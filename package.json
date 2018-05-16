@@ -38,7 +38,7 @@
     "react": "16.3.1",
     "react-native": "0.55.1",
     "react-native-animatable": "^1.2.4",
-    "react-native-busy-indicator": "https://github.com/jaylordTorres/navbar-native-jay/archive/0.0.1.tar.gz",
+    "react-native-busy-indicator": "https://github.com/jaylordTorres/react-native-busy-indicator/archive/v1.1.1.tar.gz",
     "react-native-config": "^0.10.0",
     "react-native-device-info": "0.11.0",
     "react-native-drawer": "^2.5.0",
