@@ -58,11 +58,8 @@ export const addNewTeamMergeState = (state, {newState}) => {
 }
 
 /* ------------- Hookup Reducers To Types ------------- */
-
+console.log('Types: ')
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.LOGIN_REQUEST]: request,
-  [Types.LOGIN_SUCCESS]: success,
-  [Types.LOGIN_FAILURE]: failure,
   [Types.UPLOAD_ADD_NEW_TEAM]: uploadAddNewTeam,
 
   [Types.ADD_NEW_TEAM_MERGE_STATE]: addNewTeamMergeState
