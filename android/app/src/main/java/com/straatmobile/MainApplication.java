@@ -9,7 +9,7 @@ import com.airbnb.android.react.maps.MapsPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.farmisen.react_native_file_uploader.RCTFileUploaderPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
-import com.beefe.picker.PickerViewPackage;
+// import com.beefe.picker.PickerViewPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -40,7 +40,7 @@ public class MainApplication extends Application implements ReactApplication {
             new ImagePickerPackage(),
             new RCTFileUploaderPackage(),
             new FastImageViewPackage(),
-            new PickerViewPackage(),
+            // new PickerViewPackage(),
             new ReactNativeExceptionHandlerPackage(),
             new ReactNativeI18n(),
             new VectorIconsPackage(),
