@@ -231,7 +231,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_CURRENT_USER]: setCurrentUser,
   [Types.SET_ACCESS_CODE]: setAccessCode,
   [Types.SET_HOST_ID]: setHostId,
-  [Types.RESET_USER]: resetCurrentUser,
+  [Types.RESET_CURRENT_USER]: resetCurrentUser,
 
   [Types.REGISTER_REQUEST]: registerRequest,
   [Types.REGISTER_SUCCESS]: registerSuccess,
