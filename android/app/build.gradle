@@ -98,7 +98,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.straatmobile"
+        applicationId "com.straatinfo"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
