@@ -145,6 +145,14 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-linear-gradient')
+    compile project(':react-native-spinkit')
+    compile project(':react-native-maps')
+    compile project(':react-native-image-picker')
+    compile project(':react-native-file-uploader')
+    compile project(':react-native-fast-image')
+    compile project(':react-native-picker')
+    compile project(':react-native-exception-handler')
     compile project(':react-native-i18n')
     compile project(':react-native-vector-icons')
     compile project(':react-native-device-info')

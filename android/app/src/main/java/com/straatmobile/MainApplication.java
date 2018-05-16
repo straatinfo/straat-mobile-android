@@ -3,6 +3,14 @@ package com.straatmobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.react.rnspinkit.RNSpinkitPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.farmisen.react_native_file_uploader.RCTFileUploaderPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
+import com.beefe.picker.PickerViewPackage;
+import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -26,6 +34,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
+            new RNSpinkitPackage(),
+            new MapsPackage(),
+            new ImagePickerPackage(),
+            new RCTFileUploaderPackage(),
+            new FastImageViewPackage(),
+            new PickerViewPackage(),
+            new ReactNativeExceptionHandlerPackage(),
             new ReactNativeI18n(),
             new VectorIconsPackage(),
             new RNDeviceInfo()
