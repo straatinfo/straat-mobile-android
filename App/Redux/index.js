@@ -8,7 +8,25 @@ import ReduxPersist from '../Config/ReduxPersist'
 export const reducers = combineReducers({
   nav: require('./NavigationRedux').reducer,
   github: require('./GithubRedux').reducer,
-  search: require('./SearchRedux').reducer
+  search: require('./SearchRedux').reducer,
+  user: require('./UserRedux').reducer,
+  login: require('./LoginRedux').reducer,
+  screen: require('./ScreenRedux').reducer,
+  splash: require('./SplashRedux').reducer,
+  accessCode: require('./AccessCodeRedux').reducer,
+  reports: require('./ReportsRedux').reducer,
+  setting: require('./SettingRedux').reducer,
+  conversation: require('./ConversationRedux').reducer,
+  message: require('./MessageRedux').reducer,
+  team: require('./TeamRedux').reducer,
+  teamList: require('./TeamListRedux').reducer,
+  addNewTeam: require('./AddNewTeamRedux').reducer,
+  teamProfile: require('./TeamRedux').reducer,
+  myReport: require('./MyReportRedux').reducer,
+  notification: require('./NotificationRedux').reducer,
+  feedback: require('./FeedbackRedux').reducer,
+  userProfile: require('./ProfileRedux').reducer,
+  socket: require('./SocketRedux').reducer
 })
 
 export default () => {

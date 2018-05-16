@@ -19,7 +19,20 @@ const images = {
   chevronRight: require('../Images/Icons/chevron-right.png'),
   hamburger: require('../Images/Icons/hamburger.png'),
   backButton: require('../Images/Icons/back-button.png'),
-  closeButton: require('../Images/Icons/close-button.png')
+  closeButton: require('../Images/Icons/close-button.png'),
+
+  blueCross: require('../Images/blue-cross.png'),
+  markerIcon: require('../Images/marker-icon.png'),
+  pinIcon: require('../Images/pin-icon.png'),
+  pinNew: require('../Images/ping_new.png'),
+  pinInProgress: require('../Images/ping_inprogress.png'),
+  pingDone: require('../Images/ping_done.png'),
+  pingExpired: require('../Images/ping_expired.png'),
+
+  tapHere: require('../Images/tap_here.png'),
+  blankPhoto: require('./../Images/photo_black_48dp.png'),
+  empty: require('./../Images/empty.png'),
+  uploadprofile: require('./../Images/upload_photo.png')
 }
 
 export default images

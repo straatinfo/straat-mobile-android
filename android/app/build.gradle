@@ -115,6 +115,14 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+        release {           
+            storeFile file(STRAATINFO_RELEASE_STORE_FILE)
+            storePassword STRAATINFO_RELEASE_STORE_PASSWORD
+            keyAlias STRAATINFO_RELEASE_KEY_ALIAS
+            keyPassword STRAATINFO_RELEASE_KEY_PASSWORD
+        }   
+    }    
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds

@@ -14,5 +14,14 @@ export default StyleSheet.create({
   },
   centered: {
     alignItems: 'center'
+  },
+  logo: {
+    marginTop: Metrics.doubleSection,
+    height: Metrics.images.logo,
+    width: Metrics.images.logo,
+    resizeMode: 'contain'
+  },
+  centered: {
+    alignItems: 'center'
   }
 })

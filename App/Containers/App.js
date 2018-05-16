@@ -5,8 +5,16 @@ import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 
+import BusyIndicator from 'react-native-busy-indicator'
+import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
+import { setStart } from '../Redux/commonRedux';
+import { Design } from '../Services/Constant';
+
 // create our store
-const store = createStore()
+export const store = createStore()
+// console.disableYellowBox = true;
+// set start up something
+// setStart()
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
