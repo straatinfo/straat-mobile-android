@@ -1,0 +1,27 @@
+
+export const Report = {
+  _id: null,
+  title: '',
+  description: '',
+  location: '',
+  long: 0,
+  lat: 0,
+  note: '',
+  status: '',
+  vehicleInvolvedDescription: '',
+  peopleInvolvedCount: 0,
+  finishedDate: '',
+  causeOfFinished: '',
+  isVehicleInvolved: '',
+  isPeopleInvolved: false,
+  isUrgent: false,
+  isPublic: false,
+  reportCoordinate: { coordinates: [0, 0] },
+  reportPhotos: [],
+  _reporter: '',
+  _host: '',
+  _reportType: '',
+  _mainCategory: null,
+  _subCategory: null,
+  _team: ''
+}

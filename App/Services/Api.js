@@ -1,8 +1,8 @@
-// a library to wrap and simplify api calls
+import AppConfig from './../Config/AppConfig'
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = AppConfig.ApiUrl) => {
   // ------
   // STEP 1
   // ------
@@ -17,7 +17,7 @@ const create = (baseURL = 'https://api.github.com/') => {
       'Cache-Control': 'no-cache'
     },
     // 10 second timeout...
-    timeout: 10000
+    timeout: AppConfig.apiTimeout
   })
 
   // ------
@@ -34,9 +34,588 @@ const create = (baseURL = 'https://api.github.com/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
+
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
+  const getUser = (username) => api.get('search/users', { q: username })
+  const getSomething = () => api.get('.json')
+
+  const postLogin = ({ username, password }) => {
+    return api.post('v1/api/auth/login', {
+      loginName: username,
+      password
+    },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+  /**               REPORTS                */
+  const getReportsByNearby = ({ coordinate, user: { token, language, radius } }) => {
+    // return api.get('v1/api/report/nearby/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + user.radius.toString(),
+    return api.get('v1/api/report/near/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + radius.toString(),
+    { language },
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+  /**               @param {params, user}          */
+  const getReportsByReporter = ({ params, user: { _id, token, language } }) => {
+    // return api.get('v1/api/report/reporter/' + _id,
+    return api.get('v1/api/report/clean/reporter/' + _id,
+    { language },
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+  /**               @param {params, user}          */
+  const getReportById = ({ params, user: { token, language } }) => {
+    const { _id } = params
+    return api.get('v1/api/report/' + _id,
+      { language },
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+  const postReport = ({ reportParams }) => {
+    return api.post('v1/api/report/V2',
+      reportParams.data,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + reportParams.accessToken
+        }
+      })
+  }
+  const postReportTypeC = ({ reportParams }) => {
+    return api.post('v1/api/report/V2?type=C',
+      reportParams.data,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + reportParams.accessToken
+        }
+      })
+  }
+  const putReport = (params) => {
+    return api.put('v1/api/report/status/' + params._report,
+      params.data,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + params.user.token
+        }
+      })
+  }
+  /**               REPORTS NOTIFICATION                */
+  // temp function
+  const getReports = ({ coordinate, user }) => {
+    return api.get('v1/api/report/near/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + user.radius.toString(),
+      {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + user.token
+        }
+      })
+  }
+
+  const getPublicReports = ({ _reportType, user:{ _id, language, token } }) => {
+    return api.get('v1/api/report/public',
+      {
+        _reporter: _id,
+        _reportType: _reportType,
+        language: language
+      },
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  
+  /**               ACCESS CODE                */
+  const postConfirmAccessCode = ({ accessCode }) => {
+    return api.post('v1/api/registration/validation/host', {
+      code: accessCode
+    },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postRequestAccessCode = ({ registrationData }) => {
+    /**
+     *  registration for access code
+     */
+    return api.post('v1/api/registration',
+      registrationData,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postRegisterUser = ({ registrationData }) => {
+    __DEV__ && console.log('postRegisterUser', registrationData)
+    return api.post('v1/api/registration/signupV3',
+      registrationData,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postValidateUserEmail = ({ userEmail }) => {
+    return api.post('v1/api/registration/validation',
+      { email: userEmail },
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postValidateUserName = ({ userName }) => {
+    return api.post('v1/api/registration/validation',
+      { username: userName },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postValidatePostalCode = ({ postalCode }) => {
+    return api.post('v1/api/registration/validation',
+      { postalCode: postalCode },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+  /**
+   * @description fetch coordinate from neo
+   * @param { city }
+   */
+  const postValidateLocate = ({ city, coordinate, isCoor}) => {
+    return api.post('v1/api/registration/validation',
+      { city, coordinate, isCoor },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postValidateTeamName = ({ teamName }) => {
+    return api.post('v1/api/registration/validation',
+      { teamName: teamName },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postValidateTeamEmail = ({ teamEmail }) => {
+    return api.post('v1/api/registration/validation',
+      { teamEmail: teamEmail },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postAccessCode = ({ teamName }) => {
+    return api.post('v1/api/registration/validation',
+      { teamName: teamName },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const getTeamList = ({ filter: queryObject }) => {
+    /**
+     * @param {hostId && isVolunteer }
+     * && means optional to right
+     */
+    console.log('teamFilter', queryObject)
+    return api.post('v1/api/team',
+      { queryObject },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+  const postUploadPhoto = ({ data }) => {
+    console.log('photo on API', data)
+    // return api.post('v1/api/upload/public',
+    return api.post('v1/api/upload/photo',
+      data,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+  }
+  const postProfileUploadPhoto = ({ data }) => {
+    console.log('photo on API', data)
+    // return api.post('v1/api/upload/public',
+    return api.post('v1/api/upload/profile',
+      data,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+  }
+  const postUploadReportPhotos = ({ data }) => {
+    return api.post('v1/api/upload/public',
+      data,
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+  }
+
+  const getCategories = (reportParams) => {
+    // console.log('photo on API', data)
+    // un used
+    return api.get('v1/api/category/mainCategory/withGeneral/hostId/' + reportParams._host,
+      {language: reportParams.language},
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + reportParams.token
+        }
+      })
+  }
+
+  const getCategoriesGeneral = (reportParams) => {
+    __DEV__ && console.log('getting general cat: ', reportParams)
+    return api.get('v1/api/category/mainCategory/general',
+      { code: 'ABC', language: reportParams.language },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + reportParams.token
+        }
+      })
+  }
+ 
+  const getCategoriesByHost = (reportParams) => {
+    // console.log('photo on API', data)
+    return api.get('v1/api/category/mainCategory/hostId/' + reportParams._host,
+      {language: reportParams.language},
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + reportParams.token
+        }
+      })
+  }
+
+  // MY TEAM
+  const getTeamProfile = ({ data }) => {
+    console.log('team profile', data)
+    return api.get('v1/api/team', data,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + accessToken
+        }
+      })
+  }
+
+  //  CONVERSATION
+
+  // not so long
+  const getUserTeamList = ({user, target}) => {
+    return api.get('v1/api/team/list/' + user._id, {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + user.token
+        }
+      })
+  }
+
+  const postPullConversation = ({user: {_id, token}, type, target}) => {
+    return api.get('v1/api/conversation',
+    {_user: _id, type, target},
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const getMessagesByConvoIdEX = ({user: { _id, token }, target}) => {
+    return api.get('v1/api/conversation', {_user: _id, _id: target},
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const getMessagesByConvoId = ({user: { token }, target, keyword, _reporter}) => {
+    return api.get('v2/api/message/?_conversation=' + target + '&keyword=' + keyword + '&_reporter=' + _reporter, {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const getConversationList = ({user: { _id, token }}) => {
+    return api.get('v2/api/conversation?type=TEAM&_user=' + _id, {},
+    // return api.get('v2/api/conversation?type=PRIVATE,GROUP,TEAM&_user=' + user._id, {},
+    // return api.get('v2/api/conversation?_user=5aab7079ce0881001442296b', {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const getConversation = () => {
+    return api.get('v1/api/conversation', {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postConversation = ({user: { token }, type, param}) => {
+    return api.post('v2/api/conversation?type=' + type, param,
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const getMessage = (conversationId) => {
+    console.log('ConversationId on API: ', conversationId)
+    return api.get(`v1/api/message/conversation/${conversationId}`,
+      {},
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const sendMessage = (message) => {
+    return api.post('v1/api/message',
+      message,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const postForgotPassword = ({ email }) => {
+    return api.post('/v1/api/user/password',
+      { email },
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+  // TEAM
+  // used by teamsagas
+  const getUserTeams = ({user: { _id, token }}) => {
+    return api.get('v1/api/team/list/' + _id, {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  // MY TEAM
+  const addNewTeam = ({ user: { _id, token, _host }, data }) => {
+    // return api.post('/v2/api/team/new/' + _id,
+    return api.post('v2/api/team/?_user=' + _id + '&_host=' + _host,
+      data,
+      {
+        method: 'POST',
+        header: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+  const getTeamDetails = (teamId, { token }) => {
+    // console.log('Team ID: ', teamId)
+    // return api.get(`v1/api/team/${teamId}`, {},
+    return api.get(`v1/api/team/info/${teamId}`, {},
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const getTeamRequest = (teamId, { token }) => {
+    return api.get(`v1/api/teamInvite/teamRequests/${teamId}`, {},
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const acceptUserRequest = (params,  { token }) => {
+    const { _user, _team } = params
+    console.log('acceptUserRequest', params)
+    return api.get('v1/api/teamInvite/acceptRequest/' + _user + '/' + _team,
+    {},
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const declineTeamRequest = (params,  { token }) => {
+    const { _user, _team } = params
+    return api.get('v1/api/teamInvite/declineRequest/' + _user + '/' + _team,
+    {},
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  const editTeamProfile = ({ params, user: { token }, _team }) => {
+    return api.put('v1/api/team/' + _team,
+      params,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+  const postFeedback = (params) => {
+    return api.post(`v1/api/feedback/${params.userId}`,
+      params.data,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  const editUserProfile = ({params, user: {_id, token}}) => {
+    return api.put('v1/api/user/profile/' + _id,
+      params,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
 
   // ------
   // STEP 3
@@ -54,11 +633,102 @@ const create = (baseURL = 'https://api.github.com/') => {
     // a list of the API functions from step 2
     getRoot,
     getRate,
-    getUser
+    getUser,
+
+    // login
+    postLogin,
+
+    // access code api
+    postConfirmAccessCode,
+    postRequestAccessCode,
+
+    // user
+    postForgotPassword,
+    postProfileUploadPhoto,
+    
+    // registration API
+    postRegisterUser,
+    postValidateUserEmail,
+    postValidateUserName,
+    postValidatePostalCode,
+    postValidateLocate,
+    postValidateTeamName,
+    postValidateTeamEmail,
+    getTeamList,
+    postUploadPhoto,
+    postUploadReportPhotos,
+
+    // report
+    getCategories,               // fetch categories
+    getCategoriesGeneral,        // fetch categories of freeHost
+    getCategoriesByHost,         // fetch categories by his host
+    getReportsByReporter,        // fechi reports Reporter
+    getReportsByNearby,          // fechi reports nearby
+    getReportById,               // fechi report  by report ID
+    postReport,                  // creating report
+    postReportTypeC,
+    putReport,                   // updating report
+
+    // conversation
+    getUserTeamList,
+    getConversationList,
+    postPullConversation,
+    getMessagesByConvoId,
+    getConversation,
+    postConversation,
+    getMessage,
+    sendMessage,
+    // notification
+    getReports,
+    getPublicReports,
+    // extras
+    getSomething,
+
+    // team
+    getUserTeams,
+    getTeamDetails,
+    addNewTeam,
+    editTeamProfile,
+    acceptUserRequest,
+    declineTeamRequest,
+
+    // profile
+    editUserProfile,
+    postFeedback,
+    getTeamRequest
   }
 }
 
+// google API
+
+const googleAPI = (baseURL = AppConfig.url.GOOGLEAPIS) => {
+  const api = apisauce.create({
+    baseURL,
+    headers: {
+      'Cache-Control': 'no-cache'
+    },
+    timeout: 10000
+  })
+
+  const getAddressByCoordinate = ({ coordinate }) => {
+    console.log('getAddressByCoordinate', coordinate)
+    return api.get('maps/api/geocode/json',
+      {
+        latlng: '' + coordinate.latitude + ',' + coordinate.longitude,
+        key: AppConfig.keys.GOOGLE_MAP_KEY
+      },
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+  return {
+    getAddressByCoordinate
+  }
+}
 // let's return back our create method as the default.
 export default {
-  create
+  create, googleAPI
 }
