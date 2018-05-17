@@ -225,7 +225,7 @@ class ReportDetail extends Component {
               </View>
             </View>}{ /** vehicle involved -- END */ }
 
-            {renderIf(report.attachments.length > 0)(
+            {renderIf(report.attachments && report.attachments.length > 0)(
               <View style={[ styles.rowContainer ]} >{ /** report  parse images container */ }
                 <View style={[ styles.rowTitleContainer ]} >
                   <Text style={[ styles.titleCategory, styles.f16 ]} >{ Lang.txt_J16}</Text>

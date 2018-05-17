@@ -25,7 +25,7 @@ import MapView from 'react-native-maps'
 import ReportMapContainer from './../../Containers/ReportMap/ReportMapContainer'
 import UnderMigration from './../../Components/UnderMigration'
 import {drawerData} from './../../Navigation/NavigationDrawer'
-import ReportsActions from './../../Redux/ReportsRedux'
+import ReportsActions, { ReportDefault } from './../../Redux/ReportsRedux'
 
 import NotificationActions from './../../Redux/NotificationRedux'
 
@@ -71,7 +71,7 @@ class ReportDetailsScreen extends React.Component {
      *
      */
     console.log(this.props)
-    const { report } = this.props.navigation.state.params
+    const { report } = this.props.navigation.state.params || { report: ReportDefault }
     const { design } = this.props
     return (
       <Container>
