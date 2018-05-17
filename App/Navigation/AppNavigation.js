@@ -17,7 +17,7 @@ import MyTeam from '../Containers/MyTeam'
 import AddTeamScreen from '../Containers/MyTeam/AddTeamScreen'
 // import ChangeTeamLogoScreen from '../Containers/MyTeam/ChangeTeamLogoScreen'
 // import ChangeTeamProfileScreen from '../Containers/MyTeam/ChangeTeamProfileScreen'
-// import TeamListScreen from '../Containers/MyTeam/TeamListScreen'
+import TeamListScreen from '../Containers/MyTeam/TeamListScreen'
 // import MyTeamScreen from '../Containers/MyTeam/MyTeamScreen'
 
 
@@ -46,7 +46,7 @@ if (Configuration.DEBUG) {
   }
 } else {
   defaultRoute = {
-    initialRouteName: 'AddTeam',
+    initialRouteName: 'TeamList',
     headerMode: 'none'
   }
 }
@@ -66,9 +66,7 @@ const PrimaryNav = StackNavigator(
     ForgotPassword: { screen: ForgotPasswordScreen },
     MyTeam: { screen: MyTeam },
     AddTeam: { screen: AddTeamScreen },
-    // TeamList: {
-    //   screen: TeamListScreen,
-    // },
+    TeamList: { screen: TeamListScreen },
     // ChangeTeamProfile: {
     //   screen: ChangeTeamProfileScreen
     // },
