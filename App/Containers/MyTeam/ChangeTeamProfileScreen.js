@@ -17,10 +17,10 @@ import { crop } from '../../Transforms/Cloudinary'
 class ChangeTeamProfile extends Component {
   constructor (props) {
     super(props)
-
+    const {data: {teamName, teamEmail}} = this.props.details || { data: {teamName: '', teamEmail: ''} }
     this.state = {
-      teamName: this.props.details.data.teamName,
-      teamEmail: this.props.details.data.teamEmail
+      teamName: teamName,
+      teamEmail: teamEmail
     }
   }
 
@@ -73,7 +73,7 @@ class ChangeTeamProfile extends Component {
           <View style={{ paddingRight: 16, paddingLeft: 16 }}>
             <View style={{ marginTop: 25, flexDirection: 'row' }}>
               <Text style={{ marginRight: 25, color: '#3e3f42' }}>{Lang.txt_F06}: </Text>
-              <Text style={Styles.textColor}>{team._host.hostName}</Text>
+              <Text style={Styles.textColor}>{team._host ? team._host.hostName : ''}</Text>
             </View>
             <View>
               <View style={{ marginTop: 25, flexDirection: 'column' }}>
