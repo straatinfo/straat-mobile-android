@@ -25,6 +25,8 @@ export default Creators
 
 const reportUploadImages = [{uri: 'content://media/external/images/media/19486'}, {uri: 'content://media/external/images/media/19486'}]
 
+export const ReportDefault = Report
+
 // const { width, height } = Dimensions.get('window')
 // const LATITUD_DELTA = 0.0922
 // const LONGITUDE_DELTA = LATITUD_DELTA + (width / height)
