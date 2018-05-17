@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, FlatList, Share, PermissionsAndroid,
    StyleSheet, Platform } from 'react-native'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container, Body,

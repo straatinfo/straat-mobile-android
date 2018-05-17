@@ -8,7 +8,7 @@ import Login from './../Containers/LoginScreen'
 
 import Splash from './../Containers/SplashScreen'
 // import RegistrationForm from './../Containers/RegistrationFormScreen'
-// import TestOnly from './../Containers/TestOnlyScreen'
+import TestOnly from './../Containers/TestOnlyScreen'
 import Configuration from './../Config/AppConfig'
 import AccessCodeScreen from './../Containers/AccessCodeScreen'
 
@@ -46,7 +46,7 @@ if (Configuration.DEBUG) {
   }
 } else {
   defaultRoute = {
-    initialRouteName: 'Splash',
+    initialRouteName: 'TestOnly',
     headerMode: 'none'
   }
 }
@@ -62,7 +62,7 @@ const PrimaryNav = StackNavigator(
     // NavigationDrawer: { screen: NavigationDrawer },
     // ReportDetails: { screen: ReportDetailsScreen },
     // ReportSelectTeam: { screen: ReportSelectTeamScreen },
-    // TestOnly: { screen: TestOnly },
+    TestOnly: { screen: TestOnly },
     // ForgotPassword: { screen: ForgotPasswordScreen },
     // MyTeam: {
     //   screen: MyTeam,

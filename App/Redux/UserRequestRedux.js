@@ -4,9 +4,9 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-    setRequest: ['accept'],
-    requestSuccess: ['request'],
-    requestFailed: ['error'],
+  setRequest: ['accept'],
+  requestSuccess: ['request'],
+  requestFailed: ['error']
 })
 
 export const LoginTypes = Types
@@ -40,5 +40,5 @@ export const failure = (state, { error }) => {
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_REQUEST]: request,
   [Types.REQUEST_SUCCESS]: success,
-  [Types.REQUEST_FAILURE]: failure,
+  [Types.REQUEST_FAILED]: failure
 })
