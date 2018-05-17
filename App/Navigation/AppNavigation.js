@@ -3,14 +3,14 @@ import styles from './Styles/NavigationStyles'
 
 
 // screens identified by the router
-// import Login from './../Containers/LoginScreen'
+import Login from './../Containers/LoginScreen'
 // import NavigationDrawer from './NavigationDrawer'
 
-// import Splash from './../Containers/SplashScreen'
+import Splash from './../Containers/SplashScreen'
 // import RegistrationForm from './../Containers/RegistrationFormScreen'
 // import TestOnly from './../Containers/TestOnlyScreen'
-// import Configuration from './../Config/AppConfig'
- import AccessCodeScreen from './../Containers/AccessCodeScreen'
+import Configuration from './../Config/AppConfig'
+import AccessCodeScreen from './../Containers/AccessCodeScreen'
 
 // // team
 // import MyTeam from '../Containers/MyTeam';
@@ -56,8 +56,8 @@ if (Configuration.DEBUG) {
 const PrimaryNav = StackNavigator(
   {
     AccessCodeScreen: { screen: AccessCodeScreen },
-    // Login: { screen: Login },
-    // Splash: { screen: Splash },
+    Login: { screen: Login },
+    Splash: { screen: Splash },
     // RegistrationForm: { screen: RegistrationForm },
     // NavigationDrawer: { screen: NavigationDrawer },
     // ReportDetails: { screen: ReportDetailsScreen },
