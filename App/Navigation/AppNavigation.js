@@ -25,9 +25,9 @@ import AccessCodeScreen from './../Containers/AccessCodeScreen'
 // import TeamChatScreen from '../Containers/ChatScreen'
 // import ChatScreen from '../Containers/ChatScreen'
 // import PersonalChatScreen from '../Containers/PersonalChatScreen'
-// import ReportSelectTeamScreen from '../Containers/ReportMap/ReportSelectTeamScreen'
+import ReportSelectTeamScreen from '../Containers/ReportMap/ReportSelectTeamScreen'
 import ReportDetailsScreen from '../Containers/MyReport/ReportDetailsScreen'
-// import ForgotPasswordScreen from '../Containers/User/ForgotPasswordScreen';
+import ForgotPasswordScreen from '../Containers/User/ForgotPasswordScreen';
 
 
 /**
@@ -41,12 +41,12 @@ let defaultRoute
 
 if (Configuration.DEBUG) {
   defaultRoute = {
-    initialRouteName: 'ReportDetails', // 'TestOnly',
+    initialRouteName: 'TestOnly', // 'TestOnly',
     headerMode: 'none'
   }
 } else {
   defaultRoute = {
-    initialRouteName: 'ReportDetails',
+    initialRouteName: 'ForgotPassword',
     headerMode: 'none'
   }
 }
@@ -61,9 +61,9 @@ const PrimaryNav = StackNavigator(
     RegistrationForm: { screen: RegistrationForm },
     // NavigationDrawer: { screen: NavigationDrawer },
     ReportDetails: { screen: ReportDetailsScreen },
-    // ReportSelectTeam: { screen: ReportSelectTeamScreen },
-    // TestOnly: { screen: TestOnly },
-    // ForgotPassword: { screen: ForgotPasswordScreen },
+    ReportSelectTeam: { screen: ReportSelectTeamScreen },
+    TestOnly: { screen: TestOnly },
+    ForgotPassword: { screen: ForgotPasswordScreen },
     // MyTeam: {
     //   screen: MyTeam,
     // },

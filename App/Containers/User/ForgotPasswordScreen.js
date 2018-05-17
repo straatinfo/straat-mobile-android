@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler } from 'react-native'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container, Content } from 'native-base'
 import { connect } from 'react-redux'
@@ -14,7 +15,7 @@ import Footer from '../../Components/Footer'
 import FastImage from 'react-native-fast-image'
 import Triangle from 'react-native-triangle'
 import RowView from '../../Components/RowView'
-
+ 
 import Styles from './style'
 
 class ForgotPasswordScreen extends React.Component {
