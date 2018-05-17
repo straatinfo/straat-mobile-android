@@ -1,33 +1,28 @@
-import { StackNavigator } from 'react-navigation'
-import styles from './Styles/NavigationStyles'
+import { StackNavigator }      from 'react-navigation'
+import styles                  from './Styles/NavigationStyles'
 
+import AccessCodeScreen        from './../Containers/AccessCodeScreen'
+import Configuration           from './../Config/AppConfig'
+import ChatScreen              from '../Containers/ChatScreen'
+import ForgotPasswordScreen    from '../Containers/User/ForgotPasswordScreen'
+import Login                   from './../Containers/LoginScreen'
+import Splash                  from './../Containers/SplashScreen'
+import RegistrationForm        from './../Containers/RegistrationFormScreen'
+import ReportSelectTeamScreen  from '../Containers/ReportMap/ReportSelectTeamScreen'
+import ReportDetailsScreen     from '../Containers/MyReport/ReportDetailsScreen'
+import TestOnly                from './../Containers/TestOnlyScreen'
 
-// screens identified by the router
-import Login from './../Containers/LoginScreen'
-// import NavigationDrawer from './NavigationDrawer'
-
-import Splash from './../Containers/SplashScreen'
-import RegistrationForm from './../Containers/RegistrationFormScreen'
-import TestOnly from './../Containers/TestOnlyScreen'
-import Configuration from './../Config/AppConfig'
-import AccessCodeScreen from './../Containers/AccessCodeScreen'
-
-// // team
-import MyTeam from '../Containers/MyTeam'
-import AddTeamScreen from '../Containers/MyTeam/AddTeamScreen'
-import ChangeTeamLogoScreen from '../Containers/MyTeam/ChangeTeamLogoScreen'
+import AddTeamScreen           from '../Containers/MyTeam/AddTeamScreen'
+import ChangeTeamLogoScreen    from '../Containers/MyTeam/ChangeTeamLogoScreen'
 import ChangeTeamProfileScreen from '../Containers/MyTeam/ChangeTeamProfileScreen'
-import TeamListScreen from '../Containers/MyTeam/TeamListScreen'
-import MyTeamScreen from '../Containers/MyTeam/MyTeamScreen'
+import MyTeam                  from '../Containers/MyTeam'
+import MyTeamScreen            from '../Containers/MyTeam/MyTeamScreen'
+import TeamListScreen          from '../Containers/MyTeam/TeamListScreen'
 
-
-import ReportChatScreen from '../Containers/ReportChatScreen'
-// import TeamChatScreen from '../Containers/ChatScreen'
-import ChatScreen from '../Containers/ChatScreen'
-// import PersonalChatScreen from '../Containers/PersonalChatScreen'
-import ReportSelectTeamScreen from '../Containers/ReportMap/ReportSelectTeamScreen'
-import ReportDetailsScreen from '../Containers/MyReport/ReportDetailsScreen'
-import ForgotPasswordScreen from '../Containers/User/ForgotPasswordScreen';
+// import ReportChatScreen     from '../Containers/ReportChatScreen'
+// import TeamChatScreen       from '../Containers/ChatScreen'
+// import PersonalChatScreen   from '../Containers/PersonalChatScreen'
+import NavigationDrawer        from './NavigationDrawer'
 
 
 /**
@@ -37,58 +32,39 @@ import ForgotPasswordScreen from '../Containers/User/ForgotPasswordScreen';
  *
  */
 
-let defaultRoute
-
-if (Configuration.DEBUG) {
-  defaultRoute = {
-    initialRouteName: 'TestOnly', // 'TestOnly',
-    headerMode: 'none'
-  }
-} else {
-  defaultRoute = {
-    initialRouteName: 'Chat',
-    headerMode: 'none'
-  }
+const defaultRoute = {
+  headerMode: 'none',
+  navigationOptions: { headerStyle: styles.header },
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'NavigationDrawer'
 }
-
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator(
   {
     AccessCodeScreen:    { screen: AccessCodeScreen },
+    ForgotPassword:      { screen: ForgotPasswordScreen },
     Login:               { screen: Login },
-    Splash:              { screen: Splash },
     RegistrationForm:    { screen: RegistrationForm },
     ReportDetails:       { screen: ReportDetailsScreen },
     ReportSelectTeam:    { screen: ReportSelectTeamScreen },
-    TestOnly:            { screen: TestOnly },
-    ForgotPassword:      { screen: ForgotPasswordScreen },
+    Splash:              { screen: Splash },
 
-    MyTeam:              { screen: MyTeam },
     AddTeam:             { screen: AddTeamScreen },
-    TeamList:            { screen: TeamListScreen },
     ChangeTeamProfile:   { screen: ChangeTeamProfileScreen },
     ChangeTeamLogo:      { screen: ChangeTeamLogoScreen },
+    MyTeam:              { screen: MyTeam },
     MyTeamScreen:        { screen: MyTeamScreen },
-    
-    // ReportChat:          { screen: ReportChatScreen },
-    // TeamChat: {
-    //   screen: TeamChatScreen
-    // },
+    TeamList:            { screen: TeamListScreen },
     Chat:                { screen: ChatScreen },
-    // PersonalChat: {
-    //   screen: PersonalChatScreen,
-    // },
-    // NavigationDrawer: { screen: NavigationDrawer },
+    NavigationDrawer:    { screen: NavigationDrawer },
+
+    TestOnly:            { screen: TestOnly },
+    
+    // ReportChat:          { screen: ReportChatScreen },  // not need now
+    // TeamChat:            { screen: TeamChatScreen },    // not need now
+    // PersonalChat:        { screen: PersonalChatScreen },// not need now
   },
   defaultRoute
-, {
-  // Default config for all screens
-  headerMode: 'none',
-  initialRouteName: 'LaunchScreen',
-  navigationOptions: {
-    headerStyle: styles.header
-  }
-})
+)
 
 export default PrimaryNav
