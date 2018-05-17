@@ -39,7 +39,7 @@ class TeamChat extends Component {
   }
 
   fetchMessages() {
-    const { conversationId, userId, teamId } = this.props
+    const { conversationId, userId, } = this.props
     console.log('Chat screen conversationId: ', conversationId)
     if (conversationId) {
       this.props.fetchMessage(conversationId)
@@ -66,14 +66,15 @@ class TeamChat extends Component {
   }
   render() {
     console.log('Chat Screen navigation params: ', this.props.navigation.state.params);
-    const pageTitle = this.props.navigation.state.params.title
+    console.log('Chat Screen props: ', this.props);
+    const { title } = this.props.navigation.state.params || { title: '' }
     const { fetching, userId, username, navigation, messages } = this.props
     if (fetching) {
       return (<CircleLoader color='blue' />)
     }
     return (
       <Container>
-        <HeaderInDrawer navigation={navigation} title={pageTitle} />
+        <HeaderInDrawer navigation={navigation} title={ title } />
         <Content contentContainerStyle={{ flex: 1 }}>
           <View style={{ flex: 1 }}>
             <GiftedChat
@@ -96,7 +97,6 @@ const mapStateToProps = state => {
     messages: state.message.messages,
     userId: state.user.user._id,
     username: state.user.user.username,
-    teamId: state.user.user._activeTeam._id,
     conversationId: state.conversation.conversationId
   }
 }

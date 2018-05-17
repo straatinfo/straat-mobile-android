@@ -3,26 +3,14 @@ import Immutable from 'seamless-immutable'
 
 const tempMessage = [ {
   _id: '72f422ba-d4cf-455f-8dd2-f74d004d28d6',
-  text: 'test MEs',
+  text: 'JAY LORD TESTING',
   createdAt: new Date(),
   user: {
     _id: '5a8b4afbac58ad00141a352e',
-    name: 'React Native',
+    name: 'JAY LORD TESTING',
     avatar: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png'
   }
         // image: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png'
-},
-
-{
-  _id: '72f412ba-d4cf-455f-8dd2-f74d004d28d6',
-  text: 'Hello developer',
-  createdAt: new Date(),
-  user: {
-    _id: 2,
-    name: 'React Native',
-    avatar: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png'
-  }
-    // image: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png'
 }
 ]
 /* ------------- Types and Action Creators ------------- */

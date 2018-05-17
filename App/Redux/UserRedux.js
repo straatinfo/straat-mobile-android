@@ -58,8 +58,9 @@ export const tempUser = {
   isVolunteer: true,
   _host: '5a7b485a039e2860cf9dd19a',
   teamList: [],
-  language: 'nl',
-  token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YThiNGFmYmFjNThhZDAwMTQxYTM1MmUiLCJpYXQiOjE1MjAxOTE5OTU5NjZ9.XDYrx8rMdZse6VCS902G8GwLIJM0BBIQF9yRHG_bLqY'
+  language: 'nl', 
+  token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YThiNGFmYmFjNThhZDAwMTQxYTM1MmUiLCJpYXQiOjE1MjAxOTE5OTU5NjZ9.XDYrx8rMdZse6VCS902G8GwLIJM0BBIQF9yRHG_bLqY',
+  _activeTeam: { _id: 'teamIdSample' }
 }
 /* ------------- Intial State ------------- */
 
