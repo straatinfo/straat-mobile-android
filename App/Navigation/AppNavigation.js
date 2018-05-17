@@ -13,7 +13,7 @@ import Configuration from './../Config/AppConfig'
 import AccessCodeScreen from './../Containers/AccessCodeScreen'
 
 // // team
-// import MyTeam from '../Containers/MyTeam';
+import MyTeam from '../Containers/MyTeam'
 // import AddTeamScreen from '../Containers/MyTeam/AddTeamScreen'
 // import ChangeTeamLogoScreen from '../Containers/MyTeam/ChangeTeamLogoScreen'
 // import ChangeTeamProfileScreen from '../Containers/MyTeam/ChangeTeamProfileScreen'
@@ -46,7 +46,7 @@ if (Configuration.DEBUG) {
   }
 } else {
   defaultRoute = {
-    initialRouteName: 'ForgotPassword',
+    initialRouteName: 'MyTeam',
     headerMode: 'none'
   }
 }
@@ -64,9 +64,7 @@ const PrimaryNav = StackNavigator(
     ReportSelectTeam: { screen: ReportSelectTeamScreen },
     TestOnly: { screen: TestOnly },
     ForgotPassword: { screen: ForgotPasswordScreen },
-    // MyTeam: {
-    //   screen: MyTeam,
-    // },
+    MyTeam: { screen: MyTeam },
     // AddTeam: {
     //   screen: AddTeamScreen,
     // },
