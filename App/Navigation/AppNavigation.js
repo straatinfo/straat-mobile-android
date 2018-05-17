@@ -23,7 +23,7 @@ import MyTeamScreen from '../Containers/MyTeam/MyTeamScreen'
 
 import ReportChatScreen from '../Containers/ReportChatScreen'
 // import TeamChatScreen from '../Containers/ChatScreen'
-// import ChatScreen from '../Containers/ChatScreen'
+import ChatScreen from '../Containers/ChatScreen'
 // import PersonalChatScreen from '../Containers/PersonalChatScreen'
 import ReportSelectTeamScreen from '../Containers/ReportMap/ReportSelectTeamScreen'
 import ReportDetailsScreen from '../Containers/MyReport/ReportDetailsScreen'
@@ -46,7 +46,7 @@ if (Configuration.DEBUG) {
   }
 } else {
   defaultRoute = {
-    initialRouteName: 'ReportChat',
+    initialRouteName: 'Chat',
     headerMode: 'none'
   }
 }
@@ -71,13 +71,11 @@ const PrimaryNav = StackNavigator(
     ChangeTeamLogo:      { screen: ChangeTeamLogoScreen },
     MyTeamScreen:        { screen: MyTeamScreen },
     
-    ReportChat:          { screen: ReportChatScreen },
+    // ReportChat:          { screen: ReportChatScreen },
     // TeamChat: {
     //   screen: TeamChatScreen
     // },
-    // Chat: {
-    //   screen: ChatScreen
-    // },
+    Chat:                { screen: ChatScreen },
     // PersonalChat: {
     //   screen: PersonalChatScreen,
     // },

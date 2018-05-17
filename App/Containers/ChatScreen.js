@@ -36,7 +36,8 @@ class ChatScreen extends Component {
     // option: byId, byType - refId = (userID, teamID, reportId)
 
     const { navigation, chatMerge, user: { _id, token }, getMessagesByConvoId, createPostConvo } = this.props
-    const { title, option, type, target, _team, _profilePic } = navigation.state.params
+    const { title, option, type, target, _team, _profilePic } = navigation.state.params ||  
+    { title: 'test title', option: 'testOption', type: 'testType', target: 'tesTarget', _team: 'testOption', _profilePic: null }
 
     chatMerge({title: title})
 
