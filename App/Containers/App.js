@@ -12,7 +12,7 @@ import { Design } from '../Services/Constant';
 
 // create our store
 export const store = createStore()
-// console.disableYellowBox = true;
+console.disableYellowBox = true
 // set start up something
 // setStart()
 
