@@ -18,7 +18,7 @@ import AddTeamScreen from '../Containers/MyTeam/AddTeamScreen'
 import ChangeTeamLogoScreen from '../Containers/MyTeam/ChangeTeamLogoScreen'
 import ChangeTeamProfileScreen from '../Containers/MyTeam/ChangeTeamProfileScreen'
 import TeamListScreen from '../Containers/MyTeam/TeamListScreen'
-// import MyTeamScreen from '../Containers/MyTeam/MyTeamScreen'
+import MyTeamScreen from '../Containers/MyTeam/MyTeamScreen'
 
 
 // import ReportChatScreen from '../Containers/ReportChatScreen'
@@ -46,7 +46,7 @@ if (Configuration.DEBUG) {
   }
 } else {
   defaultRoute = {
-    initialRouteName: 'ChangeTeamLogo',
+    initialRouteName: 'MyTeamScreen',
     headerMode: 'none'
   }
 }
@@ -55,23 +55,21 @@ if (Configuration.DEBUG) {
 // Manifest of possible screens
 const PrimaryNav = StackNavigator(
   {
-    AccessCodeScreen: { screen: AccessCodeScreen },
-    Login: { screen: Login },
-    Splash: { screen: Splash },
-    RegistrationForm: { screen: RegistrationForm },
-    // NavigationDrawer: { screen: NavigationDrawer },
-    ReportDetails: { screen: ReportDetailsScreen },
-    ReportSelectTeam: { screen: ReportSelectTeamScreen },
-    TestOnly: { screen: TestOnly },
-    ForgotPassword: { screen: ForgotPasswordScreen },
-    MyTeam: { screen: MyTeam },
-    AddTeam: { screen: AddTeamScreen },
-    TeamList: { screen: TeamListScreen },
-    ChangeTeamProfile: { screen: ChangeTeamProfileScreen },
-    ChangeTeamLogo: { screen: ChangeTeamLogoScreen },
-    // MyTeamScreen: {
-    //   screen: MyTeamScreen,
-    // },
+    AccessCodeScreen:    { screen: AccessCodeScreen },
+    Login:               { screen: Login },
+    Splash:              { screen: Splash },
+    RegistrationForm:    { screen: RegistrationForm },
+    ReportDetails:       { screen: ReportDetailsScreen },
+    ReportSelectTeam:    { screen: ReportSelectTeamScreen },
+    TestOnly:            { screen: TestOnly },
+    ForgotPassword:      { screen: ForgotPasswordScreen },
+
+    MyTeam:              { screen: MyTeam },
+    AddTeam:             { screen: AddTeamScreen },
+    TeamList:            { screen: TeamListScreen },
+    ChangeTeamProfile:   { screen: ChangeTeamProfileScreen },
+    ChangeTeamLogo:      { screen: ChangeTeamLogoScreen },
+    MyTeamScreen:        { screen: MyTeamScreen },
     // ReportChat: {
     //   screen: ReportChatScreen,
     // },
@@ -83,7 +81,8 @@ const PrimaryNav = StackNavigator(
     // },
     // PersonalChat: {
     //   screen: PersonalChatScreen,
-    // }
+    // },
+    // NavigationDrawer: { screen: NavigationDrawer },
   },
   defaultRoute
 , {
