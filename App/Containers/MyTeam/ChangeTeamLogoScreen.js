@@ -122,8 +122,7 @@ const mapStateToProps = state => {
     error: state.error,
     team: state.team.team,
 
-    editTeam: state.team.editTeam,
-    teamId: state.teamList.identify.teamId
+    editTeam: state.team.editTeam
   }
 }
 
