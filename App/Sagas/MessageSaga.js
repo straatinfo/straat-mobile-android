@@ -61,7 +61,7 @@ import { fixGiftChatMessages, fixConvo } from '../Transforms/messagesHelper'
 //     }
 // }
 
-export function * postConvo (API, action) {
+export const postConvo = function * (API, action) {
   yield put(MessageActions.chatMerge({fetchingConvo: true}))
   console.log('getting createConvo', action.params)
   const { type, param } = action.params
@@ -95,7 +95,7 @@ export function * postConvo (API, action) {
   }
 }
 
-export function * getMessagesByConvoId (API, action) {
+export const getMessagesByConvoId = function * (API, action) {
   const { param: { target, title } } = action
   const user = yield select(getUser)
   yield put(MessageActions.chatMerge({fetching: true, messages: []}))
@@ -124,7 +124,7 @@ export function * getMessagesByConvoId (API, action) {
   }
 }
 
-export function * getConversation (API, action) {
+export const getConversation = function * (API, action) {
   const { param: { type, target } } = action
   const user = yield select(getUser)
   try {

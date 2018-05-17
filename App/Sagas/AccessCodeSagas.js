@@ -11,7 +11,7 @@ import language from './../Lib/CutomLanguage'
  * @param {username, password}
  */
 
-export function * confirmAccessCode (API, action) {
+export const confirmAccessCode = function * (API, action) {
   console.log(action)
   // action.accessCodeContainer.navigation.navigate(action.accessCodeContainer.route)
   const { accessCode, navigation, route } = action.accessCodeContainer
@@ -50,7 +50,7 @@ export function * confirmAccessCode (API, action) {
   yield call(logStore)
 }
 
-export function * registerAccessCode (API, action) {
+export const registerAccessCode = function * (API, action) {
   console.log(action)
   // action.accessCodeContainer.navigation.navigate(action.accessCodeContainer.route)
   const { registrationData } = action.coderegistrationnavroute

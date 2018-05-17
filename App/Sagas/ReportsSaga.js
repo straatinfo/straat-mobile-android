@@ -31,7 +31,7 @@ const tempdata = {
  * @param  { coordinate, user }
  *
  */
-export function * getNearbyReports (API, action) {
+export const getNearbyReports = function * (API, action) {
   const { coordinate, user } = action.reportsParams
   // coordinate { longitude, latitude}, user {accessToken, radius}
   try {
@@ -71,7 +71,7 @@ export function * getNearbyReports (API, action) {
  * @param { coordinate, user, _host }
  *
  */
-export function * getReportAddress (API, action) {
+export const getReportAddress = function * (API, action) {
   const { coordinate } = action // no need for token cuuse it only get from googleAPI
 
   const user = yield select(getUser)
@@ -109,7 +109,7 @@ export function * getReportAddress (API, action) {
  * 
  * 
  */
-export function * uploadPhoto (API, action) {
+export const uploadPhoto = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.uploading)
 
@@ -153,7 +153,7 @@ export function * uploadPhoto (API, action) {
  *
  */
 
-export function * getCategories (API, action) {
+export const getCategories = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.fetching)
   const { reportsParams: { _reportType } } = action
@@ -188,7 +188,7 @@ export function * getCategories (API, action) {
  *
  */
 
-export function * submitReport (API, action) {
+export const submitReport = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
 
@@ -242,7 +242,7 @@ export function * submitReport (API, action) {
  *
  */
 
-export function * changeStatus (API, action) {
+export const changeStatus = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
   const user = yield select(getUser)

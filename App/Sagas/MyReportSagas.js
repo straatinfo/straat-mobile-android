@@ -10,7 +10,7 @@ import language from './../Lib/CutomLanguage'
 import { orderBy, flatReports, flatReport } from '../Transforms/ReportHelper'
 import { ReportTypes } from '../Services/Constant'
 
-export function * myReportRequest (API, action) {
+export const myReportRequest = function * (API, action) {
   const user = yield select(getUser)
   yield put(MyReportActions.myReportMerge({fetching: true, error: ''})) // set loader
   try {
@@ -28,7 +28,7 @@ export function * myReportRequest (API, action) {
   yield call(logStore)
 }
 
-export function * myReportDetailRequest (API, action) {
+export const myReportDetailRequest = function * (API, action) {
   const user = yield select(getUser)
   const { _id } = action
   yield put(MyReportActions.myReportMerge({fetchingDetails: true, errorDetails: ''})) // set loader

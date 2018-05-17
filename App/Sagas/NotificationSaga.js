@@ -12,7 +12,7 @@ import { CONNECTION } from '../Services/AppSocket'
 import DebugConfig from './../Config/DebugConfig'
 const displayNotificationCountOfHisReport = DebugConfig.displayNotificationCountOfHisReport
 
-export function * notifactionRequestTypeA (API, action) {
+export const notifactionRequestTypeA = function * (API, action) {
   const user = yield select(getUser)
   // const coordinate = reportCoordinate
   yield put(NotificationActions.notificationMerge({fetchingA: true, errorA: ''})) // set loader
@@ -33,7 +33,7 @@ export function * notifactionRequestTypeA (API, action) {
   yield call(logStore)
 }
 
-export function * notifactionRequestTypeB (API, action) {
+export const notifactionRequestTypeB = function * (API, action) {
   const user = yield select(getUser)
   // const coordinate = reportCoordinate
   yield put(NotificationActions.notificationMerge({fetchingB: true, errorB: ''})) // set loader
@@ -78,7 +78,7 @@ export function * notifactionRequestTypeC (API, action) {
  * @param { user }
  */
 
-export function * updateByNotification (API, action) {
+export const updateByNotification = function * (API, action) {
   try {
     const NotifactionState = yield select(getNotification)
     const user = yield select(getUser)

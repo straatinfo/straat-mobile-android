@@ -11,7 +11,7 @@ import language from './../Lib/CutomLanguage'
  * @param radius
  */
 
-export function * updatetRadius (API, action) {
+export const updatetRadius = function * (API, action) {
   const { radius } = action.accessCodeContainer
   try {
     yield call(loaderHandler.showLoader, language.saving)

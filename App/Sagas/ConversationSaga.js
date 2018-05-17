@@ -10,7 +10,7 @@ import language from '../Lib/CutomLanguage'
 import { getUser } from '../Redux/UserRedux'
 import { fixConversationListing, fixConversationListingForTeam } from '../Transforms/messagesHelper'
 
-export function * fetchConversation (API, action) {
+export const fetchConversation = function * (API, action) {
   try {
     console.log('Fetching conversations...', action)
     console.log('Fetching conversations API', API)
@@ -28,7 +28,7 @@ export function * fetchConversation (API, action) {
   }
 }
 
-export function * createConversation (API, action) {
+export const createConversation = function * (API, action) {
   try {
     console.log('Creating conversation...', action)
     console.log('Creating conversation API', API)
@@ -42,7 +42,7 @@ export function * createConversation (API, action) {
   }
 }
 
-export function * getConversationList (API, action) {
+export const getConversationList = function * (API, action) {
   const user = yield select(getUser)
   try {
     console.log('Fetching getConversationList...', action)

@@ -9,7 +9,7 @@ import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
 import language from '../Lib/CutomLanguage'
 import Api from '../Services/Api';
 
-export function* sendFeedback(API, action) {
+export const sendFeedback = function * (API, action) {
     try {
         console.log('Sending feedback...', action);
         console.log('Sending feedback API', API);

@@ -19,7 +19,7 @@ import { socketService } from './NotificationSaga';
  * @param {username, password}
  */
 
-export function * login (API, action) {
+export const login = function * (API, action) {
   const {username, password, navigation, route, params} = action.userpassnavroute
   try {
     console.log('HI I AM LOGIN SAGA!!!');
@@ -101,7 +101,7 @@ export function * login (API, action) {
  * @param
  */
 
-export function * appStart (API, action) {
+export const appStart = function * (API, action) {
   try {
     const theme = yield call(AppData.getTheme)
     const design = JSON.parse(theme)

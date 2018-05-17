@@ -22,7 +22,7 @@ import { getSuccessMessage, getLoginParams } from '../Transforms/RegistrationHel
  *
  */
 
-export function * registerUser (API, action) {
+export const registerUser = function * (API, action) {
   const { registrationData, navigation, route } = action.registrationDatNavRoute
   // const user = yield select(getUser)
   __DEV__ && console.log('registerUser* registrationData', registrationData)
@@ -78,7 +78,7 @@ export function * registerUser (API, action) {
  *
  */
 
-export function * validateEmail (API, action) {
+export const validateEmail = function * (API, action) {
   const { userEmail } = action
   __DEV__ && console.log('action', action)
   try {
@@ -119,7 +119,7 @@ export function * validateEmail (API, action) {
  *
  */
 
-export function * validateUserName (API, action) {
+export const validateUserName = function * (API, action) {
   const { userName, primeUserName } = action
   __DEV__ && console.log('action', action)
   try {
@@ -163,7 +163,7 @@ export function * validateUserName (API, action) {
  *
  */
 
-export function * validatePostalCode (API, action) {
+export const validatePostalCode = function * (API, action) {
   const { postalCode } = action
   __DEV__ && console.log('action', action)
   try {
@@ -204,7 +204,7 @@ export function * validatePostalCode (API, action) {
  *
  */
 
-export function * validateCity (API, action) {
+export const validateCity = function * (API, action) {
   const { city } = action
 
   const user = yield select(getUserState)
@@ -245,7 +245,7 @@ export function * validateCity (API, action) {
  *
  */
 
-export function * validatePhoneNumber (API, action) {
+export const validatePhoneNumber = function * (API, action) {
   const { phoneNumber } = action
   __DEV__ && console.log('action', action)
   try {
@@ -293,7 +293,7 @@ export function * validatePhoneNumber (API, action) {
  *
  */
 
-export function * validateTeamName (API, action) {
+export const validateTeamName = function * (API, action) {
   const { teamName, isVolunteer } = action
   __DEV__ && console.log('action', action)
   try {
@@ -335,7 +335,7 @@ export function * validateTeamName (API, action) {
  *
  */
 
-export function * validateTeamEmail (API, action) {
+export const validateTeamEmail = function * (API, action) {
   const { teamEmail } = action
   __DEV__ && console.log('action', action)
   try {
@@ -378,7 +378,7 @@ export function * validateTeamEmail (API, action) {
  *
  */
 
-export function * getTeamlist (API, action) {
+export const getTeamlist = function * (API, action) {
   const { filter } = action
   __DEV__ && console.log(' filter: ', filter)
 
@@ -416,7 +416,7 @@ export function * getTeamlist (API, action) {
  *
  */
 
-export function * uploadTeamPhoto (API, action) {
+export const uploadTeamPhoto = function * (API, action) {
   const { photo } = action
   let data = new FormData()
  // data.append('photo', photo)
@@ -455,7 +455,7 @@ export function * uploadTeamPhoto (API, action) {
  *
  */
 
-export function * requestPassword (API, action) {
+export const requestPassword = function * (API, action) {
   const { eMail, callback } = action
   __DEV__ && console.log('action', action)
   try {

@@ -13,7 +13,7 @@ import validator from 'validator'
 import { hasErrorV1 } from '../Transforms/responseHelper';
 import { toUserModel } from '../Transforms/RegistrationHelper';
 
-export function * editUserProfile (API, action) {
+export const editUserProfile = function * (API, action) {
   const { params: { data }} = action
   const user = yield select(getUser)
   try {
@@ -56,7 +56,7 @@ export function * editUserProfile (API, action) {
   yield call(logStore)
 }
 
-export function * uploadUserPhoto (API, action) {
+export const uploadUserPhoto = function * (API, action) {
   const { photo } = action
   let data = new FormData()
  // data.append('photo', photo)
@@ -98,7 +98,7 @@ export function * uploadUserPhoto (API, action) {
  *
  */
 
-export function * validateEmailProfile (API, { value }) {
+export const validateEmailProfile = function * (API, { value }) {
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.verifying)
@@ -139,7 +139,7 @@ export function * validateEmailProfile (API, { value }) {
  *
  */
 
-export function * validateUserNameProfile (API, { value }) {
+export const validateUserNameProfile = function * (API, { value }) {
  // __DEV__ && console.log('action', action)
   try {
     // show loader
@@ -183,7 +183,7 @@ export function * validateUserNameProfile (API, { value }) {
  *
  */
 
-export function * validatePostalCodeProfile (API,  { value } ) {
+export const validatePostalCodeProfile = function * (API,  { value } ) {
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.verifying + ' ' + language.postalCode)
@@ -222,7 +222,7 @@ export function * validatePostalCodeProfile (API,  { value } ) {
  *
  */
 
-export function * validateCityProfile (API, { value }) {
+export const validateCityProfile = function * (API, { value }) {
   const user = yield select(getUserState)
 
   __DEV__ && console.log('user', user)
@@ -263,7 +263,7 @@ export function * validateCityProfile (API, { value }) {
  *
  */
 
-export function * validatePhoneNumberProfile (API, { value }) {
+export const validatePhoneNumberProfile = function * (API, { value }) {
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.verifying + ' ' + language.mobileNumber)
