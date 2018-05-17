@@ -96,10 +96,11 @@ const NavigationDrawer = DrawerNavigator(
   drawerData,
   {
     initialRouteName: 'ReportMap',
-    initialRouteName: __DEV__ ? 'MyNotification' : 'ReportMap',
+    initialRouteName: !__DEV__ ? 'ReportMap' : 'ReportMap',
     contentComponent: props => <DrawerContent {...props} itemData={drawerData} />,
     drawerPosition: 'right'
   }
 )
 
 export default NavigationDrawer
+

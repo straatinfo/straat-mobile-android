@@ -23,6 +23,7 @@ import TeamListScreen          from '../Containers/MyTeam/TeamListScreen'
 // import TeamChatScreen       from '../Containers/ChatScreen'
 // import PersonalChatScreen   from '../Containers/PersonalChatScreen'
 import NavigationDrawer        from './NavigationDrawer'
+// import ReportMap2               from './../Containers/ReportMapScreen'
 
 
 /**
@@ -35,7 +36,7 @@ import NavigationDrawer        from './NavigationDrawer'
 const defaultRoute = {
   headerMode: 'none',
   navigationOptions: { headerStyle: styles.header },
-  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'NavigationDrawer'
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'TestOnly'
 }
 
 // Manifest of possible screens
@@ -59,10 +60,13 @@ const PrimaryNav = StackNavigator(
     NavigationDrawer:    { screen: NavigationDrawer },
 
     TestOnly:            { screen: TestOnly },
+    // ReportMap2:          { screen: ReportMap2 },
     
     // ReportChat:          { screen: ReportChatScreen },  // not need now
     // TeamChat:            { screen: TeamChatScreen },    // not need now
     // PersonalChat:        { screen: PersonalChatScreen },// not need now
+    
+    // TeamList:            { screen: TeamListScreen },
   },
   defaultRoute
 )
