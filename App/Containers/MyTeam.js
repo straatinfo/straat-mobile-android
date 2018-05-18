@@ -44,6 +44,9 @@ class MyTeam extends Component {
    *                                                                    create team ( not sure)
    */
 
+   //
+   //  REMOVE NOTE : 
+   //
   render () {
     const { userTeams, navigation } = this.props
     // console.log('userTeams props', this.props)

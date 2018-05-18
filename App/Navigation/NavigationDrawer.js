@@ -17,6 +17,7 @@ import Styles from './../Containers/Styles/DrawerContentStyles.js'
 import Lang from './../Lib/CutomLanguage'
 import TeamStack from '../Navigation/AppNavigation'
 import MyReportScreen from './../Containers/MyReport/MyReportScreen'
+import TeamListScreen          from '../Containers/MyTeam/TeamListScreen'
 import { Icon as IconBase } from 'native-base'
 
 /** dev only */
@@ -53,12 +54,20 @@ export const drawerData = {
     iconName: 'notifications',
     iconImage: <Icon name='notifications' {...Styles.icon} />
   },
-  MyTeam: {
-    screen: MyTeam,
+  // MyTeam: {
+  //   screen: MyTeam,
+  //   drawerLabel: Lang.txt_E03,
+  //   iconName: 'group',
+  //   iconImage: <Icon name='group' {...Styles.icon} />
+  // },
+
+  TeamList: {
+    screen: TeamListScreen,
     drawerLabel: Lang.txt_E03,
     iconName: 'group',
     iconImage: <Icon name='group' {...Styles.icon} />
   },
+  
   MyProfile: {
     screen: MyProfile,
     drawerLabel: Lang.txt_E04,
