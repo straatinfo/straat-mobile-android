@@ -21,7 +21,6 @@ import { FeedbackTypes } from '../Redux/FeedbackRedux'
 import { ProfileTypes } from '../Redux/ProfileRedux'
 import { AddNewTeamTypes } from '../Redux/AddNewTeamRedux'
 
-
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
@@ -38,7 +37,7 @@ import { notifactionRequestTypeA, notifactionRequestTypeB, notifactionRequestTyp
 import { sendFeedback } from './FeedbackSaga'
 import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam } from './TeamSagas'
 import { editUserProfile, uploadUserPhoto, validateUserNameProfile, validateEmailProfile, validatePhoneNumberProfile, validateCityProfile, validatePostalCodeProfile } from './ProfileSaga'
-import { TeamListTypes } from '../Redux/TeamListRedux';
+import { TeamListTypes } from '../Redux/TeamListRedux'
 /* ------------- API ------------- */
 
 // The API we use is only used from Sagas, so we create it here and pass along
@@ -89,7 +88,6 @@ export default function * root () {
 
     /**         TEAM           */
 
-     
     takeLatest(TeamListTypes.TEAMLIST_GET_LIST, getUserTeamList, api),
     takeLatest(TeamTypes.GET_TEAM_DETAILS, getTeamDetails, api),
     takeLatest(TeamTypes.GET_TEAM_REQUEST, getTeamRequest, api),
@@ -99,10 +97,6 @@ export default function * root () {
 
     takeLatest(AddNewTeamTypes.UPLOAD_ADD_NEW_TEAM, addNewTeamUpload, api),
     takeLatest(TeamTypes.SUBMITEDIT_TEAM, submiteditTeam, api),
-
-    
-
-    
 
     /**          CONVERSATIONS          */
 //    takeLatest(ConversationTypes.FETCH_CONVERSATION_REQUEST, fetchConversation, api),
@@ -130,14 +124,11 @@ export default function * root () {
     takeLatest(ProfileTypes.SETEMAIL_PROFILE, validateEmailProfile, api),
     takeLatest(ProfileTypes.SETPHONENUMBER_PROFILE, validatePhoneNumberProfile, api),
     takeLatest(ProfileTypes.SETPOSTALCODE_PROFILE, validatePostalCodeProfile, api),
-    
+
     takeLatest(ProfileTypes.SETUSERNAME_PROFILE, validateUserNameProfile, api),
-    
 
     takeLatest(ProfileTypes.UPLOAD_EDITPROFILE, uploadUserPhoto, api)
-    
 
-    
     // some sagas receive extra parameters in addition to an action
     // takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ])
