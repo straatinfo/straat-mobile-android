@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     shadowColor: '#bdcadc',
     shadowOffset: {
-        width: 0,
-        height: 1
-      },
+      width: 0,
+      height: 1
+    },
     shadowRadius: 5,
     shadowOpacity: 1.0
   },
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
   triangle: {
     width: 0,
     height: 50,
-    backgroundColor: 'transparent',
     borderStyle: 'solid',
     borderLeftWidth: 50,
     borderRightWidth: 50,
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     transform: [
             {rotate: '180deg'}
-      ]
+    ]
   }
 })
 

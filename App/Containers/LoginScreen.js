@@ -1,17 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation } from 'react-native'
-import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title } from 'native-base'
+import { View, Keyboard, LayoutAnimation } from 'react-native'
 import { connect } from 'react-redux'
-import Styles from './Styles/LoginScreenStyles'
-import { Images, Metrics } from '../Themes'
+import { Metrics } from '../Themes'
 import { ScreenActions } from '../Redux/ScreenRedux'
-import LoginActions from '../Redux/LoginRedux'
-import AlertMessage from './../Components/AlertMessage'
-import Lang from './../Lib/CutomLanguage'
-import Spacer from './../Components/Spacer'
 import OldLoginForm from './../Containers/Login/login'
-import Footer from '../Components/Footer';
+import LoginActions from '../Redux/LoginRedux'
 
 class LoginScreen extends React.Component {
   static propTypes = {
@@ -122,88 +116,12 @@ class LoginScreen extends React.Component {
   }
 
   render () {
-    const { username, password, isKeyboardVisible } = this.state
-    const { fetching, error, user } = this.props
-    const editable = !fetching
-    const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
-    const titleStyle = {
-      fontSize: 20
-    }
+    const { isKeyboardVisible } = this.state
     return (
       <View style={{height: this.state.visibleHeight}} >
         <OldLoginForm {...this.props} isKeyboardVisible={isKeyboardVisible} onSubmit={this._handlePressLogin.bind(this)} onNewUser={this._handlePressNewUser.bind(this)} />
       </View>
     )
-
-    /**
-    return (<View>
-      <ScrollView
-        contentContainerStyle={{ justifyContent: 'center' }}
-        style={[Styles.container, { height: this.state.visibleHeight }]}
-        keyboardShouldPersistTaps='always'>
-        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
-        <View style={Styles.form}>
-          <Spacer />
-          <Spacer />
-          <Form>
-            <Item style={{borderBottomWidth: 0}}>
-              <Label style={titleStyle}>{Lang.txt_C05}</Label>
-              <TouchableOpacity onPress={this._handlePressNewUser}>
-                <Label style={titleStyle}>
-                  {Lang.txt_C01d }
-                </Label>
-              </TouchableOpacity>
-            </Item>
-            <Item stackedLabel>
-              <Label style={titleStyle}>{Lang.txt_C01b}</Label>
-              <Input
-                ref={'username'}
-                placeholderTextColor='#9da1a5'
-                value={username}
-                editable={editable}
-                keyboardType='default'
-                returnKeyType='next'
-                autoCapitalize='none'
-                autoCorrect={false}
-                onChangeText={this._handleChangeUsername}
-                underlineColorAndroid='transparent'
-                placeholder={Lang.txt_C02}
-                onSubmitEditing={() => this.refs.password._root.focus()} />
-            </Item>
-            <Item stackedLabel>
-              <Label />
-              <Input
-                ref={'password'}
-                placeholderTextColor='#9da1a5'
-                value={password}
-                editable={editable}
-                keyboardType='default'
-                returnKeyType='go'
-                autoCapitalize='none'
-                autoCorrect={false}
-                placeholder={Lang.txt_C03}
-                secureTextEntry
-                onChangeText={this._handleChangePassword}
-                underlineColorAndroid='transparent'
-                onSubmitEditing={this._handlePressLogin} />
-            </Item>
-          </Form>
-          <View style={[Styles.loginRow]}>
-            <Button style={{ flex: 1, justifyContent: 'center' }} full block onPress={this._handlePressLogin} disabled={this.state.loginButtonDisabled}>
-              <NBText>{Lang.txt_C01}</NBText>
-            </Button>
-          </View>
-          <TouchableOpacity style={[Styles.loginRow]}>
-            <Label style={{ }} >
-              {Lang.txt_C04}
-            </Label>
-          </TouchableOpacity>
-          <AlertMessage {...this.alertDefault} title={this.props.error} />
-
-        </View>
-      </ScrollView></View>
-    )
-    */
   }
 }
 
