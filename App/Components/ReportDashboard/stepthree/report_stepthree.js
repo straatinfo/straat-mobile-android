@@ -27,6 +27,7 @@ import ReportsActions from './../../../Redux/ReportsRedux'
 import { showAlertBox, showAlertBoxWithTitle } from '../../../Redux/commonRedux'
 import HorizontalSelection from '../Components/HorizontalSelection'
 import { ReportTypes } from '../../../Services/Constant'
+import { sortCategories } from '../../../Transforms/ReportHelper';
 
 /**
  *  maybe i should rework this module later, this module works by pass dev
@@ -60,10 +61,11 @@ class ReportStepThree extends Component {
     __DEV__ && console.log('selectedMainCategoryId', selectedMainCategoryId)
     __DEV__ && console.log('selected itemIndex', itemIndex)
     const { reportMergeState, reportState: { reportMainCategoryList, reportSubCategoryList } } = this.props
+    const subCatList = reportMainCategoryList.find((item) => item._id === selectedMainCategoryId).subCategories.filter((item) => item)
     reportMergeState({
       reportSelectMainCategoryID: selectedMainCategoryId,
       reportSelectSubCategoryID: 0,    // reset selection for sub category
-      reportSubCategoryList: reportMainCategoryList.find((item) => item._id === selectedMainCategoryId).subCategories.filter((item) => item)})
+      reportSubCategoryList: sortCategories(subCatList)})
       // this.props.onMainCategoryUpdate(catObj)
     this.enableButton()
     this.validate()

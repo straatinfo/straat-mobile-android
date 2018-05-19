@@ -5,7 +5,7 @@ import { popUpAlertV2 } from '../Lib/Helper/alertHelper'
 import language from '../Lib/CutomLanguage'
 import { ReportStatus, SocketTypes } from '../Services/Constant'
 import { getUser, getTeamList } from '../Redux/UserRedux'
-import { filterReportsByMapView } from '../Transforms/ReportHelper'
+import { filterReportsByMapView, sortCategories } from '../Transforms/ReportHelper'
 
 import ReportsActions, { processReport, getReportParams, stripUploadedPhoto, getReportMapMarkerList } from './../Redux/ReportsRedux'
 import MyReportActions, { getMyReportList } from './../Redux/MyReportRedux'
@@ -161,12 +161,13 @@ export const getCategories = function * (API, action) {
   __DEV__ && console.log('saga getCategories reportsParams', action)
   try {
     // fetch from backend _hostIsSpecific
-    const result = yield call( _hostIsSpecific ? API.getCategories : API.getCategoriesGeneral, { _reportType, _host, token, language: lang })
+    const result = yield call(_hostIsSpecific ? API.getCategories : API.getCategoriesGeneral, { _reportType, _host, token, language: lang })
     __DEV__ && console.log('saga getCategories', result)
 
     // status success
     if (result.ok && result.data.status === 1) {
-      yield put(ReportsActions.reportMergeState({reportCategoryList: result.data.data}))
+     // must add sorting here base on may 19 , 2018
+      yield put(ReportsActions.reportMergeState({reportCategoryList: sortCategories(result.data.data)}))
     } else {
       throw new Error(language.error)
     }
