@@ -1,55 +1,19 @@
 import React from 'react'
+import { BackHandler } from 'react-native'
+import { Text, Container, Header, Title, Button, Left, Right, Icon, Tabs, Tab, TabHeading, Badge } from 'native-base'
 import { connect } from 'react-redux'
-import { Image, BackHandler, Dimensions, Keyboard, LayoutAnimation } from 'react-native'
-import {
-  Card,
-  CardItem,
-  Text,
-  View,
-  Thumbnail,
-  Container,
-  Header,
-  Content,
-  Title,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Tabs,
-  Tab,
-  TabHeading,
-  Spinner,
-  Badge
-} from 'native-base'
-import MapView from 'react-native-maps'
-import ReportMapContainer from './../../Containers/ReportMap/ReportMapContainer'
-import UnderMigration from './../../Components/UnderMigration'
-import {drawerData} from './../../Navigation/NavigationDrawer'
-import ReportsActions from './../../Redux/ReportsRedux'
-
-import NotificationActions from './../../Redux/NotificationRedux'
-
-import UsersActions from './../../Redux/UserRedux'
-// import Images from './../Themes/Images'
-import { Images, Metrics } from './../../Themes'
-/**  actionsyles */
-import { formatDate } from './../../Transforms/DateTransformer'
-import { onloginPopUp, getApprovedTeamList } from './../../Transforms/Filters'
-import CenterView from '../../Components/CenterView'
-import language from '../../Lib/CutomLanguage'
-import style from './../Styles/MyReportStyle'
-import GlobalStyle from '../../Components/Styles/GlobalStyle'
-import CircleLoader from '../../Components/CircleLoader'
-
-// import ChatScreen from './../ChatScreen'
 import Conversation from '../Conversation'
+import CenterView from '../../Components/CenterView'
+import NotificationActions from './../../Redux/NotificationRedux'
+import language from '../../Lib/CutomLanguage'
+import GlobalStyle from '../../Components/Styles/GlobalStyle'
+import style from './../Styles/MyReportStyle'
+import ReportsActions from './../../Redux/ReportsRedux'
 import ReportListTypeA from '../../Components/MyReport/ReportListTypeA'
 import ReportListTypeB from '../../Components/MyReport/ReportListTypeB'
 import ReportListTypeC from '../../Components/MyReport/ReportListTypeC'
-import TestWebSocket from '../../Components/TestWebSocket';
-
-// import Icon from 'react-native-vector-icons/Ionicons'
+import UnderMigration from './../../Components/UnderMigration'
+import UsersActions from './../../Redux/UserRedux'
 
 class ReportMapScreen extends React.Component {
   constructor (props) {
@@ -60,7 +24,7 @@ class ReportMapScreen extends React.Component {
   }
 
   componentDidMount () {
-    console.log(this.props)
+    __DEV__ && console.log(this.props)
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
@@ -103,10 +67,6 @@ class ReportMapScreen extends React.Component {
           </Right>
         </Header>
         <Tabs locked={false}>
-          {/* { __DEV__ && <Tab heading={this._getSubHeading('con', 0)}>
-            <TestWebSocket />
-          </Tab>} */}
-
           <Tab heading={this._getSubHeading(language.publicSpace, typeCount_A)}>
             <ReportListTypeA navigation={navigation} />
           </Tab>
@@ -117,7 +77,7 @@ class ReportMapScreen extends React.Component {
             <ReportListTypeC navigation={navigation} />
           </Tab>}
           <Tab heading={this._getSubHeading(language.chat, chatCount)}>
-             {/* <ChatScreen navigation={navigation} noHeader />  */}
+            {/* <ChatScreen navigation={navigation} noHeader />  */}
             <Conversation navigation={navigation} noHeader />
           </Tab>
         </Tabs>
