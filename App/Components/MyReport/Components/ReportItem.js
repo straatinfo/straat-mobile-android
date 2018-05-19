@@ -3,7 +3,7 @@ import { BackHandler, Image, View, StyleSheet, TouchableOpacity } from 'react-na
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, SwipeRow } from 'native-base'
 import FastImage from 'react-native-fast-image'
 
-import { GetDate, GetTime } from './../../../Lib/Helper/TimeUtils'
+import { GetDate, GetTime, GetDateEutype} from './../../../Lib/Helper/TimeUtils'
 import Lang from './../../../Lib/CutomLanguage'
 import { Fonts, Images } from './../../../Themes'
 // import style from './style'
@@ -13,7 +13,7 @@ import ImageTumb from './ImageTumb'
 import { cropWH, crop } from '../../../Transforms/Cloudinary'
 import Urgency from './Urgency'
 import { getStyleStatusInPin } from '../../../Transforms/ReportHelper'
-
+ 
 const tempUrl = 'https://res.cloudinary.com/hvina6sjo/image/upload/v1519079967/sample/20180216_013543.jpg_Mon%20Feb%2019%202018%2022:39:25%20GMT%2B0000%20%28UTC%29.jpg'
 
 const shadow = {
@@ -99,7 +99,7 @@ class ReportItem extends Component {
         { item.hasOwnProperty('_mainCategory') === true && item._mainCategory !== null && item._mainCategory.hasOwnProperty('name') === true && (<Text style={styles.title} >{ item._mainCategory.name }</Text>) || (<Text style={styles.title} >  </Text>)}
         {/* <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.location}>{item.location}</Text> */}
-        <Text style={styles.date}>{ GetDate(item.createdAt) } / { GetTime(item.createdAt) } </Text>
+        <Text style={styles.date}>{ GetDateEutype(item.createdAt) } / { GetTime(item.createdAt) } </Text>
         <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={() => this._navigation()} ><Text style={[styles.view, {color: getStyleStatusInPin(item.status)}]}>{Lang.checkOutTheReport}</Text></TouchableOpacity>
       </View>
       { item.hasOwnProperty('attachments') === true && item.attachments.length > 0 && crop(100, item.attachments[0].secure_url) && <FastImage
