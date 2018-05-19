@@ -1,48 +1,15 @@
 import React from 'react'
+import { BackHandler } from 'react-native'
+import { Container, Header, Title, Button, Left, Right, Icon } from 'native-base'
 import { connect } from 'react-redux'
-import { Image, BackHandler, Dimensions, Keyboard, LayoutAnimation } from 'react-native'
-import {
-  Card,
-  CardItem,
-  Text,
-  View,
-  Thumbnail,
-  Container,
-  Header,
-  Content,
-  Title,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Tabs,
-  Tab,
-  TabHeading,
-  Spinner
-} from 'native-base'
-import MapView from 'react-native-maps'
-import ReportMapContainer from './../../Containers/ReportMap/ReportMapContainer'
-import UnderMigration from './../../Components/UnderMigration'
-import {drawerData} from './../../Navigation/NavigationDrawer'
-import ReportsActions from './../../Redux/ReportsRedux'
-
-import NotificationActions from './../../Redux/NotificationRedux'
-
-import UsersActions from './../../Redux/UserRedux'
-// import Images from './../Themes/Images'
-import { Images, Metrics } from './../../Themes'
-/**  actionsyles */
-import { formatDate } from './../../Transforms/DateTransformer'
-import { onloginPopUp, getApprovedTeamList } from './../../Transforms/Filters'
+import { drawerData } from './../../Navigation/NavigationDrawer'
 import CenterView from '../../Components/CenterView'
-import language from '../../Lib/CutomLanguage'
-import style from './../Styles/MyReportStyle'
-import GlobalStyle from '../../Components/Styles/GlobalStyle'
-import CircleLoader from '../../Components/CircleLoader'
-
 import MyReportList from '../../Components/MyReport/MyReportList'
-import Footer from '../../Components/Footer';
+import NotificationActions from './../../Redux/NotificationRedux'
+import GlobalStyle from '../../Components/Styles/GlobalStyle'
+import ReportsActions from './../../Redux/ReportsRedux'
+import UnderMigration from './../../Components/UnderMigration'
+import UsersActions from './../../Redux/UserRedux'
 
 // import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -76,7 +43,6 @@ class ReportMapScreen extends React.Component {
     const { navigation, design } = this.props
     console.log(this.props.navigation.state.routeName)
     return (
-      
       <Container>
         <Header style={[GlobalStyle.header, {backgroundColor: design.header}]} hasTabs>
           <Left style={{flex: 1}}>
