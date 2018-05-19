@@ -217,8 +217,21 @@ export const submitReport = function * (API, action) {
       if (reportParams.type !== 'C') {
         yield put(ReportsActions.reportMergeState({reportMapMarkerList: [...pointList, data]}))
       }
+
+      // send socket notification
       const socketConnection = CONNECTION.getConnection()
-      socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: data})
+      if (reportParams.type !== 'C') {
+        socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: data})
+      } else if (reportParams.type === 'C') {
+        data.success.map(report => {
+          socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: report})
+        })
+      } else {
+        console.log('no noti to')
+      }
+
+
+
     } else if (result.ok && result.data.status === 0) {
       throw new Error(result.data.data.error) // success sending but error on something
     } else {

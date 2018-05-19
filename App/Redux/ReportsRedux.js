@@ -175,9 +175,10 @@ export const getReportParams = (state) => {
     _reporter: user._id,
     _host: user._host,
     _reportType: reports.reportType._id,
+    reportTypeCode: reports.reportType.code,
     title: reports.reportType.name,
     description: reports.reportDescription,
-    reportUploadedPhotos: reports.reportListImages,
+    reportUploadedPhotos: reports.reportListImages
   }
 
   let requireInType = {}
@@ -216,7 +217,7 @@ export const getReportParams = (state) => {
       requireInType.vehicleInvolvedDescription = reports.reportVehicleInvoledDesc
     }
   }
-  // type B
+  // type C
   if (reports.reportType.code === ReportTypes.COMMUNICATION.code) {
     // validation
     // validation
