@@ -163,7 +163,6 @@ export const validatePostalCodeProfile = function * (API,  { value } ) {
     yield  put(ProfileActions.editfieldProfile({inpostalCode: false}))
 
   } catch (e) {
-    __DEV__ && console.log(e)
     yield  put(ProfileActions.editfieldProfile({inpostalCode: true}))
     showAlertBox(e.message)
   }
@@ -184,7 +183,7 @@ export const validateCityProfile = function * (API, { value }) {
 
   try {
     yield call(loaderHandler.showLoader, language.verifying + ' ' + language.city)
-   const validationResult = yield call(API.postValidateLocate, { city: value, coordinate: user.position, isCoor: false })
+    const validationResult = yield call(API.postValidateLocate, { city: value, coordinate: user.position, isCoor: false })
     if (validationResult.ok && validationResult.data.status === 1) {
       yield put(ProfileActions.editfieldProfile({incity: false})) 
     } else if (validationResult.data && validationResult.data.status === 0) {
@@ -193,10 +192,10 @@ export const validateCityProfile = function * (API, { value }) {
       throw new Error(language.request + ' ' + language.failed)
     }
   } catch (e) {
-    yield put(ProfileActions.editfieldProfile({incity: true}))
     showAlertBox(e.message)
+    yield put(ProfileActions.editfieldProfile({incity: true}))
   }
-  yield call(loaderHandler.hideLoader)
+  call(loaderHandler.hideLoader)
 }
 
 /**
@@ -217,7 +216,6 @@ export const validatePhoneNumberProfile = function * (API, { value }) {
 
     yield put(ProfileActions.editfieldProfile({inphonenumber: false})) 
   } catch (e) {
-    __DEV__ && console.log(e)
     yield  put(ProfileActions.editfieldProfile({inphonenumber: true})) 
     showAlertBox(e.message)
   }
