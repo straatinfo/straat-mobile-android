@@ -10,7 +10,6 @@ import { Images } from './../../Themes'
 import { getTeamLogo } from '../../Transforms/TeamHelper'
 import { usernameSeparator } from '../../Services/Constant'
 import ImagePicker from 'react-native-image-picker'
-import Lang from './../../Lib/CutomLanguage'
 import LinearGradient from 'react-native-linear-gradient'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import ProfileActions from '../../Redux/ProfileRedux'
@@ -45,6 +44,7 @@ class ProfileForm extends ValidationComponent {
   }
 
   liveValidation (key, value) {
+    const { Lang } = this.props
     /**
      * @param key(String: enum(userEmail, userName, postaCode)), value
      */
@@ -84,7 +84,6 @@ class ProfileForm extends ValidationComponent {
       this.props.setpostalcodeProfile(value)
     }
 
-
     if (key === 'phoneNumber') {
       __DEV__ && console.log('liveValidate teamEmail', value)
       const {currentUser: {phoneNumber}} = this.props
@@ -117,6 +116,7 @@ class ProfileForm extends ValidationComponent {
   }
 
   validatePassword (password) {
+    const { Lang } = this.props
     if (!checkPassword(password)) {
       errorAlert(Lang.txt_D48)
       this.props.parentChangeState({isValidPassword: false})
@@ -158,7 +158,7 @@ class ProfileForm extends ValidationComponent {
     return !(inemail || inusername || incity || inphonenumber || inpostalCode)
   }
   render () {
-    const { navigation, editfieldProfile, currentUser, editUser } = this.props
+    const { navigation, editfieldProfile, currentUser, editUser, Lang } = this.props
     //   <CenterView><TouchableOpacity onPress={() => { this._onPickImagePress() }} >
     //   {
     //   !teamLogo ? <Icon style={picStyle} name='photo' size={200} color={'#b0bfc1'} /> : <Image source={{uri: teamLogo}} style={picStyle} resizeMode='contain' />
@@ -314,7 +314,8 @@ const mapStateToProps = state => {
     email: state.user.email,
     editUser: state.userProfile.editUser,
 
-    currentUser: state.userProfile.currentUser
+    currentUser: state.userProfile.currentUser,
+    Lang: state.language.Languages
   }
 }
 
