@@ -74,3 +74,13 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.INITIALIZE_LANGUAGE]: initializeLanguage
 
 })
+
+/* ------------- Selectors ---------------- */
+
+/**
+ * @description  get language state from redux
+ * @param {*} state
+ */
+export const getLanguageState = ({language: { Languages }}) => {
+  return Languages
+}
