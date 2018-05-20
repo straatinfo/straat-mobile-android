@@ -22,7 +22,7 @@ class AddTeam extends Component {
   }
 
   _launchImageLibrary = () => {
-    const { addNewTeamMergeState, uploadAddNewTeam } = this.props
+    const { addNewTeamMergeState } = this.props
     try {
       const options = {
         quality: 1.0,
@@ -32,14 +32,14 @@ class AddTeam extends Component {
       }
 
       ImagePicker.launchImageLibrary(options, (response) => {
-        console.log('Response ', response)
+        __DEV__ && console.log('Response ', response)
 
         if (response.didCancel) {
-          console.log('User cancelled photo picker')
+          __DEV__ && console.log('User cancelled photo picker')
         } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error)
+          __DEV__ && console.log('ImagePicker Error: ', response.error)
         } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton)
+          __DEV__ && console.log('User tapped custom button: ', response.customButton)
         } else {
           this.setState({ teamPhoto: response.uri, teamLogo: response })
           addNewTeamMergeState({teamPhoto: response.uri})
@@ -48,13 +48,13 @@ class AddTeam extends Component {
         }
       })
     } catch (error) {
-      console.log(error)
+      __DEV__ && console.log(error)
     }
   }
 
   submit () {
     const { teamLogo } = this.state
-    const { addNewTeam, teamName, teamEmail, teamPhoto, navigation } = this.props
+    const { teamName, teamEmail, navigation } = this.props
     this.props.addNewTeam({ teamLogo, teamName, teamEmail, callBack: () => { navigation.goBack() } })
   }
 
@@ -81,7 +81,7 @@ class AddTeam extends Component {
           <View style={{ flex: 1, marginTop: 25, marginLeft: 15 }}>
             <Text style={{ fontSize: 25 }}>{Lang.txt_F10}</Text>
           </View>
-          <View style={{flex: 1, paddingLeft: 16, paddingRight: 16 }}>
+          <View style={{ flex: 1, paddingLeft: 16, paddingRight: 16 }}>
             <Form style={{ marginTop: 16, marginBottom: 16 }}>
               <View>
                 <View>
@@ -119,7 +119,7 @@ class AddTeam extends Component {
               <View style={Styles.spacing} />
 
               <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 15, marginBottom: 15}}>
-                {teamPhoto ? <Image source={{uri: this.state.teamPhoto }} style={Styles.image} /> : null}
+                {teamPhoto ? <Image source={{ uri: this.state.teamPhoto }} style={Styles.image} /> : null}
               </View>
 
               <View style={Styles.spacing} />

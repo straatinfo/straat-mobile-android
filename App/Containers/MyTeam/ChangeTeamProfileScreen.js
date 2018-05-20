@@ -1,18 +1,14 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Image } from 'react-native'
-import { Container, Form, Content, Button, Item, Input, Icon, Text, Header, Body, Title, Left, Right } from 'native-base'
-
-import Lang from '../../Lib/CutomLanguage'
-import { Images } from '../../Themes'
-import Styles from './Styles'
-import LinearGradient from 'react-native-linear-gradient'
-import AppData from '../../Lib/Common/AppData'
-import Api from '../../Lib/Common/Api'
+import { Container, Content, Item, Input, Text } from 'native-base'
 import { connect } from 'react-redux'
-import TeamActions from '../../Redux/TeamRedux'
-import HeaderInDrawer from '../../Components/HeaderInDrawer'
-import { getTeamLogo } from '../../Transforms/TeamHelper'
 import { crop } from '../../Transforms/Cloudinary'
+import { getTeamLogo } from '../../Transforms/TeamHelper'
+import Lang from '../../Lib/CutomLanguage'
+import LinearGradient from 'react-native-linear-gradient'
+import HeaderInDrawer from '../../Components/HeaderInDrawer'
+import Styles from './Styles'
+import TeamActions from '../../Redux/TeamRedux'
 
 class ChangeTeamProfile extends Component {
   constructor (props) {
@@ -25,8 +21,8 @@ class ChangeTeamProfile extends Component {
   }
 
   componentDidMount () {
-    const { user, team: {teamName, teamEmail}, editfieldTeam, _profilePic } = this.props
-    console.log('Edit Team props ', this.props)
+    const { team: {teamName, teamEmail}, editfieldTeam, _profilePic } = this.props
+    __DEV__ && console.log('Edit Team props ', this.props)
     this.setState({
       teamName: teamName,
       teamEmail: teamEmail,
@@ -44,30 +40,15 @@ class ChangeTeamProfile extends Component {
       teamName: teamName,
       teamLogo: teamLogo
     }
-    console.log('data', data)
+    __DEV__ && console.log('data', data)
     this.props.navigation.navigate('ChangeTeamLogo', data)
   }
 
   render () {
-    const { details, team, editfieldTeam, navigation } = this.props
+    const { team, editfieldTeam, navigation } = this.props
     const logo = getTeamLogo(team)
     return (
       <Container>
-        {/* <Header>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.navigate('MyTeam')}>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body style={{ flex: 1 }}>
-            <Title >{Lang.txt_E03}</Title>
-          </Body>
-          <Right>
-            <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-              <Icon name='ios-menu' />
-            </Button>
-          </Right>
-        </Header> */}
         <HeaderInDrawer navigation={navigation} title={Lang.txt_E03} nhBack />
         <Content>
           <View style={{ paddingRight: 16, paddingLeft: 16 }}>
@@ -96,8 +77,8 @@ class ChangeTeamProfile extends Component {
                   style={Styles.itemInput}>
                   <Input
                     placeholder={team.teamEmail}
-                    style={{ color: '#3e3f42'}}
-                    onChangeText={text => this.setState({ teamEmail: text})}
+                    style={{ color: '#3e3f42' }}
+                    onChangeText={text => this.setState({ teamEmail: text })}
                     onEndEditing={(e) => { editfieldTeam({eteamEmail: e.nativeEvent.text}) }}
                     value={this.state.teamEmail} />
                 </Item>
