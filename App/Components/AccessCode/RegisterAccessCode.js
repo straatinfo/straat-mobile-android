@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler } from 'react-native'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container,
    Card, CardItem, List, Switch, Body, ListItem, Right, Radio, Left, Content, Segment, Header, Tabs, Tab, TabHeading, Icon, Center} from 'native-base'
-
+import { connect } from 'react-redux'
 import ValidationComponent from 'react-native-form-validator'
 import validator from 'validator'
 
-import Lang from './../../Lib/CutomLanguage'
 import {Fonts, Colors} from './../../Themes'
 import style from './style'
 import CenterView from './../../Components/CenterView'
@@ -29,6 +28,7 @@ class RegisterAccessCode extends ValidationComponent {
   }
 
   _onPressSubmit = () => {
+    const { Lang } = this.props
     const errorAlert = (errorMessage) => {
       AlertBox.alert(
         Lang.error,
@@ -52,7 +52,7 @@ class RegisterAccessCode extends ValidationComponent {
       errorAlert(this.getErrorMessages())
       return false
     }
-   
+
      */
     // validate first Name
     if (validator.isEmpty(this.state.fname)) {
@@ -116,6 +116,7 @@ class RegisterAccessCode extends ValidationComponent {
   }
 
   render () {
+    const { Lang } = this.props
     const TextStyles = {
       fontSize: Fonts.size.h5
     }
@@ -170,4 +171,16 @@ class RegisterAccessCode extends ValidationComponent {
   }
 }
 
-export default RegisterAccessCode
+const mapStateToProps = state => {
+  return {
+    Lang: state.language.Languages
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterAccessCode)
