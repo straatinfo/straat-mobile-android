@@ -9,13 +9,12 @@ import validator from 'validator'
 import { Images, Metrics } from '../../Themes'
 import { ScreenActions } from '../../Redux/ScreenRedux'
 import UserActions from './../../Redux/UserRedux'
-import Lang from './../../Lib/CutomLanguage'
 import Spacer from './../../Components/Spacer'
 import Footer from '../../Components/Footer'
 import FastImage from 'react-native-fast-image'
 import Triangle from 'react-native-triangle'
 import RowView from '../../Components/RowView'
- 
+
 import Styles from './style'
 
 class ForgotPasswordScreen extends React.Component {
@@ -112,7 +111,7 @@ class ForgotPasswordScreen extends React.Component {
 
   render () {
     const { username, password, isKeyboardVisible, email } = this.state
-    const { fetching, error, user, design } = this.props
+    const { fetching, error, user, design, Lang } = this.props
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     const titleStyle = {
@@ -122,7 +121,7 @@ class ForgotPasswordScreen extends React.Component {
     __DEV__ && console.log('render in loginScreen', user)
     return (
       <Container>
-      <Content style={{height: this.state.visibleHeight}} >
+        <Content style={{height: this.state.visibleHeight}} >
         <View style={Styles.container}>
           <View style={Styles.upperboxContainer}>
             {!isKeyboardVisible && <View style={[Styles.upperbox]}>
@@ -158,7 +157,7 @@ class ForgotPasswordScreen extends React.Component {
 
       </Content>
         <Footer show />
-        </Container>
+      </Container>
     )
   }
 }
@@ -168,15 +167,15 @@ const mapStateToProps = state => {
     fetching: state.login.fetching,
     error: state.login.error,
     user: state.user,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     forgotPasswordRequest: (email, callback) => dispatch(UserActions.forgotPasswordRequest(email, callback)),
-    change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
-    
+    change: (navigation, route) => dispatch(ScreenActions.change(navigation, route))
   }
 }
 
