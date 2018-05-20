@@ -4,7 +4,6 @@ import { Container, Content, Item, Input, Text } from 'native-base'
 import { connect } from 'react-redux'
 import { crop } from '../../Transforms/Cloudinary'
 import { getTeamLogo } from '../../Transforms/TeamHelper'
-import Lang from '../../Lib/CutomLanguage'
 import LinearGradient from 'react-native-linear-gradient'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './Styles'
@@ -45,7 +44,7 @@ class ChangeTeamProfile extends Component {
   }
 
   render () {
-    const { team, editfieldTeam, navigation } = this.props
+    const { team, editfieldTeam, navigation, Lang } = this.props
     const logo = getTeamLogo(team)
     return (
       <Container>
@@ -112,7 +111,8 @@ const mapStateToProps = state => {
     error: state.error,
     teamId: state.team.team._id,
     team: state.team.team,
-    details: state.teamProfile.details
+    details: state.teamProfile.details,
+    Lang: state.language.Languages
   }
 }
 

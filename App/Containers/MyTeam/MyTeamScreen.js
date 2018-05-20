@@ -11,7 +11,6 @@ import { SocketTypes, ConvoTypes, convoOption } from '../../Services/Constant'
 import ButtonIcon from './../../Components/ButtonIcon'
 import CircleLoader from '../../Components/CircleLoader'
 import ConversationActions from '../../Redux/ConversationRedux'
-import Lang from '../../Lib/CutomLanguage'
 import MainButton from '../../Components/MainButton'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import SocketActions from '../../Redux/SocketRedux'
@@ -174,7 +173,7 @@ class MyTeamScreen extends Component {
   }
   _renderGroupButton (isTeamLeader) {
     // show if user is leader member of this team
-    const { navigation: { navigate } } = this.props
+    const { navigation: { navigate }, Lang } = this.props
     if (!isTeamLeader) {
       return (<Spacer />)
     }
@@ -186,7 +185,7 @@ class MyTeamScreen extends Component {
     )
   }
   _renderMemberRequestLst (isTeamLeader) {
-    const { requests } = this.props
+    const { requests, Lang } = this.props
     const teamAcceptRequest = this.teamAcceptRequest.bind(this)
     const teamRejectRequest = this.teamRejectRequest.bind(this)
 
@@ -200,7 +199,7 @@ class MyTeamScreen extends Component {
 
     return (
       <List>
-        <ListItem itemDivider>
+        <ListItem itemDivider>s
           <Text note>{Lang.txt_F03.toUpperCase()}</Text>{/**  REQUEST */}
         </ListItem>
         { requests.map((user) => (
@@ -220,7 +219,7 @@ class MyTeamScreen extends Component {
     )
   }
   _renderTeamMemberList () {
-    const { team: { teamMembers }, userId } = this.props
+    const { team: { teamMembers }, userId, Lang } = this.props
     __DEV__ && console.log('team members', this.props)
     if (!(teamMembers && teamMembers.length > 1)) {
       return null
@@ -259,7 +258,7 @@ class MyTeamScreen extends Component {
 
   render () {
     const { team: { teamLeaders }, userId } = this.props
-    const { team, fetching, navigation } = this.props
+    const { team, fetching, navigation, Lang } = this.props
     if (fetching) {
       return (<CircleLoader color='blue' />)
     }
@@ -305,7 +304,8 @@ const mapStateToProps = state => {
     conversations: state.user.conversations,
     conversationId: state.conversation.conversationId,
     connectionId: state.socket.connectionId,
-    nav: state.nav
+    nav: state.nav,
+    Lang: state.language.Languages
 
   }
 }

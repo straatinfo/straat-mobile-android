@@ -6,7 +6,6 @@ import { crop } from '../../Transforms/Cloudinary'
 import { Images } from '../../Themes'
 import { getTeamLogo } from '../../Transforms/TeamHelper'
 import CircleLoader from './../../Components/CircleLoader'
-import language from '../../Lib/CutomLanguage'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import TeamActions from '../../Redux/TeamRedux'
 import TeamListActions from '../../Redux/TeamListRedux'
@@ -74,7 +73,7 @@ class TeamList extends Component {
   }
 
   render () {
-    const { userTeams, navigation, fetching } = this.props
+    const { userTeams, navigation, fetching, language } = this.props
     if (fetching) {
       return (<CircleLoader color='blue' />)
     }
@@ -93,7 +92,8 @@ class TeamList extends Component {
 const mapStateToProps = state => {
   return {
     fetching: state.teamList.fetching,
-    userTeams: state.teamList.teamList
+    userTeams: state.teamList.teamList,
+    language: state.language.Languages
   }
 }
 

@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { crop } from '../../Transforms/Cloudinary'
 import { getTeamLogo } from '../../Transforms/TeamHelper'
 import ImagePicker from 'react-native-image-picker'
-import Lang from '../../Lib/CutomLanguage'
 import LinearGradient from 'react-native-linear-gradient'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './Styles'
@@ -57,7 +56,7 @@ class ChangeTeamLogo extends Component {
   }
 
   render () {
-    const { team, editTeam, navigation } = this.props
+    const { team, editTeam, navigation, Lang } = this.props
     const logo = getTeamLogo(team)
     const editLogo = editTeam.eteamLogo ? editTeam.eteamLogo.uri || null : null
     return (
@@ -101,7 +100,8 @@ const mapStateToProps = state => {
     error: state.error,
     team: state.team.team,
 
-    editTeam: state.team.editTeam
+    editTeam: state.team.editTeam,
+    Lang: state.language.Languages
   }
 }
 

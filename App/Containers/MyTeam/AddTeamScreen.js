@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity, Image } from 'react-native'
 import { Container, Form, Content, Button, Item, Input, Icon, Text, Header, Left, Body, Right, Title } from 'native-base'
 import ImagePicker from 'react-native-image-picker'
-import Lang from '../../Lib/CutomLanguage'
 import Styles from './Styles'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux'
@@ -59,7 +58,7 @@ class AddTeam extends Component {
   }
 
   render () {
-    const { addNewTeamMergeState, teamName, teamEmail, teamPhoto } = this.props
+    const { addNewTeamMergeState, teamName, teamEmail, teamPhoto, Lang } = this.props
     return (
       <Container>
         <Header>
@@ -145,7 +144,8 @@ const mapStateToProps = state => {
     teamName: state.addNewTeam.teamName,
     teamEmail: state.addNewTeam.teamEmail,
    // _profilePic: state.addNewTeam._profilePic,
-    teamPhoto: state.addNewTeam.teamPhoto
+    teamPhoto: state.addNewTeam.teamPhoto,
+    Lang: state.language.Languages
   }
 }
 

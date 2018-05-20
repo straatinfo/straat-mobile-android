@@ -4,16 +4,15 @@ import { showAlertBox, logStore, AppData } from '../Redux/commonRedux'
 import { changeto } from '../Redux/ScreenRedux'
 import { popUpAlert } from '../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from '../Transforms/Filters'
-import Lang from '../Lib/CutomLanguage'
 import { fail } from 'assert'
 import { getUser } from '../Redux/UserRedux'
-import language from '../Lib/CutomLanguage'
 import { backEndConstEnum } from '../Services/Constant'
 import { hasError } from '../Transforms/responseHelper'
 
 import TeamActions, { getTeamId, putEditTeamState } from '../Redux/TeamRedux'
 import AddNewTeamActions from '../Redux/AddNewTeamRedux'
 import TeamListActions from '../Redux/TeamListRedux'
+import { getLanguageState } from '../Redux/LanguageRedux'
 
 export function * getTeamProfile (API, action) {
   try {
@@ -113,6 +112,7 @@ export function * teamRejectRequest (API, action) {
 }
 
 export function * addNewTeam (API, action) {
+  const Lang = yield select(getLanguageState)
   const { params: { teamLogo, teamName, teamEmail, callBack } } = action
   __DEV__ && console.log('action: ', action)
   const user = yield select(getUser)
@@ -155,6 +155,7 @@ export function * addNewTeam (API, action) {
 }
 
 export function * submiteditTeam (API, action) {
+  const Lang = yield select(getLanguageState)
   const { params: { callBack } } = action
   try {
     console.log('Fetching team data...', action)
@@ -237,6 +238,7 @@ export function * declineUserRequest (API, action) {
  */
 
 export function * addNewTeamUpload (API, action) {
+  const language = yield select(getLanguageState)
   const { photo } = action
   let data = new FormData()
  // data.append('photo', photo)
