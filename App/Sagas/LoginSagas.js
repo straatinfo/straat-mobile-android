@@ -9,11 +9,7 @@ import { changeto } from '../Redux/ScreenRedux'
 import { popUpAlert } from './../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
 import language from '../Lib/CutomLanguage'
-import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper';
-import CONNECTION from '../Services/AppSocket';
-import { SocketTypes } from '../Services/Constant';
-import { getNotification } from '../Redux/NotificationRedux';
-import { socketService } from './NotificationSaga';
+import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper'
 
 /**
  * try log in user
@@ -23,7 +19,7 @@ import { socketService } from './NotificationSaga';
 export const login = function * (API, action) {
   const {username, password, navigation, route, params} = action.userpassnavroute
   try {
-    console.log('HI I AM LOGIN SAGA!!!');
+    console.log('HI I AM LOGIN SAGA!!!')
     // show loader
     yield call(loaderHandler.showLoader, language.txt_C08)
 
