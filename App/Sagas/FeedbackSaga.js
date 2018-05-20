@@ -1,15 +1,14 @@
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import FeedbackActions from '../Redux/FeedbackRedux'
 import { showAlertBox, logStore, AppData } from './../Redux/commonRedux'
-import { put, call } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
 
 import { popUpAlert } from './../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
-import language from '../Lib/CutomLanguage'
-import Api from '../Services/Api';
-
+import { getLanguageState } from './../Redux/LanguageRedux'
 export const sendFeedback = function * (API, action) {
+    const language = yield select(getLanguageState)
     try {
         console.log('Sending feedback...', action);
         console.log('Sending feedback API', API);
@@ -27,7 +26,7 @@ export const sendFeedback = function * (API, action) {
     } catch (error) {
         console.log('Sending feedback failed. ', error);
         yield put(FeedbackActions.sendFeedbackFailure(error));
-        yield call(showAlertBox, e.message);
+        yield call(showAlertBox, error.message);
     }
     // clean screen
     yield call(loaderHandler.hideLoader)

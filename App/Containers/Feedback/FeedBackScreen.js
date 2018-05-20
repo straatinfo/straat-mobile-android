@@ -4,7 +4,6 @@ import { Container, Content, Form, Item, Input } from 'native-base'
 import { connect } from 'react-redux'
 import { Metrics } from '../../Themes'
 import FeedbackActions from '../../Redux/FeedbackRedux'
-import Lang from '../../Lib/CutomLanguage'
 import LinearGradient from 'react-native-linear-gradient'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './FeedbackScreenStyles'
@@ -52,7 +51,7 @@ class FeedBack extends Component {
   }
 
   render () {
-    const { title, navigation, design } = this.props
+    const { title, navigation, design, Lang } = this.props
     const { name, email, problem, submitStatus } = this.state
     return (
       <Container>
@@ -122,13 +121,13 @@ class FeedBack extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('Feedback state: ', state)
   return {
     userId: state.user.user._id,
     isFetching: state.feedback.fetching,
     error: state.feedback.error,
     isSuccess: state.feedback.isSuccess,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 
