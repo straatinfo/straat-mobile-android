@@ -24,7 +24,6 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import Api from './../../Lib/Common/Api'
 import AppData from './../../Lib/Common/AppData'
 import ApiUtil from './../../Lib/Common/ApiUtil'
-import Lang from '././../../Lib/CutomLanguage'
 import { errorAlert } from './../../Lib/Helper/alertHelper'
 
 import RegistrationStepOne from './../../Components/RegistrationCustom/stepone/register_step_one'
@@ -468,7 +467,7 @@ class RegistrationForm extends ValidationComponent {
   }
 
   onUserVolunteer (value) {
-    const { hostId } = this.props
+    const { hostId, Lang } = this.props
     this.setState({is_volunteer: value})
     // according to spec
     // volunteer cennot use forbiden user names
@@ -600,6 +599,7 @@ class RegistrationForm extends ValidationComponent {
   }
 
   liveValidation (key, value) {
+    const { Lang } = this.props
     const { postUserName } = this.state
     /**
      * @param key(String: enum(userEmail, userName, postaCode)), value
@@ -658,7 +658,7 @@ class RegistrationForm extends ValidationComponent {
   }
   showInvalid (display = true) {
     let errorList = []
-    const { isValidatedUserEmail, isValidatedUserName, isValidatedPostalCode, isValidatedCity, isValidatedPhoneNumber } = this.props
+    const { isValidatedUserEmail, isValidatedUserName, isValidatedPostalCode, isValidatedCity, isValidatedPhoneNumber, Lang } = this.props
     const showAlert = (message) => {
       return Lang.invalid + ': ' + message
     }
@@ -719,7 +719,7 @@ class RegistrationForm extends ValidationComponent {
     console.log(this.props)
     const { showCreateTeam } = this.state
     const activeHeaderButton = this.state.status
-    const { isValidatedTeamEmail, isValidatedTeamName, getTeamlist, teamList, setTeamPhoto, design } = this.props
+    const { isValidatedTeamEmail, isValidatedTeamName, getTeamlist, teamList, setTeamPhoto, design, Lang } = this.props
     let headerButtonStyleFirststep = { }
     let headerButtonStyleSecondstep = {}
     let headerButtonStyleThirdstep = {}

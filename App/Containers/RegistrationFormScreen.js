@@ -13,7 +13,6 @@ import UserActions from '../Redux/UserRedux'
 import AlertMessage from './../Components/AlertMessage'
 import BusyIndicator from 'react-native-busy-indicator'
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-import Lang from './../Lib/CutomLanguage'
 import HeaderBigCenterLogo from './../Components/HeaderBigCenterLogo'
 import HeaderTextField from './../Components/HeaderTextField'
 import RegisterUserData from './../Components/RegisterUserData'
@@ -126,7 +125,8 @@ const mapStateToProps = state => {
     isValidatedTeamEmail: state.user.isValidatedTeamEmail,
     teamPhotoUploaded: state.user.teamPhotoUploaded,
     teamList: state.user.teamList,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

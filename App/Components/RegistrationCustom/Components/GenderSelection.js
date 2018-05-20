@@ -5,13 +5,12 @@ import {
   } from 'react-native'
 
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
-import Lang from './../../../Lib/CutomLanguage'
 
 export default (props) => {
-  const { genders, selected, onSelectGender } = props
+  const { genders, selected, onSelectGender, title } = props
   return (
     <View style={{alignItems: 'flex-start', flex: 1, paddingBottom: 10}}>
-      <Text style={{marginBottom: 10}}>{Lang.txt_D29}</Text>
+      <Text style={{marginBottom: 10}}>{title}</Text>
       <RadioForm style={{alignItems: 'flex-start', flex: 1}}
         initial={0}
         formHorizontal={false}
