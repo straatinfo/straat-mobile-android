@@ -2,6 +2,7 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import LoginActions from '../Redux/LoginRedux'
 import UserActions, { setTheme, INITIAL_STATE as USER_INITIAL_STATE } from './../Redux/UserRedux'
 import { showAlertBox, logStore, AppData } from './../Redux/commonRedux'
+import LanguageActions from './../Redux/LanguageRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
 
@@ -63,7 +64,7 @@ export const login = function * (API, action) {
       yield call(AppData.setTheme, design)
       yield call(AppData.setLogin, { username: username, password: password })  // save user login data to local
       yield put(UserActions.mergeState({design: design}))
-
+      yield put(LanguageActions.setLanguage(userWithToken.language))
       __DEV__ && console.log('convertActiveDesignToDesign: ', design)
       // filter if it has login message
       const hasBlocker = yield call(onloginPopUp, {userData: userWithToken})
