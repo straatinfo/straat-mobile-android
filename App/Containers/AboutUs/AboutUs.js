@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { Button, Container, Content } from 'native-base'
+import { connect } from 'react-redux'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './Styles'
 
-export default class AboutUs extends Component {
+class AboutUs extends Component {
   render () {
-    const { title, navigation, Lang } = this.props
+    const { navigation, Lang } = this.props
     return (
       <Container>
         <HeaderInDrawer title={Lang.txt_E06} navigation={navigation} />
@@ -41,7 +42,6 @@ export default class AboutUs extends Component {
   }
 }
 
-
 const mapStateToProps = state => {
   return {
     Lang: state.language.Languages
@@ -55,4 +55,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AboutUs)
-
