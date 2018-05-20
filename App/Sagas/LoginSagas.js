@@ -2,13 +2,13 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import LoginActions from '../Redux/LoginRedux'
 import UserActions, { setTheme, INITIAL_STATE as USER_INITIAL_STATE } from './../Redux/UserRedux'
 import { showAlertBox, logStore, AppData } from './../Redux/commonRedux'
-import LanguageActions from './../Redux/LanguageRedux'
+import LanguageActions, { getLanguageState } from './../Redux/LanguageRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
 
 import { popUpAlert } from './../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
-import language from '../Lib/CutomLanguage'
+
 import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper'
 
 /**
@@ -17,6 +17,7 @@ import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeH
  */
 
 export const login = function * (API, action) {
+  const language = yield select(getLanguageState)
   const {username, password, navigation, route, params} = action.userpassnavroute
   try {
     console.log('HI I AM LOGIN SAGA!!!')

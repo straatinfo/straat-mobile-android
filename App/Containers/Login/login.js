@@ -10,7 +10,7 @@ import {
 import { Images } from './../../Themes'
 import Footer from '../../Components/Footer'
 import FastImage from 'react-native-fast-image'
-import Lang from './../../Lib/CutomLanguage'
+
 import LinearGradient from 'react-native-linear-gradient'
 import RowView from '../../Components/RowView'
 import Spacer from './../../Components/Spacer'
@@ -56,7 +56,7 @@ class Login extends ValidationComponent {
     }
   }
   render () {
-    const { onNewUser, isKeyboardVisible, design, navigation } = this.props
+    const { onNewUser, isKeyboardVisible, design, navigation, Lang } = this.props
     const { submitStatus } = this.state
     return (
       <ScrollView bounces={false}>

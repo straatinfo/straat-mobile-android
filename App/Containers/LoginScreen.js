@@ -130,7 +130,8 @@ const mapStateToProps = state => {
     fetching: state.login.fetching,
     error: state.login.error,
     user: state.user,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 
