@@ -20,7 +20,6 @@ import ReportStyle from './../ReportStyle'
 import Images from './../../../Themes/Images'
 import styles from '../stepthree/style'
 import ImageContainer from './../Components/ImageContainer'
-import language from '../../../Lib/CutomLanguage'
 
 import { connect } from 'react-redux'
 import ReportsActions from './../../../Redux/ReportsRedux'
@@ -102,7 +101,7 @@ class ReportStepThree extends Component {
   }
 
   _onPressIsUrgent (isUrgentNewValue) {
-    const { reportState: { reportIsUrgent, reportType } } = this.props
+    const { reportState: { reportIsUrgent, reportType }, language } = this.props
     const isUrgent = !reportIsUrgent
 
     if (ReportTypes.SAFETY.code === reportType.code && isUrgent) {
@@ -182,7 +181,7 @@ class ReportStepThree extends Component {
     const { reportState: {
       reportIsUrgent, reportDescription, reportMainCategoryList, submitButton, reportIsPersonInvoled, reportIsVehicleInvoled, reportType,
       reportPersonInvoledCount, reportVehicleInvoledCount, reportPersonInvoledDesc, reportVehicleInvoledDesc,
-      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design } = this.props
+      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design, language } = this.props
     const validated = this.validate()
     return (
       <View style={ReportStyle.container}>
@@ -347,7 +346,8 @@ const mapStateToProps = state => {
   return {
     reportState: state.reports,
     user: state.user.user,
-    design: state.user.design
+    design: state.user.design,
+    language: state.language.Languages
   }
 }
 

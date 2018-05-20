@@ -30,7 +30,6 @@ import MapView from 'react-native-maps'
 
 import { ReportTypes, ReportStatus } from './../../Services/Constant'
 import Api from './../../Lib/Common/Api'
-import Lang from './../../Lib/CutomLanguage'
 import ApiUtil from './../../Lib/Common/ApiUtil'
 import AlertBox from './../../Components/AlertBox'
 import Images from './../../Themes/Images'
@@ -318,6 +317,7 @@ class ReportMapContainer extends Component {
   }
 
   changeStatus (reportID) {
+    const { Lang } = this.props
     Api.changeStatus({ status: 1, report_id: reportID }, this.props.user.access_token)
     .then(result => {
       // check if success
@@ -335,6 +335,7 @@ class ReportMapContainer extends Component {
   }
 
   confirmChangeStatus (reportID) {
+    const { Lang } = this.props
     AlertBox.alert(' ',
       Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeStatus(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
       { cancelable: false }
@@ -458,7 +459,7 @@ class ReportMapContainer extends Component {
     return Images.pinNew
   }
   render () {
-    const { reportMergeState, reportState, user, navigation, design } = this.props
+    const { reportMergeState, reportState, user, navigation, design, Lang } = this.props
     // console.log('reportState ', reportState)
     const { currentCoordinate, reportPosition, mapState } = this.state
     const calloutOnPress = this.calloutOnClick.bind(this)

@@ -25,8 +25,6 @@ import {
 } from 'native-base'
 import LinearGradient from 'react-native-linear-gradient'
 import TeamSelect from './../../Components/ReportDashboard/Components/TeamSelect'
- 
-import language from './../../Lib/CutomLanguage'
 
 import ReportsActions from './../../Redux/ReportsRedux'
 import UserActions from './../../Redux/UserRedux'
