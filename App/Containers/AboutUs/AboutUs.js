@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { Button, Container, Content } from 'native-base'
-import Lang from '../../Lib/CutomLanguage'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './Styles'
 
 export default class AboutUs extends Component {
   render () {
-    const { title, navigation } = this.props
+    const { title, navigation, Lang } = this.props
     return (
       <Container>
-        <HeaderInDrawer title={title} navigation={navigation} />
+        <HeaderInDrawer title={Lang.txt_E06} navigation={navigation} />
         <Content>
           <View style={{
             flex: 1,
@@ -41,3 +40,19 @@ export default class AboutUs extends Component {
     )
   }
 }
+
+
+const mapStateToProps = state => {
+  return {
+    Lang: state.language.Languages
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AboutUs)
+
