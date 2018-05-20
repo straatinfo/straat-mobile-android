@@ -692,5 +692,8 @@ export default {
 
   txt_END: 'END',
 
-  txt_CONVERSATION_TITLE: 'Conversation Title' 
+  txt_CONVERSATION_TITLE: 'Conversation Title',
+
+  /** @description Show */
+  show: 'Show'
 }
