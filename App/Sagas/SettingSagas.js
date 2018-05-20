@@ -1,10 +1,9 @@
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import UserActions from './../Redux/UserRedux'
 import { showAlertBox, logStore, showSuccesstBox } from './../Redux/commonRedux'
-import { put, call } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
-import Lang from './../Lib/CutomLanguage'
-import language from './../Lib/CutomLanguage'
+import { getLanguageState } from './../Redux/LanguageRedux'
 
 /**
  * try update radius setting of current user
@@ -12,6 +11,7 @@ import language from './../Lib/CutomLanguage'
  */
 
 export const updatetRadius = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { radius } = action.accessCodeContainer
   try {
     yield call(loaderHandler.showLoader, language.saving)
