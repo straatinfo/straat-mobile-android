@@ -13,7 +13,7 @@ import { Images } from '../Themes'
 import Styles from './Styles/SplashStyle'
 
 import AlertBox from '../Components/AlertBox'
-import Lang from './../Lib/CutomLanguage'
+// import Lang from './../Lib/CutomLanguage'
 import { AppData } from '../Redux/commonRedux'
 import { designDefault } from '../Transforms/themeHelper'
 import { Design } from '../Services/Constant'
@@ -23,13 +23,15 @@ import FastImage from 'react-native-fast-image'
 class LoginScreen extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { progressMessage: Lang.txt_A03, design: Design }
+    // props.Lang.txt_A03
+    this.state = { progressMessage: '', design: Design }
 
     // set defulat theme
     global.appSetting = Design
 
-    this.props.appStart()
-    console.log('this.start()', this.start())
+    // this.props.appStart()            shift startupsaga
+    // this.start()                     shift startupsaga
+    // console.log('this.start()',)
   }
   geo () {
     return new Promise((resolve, reject) => {
@@ -44,7 +46,9 @@ class LoginScreen extends React.Component {
   }
 
   async getLocation () {
-    const { reportMergeState, reportState: { reportCoordinate } } = this.props
+    const { Lang, reportMergeState, reportState: { reportCoordinate } } = this.props
+
+    console.log('use lang here')
     try {
       const location = await this.geo()
       console.log(location)
@@ -57,6 +61,7 @@ class LoginScreen extends React.Component {
   }
 
   promtGPS () {
+    const { Lang } = this.props
     navigator.geolocation.getCurrentPosition(
       (position) => {
         // gps running
@@ -65,36 +70,37 @@ class LoginScreen extends React.Component {
       },
       (err) => {
         this.props.changeLoadingMessage('')
-        console.log(err)
         AlertBox.alert('', Lang.txt_A02, [{text: Lang.txt_A01, onPress: () => this._processedNext()}], { cancelable: false })
       }
      // { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 },
     )
   }
-  async start () {
-    // this code is for this component only
-    // pre set is set by his.props.appStart()
+  // async start () {
+  //   // this code is for this component only
+  //   // pre set is set by his.props.appStart()
 
-    const theme = await AppData.getTheme()
-    const design = JSON.parse(theme)
-    if (design !== null && design.button !== undefined) {
-      this.setState({design: design})
-      console.log('design', design)
-    }
-    // clean
-    //  const clean = await AppData.clear()
+  //   const theme = await AppData.getTheme()
+  //   const design = JSON.parse(theme)
+  //   if (design !== null && design.button !== undefined) {
+  //     this.setState({design: design})
+  //     console.log('design', design)
+  //   }
 
-    // check if not logout
-  }
+  //   // clean
+  //   //  const clean = await AppData.clear()
+
+  //   // check if not logout
+  // }
 
   componentDidMount () {
+    const { Lang } = this.props
     this.props.changeLoadingMessage(Lang.txt_A03)
 
     let interval = setInterval(() => {
       // this.promtGPS()
       this.getLocation()
       this.props.changeLoadingMessage('')
-      console.log('global.appSetting', global.appSetting)
+      __DEV__ && console.log('global.appSetting', global.appSetting)
       clearInterval(interval)
     }, 2000)
   }
@@ -134,13 +140,13 @@ const mapStateToProps = state => {
   return {
     loadingMessage: state.splash.loadingMessage,
     designR: state.user.design,
-    reportState: state.reports
+    reportState: state.reports,
+    Lang: state.language.Languages
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    appStart: (params) => dispatch(LoginActions.appStart(params)),
     changeLoadingMessage: (loadingMessage) => dispatch(SplashActions.changeLoadingMessage(loadingMessage)),
     change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
     reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState))
