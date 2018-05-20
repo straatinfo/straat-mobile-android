@@ -9,7 +9,6 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-import Lang from './../../../Lib/CutomLanguage'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import renderIf from 'render-if'
 import ImageLoad from 'react-native-image-placeholder'
@@ -21,13 +20,13 @@ import MyReportActions from './../../../Redux/MyReportRedux'
 
 import { GetDate, GetTime } from './../../../Lib/Helper/TimeUtils'
 import { FontSizes, WidthSizes } from './../../../Lib/Common/Constants'
-      
+
 import { GetFullName } from './../../../Transforms/NameUtils'
 import { ReportStatus } from '../../../Services/Constant'
 import { Report } from '../../../Services/ReportDefaults'
 import AlertBox from '../../AlertBox'
-import CircleLoader from '../../CircleLoader';
-import ReportImageHolders from '../../ReportImageHolders';
+import CircleLoader from '../../CircleLoader'
+import ReportImageHolders from '../../ReportImageHolders'
 
 const { width } = Dimensions.get('window')
 const fixColorBorder = '#aaa'
@@ -46,7 +45,7 @@ class Status extends Component {
     this.state = {}
   }
   render () {
-    const { status } = this.props
+    const { status, Lang } = this.props
     const btnStyle = StyleSheet.create({
       changeStatusCon: {
         backgroundColor: '#09bcad',
@@ -99,7 +98,6 @@ class Status extends Component {
     )
   }
 }
- 
 
 class ReportDetail extends Component {
   constructor () {
@@ -114,6 +112,7 @@ class ReportDetail extends Component {
   }
 
   confirmChangeStatus (reportID) {
+    const { Lang } = this.props
     AlertBox.alert(' ',
       Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeStatus(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
       { cancelable: false }
@@ -126,7 +125,7 @@ class ReportDetail extends Component {
   }
   render () {
     // default value and eee
-    const { reportDetails, screen, fetching } = this.props
+    const { reportDetails, screen, fetching, Lang } = this.props
     const report = { ...Report, ...reportDetails }
     if (fetching === true) {
       return <CircleLoader color='blue' />
@@ -181,7 +180,7 @@ class ReportDetail extends Component {
                     <Text style={[ styles.f16 ]}> { Lang.txt_J09 }</Text>
                   </View>
                   <View style={[ styles.w50, styles.statusValue ]}>
-                    <Status status={report.status} onChangeStatus={() => this.confirmChangeStatus(report._id)} reacordID={report._id} />{ /** report status value */ }
+                    <Status status={report.status} onChangeStatus={() => this.confirmChangeStatus(report._id)} reacordID={report._id} Lang={Lang} />{ /** report status value */ }
                   </View>
                 </View>
               </View>
@@ -313,7 +312,8 @@ const mapStateToProps = state => {
   return {
     reportDetails: state.reports.reportDetails,
     fetching: state.myReport.fetchingDetails,
-    error: state.myReport.errorDetails
+    error: state.myReport.errorDetails,
+    Lang: state.language.Languages
   }
 }
 

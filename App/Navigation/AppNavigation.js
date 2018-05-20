@@ -39,7 +39,7 @@ const defaultRoute = {
   initialRouteName: !Configuration.DEBUG ? 'Splash' : 'TestOnly'
 }
 
-// Manifest of possible screens
+// Manifest of possible screens 
 const PrimaryNav = StackNavigator(
   {
     AccessCodeScreen:    { screen: AccessCodeScreen },
@@ -53,7 +53,7 @@ const PrimaryNav = StackNavigator(
     AddTeam:             { screen: AddTeamScreen },
     ChangeTeamProfile:   { screen: ChangeTeamProfileScreen },
     ChangeTeamLogo:      { screen: ChangeTeamLogoScreen },
-    MyTeam:              { screen: MyTeam },
+    MyTeam:              { screen: MyTeam },                   // unused screen
     MyTeamScreen:        { screen: MyTeamScreen },
  //    TeamList:            { screen: TeamListScreen },
     Chat:                { screen: ChatScreen },

@@ -5,12 +5,12 @@ import ReportsActions from './../Redux/ReportsRedux'
 import { reportCoordinate } from './../Redux/ReportsRedux'
 import { showAlertBox, logStore, showSuccesstBox } from './../Redux/commonRedux'
 import { put, call, select } from 'redux-saga/effects'
-import Lang from './../Lib/CutomLanguage'
-import language from './../Lib/CutomLanguage'
 import { orderBy, flatReports, flatReport } from '../Transforms/ReportHelper'
 import { ReportTypes } from '../Services/Constant'
+import { getLanguageState } from '../Redux/LanguageRedux'
 
 export const myReportRequest = function * (API, action) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
   yield put(MyReportActions.myReportMerge({fetching: true, error: ''})) // set loader
   try {
@@ -29,6 +29,7 @@ export const myReportRequest = function * (API, action) {
 }
 
 export const myReportDetailRequest = function * (API, action) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
   const { _id } = action
   yield put(MyReportActions.myReportMerge({fetchingDetails: true, errorDetails: ''})) // set loader

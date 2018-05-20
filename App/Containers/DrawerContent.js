@@ -38,10 +38,9 @@ class DrawerContent extends Component {
   }
 
   render () {
-    const { navigation, itemData } = this.props
+    const { navigation, itemData, Lang } = this.props
     const items = this.props.items
     const design = this.props.design
-
     return (
 
       <View style={[styles.container, {backgroundColor: design.background}]}>
@@ -53,12 +52,13 @@ class DrawerContent extends Component {
           <List
             dataArray={items}
             renderRow={(item) => {
+              console.log('renderRow={(item', item)
               if (itemData[item.routeName].visible === undefined || itemData[item.routeName].visible === true) {
                 console.log(item)
                 return (
                   <ListItem style={styles.listItem} onPress={() => navigation.navigate(item.routeName)}>
                     { itemData[item.routeName].iconImage }
-                    <Text style={styles.item}>{ itemData[item.routeName].drawerLabel.toUpperCase() } </Text>
+                    <Text style={styles.item}>{ Lang[itemData[item.key].drawerLabel] ? Lang[itemData[item.key].drawerLabel].toUpperCase() : ' ' } </Text>
                   </ListItem>
                 )
               }
@@ -75,7 +75,8 @@ const mapStateToProps = state => {
   return {
     design: state.user.design,
     _user: state.user.user._id,
-    token: state.user.user.token
+    token: state.user.user.token,
+    Lang: state.language.Languages
   }
 }
 

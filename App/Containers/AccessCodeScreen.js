@@ -13,7 +13,6 @@ import LoginActions from '../Redux/LoginRedux'
 import AlertMessage from './../Components/AlertMessage'
 import BusyIndicator from 'react-native-busy-indicator'
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-import Lang from './../Lib/CutomLanguage'
 import HeaderBigCenterLogo from './../Components/HeaderBigCenterLogo'
 import HeaderTextField from './../Components/HeaderTextField'
 import UnderMigration from './../Components/UnderMigration'
@@ -25,7 +24,6 @@ import Styles from './Styles/LoginScreenStyles'
 import Footer from '../Components/Footer';
 
  
-
 class AccessCodeScreen extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func,
@@ -132,7 +130,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccessCodeScreen)
-
-/**
-{() => this.password._root.focus()} />
- */

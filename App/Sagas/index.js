@@ -23,7 +23,7 @@ import { AddNewTeamTypes } from '../Redux/AddNewTeamRedux'
 
 /* ------------- Sagas ------------- */
 
-import { startup } from './StartupSagas'
+import { startup, configureApp } from './StartupSagas'
 import { login, appStart } from './LoginSagas'
 import { getUserAvatar } from './GithubSagas'
 import { change } from './ScreenSagas'
@@ -56,6 +56,7 @@ export default function * root () {
     /**             LOGIN             */
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(StartupTypes.STARTUP, startup),
+    takeLatest(StartupTypes.CONFIGURE_APP, configureApp),
     takeLatest(ScreenTypes.CHANGE, change),
 
     /**              USER              */

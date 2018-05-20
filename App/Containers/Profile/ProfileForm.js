@@ -1,35 +1,20 @@
-import React, { Component } from 'react'
-import { View, StatusBar, Switch, ScrollView, Image, TouchableOpacity } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import ValidationComponent from 'react-native-form-validator'
-import styles from './../Profile/styles'
-import {
-    Text,
-    Container,
-    Header,
-    Content,
-    Title,
-    Button,
-    Right,
-    Body,
-    Icon,
-    Item,
-    Input
-} from 'native-base'
-
-import { Images, Metrics } from './../../Themes'
+import React from 'react'
+import { View, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { Text, Container, Content, Item, Input } from 'native-base'
 import { connect } from 'react-redux'
-import ProfileActions from '../../Redux/ProfileRedux'
-import Lang from './../../Lib/CutomLanguage'
-import AppData from './../../Lib/Common/AppData'
-import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import { checkPassword, toUserModel } from '../../Transforms/RegistrationHelper'
-import { getTeamLogo } from '../../Transforms/TeamHelper'
-import ImagePicker from 'react-native-image-picker'
-import { errorAlert } from '../../Lib/Helper/alertHelper'
 import { crop } from '../../Transforms/Cloudinary'
+import { errorAlert } from '../../Lib/Helper/alertHelper'
 import { isValidUserName } from '../../Redux/UserRedux'
+import { Images } from './../../Themes'
+import { getTeamLogo } from '../../Transforms/TeamHelper'
 import { usernameSeparator } from '../../Services/Constant'
+import ImagePicker from 'react-native-image-picker'
+import LinearGradient from 'react-native-linear-gradient'
+import HeaderInDrawer from '../../Components/HeaderInDrawer'
+import ProfileActions from '../../Redux/ProfileRedux'
+import styles from './../Profile/styles'
+import ValidationComponent from 'react-native-form-validator'
 
 class ProfileForm extends ValidationComponent {
   constructor (props) {
@@ -52,13 +37,14 @@ class ProfileForm extends ValidationComponent {
     }
   }
   componentDidMount () {
-    const { user, editprofileMerge, editUser } = this.props
+    const { user, editprofileMerge } = this.props
     const tuser = toUserModel(user)
     this.setState(tuser)
     editprofileMerge({currentUser: tuser, editUser: tuser})
   }
 
   liveValidation (key, value) {
+    const { Lang } = this.props
     /**
      * @param key(String: enum(userEmail, userName, postaCode)), value
      */
@@ -97,7 +83,6 @@ class ProfileForm extends ValidationComponent {
       if (postalCode === value) return true
       this.props.setpostalcodeProfile(value)
     }
- 
 
     if (key === 'phoneNumber') {
       __DEV__ && console.log('liveValidate teamEmail', value)
@@ -131,6 +116,7 @@ class ProfileForm extends ValidationComponent {
   }
 
   validatePassword (password) {
+    const { Lang } = this.props
     if (!checkPassword(password)) {
       errorAlert(Lang.txt_D48)
       this.props.parentChangeState({isValidPassword: false})
@@ -151,20 +137,20 @@ class ProfileForm extends ValidationComponent {
        // console.log('Response ', response)
 
         if (response.didCancel) {
-          console.log('User cancelled photo picker')
+          __DEV__ && console.log('User cancelled photo picker')
         } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error)
+          __DEV__ && console.log('ImagePicker Error: ', response.error)
         } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton)
+          __DEV__ && console.log('User tapped custom button: ', response.customButton)
         } else {
           delete response.data
-          console.log('response', response)
+          __DEV__ && console.log('response', response)
        //   this.setState({ teamPhoto: response.uri })
           uploadEditprofile(response)
         }
       })
     } catch (error) {
-      console.log(error)
+      __DEV__ && console.log(error)
     }
   }
   validate () {
@@ -172,7 +158,7 @@ class ProfileForm extends ValidationComponent {
     return !(inemail || inusername || incity || inphonenumber || inpostalCode)
   }
   render () {
-    const { navigation, editfieldProfile, currentUser, editUser } = this.props
+    const { navigation, editfieldProfile, currentUser, editUser, Lang } = this.props
     //   <CenterView><TouchableOpacity onPress={() => { this._onPickImagePress() }} >
     //   {
     //   !teamLogo ? <Icon style={picStyle} name='photo' size={200} color={'#b0bfc1'} /> : <Image source={{uri: teamLogo}} style={picStyle} resizeMode='contain' />
@@ -328,7 +314,8 @@ const mapStateToProps = state => {
     email: state.user.email,
     editUser: state.userProfile.editUser,
 
-    currentUser: state.userProfile.currentUser
+    currentUser: state.userProfile.currentUser,
+    Lang: state.language.Languages
   }
 }
 

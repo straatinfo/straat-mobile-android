@@ -4,15 +4,15 @@ import NotificationActions, { getNotification } from './../Redux/NotificationRed
 import { reportCoordinate } from './../Redux/ReportsRedux'
 import { showAlertBox, logStore, showSuccesstBox } from './../Redux/commonRedux'
 import { put, call, select } from 'redux-saga/effects'
-import Lang from './../Lib/CutomLanguage'
-import language from './../Lib/CutomLanguage'
 import { filterReportsByType, flatReports, orderBy } from '../Transforms/ReportHelper'
 import { ReportTypes, SocketTypes } from '../Services/Constant'
 import { CONNECTION } from '../Services/AppSocket'
 import DebugConfig from './../Config/DebugConfig'
+import { getLanguageState } from './../Redux/LanguageRedux'
 const displayNotificationCountOfHisReport = DebugConfig.displayNotificationCountOfHisReport
 
 export const notifactionRequestTypeA = function * (API, action) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
   // const coordinate = reportCoordinate
   yield put(NotificationActions.notificationMerge({fetchingA: true, errorA: ''})) // set loader
@@ -34,6 +34,7 @@ export const notifactionRequestTypeA = function * (API, action) {
 }
 
 export const notifactionRequestTypeB = function * (API, action) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
   // const coordinate = reportCoordinate
   yield put(NotificationActions.notificationMerge({fetchingB: true, errorB: ''})) // set loader
@@ -54,6 +55,7 @@ export const notifactionRequestTypeB = function * (API, action) {
 }
 
 export function * notifactionRequestTypeC (API, action) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
   // const coordinate = reportCoordinate
   yield put(NotificationActions.notificationMerge({fetchingC: true, errorC: ''})) // set loader

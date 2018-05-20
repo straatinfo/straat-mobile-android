@@ -10,7 +10,6 @@ import LinearGradient from 'react-native-linear-gradient'
 // import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Images from './../../../Themes/Images'
-import Lang from './../../../Lib/CutomLanguage'
 import styles from '../steptwo/style'
 import ReportStyle from './../ReportStyle'
 
@@ -52,7 +51,7 @@ class ReportStepTwo extends Component {
   }
   render () {
     const { isVolunteer } = this.props.user
-    const { design } = this.props
+    const { design, Lang } = this.props
     return (
       <View style={ReportStyle.container}>
         <View style={ReportStyle.cancelBtnContainer}>
@@ -79,7 +78,8 @@ const mapStateToProps = state => {
   return {
     user: state.user.user,
     reportState: state.reports,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

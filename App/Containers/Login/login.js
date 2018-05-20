@@ -1,36 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   Text,
   View,
-  StyleSheet,
   Image,
   TextInput,
-  Button,
   ScrollView,
-  TouchableOpacity,
-  Platform,
-  Alert,
-  NetInfo,
-  AsyncStorage
+  TouchableOpacity
 } from 'react-native'
-
-import ValidationComponent from 'react-native-form-validator'
-import LinearGradient from 'react-native-linear-gradient'
-import styles from './../Login/styles'
-
-import AppData from './../../Lib/Common/AppData'
-import Api from './../../Lib/Common/Api'
-import ApiUtil from './../../Lib/Common/ApiUtil'
-import BusyIndicator from 'react-native-busy-indicator'
-import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-import { Images, Metrics } from './../../Themes'
-import Lang from './../../Lib/CutomLanguage'
-import Spacer from './../../Components/Spacer'
-import RowView from '../../Components/RowView'
-import Triangle from 'react-native-triangle'
-import GlobalStyle from '../../Components/Styles/GlobalStyle'
+import { Images } from './../../Themes'
 import Footer from '../../Components/Footer'
 import FastImage from 'react-native-fast-image'
+
+import LinearGradient from 'react-native-linear-gradient'
+import RowView from '../../Components/RowView'
+import Spacer from './../../Components/Spacer'
+import styles from './../Login/styles'
+import Triangle from 'react-native-triangle'
+import ValidationComponent from 'react-native-form-validator'
 
 /**
  *
@@ -51,7 +37,7 @@ class Login extends ValidationComponent {
   }
 
   login (params) {
-    const { onSubmit, navigation} = this.props
+    const { onSubmit, navigation } = this.props
     // process login
     onSubmit(this.state.username, this.state.password, navigation.state.params)
   }
@@ -70,7 +56,7 @@ class Login extends ValidationComponent {
     }
   }
   render () {
-    const { onNewUser, isKeyboardVisible, design, navigation } = this.props
+    const { onNewUser, isKeyboardVisible, design, navigation, Lang } = this.props
     const { submitStatus } = this.state
     return (
       <ScrollView bounces={false}>

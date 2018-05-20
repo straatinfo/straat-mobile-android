@@ -4,7 +4,6 @@ import { showAlertBox, logStore, AppData } from '../Redux/commonRedux'
 import { changeto } from '../Redux/ScreenRedux'
 import { popUpAlert } from '../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList, isEmpty } from '../Transforms/Filters'
-import language from '../Lib/CutomLanguage'
 import ProfileActions, { putEditUserState } from '../Redux/ProfileRedux'
 import { fail } from 'assert'
 import UserActions, { getUser, isValidMobileNumber, getUserState } from '../Redux/UserRedux'
@@ -14,6 +13,7 @@ import { hasErrorV1 } from '../Transforms/responseHelper';
 import { toUserModel } from '../Transforms/RegistrationHelper';
 
 export const editUserProfile = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { params: { data }} = action
   const user = yield select(getUser)
   try {
@@ -57,6 +57,7 @@ export const editUserProfile = function * (API, action) {
 }
 
 export const uploadUserPhoto = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { photo } = action
   let data = new FormData()
  // data.append('photo', photo)
@@ -99,6 +100,7 @@ export const uploadUserPhoto = function * (API, action) {
  */
 
 export const validateEmailProfile = function * (API, { value }) {
+  const language = yield select(getLanguageState)
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.verifying)
@@ -140,6 +142,7 @@ export const validateEmailProfile = function * (API, { value }) {
  */
 
 export const validateUserNameProfile = function * (API, { value }) {
+  const language = yield select(getLanguageState)
  // __DEV__ && console.log('action', action)
   try {
     // show loader
@@ -184,6 +187,7 @@ export const validateUserNameProfile = function * (API, { value }) {
  */
 
 export const validatePostalCodeProfile = function * (API,  { value } ) {
+  const language = yield select(getLanguageState)
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.verifying + ' ' + language.postalCode)
@@ -223,6 +227,7 @@ export const validatePostalCodeProfile = function * (API,  { value } ) {
  */
 
 export const validateCityProfile = function * (API, { value }) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUserState)
 
   __DEV__ && console.log('user', user)
@@ -264,6 +269,7 @@ export const validateCityProfile = function * (API, { value }) {
  */
 
 export const validatePhoneNumberProfile = function * (API, { value }) {
+  const language = yield select(getLanguageState)
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.verifying + ' ' + language.mobileNumber)

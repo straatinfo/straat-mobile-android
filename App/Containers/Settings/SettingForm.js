@@ -19,8 +19,6 @@ import {
   Switch
 } from 'native-base'
 
-import { drawerData } from './../../Navigation/NavigationDrawer'
-import Lang from './../../Lib/CutomLanguage'
 import ValidationComponent from 'react-native-form-validator'
 import CenterView from '../../Components/CenterView'
 import UserActions from './../../Redux/UserRedux'
@@ -99,7 +97,7 @@ class SettingForm extends ValidationComponent {
   }
 
   render () {
-    const { title, design, navigation } = this.props
+    const { title, design, navigation, Lang } = this.props
     return (
       <Container>
         <HeaderInDrawer title={title} navigation={navigation} />
@@ -126,7 +124,8 @@ class SettingForm extends ValidationComponent {
 const mapStateToProps = state => {
   return {
     design: state.user.design,
-    radius: state.user.user.radius
+    radius: state.user.user.radius,
+    Lang: state.language.Languages
   }
 }
 

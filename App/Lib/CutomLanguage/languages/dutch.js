@@ -708,5 +708,8 @@ export default {
 
   txt_END: 'END',
 
-  txt_CONVERSATION_TITLE: 'Gespreks Titel' 
+  txt_CONVERSATION_TITLE: 'Gespreks Titel',
+
+  /** @description Show */
+  show: 'Toon'
 }

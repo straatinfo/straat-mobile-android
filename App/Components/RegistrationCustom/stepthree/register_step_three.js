@@ -17,7 +17,6 @@ import renderIf from 'render-if'
 
 import Api from './../../../Lib/Common/Api'
 import ApiUtil from './../../../Lib/Common/ApiUtil'
-import Lang from './../../../Lib/CutomLanguage'
 
 import CircleButton from './../../../Components/CircleButton'
 import styles from '../stepthree/style'
@@ -29,6 +28,7 @@ import Footer from '../../Footer';
 class RegistrationStepThree extends Component {
   constructor (props) {
     super(props)
+    const { Lang } = this.props
    // const {teamList} = this.props
     this.state = {
       types3: [
@@ -110,7 +110,7 @@ class RegistrationStepThree extends Component {
   }
 
   render () {
-    const { teamList, onRegisterSubmit, design } = this.props
+    const { teamList, onRegisterSubmit, design, Lang } = this.props
     const { regOptions } = this.state
     const { teamID, register_option: registerOption, validation: { personalDataForm, volunteerOptionForm, teamOptionForm } } = this.props.parentState
     __DEV__ && console.log('personalDataForm, volunteerOptionForm, teamOptionForm', personalDataForm, volunteerOptionForm, teamOptionForm)
@@ -157,7 +157,8 @@ class RegistrationStepThree extends Component {
 
 const mapStateToProps = state => {
   return {
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

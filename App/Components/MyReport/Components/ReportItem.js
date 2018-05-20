@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { BackHandler, Image, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, SwipeRow } from 'native-base'
+import { connect } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 
 import { GetDate, GetTime, GetDateEutype} from './../../../Lib/Helper/TimeUtils'
-import Lang from './../../../Lib/CutomLanguage'
+
 import { Fonts, Images } from './../../../Themes'
 // import style from './style'
 import CenterView from './../../../Components/CenterView'
@@ -93,7 +94,7 @@ class ReportItem extends Component {
     reportMergeState({reportDetails: item})
   }
   render () {
-    const { item } = this.props
+    const { item, Lang } = this.props
     return (<View style={styles.item}>
       <View style={styles.info}>
         { item.hasOwnProperty('_mainCategory') === true && item._mainCategory !== null && item._mainCategory.hasOwnProperty('name') === true && (<Text style={styles.title} >{ item._mainCategory.name }</Text>) || (<Text style={styles.title} >  </Text>)}
@@ -107,37 +108,19 @@ class ReportItem extends Component {
         style={styles.image} /> || <Image style = {styles.image} source={Images.empty} />}
       { item.isUrgent === true && <Text style={styles.urgent}>!</Text>}
     </View>)
-
-    // return (
-    //   <SwipeRow
-    //     leftOpenValue={150}
-    //     rightOpenValue={-150}
-    //     left={
-    //       <Button success onPress={() => alert('Add')}>
-    //         <Icon active name='add' />
-    //       </Button>
-    //       }
-    //     body={
-    //       <View style={styles.item}>
-    //         <View style={styles.info}>
-    //           <Text style={styles.title}>{item.title}</Text>
-    //           <Text style={styles.date}>{ GetDate(item.createdAt) } / { GetTime(item.createdAt) } </Text>
-    //           <Text style={styles.location}>{item.location}</Text>
-    //           <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={() => console.log(item)} ><Text style={styles.view}>{Lang.checkOutTheReport}</Text></TouchableOpacity>
-    //         </View>
-    //         { item.reportPhotos.length > 0 && <FastImage
-    //           source={{uri: cropWH(styles.image.width, styles.image.height, item.reportPhotos[0].secure_url), priority: FastImage.priority.normal}}
-    //           style={styles.image} />}
-    //         { item.isUrgent === true && <Text style={styles.urgent}>!</Text>}
-    //       </View>
-    //       }
-    //     right={
-    //       <Button danger onPress={() => alert('Trash')}>
-    //         <Icon active name='trash' />
-    //       </Button>
-    //       } />
-    // )
   }
 }
 
-export default ReportItem
+const mapStateToProps = state => {
+  return {
+    Lang: state.language.Languages
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ReportItem)
+
+ 

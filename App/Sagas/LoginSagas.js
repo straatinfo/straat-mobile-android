@@ -2,17 +2,14 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import LoginActions from '../Redux/LoginRedux'
 import UserActions, { setTheme, INITIAL_STATE as USER_INITIAL_STATE } from './../Redux/UserRedux'
 import { showAlertBox, logStore, AppData } from './../Redux/commonRedux'
+import LanguageActions, { getLanguageState } from './../Redux/LanguageRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
 
 import { popUpAlert } from './../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
-import language from '../Lib/CutomLanguage'
-import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper';
-import CONNECTION from '../Services/AppSocket';
-import { SocketTypes } from '../Services/Constant';
-import { getNotification } from '../Redux/NotificationRedux';
-import { socketService } from './NotificationSaga';
+
+import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper'
 
 /**
  * try log in user
@@ -20,9 +17,10 @@ import { socketService } from './NotificationSaga';
  */
 
 export const login = function * (API, action) {
+  const language = yield select(getLanguageState)
   const {username, password, navigation, route, params} = action.userpassnavroute
   try {
-    console.log('HI I AM LOGIN SAGA!!!');
+    console.log('HI I AM LOGIN SAGA!!!')
     // show loader
     yield call(loaderHandler.showLoader, language.txt_C08)
 
@@ -63,7 +61,7 @@ export const login = function * (API, action) {
       yield call(AppData.setTheme, design)
       yield call(AppData.setLogin, { username: username, password: password })  // save user login data to local
       yield put(UserActions.mergeState({design: design}))
-
+      yield put(LanguageActions.setLanguage(userWithToken.language))
       __DEV__ && console.log('convertActiveDesignToDesign: ', design)
       // filter if it has login message
       const hasBlocker = yield call(onloginPopUp, {userData: userWithToken})

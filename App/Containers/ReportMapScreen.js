@@ -142,7 +142,8 @@ const mapStateToProps = state => {
     typeCount_A: state.notification.typeCount_A,
     typeCount_B: state.notification.typeCount_B,
     typeCount_C: state.notification.typeCount_C,
-    chatCount: state.notification.chatCount
+    chatCount: state.notification.chatCount,
+    Lang: state.language.Languages
   }
 }
 

@@ -1,27 +1,22 @@
 import React, { Component } from 'react'
-import { View, StatusBar, ScrollView, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { Container, Content, Form, Item, Input } from 'native-base'
 import { connect } from 'react-redux'
-import FeedbackActions from '../../Redux/FeedbackRedux'
-import { Container, Header, Body, Title, Button, Icon, Right, Content, Form, Item, Input } from 'native-base'
-import Styles from './FeedbackScreenStyles'
 import { Metrics } from '../../Themes'
-import Lang from '../../Lib/CutomLanguage';
-import LinearGradient from 'react-native-linear-gradient';
-
-import { drawerData } from '../../Navigation/NavigationDrawer';
-import HeaderInDrawer from '../../Components/HeaderInDrawer';
+import FeedbackActions from '../../Redux/FeedbackRedux'
+import LinearGradient from 'react-native-linear-gradient'
+import HeaderInDrawer from '../../Components/HeaderInDrawer'
+import Styles from './FeedbackScreenStyles'
 
 class FeedBack extends Component {
-
-  constructor(props) {
-    super(props);
-
+  constructor (props) {
+    super(props)
     this.state = {
       name: '',
       email: '',
       problem: '',
       visibleHeight: Metrics.screenHeight,
-      submitStatus: false,
+      submitStatus: false
     }
   }
 
@@ -33,7 +28,6 @@ class FeedBack extends Component {
   _handleChangeEmail = text => {
     // handles change of text in email
     this.setState({ email: text })
-
   }
 
   _handleChangeProblem = text => {
@@ -43,8 +37,8 @@ class FeedBack extends Component {
 
   _handleSubmit = () => {
     // handle feedback submit
-    const { name, email, problem, submitStatus } = this.state;
-    const { userId, isSuccess } = this.props;
+    const { name, email, problem } = this.state
+    const { userId } = this.props
     const params = {
       userId,
       data: {
@@ -53,11 +47,11 @@ class FeedBack extends Component {
         reporterEmail: email
       }
     }
-    this.props.sendFeedback(params);
+    this.props.sendFeedback(params)
   }
 
-  render() {
-    const { title, navigation, design } = this.props
+  render () {
+    const { title, navigation, design, Lang } = this.props
     const { name, email, problem, submitStatus } = this.state
     return (
       <Container>
@@ -110,16 +104,16 @@ class FeedBack extends Component {
                   onSubmitEditing={() => this._handleSubmit} />
               </Item>
             </Form>
-            </View>
+          </View>
 
-            <View style={Styles.buttonContainer}>
-              <TouchableOpacity disabled={!submitStatus} underlayColor='rgba(0,0,0,0.0)' onPress={this._handleSubmit}>
-                <LinearGradient colors={[submitStatus ? design.button2 : '#a6b2c1', submitStatus ? design.button : '#7f8893']} style={Styles.linearGradient}>
-                  <Text style={Styles.buttonText}>{Lang.txt_Z10.toUpperCase()}</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </View>
-          
+          <View style={Styles.buttonContainer}>
+            <TouchableOpacity disabled={!submitStatus} underlayColor='rgba(0,0,0,0.0)' onPress={this._handleSubmit}>
+              <LinearGradient colors={[submitStatus ? design.button2 : '#a6b2c1', submitStatus ? design.button : '#7f8893']} style={Styles.linearGradient}>
+                <Text style={Styles.buttonText}>{Lang.txt_Z10.toUpperCase()}</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+
         </Content>
       </Container>
     )
@@ -127,19 +121,19 @@ class FeedBack extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('Feedback state: ', state);
   return {
     userId: state.user.user._id,
     isFetching: state.feedback.fetching,
     error: state.feedback.error,
     isSuccess: state.feedback.isSuccess,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    sendFeedback: (params) => dispatch(FeedbackActions.sendFeedbackRequest(params)),
+    sendFeedback: (params) => dispatch(FeedbackActions.sendFeedbackRequest(params))
   }
 }
 

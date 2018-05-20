@@ -1,47 +1,13 @@
 import React from 'react'
+import { BackHandler } from 'react-native'
+import { Container, Header, Title, Button, Left, Body, Icon } from 'native-base'
 import { connect } from 'react-redux'
-import { Image, BackHandler, Dimensions, Keyboard, LayoutAnimation } from 'react-native'
-import {
-  Card,
-  CardItem,
-  Text,
-  View,
-  Thumbnail,
-  Container,
-  Header,
-  Content,
-  Title,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Tabs,
-  Tab,
-  TabHeading,
-  Spinner
-} from 'native-base'
-import MapView from 'react-native-maps'
-import ReportMapContainer from './../../Containers/ReportMap/ReportMapContainer'
-import UnderMigration from './../../Components/UnderMigration'
-import {drawerData} from './../../Navigation/NavigationDrawer'
-import ReportsActions from './../../Redux/ReportsRedux'
-
-import NotificationActions from './../../Redux/NotificationRedux'
-
-import UsersActions from './../../Redux/UserRedux'
-// import Images from './../Themes/Images'
-import { Images, Metrics } from './../../Themes'
-/**  actionsyles */
-import { formatDate } from './../../Transforms/DateTransformer'
-import { onloginPopUp, getApprovedTeamList } from './../../Transforms/Filters'
-import CenterView from '../../Components/CenterView'
-import language from '../../Lib/CutomLanguage'
-import style from './../Styles/MyReportStyle'
-import GlobalStyle from '../../Components/Styles/GlobalStyle'
-import CircleLoader from '../../Components/CircleLoader'
 import Details from './../../Components/ReportDashboard/view_report_from_map'
-// import Icon from 'react-native-vector-icons/Ionicons'
+import NotificationActions from './../../Redux/NotificationRedux'
+import GlobalStyle from '../../Components/Styles/GlobalStyle'
+import UnderMigration from './../../Components/UnderMigration'
+import ReportsActions from './../../Redux/ReportsRedux'
+import UsersActions from './../../Redux/UserRedux'
 
 class ReportDetailsScreen extends React.Component {
   constructor (props) {
@@ -69,7 +35,7 @@ class ReportDetailsScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    console.log(this.props)
+    __DEV__ && console.log(this.props)
     const { report } = this.props.navigation.state.params
     const { design } = this.props
     return (

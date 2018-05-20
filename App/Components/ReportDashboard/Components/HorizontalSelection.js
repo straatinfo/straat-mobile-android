@@ -7,7 +7,6 @@ import {
   } from 'react-native'
 import { Switch } from 'native-base'; 
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
-import Lang from './../../../Lib/CutomLanguage'
  
 export default (props) => {
   const { options, selected, onSelect, title } = props

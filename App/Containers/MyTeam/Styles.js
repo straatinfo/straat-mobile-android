@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 const Styles = StyleSheet.create({
   // View Containers
   contentContainer: {
-    marginTop: 10,
+    marginTop: 10
   },
   viewContainer: {
     flex: 1,
@@ -15,7 +15,7 @@ const Styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   upperboxContainer: {
-    //height:200,
+    // height:200,
   },
   teamContainer: {
     alignItems: 'flex-start',
@@ -31,31 +31,31 @@ const Styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   teamLogoContainer: {
     flex: 1,
     marginTop: 15,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   previewLogoContainer: {
     flex: 1,
     marginTop: 45,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   teamlistContainer: {
     flex: 1,
     marginTop: 50,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   teamListView: {
     borderColor: 'black',
     height: 100,
     width: 200,
     borderRadius: 10,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   // FORM VIEWS
   forms: {
@@ -71,7 +71,7 @@ const Styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderBottomColor: 'gray',
     marginLeft: 0,
-    elevation: 1,
+    elevation: 1
   },
   // SPACING
   spacing: {
@@ -98,27 +98,27 @@ const Styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     color: '#ffffff',
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
-  buttonLeft :{
+  buttonLeft: {
     marginRight: 0,
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
     backgroundColor: 'transparent',
-    width: 50, 
-    height: 40, 
-    alignItems: 'center', 
-    justifyContent: 'center' 
+    width: 50,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   buttonRight: {
-    marginLeft: 0, 
-    borderBottomRightRadius: 10, 
-    borderTopRightRadius: 10, 
-    backgroundColor: 'transparent', 
-    width: 50, 
+    marginLeft: 0,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: 'transparent',
+    width: 50,
     height: 40,
-    alignItems: 'center', 
-    justifyContent: 'center', 
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   // IMAGES
@@ -127,7 +127,7 @@ const Styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     marginLeft: 25,
-    marginTop: 15,
+    marginTop: 15
   },
   requestList: {
     flexDirection: 'row',
@@ -148,27 +148,27 @@ const Styles = StyleSheet.create({
   },
   teamlistText: {
     fontSize: 26,
-    color: 'black',
+    color: 'black'
   },
 
-  //TEXT
+  // TEXT
   textColor: {
-    color: '#3e3f42',
+    color: '#3e3f42'
   },
   textTeamName: {
-    fontSize: 35, 
-    marginTop: 15, 
-    color: '#3e3f42', 
+    fontSize: 35,
+    marginTop: 15,
+    color: '#3e3f42'
   },
   textTeamEmail: {
-    fontSize: 18, 
-    marginTop: 15, 
-    color: '#3e3f42',
+    fontSize: 18,
+    marginTop: 15,
+    color: '#3e3f42'
   },
-  textHostName: { 
-    fontSize: 18, 
-    color: '#3e3f42', 
-  },
+  textHostName: {
+    fontSize: 18,
+    color: '#3e3f42'
+  }
 
 })
 

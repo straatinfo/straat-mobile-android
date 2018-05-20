@@ -11,28 +11,42 @@ import { Root } from 'native-base'
 // Styles
 import styles from './Styles/RootContainerStyles'
 
+// import Language from '../Redux/LanguageRedux'
+import renderIf from 'render-if'
+
 class RootContainer extends Component {
+
   componentDidMount () {
     // if redux persist is not active fire startup action
     if (!ReduxPersist.active) {
       this.props.startup()
     }
+
+    this.props.configureApp()
   }
 
   render () {
+    const { loadedLaguage } = this.props
     return (
       <Root style={styles.applicationView}>
         <StatusBar barStyle='light-content' />
-        <ReduxNavigation />
+        {renderIf(loadedLaguage)(<ReduxNavigation />)}
         <BusyIndicator />
       </Root>
     )
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    loadedLaguage: state.language.loadedLaguage
+  }
+}
+
 // wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
-  startup: () => dispatch(StartupActions.startup())
+  startup: () => dispatch(StartupActions.startup()),
+  configureApp: () => dispatch(StartupActions.configureApp())
 })
 
-export default connect(null, mapDispatchToProps)(RootContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)
