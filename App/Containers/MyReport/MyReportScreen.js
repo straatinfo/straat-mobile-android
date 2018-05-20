@@ -2,7 +2,6 @@ import React from 'react'
 import { BackHandler } from 'react-native'
 import { Container, Header, Title, Button, Left, Right, Icon } from 'native-base'
 import { connect } from 'react-redux'
-import { drawerData } from './../../Navigation/NavigationDrawer'
 import CenterView from '../../Components/CenterView'
 import MyReportList from '../../Components/MyReport/MyReportList'
 import NotificationActions from './../../Redux/NotificationRedux'
@@ -40,7 +39,7 @@ class ReportMapScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    const { navigation, design } = this.props
+    const { navigation, design, Lang } = this.props
     console.log(this.props.navigation.state.routeName)
     return (
       <Container>
@@ -51,7 +50,7 @@ class ReportMapScreen extends React.Component {
             </Button>
           </Left>
           <CenterView style={{ flex: 6 }}>
-            <Title>{ drawerData[navigation.state.routeName].drawerLabel }</Title>
+            <Title>{ Lang['txt_E02'] }</Title>
           </CenterView>
           <Right style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
@@ -64,13 +63,14 @@ class ReportMapScreen extends React.Component {
     )
   }
 }
-
+ 
 const mapStateToProps = state => {
   return {
     user: state.user.user,
     userState: state.user,
     design: state.user.design,
-    notificationtState: state.notification
+    notificationtState: state.notification,
+    Lang: state.language.Languages
   }
 }
 

@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import NotificationActions from './../../Redux/NotificationRedux'
 import ReportsActions from './../../Redux/ReportsRedux'
 import ReportChat from '../../Containers/ReportChat'
-import Lang from '../../Lib/CutomLanguage'
 import { Fonts, Colors } from './../../Themes'
 
 import CircleLoader from '../CircleLoader'
@@ -85,7 +84,7 @@ class ReportTypeAList extends Component {
   // }
   render () {
     const { fetching, reportList, navigation, reportMergeState } = this.props
-    console.log(this.props)
+
     if (fetching) {
       return (<CircleLoader color='blue' />)
     }
