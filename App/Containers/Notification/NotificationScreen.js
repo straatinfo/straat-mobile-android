@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import Conversation from '../Conversation'
 import CenterView from '../../Components/CenterView'
 import NotificationActions from './../../Redux/NotificationRedux'
-import language from '../../Lib/CutomLanguage'
 import GlobalStyle from '../../Components/Styles/GlobalStyle'
 import style from './../Styles/MyReportStyle'
 import ReportsActions from './../../Redux/ReportsRedux'
@@ -46,7 +45,7 @@ class ReportMapScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    const { navigation, design, user: { isVolunteer }, notificationtState: { typeCount_A, typeCount_B, typeCount_C, chatCount } } = this.props
+    const { language, navigation, design, user: { isVolunteer }, notificationtState: { typeCount_A, typeCount_B, typeCount_C, chatCount } } = this.props
     const notificationCount = typeCount_A + typeCount_B + typeCount_C + chatCount
     return (
       <Container>
@@ -91,7 +90,8 @@ const mapStateToProps = state => {
     user: state.user.user,
     userState: state.user,
     design: state.user.design,
-    notificationtState: state.notification
+    notificationtState: state.notification,
+    language: state.language.Languages
   }
 }
 
