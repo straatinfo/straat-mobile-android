@@ -3,7 +3,7 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import { getLanguageState } from './../Redux/LanguageRedux'
 import { popUpAlert } from './../Lib/Helper/alertHelper'
 import { put, call, select } from 'redux-saga/effects'
-import { showAlertBox} from './../Redux/commonRedux'
+import { showAlertBox } from './../Redux/commonRedux'
 
 export const sendFeedback = function * (API, action) {
   const language = yield select(getLanguageState)
