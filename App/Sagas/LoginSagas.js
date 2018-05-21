@@ -20,19 +20,10 @@ export const login = function * (API, action) {
   const language = yield select(getLanguageState)
   const {username, password, navigation, route, params} = action.userpassnavroute
   try {
-    console.log('HI I AM LOGIN SAGA!!!')
-    // show loader
     yield call(loaderHandler.showLoader, language.txt_C08)
-
-    // fetch user
     const requestedUserAccount = yield call(API.postLogin, { username, password })
     let userWithToken = {}
-
-    __DEV__ && console.log('requestedUserAccount', requestedUserAccount)
-    // status success
     if (requestedUserAccount.ok && requestedUserAccount.data.status === 1) {
-      // log in successfully
-      // save to storage user account for restart retrieving
       const _host = requestedUserAccount.data.data.user._host ? requestedUserAccount.data.data.user._host._id : null
       const isSpecific = requestedUserAccount.data.data.user._host ? requestedUserAccount.data.data.user._host.isSpecific : false
 
@@ -62,7 +53,6 @@ export const login = function * (API, action) {
       yield call(AppData.setLogin, { username: username, password: password })  // save user login data to local
       yield put(UserActions.mergeState({design: design}))
       yield put(LanguageActions.setLanguage(userWithToken.language))
-      __DEV__ && console.log('convertActiveDesignToDesign: ', design)
       // filter if it has login message
       const hasBlocker = yield call(onloginPopUp, {userData: userWithToken})
       if (hasBlocker.access && hasBlocker.message) {
@@ -76,10 +66,6 @@ export const login = function * (API, action) {
       } else {
         yield call(popUpAlert, { title: ' ', message: hasBlocker.message, pressok: () => {} })
       }
-
-     // yield call(socketService, API)
-      // redirect user to dashboard after success login
-      // yield call(changeto, navigation, route)
     } else if (requestedUserAccount.status === 401) {
       throw new Error(language.invalidCredentials)
     } else {
@@ -103,13 +89,11 @@ export const appStart = function * (API, action) {
   try {
     const theme = yield call(AppData.getTheme)
     const design = JSON.parse(theme)
-    __DEV__ && console.log('AppData.getTheme', design)
     if (design !== null && design.button !== undefined) {
       yield call(setTheme, design)
       yield put(UserActions.mergeState({design: design}))
     }
   } catch (e) {
     yield call(setTheme, designDefault)
-    // yield put(UserActions.mergeState({design: designDefault}))
   }
 }
