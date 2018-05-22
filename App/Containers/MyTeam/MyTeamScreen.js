@@ -6,7 +6,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid'
 import { crop } from '../../Transforms/Cloudinary'
 import { Images, Colors } from '../../Themes'
 import { getTeamLogo, checkLeaderById, isActiveTeam } from '../../Transforms/TeamHelper'
-import { GetFullName } from '../../Transforms/NameUtils'
+import { GetFullName, GetChatName } from '../../Transforms/NameUtils'
 import { SocketTypes, ConvoTypes, convoOption } from '../../Services/Constant'
 import ButtonIcon from './../../Components/ButtonIcon'
 import CircleLoader from '../../Components/CircleLoader'
@@ -82,7 +82,7 @@ class MyTeamScreen extends Component {
     if (this.state.isSuccess === true) {
       __DEV__ && console.log('Setting conversation id...', this.conversationId)
       setSelectedConversationId(this.conversationId)
-      this.props.navigation.navigate('PersonalChat', { title: GetFullName(user._user) })
+      this.props.navigation.navigate('PersonalChat', { title: GetChatName(user._user) })
     }
   }
 /*   _navigateToPersonalChat(user) {
@@ -93,7 +93,7 @@ class MyTeamScreen extends Component {
     const { userId, conversationId } = this.props
     __DEV__ && console.log('Personal Message')
     const conversation = {
-      'title': GetFullName(user._user),
+      'title': GetChatName(user._user),
       'type': 'PRIVATE',
       '_author': userId,
       '_user': user._id
@@ -185,7 +185,7 @@ class MyTeamScreen extends Component {
     )
   }
   _renderMemberRequestLst (isTeamLeader) {
-    const { requests, Lang } = this.props
+    const { requests, Lang, fetching } = this.props
     const teamAcceptRequest = this.teamAcceptRequest.bind(this)
     const teamRejectRequest = this.teamRejectRequest.bind(this)
 
@@ -196,21 +196,23 @@ class MyTeamScreen extends Component {
     if (!isTeamLeader) {
       return null
     }
-
+    if (fetching) {
+      return (<CircleLoader color='blue' />)
+    }
     return (
       <List>
-        <ListItem itemDivider>s
+        <ListItem itemDivider>
           <Text note>{Lang.txt_F03.toUpperCase()}</Text>{/**  REQUEST */}
         </ListItem>
-        { requests.map((user) => (
-          <ListItem key={user._user._id}>
+        { requests.map((teamInvite) => (
+          <ListItem key={teamInvite._user._id}>
             <Body>
-              <Text>{GetFullName(user._user)}</Text>
+              <Text>{GetChatName(teamInvite._user)}</Text>
             </Body>
             <Right>
               <Row>
-                <ButtonIcon iconName='remove' onPress={() => teamRejectRequest(user._user)} />
-                <ButtonIcon iconName='add' onPress={() => teamAcceptRequest(user._user)} />
+                <ButtonIcon iconName='remove' onPress={() => teamRejectRequest(teamInvite)} />
+                <ButtonIcon iconName='add' onPress={() => teamAcceptRequest(teamInvite)} />
               </Row>
             </Right>
           </ListItem>
@@ -237,7 +239,7 @@ class MyTeamScreen extends Component {
 
             <ListItem key={user._user._id}>
               <Body>
-                <Text>{GetFullName(user._user)}</Text>
+                <Text>{GetChatName(user._user)}</Text>
               </Body>
               <Right>
                 <Icon name='chatbubbles' onPress={() => this.chatScreen(user._user)} />
@@ -247,9 +249,9 @@ class MyTeamScreen extends Component {
         }) }
       </List>)
   }
-  teamAcceptRequest (user) {
+  teamAcceptRequest (teamInvite) {
     const { acceptRequest } = this.props
-    acceptRequest(user)
+    acceptRequest(teamInvite)
   }
   teamRejectRequest (user) {
     const { rejectRequest } = this.props
@@ -314,7 +316,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getTeamDetails: (teamId) => dispatch(TeamActions.getTeamDetails(teamId)),
     getTeamRequest: (teamId) => dispatch(TeamActions.getTeamRequest(teamId)),
-    acceptRequest: (user) => dispatch(TeamActions.teamAcceptRequest(user)),
+    acceptRequest: (teamInvite) => dispatch(TeamActions.teamAcceptRequest(teamInvite)),
     rejectRequest: (user) => dispatch(TeamActions.teamRejectRequest(user)),
     declineRequest: (userId, teamId) => dispatch(TeamActions.declineRequest(userId, teamId)),
     fetchConversations: (conversationId) => dispatch(ConversationActions.fetchConversationRequest(conversationId)),

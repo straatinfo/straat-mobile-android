@@ -71,26 +71,31 @@ export function * getTeamDetails (API, action) {
   yield put(TeamActions.teamMergeState({getTeamInfoFetching: false}))
 }
 
-export function * teamAcceptRequest (API, action) {
+export const teamAcceptRequest = function * (API, { teamInvite }) {
   console.log('-- accepting request -- ')
   try {
+    yield put(TeamActions.teamMergeState({getTeamInfoFetching: true}))
     console.log('-- accepting request -- ')
-    const _user = action.user._id
+    const {_user: { _id: userId }, _team: {_id: teamId }, _id: teamInviteId } = teamInvite
     const user = yield select(getUser)
-    const teamId = yield select(getTeamId)
-    const acceptUserResponse = yield call(API.acceptUserRequest, {_user, _team: teamId}, user)
+    // const teamId = yield select(getTeamId)
+    const acceptUserResponse = yield call(API.acceptUserRequest, {_user: userId, _team: teamId}, user)
     __DEV__ && console.log('acceptUserResponse', acceptUserResponse)
 
     if (acceptUserResponse.ok && acceptUserResponse.data.status === 1) {
-     // yield put(TeamActions.requestSuccess(acceptUserResponse.data))
-      yield put(TeamActions.getTeamDetails(action.params))
+      // yield put(TeamListActions.listtarsTeam(teamInvite))
+      // yield put(TeamActions.tarsTeam(teamInvite, acceptUserResponse.data.data.teamMembers ))
+      yield put(TeamActions.getTeamDetails({}))                         // reset team details
+      yield put(TeamListActions.teamlistGetList({}))                    // reset teamList
     }
   } catch (error) {
     console.log(error)
     yield put(TeamActions.requestFailed(error))
   }
+  yield put(TeamActions.teamMergeState({getTeamInfoFetching: false}))
 }
 
+ 
 export function * teamRejectRequest (API, action) {
   try {
     console.log('-- accepting request -- ')
@@ -103,7 +108,8 @@ export function * teamRejectRequest (API, action) {
     if (rejectUserResponse.ok && rejectUserResponse.data.status === 1) {
      // yield put(TeamActions.requestSuccess(acceptUserResponse.data))
      // refresh list
-      yield put(TeamActions.getTeamDetails(action.params))
+      yield put(TeamActions.getTeamDetails({}))                         // reset team details
+      yield put(TeamListActions.teamlistGetList({}))                    // reset teamList
     }
   } catch (error) {
     console.log(error)
@@ -288,3 +294,4 @@ export function * getUserTeamList (API, action) {
   }
   yield put(TeamListActions.teamlistMerge({fetching: false}))
 }
+ 
