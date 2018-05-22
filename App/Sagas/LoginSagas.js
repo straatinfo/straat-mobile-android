@@ -54,10 +54,12 @@ export const login = function * (API, action) {
       yield call(setTheme, design)
       yield call(AppData.setTheme, design)
       yield call(AppData.setLogin, { username: username, password: password })  // save user login data to local
-      yield put(UserActions.mergeState({design: design}))
+      yield put(UserActions.mergeState({design: design, host: userHost}))
      
       yield call(AppData.setLanguage, {code: userLanguage})
       yield put(LanguageActions.setLanguage(userLanguage))
+
+      yield call(AppData.setHost, userHost)  // save host
 
       // filter if it has login message
       const hasBlocker = yield call(onloginPopUp, {userData: userWithToken})

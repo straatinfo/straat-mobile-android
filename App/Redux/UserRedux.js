@@ -67,6 +67,7 @@ export const tempUser = {
 export const INITIAL_STATE = Immutable({
   user: __DEV__ ? tempUser : {language: 'nl'},
   accessCode: null,
+  host: null,
   hostId: null,
   _teamActive: '',
   radius: radius,
@@ -330,4 +331,13 @@ export const getUserState = (state) => {
 
 export const getTeamList = (state) => {
   return state.user.user.teamList
+}
+
+/**
+ * @description
+ * @param r
+ * @return host
+ */
+export const getUserHost = (state) => {
+  return state.user.host
 }
