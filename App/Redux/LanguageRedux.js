@@ -9,7 +9,8 @@ import { AppData } from './commonRedux'
 
 const { Types, Creators } = createActions({
   setLanguage: ['langCode'],
-  initializeLanguage: []
+  initializeLanguage: [],
+  languageMergeState: ['newState']
 })
 
 export const LanguageTypes = Types
@@ -67,11 +68,17 @@ export const initializeLanguage = async (state, action) => {
   return state
 }
 
+export const languageMergeState = (state, { newState }) => {
+  return state.merge(newState)
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_LANGUAGE]: setLanguage,
-  [Types.INITIALIZE_LANGUAGE]: initializeLanguage
+  [Types.INITIALIZE_LANGUAGE]: initializeLanguage,
+  [Types.LANGUAGE_MERGE_STATE]: languageMergeState
+  
 
 })
 

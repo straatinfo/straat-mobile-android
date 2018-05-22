@@ -55,10 +55,14 @@ export const configureApp = function * (action) {
     // set up language base on old user
     const userInfo = yield call(AppData.getUserInfo)
     const oldUser = JSON.parse(userInfo)
-    if (oldUser.language) {
+    if (oldUser && oldUser.language) {
       yield put(LanguageActions.setLanguage(oldUser.language))
+    } else {
+      yield put(LanguageActions.languageMergeState({loadedLaguage: true}))
     }
   } catch (e) {
+    console.log(e)
+    yield put(LanguageActions.languageMergeState({loadedLaguage: true}))
     yield call(setTheme, designDefault)
   }
 }
