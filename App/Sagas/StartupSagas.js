@@ -47,16 +47,18 @@ export const configureApp = function * (action) {
     // set theam base on old user
     const theme = yield call(AppData.getTheme)
     const design = JSON.parse(theme)
+    console.log('theme', theme)
     if (design !== null && design.button !== undefined) {
       yield call(setTheme, design)
-      yield put(UserActions.mergeState({design: design}))
+      yield put(UserActions.mergeState({design: design})) 
     }
 
     // set up language base on old user
-    const userInfo = yield call(AppData.getUserInfo)
-    const oldUser = JSON.parse(userInfo)
-    if (oldUser && oldUser.language) {
-      yield put(LanguageActions.setLanguage(oldUser.language))
+    const applanguage = yield call(AppData.getLanguage)
+    console.log('applanguage', applanguage)
+    const language = JSON.parse(applanguage)
+    if (language && language.code) {
+      yield put(LanguageActions.setLanguage(language.code))
     } else {
       yield put(LanguageActions.languageMergeState({loadedLaguage: true}))
     }

@@ -9,7 +9,7 @@ import { changeto } from '../Redux/ScreenRedux'
 import { popUpAlert } from './../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
 
-import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper'
+import { convertActiveDesignToDesign, designDefault, getHostLangauge } from '../Transforms/themeHelper'
 
 /**
  * try log in user
@@ -26,6 +26,7 @@ export const login = function * (API, action) {
     if (requestedUserAccount.ok && requestedUserAccount.data.status === 1) {
       const _host = requestedUserAccount.data.data.user._host ? requestedUserAccount.data.data.user._host._id : null
       const isSpecific = requestedUserAccount.data.data.user._host ? requestedUserAccount.data.data.user._host.isSpecific : false
+      const userHost = requestedUserAccount.data.data.user._host
 
       userWithToken = {
         radius: USER_INITIAL_STATE.radius,
@@ -48,11 +49,16 @@ export const login = function * (API, action) {
       // save to global for faster access to use account
       global.usersAccount = userWithToken
       const design = convertActiveDesignToDesign({ ...requestedUserAccount.data.data._activeDesign, isSpecific: isSpecific })
+      const userLanguage = getHostLangauge(userHost)
+
       yield call(setTheme, design)
       yield call(AppData.setTheme, design)
       yield call(AppData.setLogin, { username: username, password: password })  // save user login data to local
       yield put(UserActions.mergeState({design: design}))
-      yield put(LanguageActions.setLanguage(userWithToken.language))
+     
+      yield call(AppData.setLanguage, {code: userLanguage})
+      yield put(LanguageActions.setLanguage(userLanguage))
+
       // filter if it has login message
       const hasBlocker = yield call(onloginPopUp, {userData: userWithToken})
       if (hasBlocker.access && hasBlocker.message) {

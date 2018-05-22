@@ -68,11 +68,17 @@ export const AppData = {
     AsyncStorage.setItem('radius', radius)
   },
 
+  setLanguage: (language) => {
+    AsyncStorage.setItem('language', JSON.stringify(language))
+  },
+
   setTheme: (_activeDesign) => {
     AsyncStorage.setItem('theme', JSON.stringify(_activeDesign))
   },
 
   getUserInfo: () => AsyncStorage.getItem('userInfo'),
+
+  getLanguage: () => AsyncStorage.getItem('language'),
 
   getLogin: () => AsyncStorage.getItem('login'),
 
