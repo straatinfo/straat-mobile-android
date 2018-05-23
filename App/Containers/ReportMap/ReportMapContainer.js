@@ -516,13 +516,13 @@ class ReportMapContainer extends Component {
               </MapView.Callout>
             </MapView.Marker >}
             <MapView.Circle
-              center={reportState.reportCoordinate}
+              center={reportState.userPosition}
               radius={300}
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.30)'}
                     />
             <MapView.Circle
-              center={reportState.reportCoordinate}
+              center={reportState.userPosition}
               radius={5}
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.60)'} />
