@@ -1,4 +1,4 @@
-import { Design } from '../Services/Constant'
+import { Design, Languages } from '../Services/Constant'
 
 export const designDefault = Design
 
@@ -63,4 +63,17 @@ export const lighten = (p, c0, c1) => {
     const B1 = f & 0x0000FF
     return '#' + (0x1000000 + (u(((t >> 16) - R1) * n) + R1) * 0x10000 + (u(((t >> 8 & 0x00FF) - G1) * n) + G1) * 0x100 + (u(((t & 0x0000FF) - B1) * n) + B1)).toString(16).slice(1)
   }
+}
+
+export const getHostLangauge = (host) => {
+  const languageSetting = host.language
+  if (languageSetting) {
+    if (
+      languageSetting === Languages.ENGLISH ||
+      languageSetting === Languages.DUTCH
+    ) {
+      return languageSetting
+    }
+  }
+  return Languages.DUTCH
 }

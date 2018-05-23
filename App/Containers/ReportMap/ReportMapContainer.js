@@ -30,7 +30,6 @@ import MapView from 'react-native-maps'
 
 import { ReportTypes, ReportStatus } from './../../Services/Constant'
 import Api from './../../Lib/Common/Api'
-import Lang from './../../Lib/CutomLanguage'
 import ApiUtil from './../../Lib/Common/ApiUtil'
 import AlertBox from './../../Components/AlertBox'
 import Images from './../../Themes/Images'
@@ -45,6 +44,8 @@ import ReportStyle from './../../Components/ReportDashboard/ReportStyle.js'
 import styles from './style'
 import { reportCoordinate, getReportsNearbyRequest } from '../../Redux/ReportsRedux'
 import { cropWH } from '../../Transforms/Cloudinary'
+import DebugConfig from './../../Config/DebugConfig'
+
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
  *
@@ -318,6 +319,7 @@ class ReportMapContainer extends Component {
   }
 
   changeStatus (reportID) {
+    const { Lang } = this.props
     Api.changeStatus({ status: 1, report_id: reportID }, this.props.user.access_token)
     .then(result => {
       // check if success
@@ -335,6 +337,7 @@ class ReportMapContainer extends Component {
   }
 
   confirmChangeStatus (reportID) {
+    const { Lang } = this.props
     AlertBox.alert(' ',
       Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeStatus(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
       { cancelable: false }
@@ -458,13 +461,16 @@ class ReportMapContainer extends Component {
     return Images.pinNew
   }
   render () {
-    const { reportMergeState, reportState, user, navigation, design } = this.props
+    const { reportMergeState, reportState, user, navigation, design, Lang } = this.props
     // console.log('reportState ', reportState)
     const { currentCoordinate, reportPosition, mapState } = this.state
     const calloutOnPress = this.calloutOnClick.bind(this)
     const confirmChangeStatus = this.confirmChangeStatus.bind(this)
     const pinImage = this.pinImage
     const heights = this.getHeight()
+    if (!DebugConfig.displayGoogleMap) {
+      return null
+    }
     return (
       <View style={styles.container}>
         {renderIf(this.state.mapReset === 1)(
@@ -510,13 +516,13 @@ class ReportMapContainer extends Component {
               </MapView.Callout>
             </MapView.Marker >}
             <MapView.Circle
-              center={reportState.reportCoordinate}
-              radius={user.radius}
+              center={reportState.userPosition}
+              radius={300}
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.30)'}
                     />
             <MapView.Circle
-              center={reportState.reportCoordinate}
+              center={reportState.userPosition}
               radius={5}
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.60)'} />

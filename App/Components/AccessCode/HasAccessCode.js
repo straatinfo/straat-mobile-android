@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler  } from 'react-native'
+import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler } from 'react-native'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container,
    Card, CardItem, ListItem, Right, Radio, Left, Content, Segment, Header, Tabs, Tab, TabHeading, Icon, Center} from 'native-base'
-   
+import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
-import Lang from './../../Lib/CutomLanguage'
 import {Fonts, Colors} from './../../Themes'
 import style from './style'
 import CenterView from './../../Components/CenterView'
@@ -14,6 +13,7 @@ import Spacer from './../../Components/Spacer'
 
 class HasAccessCode extends Component {
   render () {
+    const { Lang } = this.props
     const TextStyles = {
       fontSize: Fonts.size.h5,
       textAlign: 'center'
@@ -41,12 +41,16 @@ class HasAccessCode extends Component {
   }
 }
 
-export default HasAccessCode
-/**
- *
- *     return (
-      <View style={style.container}>
-        <View style={{ backgroundColor: 'red', flex:1 }}>
-        <Text style={{ textAlign: 'center' }}>jalord></Text></View>
-      </View>
- */
+const mapStateToProps = state => {
+  return {
+    Lang: state.language.Languages
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HasAccessCode)

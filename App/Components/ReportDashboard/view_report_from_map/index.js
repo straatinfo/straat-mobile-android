@@ -9,7 +9,6 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-import Lang from './../../../Lib/CutomLanguage'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import renderIf from 'render-if'
 import ImageLoad from 'react-native-image-placeholder'
@@ -43,7 +42,7 @@ class Status extends Component {
     this.state = {}
   }
   render () {
-    const { status } = this.props
+    const { status, Lang } = this.props
     const btnStyle = StyleSheet.create({
       changeStatusCon: {
         backgroundColor: '#09bcad',
@@ -110,6 +109,7 @@ class ViewReportFromMap extends Component {
   }
 
   confirmChangeStatus (reportID) {
+    const { Lang } = this.props
     AlertBox.alert(' ',
       Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeStatus(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
       { cancelable: false }
@@ -120,7 +120,7 @@ class ViewReportFromMap extends Component {
   }
   render () {
     // default value and eee
-    const { reportDetails, screen } = this.props
+    const { reportDetails, screen, Lang } = this.props
     const report = { ...Report, ...reportDetails }
     return (
       <View style={styles.container}>
@@ -172,7 +172,7 @@ class ViewReportFromMap extends Component {
                     <Text style={[ styles.f16 ]}> { Lang.txt_J09 }</Text>
                   </View>
                   <View style={[ styles.w50, styles.statusValue ]}>
-                    <Status status={report.status} onChangeStatus={() => this.confirmChangeStatus(report._id)} reacordID={report._id} />{ /** report status value */ }
+                    <Status status={report.status} onChangeStatus={() => this.confirmChangeStatus(report._id)} reacordID={report._id} Lang={Lang} />{ /** report status value */ }
                   </View>
                 </View>
               </View>
@@ -301,7 +301,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    reportDetails: state.reports.reportDetails
+    reportDetails: state.reports.reportDetails,
+    Lang: state.language.Languages
   }
 }
 

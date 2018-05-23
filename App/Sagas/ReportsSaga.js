@@ -4,12 +4,12 @@ import { put, call, select } from 'redux-saga/effects'
 import { popUpAlertV2 } from '../Lib/Helper/alertHelper'
 import language from '../Lib/CutomLanguage'
 import { ReportStatus, SocketTypes } from '../Services/Constant'
-import { getUser, getTeamList } from '../Redux/UserRedux'
-import { filterReportsByMapView } from '../Transforms/ReportHelper'
+import { getUser, getTeamList, getUserHost } from '../Redux/UserRedux'
+import { filterReportsByMapView, sortCategories } from '../Transforms/ReportHelper'
 
 import ReportsActions, { processReport, getReportParams, stripUploadedPhoto, getReportMapMarkerList } from './../Redux/ReportsRedux'
 import MyReportActions, { getMyReportList } from './../Redux/MyReportRedux'
-import { CONNECTION } from '../Services/AppSocket';
+import { CONNECTION } from '../Services/AppSocket'
 
 /**
  * getNearbyReports
@@ -31,7 +31,7 @@ const tempdata = {
  * @param  { coordinate, user }
  *
  */
-export function * getNearbyReports (API, action) {
+export const getNearbyReports = function * (API, action) {
   const { coordinate, user } = action.reportsParams
   // coordinate { longitude, latitude}, user {accessToken, radius}
   try {
@@ -71,7 +71,7 @@ export function * getNearbyReports (API, action) {
  * @param { coordinate, user, _host }
  *
  */
-export function * getReportAddress (API, action) {
+export const getReportAddress = function * (API, action) {
   const { coordinate } = action // no need for token cuuse it only get from googleAPI
 
   const user = yield select(getUser)
@@ -105,11 +105,11 @@ export function * getReportAddress (API, action) {
  *
  * @description upload photo
  * @param       photo {uri, fileName, type }
- *              
- * 
- * 
+ *
+ *
+ *
  */
-export function * uploadPhoto (API, action) {
+export const uploadPhoto = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.uploading)
 
@@ -153,23 +153,42 @@ export function * uploadPhoto (API, action) {
  *
  */
 
-export function * getCategories (API, action) {
+export const getCategories = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.fetching)
   const { reportsParams: { _reportType } } = action
-  const { _host, _hostIsSpecific, token, language: lang } = yield select(getUser)
+  const { _host, token} = yield select(getUser)
+  const { isSpecific, language: lang } = yield select(getUserHost)
+
   __DEV__ && console.log('saga getCategories reportsParams', action)
   try {
+    // getting general categories
     // fetch from backend _hostIsSpecific
-    const result = yield call( _hostIsSpecific ? API.getCategories : API.getCategoriesGeneral, { _reportType, _host, token, language: lang })
+    const result = yield call(API.getCategoriesGeneral, { _reportType, _host, token, language: lang })
     __DEV__ && console.log('saga getCategories', result)
 
     // status success
     if (result.ok && result.data.status === 1) {
-      yield put(ReportsActions.reportMergeState({reportCategoryList: result.data.data}))
+     // must add sorting here base on may 19 , 2018
+      yield put(ReportsActions.reportMergeState({reportGeneralCategoryList: sortCategories(result.data.data)}))
     } else {
       throw new Error(language.error)
     }
+
+    if (isSpecific) {
+      // getting specific categories
+      const specificCategories = yield call(API.getCategories, { _reportType, _host, token, language: lang })
+      __DEV__ && console.log('saga getCategories', result)
+
+      // status success
+      if (specificCategories.ok && specificCategories.data.status === 1) {
+        // must add sorting here base on may 19 , 2018
+        yield put(ReportsActions.reportMergeState({reportCategoryList: sortCategories(specificCategories.data.data)}))
+      } else {
+        throw new Error(language.error)
+      }
+    }
+
    // __DEV__ && console.log('success photo', result.data.data)
   } catch (e) {
     __DEV__ && console.log(e)
@@ -188,7 +207,7 @@ export function * getCategories (API, action) {
  *
  */
 
-export function * submitReport (API, action) {
+export const submitReport = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
 
@@ -217,8 +236,18 @@ export function * submitReport (API, action) {
       if (reportParams.type !== 'C') {
         yield put(ReportsActions.reportMergeState({reportMapMarkerList: [...pointList, data]}))
       }
+
+      // send socket notification
       const socketConnection = CONNECTION.getConnection()
-      socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: data})
+      if (reportParams.type !== 'C') {
+        socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: data})
+      } else if (reportParams.type === 'C') {
+        data.success.map(report => {
+          socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: report})
+        })
+      } else {
+        console.log('no noti to')
+      }
     } else if (result.ok && result.data.status === 0) {
       throw new Error(result.data.data.error) // success sending but error on something
     } else {
@@ -242,7 +271,7 @@ export function * submitReport (API, action) {
  *
  */
 
-export function * changeStatus (API, action) {
+export const changeStatus = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
   const user = yield select(getUser)

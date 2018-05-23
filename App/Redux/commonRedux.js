@@ -51,6 +51,10 @@ export const AppData = {
   setUserInfo: (user) => {
     AsyncStorage.setItem('userInfo', JSON.stringify(user))
   },
+  
+  setHost: (host) => {
+    AsyncStorage.setItem('host', JSON.stringify(host))
+  },
 
   setLogin: (user) => {
     AsyncStorage.setItem('login', JSON.stringify(user))
@@ -68,11 +72,19 @@ export const AppData = {
     AsyncStorage.setItem('radius', radius)
   },
 
+  setLanguage: (language) => {
+    AsyncStorage.setItem('language', JSON.stringify(language))
+  },
+
   setTheme: (_activeDesign) => {
     AsyncStorage.setItem('theme', JSON.stringify(_activeDesign))
   },
 
+  getHost: () => AsyncStorage.getItem('host'),
+
   getUserInfo: () => AsyncStorage.getItem('userInfo'),
+
+  getLanguage: () => AsyncStorage.getItem('language'),
 
   getLogin: () => AsyncStorage.getItem('login'),
 

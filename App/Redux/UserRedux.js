@@ -25,7 +25,8 @@ const { Types, Creators } = createActions({
   forgotPasswordRequest: ['eMail', 'callback'],
   userReset: ['params'],
   userChangeRadius: ['radius'],
-  updateUser: ['user']
+  updateUser: ['user'],
+  teamlistGetuser: ['user'],
 })
 
 export const CurrentUserTypes = Types
@@ -67,12 +68,13 @@ export const tempUser = {
 export const INITIAL_STATE = Immutable({
   user: __DEV__ ? tempUser : {language: 'nl'},
   accessCode: null,
+  host: null,
   hostId: null,
   _teamActive: '',
   radius: radius,
   error: null,
   fetching: false,
-
+  userTeamList: [],
   // for registration
   isValidatedUserEmail: false,
   isValidatedPostalCode: false,
@@ -330,4 +332,13 @@ export const getUserState = (state) => {
 
 export const getTeamList = (state) => {
   return state.user.user.teamList
+}
+
+/**
+ * @description
+ * @param r
+ * @return host
+ */
+export const getUserHost = (state) => {
+  return state.user.host
 }

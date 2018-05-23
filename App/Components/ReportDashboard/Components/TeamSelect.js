@@ -17,7 +17,8 @@ import Spacer from '../../Spacer'
 
 import colors from './../../../Themes/Colors'
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-import ReportsActions from './../../../Redux/ReportsRedux'
+import ReportsActions from  './../../../Redux/ReportsRedux'
+import TeamListActions from './../../../Redux/TeamListRedux'
 import UserActions from './../../../Redux/UserRedux'
 import { connect } from 'react-redux'
 import { modelFindById, isInArray } from '../../../Transforms/ArrayHelper'
@@ -56,9 +57,10 @@ class TeamSelect extends Component {
     }
   }
   componentDidMount () {
-    const { user: {_host, isVolunteer}, teamList } = this.props
+    const { user: {_host, isVolunteer, _id}, teamList } = this.props
     if (teamList.length < 5) {
-      this.props.getTeamlist(_host, isVolunteer)
+      // this.props.getTeamlist(_host, isVolunteer, _id)
+      this.props.teamlistGetList({})
     }
   }
 
@@ -78,6 +80,8 @@ class TeamSelect extends Component {
     // }
    // const { count } = this.state
     const { teamList, reportTeamSelected, fetchTeam, navigation } = this.props
+    __DEV__ && console.log('teamList', teamList)
+    __DEV__ && console.log('reportTeamSelected', reportTeamSelected)
     if (fetchTeam === true) {
       return (<CircleLoader color='blue' />)
     }
@@ -212,17 +216,19 @@ const styles = {
 const mapStateToProps = state => {
   return {
     user: state.user.user,
-    teamList: state.user.teamList,
-  //  reportState: state.reports,
+    // teamList: state.user.teamList,
+    teamList: state.teamList.teamList,
+    //  reportState: state.reports,
     reportTeamSelected: state.reports.reportTeamSelected,
-    fetchTeam: state.reports.fetchTeam
+    fetchTeam: state.teamList.fetching
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTeamlist: (_host, isVolunteer) => dispatch(UserActions.getTeamlist({_host, isVolunteer})),
-    reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState))
+    getTeamlist: (_host, isVolunteer, _user) => dispatch(UserActions.getTeamlist({_host, isVolunteer, _user})),
+    reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState)),
+    teamlistGetList: (params) => dispatch(TeamListActions.teamlistGetList(params))
   }
 }
 

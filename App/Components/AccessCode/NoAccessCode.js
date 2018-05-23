@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, BackHandler } from 'react-native'
-
-import Lang from './../../Lib/CutomLanguage'
+import { connect } from 'react-redux'
 import { Fonts } from './../../Themes'
 // import style from './style'
 import CenterView from './../../Components/CenterView'
@@ -11,6 +10,7 @@ import Spacer from './../../Components/Spacer'
 
 class NoAccessCode extends Component {
   render () {
+    const { Lang } = this.props
     const TextStyles = {
       fontSize: Fonts.size.h5,
       textAlign: 'center'
@@ -33,4 +33,16 @@ class NoAccessCode extends Component {
   }
 }
 
-export default NoAccessCode
+const mapStateToProps = state => {
+  return {
+    Lang: state.language.Languages
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoAccessCode)

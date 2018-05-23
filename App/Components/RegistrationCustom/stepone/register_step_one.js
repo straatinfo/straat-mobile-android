@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
 import LinearGradient from 'react-native-linear-gradient'
 
-import Lang from './../../../Lib/CutomLanguage'
 import { CheckBox } from 'react-native-elements'
 import HorizontalSpace from './../../RegistrationCustom/Components/HorizontalSpace'
 import styles from './../stepone/style'
@@ -30,6 +29,7 @@ import { checkPassword } from '../../../Transforms/RegistrationHelper';
 class RegistrationStepOne extends Component {
   constructor (props) {
     super(props)
+    const { Lang } = this.props
     // maybe later  ENGLISH wil become en
     this.state = {
       terms: false,
@@ -65,17 +65,20 @@ class RegistrationStepOne extends Component {
     this.props.onValidate()
   }
   _onPressUserNamehelp () {
+    const { Lang } = this.props
     Alert.alert(' ', Lang.txt_D35,
       [{text: 'OK', onPress: () => {}}],
       { cancelable: true })
   }
   showTerms () {
+    const { Lang } = this.props
     // Ik accepteer hierbij de algemene voorwaarden
     Alert.alert(Lang.txt_D31, Lang.txt_D33,
       [{text: 'Cancel', onPress: () => this._onSelectTerms(false)}, {text: Lang.txt_D32, onPress: () => this._onSelectTerms(true)}],
       { cancelable: false })
   }
   validatePassword (password) {
+    const { Lang } = this.props
     if (!checkPassword(password)) {
       errorAlert(Lang.txt_D48)
       this.props.parentChangeState({isValidPassword: false})
@@ -88,7 +91,7 @@ class RegistrationStepOne extends Component {
 
   render () {
     const { languages, genders } = this.state
-    const { onValidate, liveValidation, gotoLogin, showInvalid, onSubmit, design } = this.props
+    const { onValidate, liveValidation, gotoLogin, showInvalid, onSubmit, design, Lang } = this.props
 
     // parents state use for reload of components
     const { gender, first_name, last_name, username, postUserName, password,
@@ -104,7 +107,7 @@ class RegistrationStepOne extends Component {
         <TabContentTitle title={Lang.txt_D04} />
         <View style={styles.verticalSpacing} />
         <View style={styles.textInputContainer}>
-          <GenderSelection genders={genders} selected={gender} onSelectGender={this._onClickGender.bind(this)} />
+          <GenderSelection genders={genders} selected={gender} onSelectGender={this._onClickGender.bind(this)} title={Lang.txt_D29} />
         </View>
         <View style={styles.verticalFieldsSpacing} />
         <View style={styles.textInputContainer}>
@@ -262,7 +265,8 @@ class RegistrationStepOne extends Component {
 
 const mapStateToProps = state => {
   return {
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

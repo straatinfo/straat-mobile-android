@@ -10,7 +10,6 @@ import ImagePicker from 'react-native-image-picker'
 
 import RowView from '../../RowView'
 import CenterView from '../../CenterView'
-import Lang from './../../../Lib/CutomLanguage'
 import InputTextBox from './InputTextBox'
 import CircleButton from './../../../Components/CircleButton'
 import GeneralDesign from './../../../Lib/GeneralDesign'
@@ -43,7 +42,7 @@ class CreateTeam extends Component {
   }
 
   _onPickImagePress () {
-    const { setTeamPhoto } = this.props
+    const { setTeamPhoto, Lang } = this.props
     const title = Lang.txt_D40
 
     const options = {
@@ -77,7 +76,7 @@ class CreateTeam extends Component {
   render () {
     __DEV__ && console.log('rendering create team')
     const { MainButton } = GeneralDesign
-    const { onRegisterSubmit, title, onClose, parentSetState, liveValidation, validateCreateTeam, liveValidated: { isValidatedTeamEmail, isValidatedTeamName }, design } = this.props
+    const { onRegisterSubmit, title, onClose, parentSetState, liveValidation, validateCreateTeam, liveValidated: { isValidatedTeamEmail, isValidatedTeamName }, design, Lang } = this.props
     const { teamName, teamEmailAddress, teamLogo, validation: { personalDataForm, volunteerOptionForm }, register_option: registerOption } = this.props.parentState
     const enableRegister = personalDataForm && volunteerOptionForm && (registerOption === 2) && isValidatedTeamName && isValidatedTeamEmail
     // const enableRegister = (registerOption === 2) && isValidatedTeamEmail && isValidatedTeamName
@@ -123,7 +122,8 @@ class CreateTeam extends Component {
 
 const mapStateToProps = state => {
   return {
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

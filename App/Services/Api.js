@@ -67,7 +67,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
   /**               @param {params, user}          */
-  const getReportsByReporter = ({ params, user: { _id, token, language } }) => {
+  const getReportsByReporter = ({ params, user: { _id, token }, host: { language } }) => {
     // return api.get('v1/api/report/reporter/' + _id,
     return api.get('v1/api/report/clean/reporter/' + _id,
     { language },
@@ -81,7 +81,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
   /**               @param {params, user}          */
-  const getReportById = ({ params, user: { token, language } }) => {
+  const getReportById = ({ params, user: { token }, host: { language } }) => {
     const { _id } = params
     return api.get('v1/api/report/' + _id,
       { language },
@@ -142,7 +142,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
-  const getPublicReports = ({ _reportType, user:{ _id, language, token } }) => {
+  const getPublicReports = ({ _reportType, user:{ _id, token }, host:{ language } }) => {
     return api.get('v1/api/report/public',
       {
         _reporter: _id,
@@ -279,7 +279,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
-  const getTeamList = ({ filter: queryObject }) => {
+  const getTeamList = ({ filter: queryObject, user }) => {
     /**
      * @param {hostId && isVolunteer }
      * && means optional to right

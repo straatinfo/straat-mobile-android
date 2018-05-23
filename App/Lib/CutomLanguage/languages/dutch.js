@@ -290,35 +290,6 @@ export default {
   // Report
   txt_E10: 'GEEF MELDING DOOR',
 
-   // MY TEAM
-  //Add extra team
-  txt_F01: 'Maak extra team aan',
-
-  //Change teamprofile
-  txt_F02: 'Wijzig teamprofiel',
-
-  //Request new members
-  txt_F03: 'Aanvraag nieuw leden',
-
-  //Invite friends
-  txt_F04: 'Vrienden Uitnodigen',
-
-  txt_F05: 'Huidige leden',
-
-  txt_F06: 'Gemeente',
-
-  txt_F07: 'Team Naam',
-
-  txt_F08: 'Team e-mailadres',
-
-  txt_F09: 'Pas Team ID aan',
-
-  txt_F10: 'Een nieuw team starten',
-
-  txt_F11: 'Selecteer teamlogo',
-
-  txt_F12: 'REGISTEREN',
-
   txt_F13: 'Voeg nieuw team toe',
 
   // REPORTS
@@ -498,18 +469,15 @@ export default {
   /** @description Urgent? First call 112 */
   txt_J44: 'Spoed? Bel eerst 112',
 
-  
-
   /** @description General Information */
   generalInformation: 'Algemene Informatie',
- 
+
   /** @description Request */
   request: 'Verzoek',
-  
+
   /** @description Already Taken */
   alreadyTaken: 'Al Bezet',
 
-  
   // MY TEAM
   // Add extra team
   txt_F01: 'Maak extra team aan',
@@ -629,16 +597,16 @@ export default {
   modify: 'wijzigen',
 
   sendMessage: 'Verzend Bericht',
-  
+
   noChanges: 'Geen veranderingen',
-  
+
   // Setting M
 
   // Setting Module
   // Report Time A
-  
+
   txt_Z07: 'Voeg team toe',
-  
+
   txt_Z08: 'Naam',
 
   txt_Z09: 'Schrijf hier uw probleem of tip voor verbetering.',
@@ -648,17 +616,15 @@ export default {
   txt_Z11: 'Straat.info is ontwikkeld, getest en gebruikt met buurtpreventieteams   in hun dagelijkse werk. We doen ons best on uw gebruikerservaring zo hoog  mogelijk te laten zijn.',
 
   txt_Z12: 'Als u vragen heeft of tips om de app te verbeteren dan zijn we erg geinteresseerd. Laat het ons weten!',
-  
+
   txt_Z13: 'GEEF FEEDBACK ',
 
   txt_Z14: 'Geen nieuwe aanvragen.',
 
   txt_Z15: 'Geen leden in het team.',
-  
 
- 
-  //Setting Module
-  //Report Time A
+  // Setting Module
+  // Report Time A
   txt_S01: 'Openbare Ruimte',
 
   // Report Time B
@@ -701,12 +667,13 @@ export default {
   // Change my Data
   txt_P06: 'WIJZIG MIJN GEGEVENS',
 
-  txt_Z07: 'Voeg team toe',
-
   /** @description Address */
   address: 'Adres',
 
   txt_END: 'END',
 
-  txt_CONVERSATION_TITLE: 'Gespreks Titel' 
+  txt_CONVERSATION_TITLE: 'Gespreks Titel',
+
+  /** @description Show */
+  show: 'Toon'
 }

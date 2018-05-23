@@ -1,57 +1,39 @@
-import React, { Component, PropTypes } from 'react'
-import { View, StatusBar, ScrollView, Image, TouchableOpacity, BackHandler } from 'react-native'
-import { Text, Container, Header, Content, Title, Button, Right, Body, Icon, Left, FlatList, List, ListItem, Thumbnail, H1, H2, H4, Card, CardItem } from 'native-base'
-import { Col, Row, Grid } from 'react-native-easy-grid'
-import Triangle from 'react-native-triangle'
-import LinearGradient from 'react-native-linear-gradient'
+import React, { Component } from 'react'
+import { View, BackHandler } from 'react-native'
+import { Text, Container, Content, Button, Right, Body, Icon, Left, List, ListItem, Thumbnail, H1, Card, CardItem } from 'native-base'
 import { connect } from 'react-redux'
-import Styles from './Styles'
-import Lang from '../../Lib/CutomLanguage'
-import Api from '../../Lib/Common/Api'
-import TeamActions from '../../Redux/TeamRedux'
-import RequestActions from '../../Redux/UserRequestRedux'
-import { getTeamRequest } from '../../Sagas/TeamSagas'
+import { Col, Row, Grid } from 'react-native-easy-grid'
 import { crop } from '../../Transforms/Cloudinary'
+import { Images, Colors } from '../../Themes'
 import { getTeamLogo, checkLeaderById, isActiveTeam } from '../../Transforms/TeamHelper'
-import CircleLoader from '../../Components/CircleLoader'
-import HeaderInDrawer from '../../Components/HeaderInDrawer'
-import colors, { Images, Colors } from '../../Themes'
-import Spacer from '../../Components/Spacer'
-import { GetFullName } from '../../Transforms/NameUtils'
-import ButtonIcon from './../../Components/ButtonIcon'
-import MainButton from '../../Components/MainButton'
-import Conversation from '.././Conversation'
-import { CONNECTION } from '../../Services/AppSocket'
-import ConversationActions from '../../Redux/ConversationRedux'
-import SocketActions from '../../Redux/SocketRedux'
+import { GetFullName, GetChatName } from '../../Transforms/NameUtils'
 import { SocketTypes, ConvoTypes, convoOption } from '../../Services/Constant'
+import ButtonIcon from './../../Components/ButtonIcon'
+import CircleLoader from '../../Components/CircleLoader'
+import ConversationActions from '../../Redux/ConversationRedux'
+import MainButton from '../../Components/MainButton'
+import HeaderInDrawer from '../../Components/HeaderInDrawer'
+import SocketActions from '../../Redux/SocketRedux'
+import Spacer from '../../Components/Spacer'
+import Styles from './Styles'
+import TeamActions from '../../Redux/TeamRedux'
+import Triangle from 'react-native-triangle'
 
 class MyTeamScreen extends Component {
   conversationId = null
-
   constructor (props) {
     super(props)
-
     this.state = {
       isSuccess: false
     }
   }
 
   componentWillMount () {
-
-    const { getTeamDetails, teamId } = this.props
-    
+    const { getTeamDetails } = this.props
     getTeamDetails()
   }
 
   componentDidMount () {
-    // const { userId, conversationId } = this.props
-    // this.connection = CONNECTION.getConnection(userId)
-    // this.connectionId = CONNECTION.connectionId
-    // console.log('Conversation socket: ', this.connection)
-    // console.log('Conversation socket: ConnectionId ', this.connectionId)
-    // console.log('Conversation props: ', this.props)
-
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
@@ -64,11 +46,11 @@ class MyTeamScreen extends Component {
   }
 
   chatScreen (user) {
-    console.log('user', user)
+    __DEV__ && console.log('user', user)
     this.props.navigation.navigate('Chat', {
-    //  conversationId: '5ae2369ee5424662ecfaaece',
+      //  conversationId: '5ae2369ee5424662ecfaaece',
       title: user.username,
-   //  messages: [],
+      //  messages: [],
       option: convoOption.BYTYPE,
       target: {_id: user._id},  //  {_id: '5adf2b173e894d0014c77f53'},
       type: ConvoTypes.USER
@@ -79,28 +61,28 @@ class MyTeamScreen extends Component {
   _navigateToPersonalChat = user => {
     const connectionId = this.connectionId
     this.conversationId = user.conversations[0]
-    const { navigation, setSelectedConversationId, nav } = this.props
-    console.log('personal conversation params: ', user)
+    const { setSelectedConversationId } = this.props
+    __DEV__ && console.log('personal conversation params: ', user)
     if (!user.convesations[0]) {
-      console.log('Creating personal conversation...')
+      __DEV__ && console.log('Creating personal conversation...')
       this._createConversation(user)
     }
-    console.log('PM ConversationId: ', this.conversationId)
-    console.log('entering-convo: Emitting...', SocketTypes.ENTER_CONVO)
+    __DEV__ && console.log('PM ConversationId: ', this.conversationId)
+    __DEV__ && console.log('entering-convo: Emitting...', SocketTypes.ENTER_CONVO)
     this.connectionId.emit(SocketTypes.ENTER_CONVO, {
       '_conversation': this.conversationId,
       '_connection': connectionId
     })
     this.connectionId.on(SocketTypes.ENTER_CONVO, data => {
-      console.log('entering-convo: Emit Response: ', data)
+      __DEV__ && console.log('entering-convo: Emit Response: ', data)
       if (data && data.status === 1) {
         this.setState({ isSuccess: true })
       }
     })
     if (this.state.isSuccess === true) {
-      console.log('Setting conversation id...', this.conversationId)
+      __DEV__ && console.log('Setting conversation id...', this.conversationId)
       setSelectedConversationId(this.conversationId)
-      this.props.navigation.navigate('PersonalChat', { title: GetFullName(user._user) })
+      this.props.navigation.navigate('PersonalChat', { title: GetChatName(user._user) })
     }
   }
 /*   _navigateToPersonalChat(user) {
@@ -109,9 +91,9 @@ class MyTeamScreen extends Component {
 
   _createConversation = user => {
     const { userId, conversationId } = this.props
-    console.log('Personal Message')
+    __DEV__ && console.log('Personal Message')
     const conversation = {
-      'title': GetFullName(user._user),
+      'title': GetChatName(user._user),
       'type': 'PRIVATE',
       '_author': userId,
       '_user': user._id
@@ -191,7 +173,7 @@ class MyTeamScreen extends Component {
   }
   _renderGroupButton (isTeamLeader) {
     // show if user is leader member of this team
-    const { navigation: { navigate } } = this.props
+    const { navigation: { navigate }, Lang } = this.props
     if (!isTeamLeader) {
       return (<Spacer />)
     }
@@ -203,7 +185,7 @@ class MyTeamScreen extends Component {
     )
   }
   _renderMemberRequestLst (isTeamLeader) {
-    const { requests } = this.props
+    const { requests, Lang, fetching } = this.props
     const teamAcceptRequest = this.teamAcceptRequest.bind(this)
     const teamRejectRequest = this.teamRejectRequest.bind(this)
 
@@ -214,21 +196,23 @@ class MyTeamScreen extends Component {
     if (!isTeamLeader) {
       return null
     }
-
+    if (fetching) {
+      return (<CircleLoader color='blue' />)
+    }
     return (
       <List>
         <ListItem itemDivider>
           <Text note>{Lang.txt_F03.toUpperCase()}</Text>{/**  REQUEST */}
         </ListItem>
-        { requests.map((user) => (
-          <ListItem key={user._user._id}>
+        { requests.map((teamInvite) => (
+          <ListItem key={teamInvite._user._id}>
             <Body>
-              <Text>{GetFullName(user._user)}</Text>
+              <Text>{GetChatName(teamInvite._user)}</Text>
             </Body>
             <Right>
               <Row>
-                <ButtonIcon iconName='remove' onPress={() => teamRejectRequest(user._user)} />
-                <ButtonIcon iconName='add' onPress={() => teamAcceptRequest(user._user)} />
+                <ButtonIcon iconName='remove' onPress={() => teamRejectRequest(teamInvite)} />
+                <ButtonIcon iconName='add' onPress={() => teamAcceptRequest(teamInvite)} />
               </Row>
             </Right>
           </ListItem>
@@ -237,8 +221,8 @@ class MyTeamScreen extends Component {
     )
   }
   _renderTeamMemberList () {
-    const { team: { teamMembers }, userId } = this.props
-    console.log('team members', this.props)
+    const { team: { teamMembers }, userId, Lang } = this.props
+    __DEV__ && console.log('team members', this.props)
     if (!(teamMembers && teamMembers.length > 1)) {
       return null
     }
@@ -255,7 +239,7 @@ class MyTeamScreen extends Component {
 
             <ListItem key={user._user._id}>
               <Body>
-                <Text>{GetFullName(user._user)}</Text>
+                <Text>{GetChatName(user._user)}</Text>
               </Body>
               <Right>
                 <Icon name='chatbubbles' onPress={() => this.chatScreen(user._user)} />
@@ -265,9 +249,9 @@ class MyTeamScreen extends Component {
         }) }
       </List>)
   }
-  teamAcceptRequest (user) {
+  teamAcceptRequest (teamInvite) {
     const { acceptRequest } = this.props
-    acceptRequest(user)
+    acceptRequest(teamInvite)
   }
   teamRejectRequest (user) {
     const { rejectRequest } = this.props
@@ -276,16 +260,15 @@ class MyTeamScreen extends Component {
 
   render () {
     const { team: { teamLeaders }, userId } = this.props
-    // console.log('details', this.props.requests.length);
-    const { currentMembers, team, requests, fetching, navigation } = this.props
+    const { team, fetching, navigation, Lang } = this.props
     if (fetching) {
       return (<CircleLoader color='blue' />)
     }
     const isTeamLeader = checkLeaderById(userId, teamLeaders)
     const ifActiveTeam = isActiveTeam(team)
-    console.log('team', team)
+    __DEV__ && console.log('team', team)
     return (
-      <Container style={{backgroundColor: Colors.background }}>
+      <Container style={{ backgroundColor: Colors.background }}>
         <HeaderInDrawer navigation={navigation} title={Lang.txt_E03} nhBack />
         <Content>
           <View style={Styles.topHeader}>
@@ -323,7 +306,8 @@ const mapStateToProps = state => {
     conversations: state.user.conversations,
     conversationId: state.conversation.conversationId,
     connectionId: state.socket.connectionId,
-    nav: state.nav
+    nav: state.nav,
+    Lang: state.language.Languages
 
   }
 }
@@ -332,7 +316,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getTeamDetails: (teamId) => dispatch(TeamActions.getTeamDetails(teamId)),
     getTeamRequest: (teamId) => dispatch(TeamActions.getTeamRequest(teamId)),
-    acceptRequest: (user) => dispatch(TeamActions.teamAcceptRequest(user)),
+    acceptRequest: (teamInvite) => dispatch(TeamActions.teamAcceptRequest(teamInvite)),
     rejectRequest: (user) => dispatch(TeamActions.teamRejectRequest(user)),
     declineRequest: (userId, teamId) => dispatch(TeamActions.declineRequest(userId, teamId)),
     fetchConversations: (conversationId) => dispatch(ConversationActions.fetchConversationRequest(conversationId)),

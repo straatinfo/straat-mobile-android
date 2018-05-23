@@ -17,7 +17,7 @@ import ChangeTeamLogoScreen    from '../Containers/MyTeam/ChangeTeamLogoScreen'
 import ChangeTeamProfileScreen from '../Containers/MyTeam/ChangeTeamProfileScreen'
 import MyTeam                  from '../Containers/MyTeam'
 import MyTeamScreen            from '../Containers/MyTeam/MyTeamScreen'
-import TeamListScreen          from '../Containers/MyTeam/TeamListScreen'
+// import TeamListScreen          from '../Containers/MyTeam/TeamListScreen'
 
 // import ReportChatScreen     from '../Containers/ReportChatScreen'
 // import TeamChatScreen       from '../Containers/ChatScreen'
@@ -36,10 +36,10 @@ import NavigationDrawer        from './NavigationDrawer'
 const defaultRoute = {
   headerMode: 'none',
   navigationOptions: { headerStyle: styles.header },
-  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'TestOnly'
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'NavigationDrawer'
 }
 
-// Manifest of possible screens
+// Manifest of possible screens 
 const PrimaryNav = StackNavigator(
   {
     AccessCodeScreen:    { screen: AccessCodeScreen },
@@ -53,9 +53,9 @@ const PrimaryNav = StackNavigator(
     AddTeam:             { screen: AddTeamScreen },
     ChangeTeamProfile:   { screen: ChangeTeamProfileScreen },
     ChangeTeamLogo:      { screen: ChangeTeamLogoScreen },
-    MyTeam:              { screen: MyTeam },
+    MyTeam:              { screen: MyTeam },                   // unused screen
     MyTeamScreen:        { screen: MyTeamScreen },
-    TeamList:            { screen: TeamListScreen },
+ //    TeamList:            { screen: TeamListScreen },
     Chat:                { screen: ChatScreen },
     NavigationDrawer:    { screen: NavigationDrawer },
 

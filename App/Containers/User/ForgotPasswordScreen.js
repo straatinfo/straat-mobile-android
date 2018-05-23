@@ -1,22 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler } from 'react-native'
-import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container, Content } from 'native-base'
+import { View, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler } from 'react-native'
 import { connect } from 'react-redux'
-import LinearGradient from 'react-native-linear-gradient'
-import validator from 'validator'
-
+import { Container, Content } from 'native-base'
 import { Images, Metrics } from '../../Themes'
 import { ScreenActions } from '../../Redux/ScreenRedux'
-import UserActions from './../../Redux/UserRedux'
-import Lang from './../../Lib/CutomLanguage'
-import Spacer from './../../Components/Spacer'
-import Footer from '../../Components/Footer'
+import LinearGradient from 'react-native-linear-gradient'
 import FastImage from 'react-native-fast-image'
-import Triangle from 'react-native-triangle'
-import RowView from '../../Components/RowView'
- 
+import Footer from '../../Components/Footer'
+import Spacer from './../../Components/Spacer'
 import Styles from './style'
+import Triangle from 'react-native-triangle'
+import UserActions from './../../Redux/UserRedux'
+import validator from 'validator'
 
 class ForgotPasswordScreen extends React.Component {
   static propTypes = {
@@ -106,59 +102,54 @@ class ForgotPasswordScreen extends React.Component {
   }
 
   _handlePressRequest = (username, password) => {
-    const {forgotPasswordRequest, navigation } = this.props
+    const { forgotPasswordRequest, navigation } = this.props
     forgotPasswordRequest(this.state.email, () => navigation.navigate('Login')) // change to dashboard
   }
 
   render () {
-    const { username, password, isKeyboardVisible, email } = this.state
-    const { fetching, error, user, design } = this.props
-    const editable = !fetching
-    const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
-    const titleStyle = {
-      fontSize: 20
-    }
+    const { isKeyboardVisible, email } = this.state
+    const { design, Lang } = this.props
     const submitStatus = validator.isEmail(email)
-    __DEV__ && console.log('render in loginScreen', user)
+
     return (
       <Container>
-      <Content style={{height: this.state.visibleHeight}} >
-        <View style={Styles.container}>
-          <View style={Styles.upperboxContainer}>
-            {!isKeyboardVisible && <View style={[Styles.upperbox]}>
-              <View style={Styles.logoHolder}>
-                { design.secureUrl === '' && <Image source={Images.logo} style={Styles.logo} /> }
-                { design.secureUrl !== '' && <FastImage source={{uri: design.secureUrl}} style={Styles.logo} /> }
+        <Content style={{height: this.state.visibleHeight}} >
+          <View style={Styles.container}>
+            <View style={Styles.upperboxContainer}>
+              {!isKeyboardVisible && <View style={[Styles.upperbox]}>
+                <View style={Styles.logoHolder}>
+                  { design.secureUrl === '' && <Image source={Images.logo} style={Styles.logo} /> }
+                  { design.secureUrl !== '' && <FastImage source={{uri: design.secureUrl}} style={Styles.logo} /> }
+                </View>
+              </View>}
+              <View style={[Styles.triangleContainer, {justifyContent: 'space-around'}]}>
+                <Triangle width={90} height={30} direction={'down'} color={'white'} />
               </View>
-            </View>}
-            <View style={[Styles.triangleContainer, {justifyContent: 'space-around'}]}>
-              <Triangle width={90} height={30} direction={'down'} color={'white'} />
             </View>
-          </View>
-          <View style={Styles.forms}>
+            <View style={Styles.forms}>
+              <Spacer />
+              <View ><Text style={Styles.inLoginTxt}>{Lang.forgotPassword}</Text></View>
+              <View style={[Styles.textInputContainer]}>
+                <TextInput
+                  onEndEditing={(e) => this.setState({email: e.nativeEvent.text})}
+                  underlineColorAndroid='transparent'
+                  multiline={false}
+                  placeholder={Lang.email} />
+              </View>
+            </View>
             <Spacer />
-            <View ><Text style={Styles.inLoginTxt}>{Lang.forgotPassword}</Text></View>
-            <View style={[Styles.textInputContainer]}>
-              <TextInput
-                onEndEditing={(e) => this.setState({email: e.nativeEvent.text})}
-                underlineColorAndroid='transparent'
-                multiline={false}
-                placeholder={Lang.email} />
+            <View style={Styles.buttonContainer}>
+              <TouchableOpacity disabled={!submitStatus} underlayColor='rgba(0,0,0,0.0)' onPress={() => this._handlePressRequest()}>
+                <LinearGradient colors={[submitStatus ? design.button2 : '#a6b2c1', submitStatus ? design.button : '#7f8893']} style={Styles.linearGradient}>
+                  <Text style={Styles.buttonText}>{Lang.sendRequest.toUpperCase()}</Text>
+                </LinearGradient>
+              </TouchableOpacity>
             </View>
           </View>
-          <Spacer />
-          <View style={Styles.buttonContainer}>
-            <TouchableOpacity disabled={!submitStatus} underlayColor='rgba(0,0,0,0.0)' onPress={() => this._handlePressRequest()}>
-              <LinearGradient colors={[submitStatus ? design.button2 : '#a6b2c1', submitStatus ? design.button : '#7f8893']} style={Styles.linearGradient}>
-                <Text style={Styles.buttonText}>{Lang.sendRequest.toUpperCase()}</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-        </View>
 
-      </Content>
+        </Content>
         <Footer show />
-        </Container>
+      </Container>
     )
   }
 }
@@ -168,20 +159,16 @@ const mapStateToProps = state => {
     fetching: state.login.fetching,
     error: state.login.error,
     user: state.user,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     forgotPasswordRequest: (email, callback) => dispatch(UserActions.forgotPasswordRequest(email, callback)),
-    change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
-    
+    change: (navigation, route) => dispatch(ScreenActions.change(navigation, route))
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordScreen)
-
-/**
-{() => this.password._root.focus()} />
- */

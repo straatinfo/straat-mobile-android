@@ -25,7 +25,6 @@ import {
 } from 'native-base'
 import LinearGradient from 'react-native-linear-gradient'
 import TeamSelect from './../../Components/ReportDashboard/Components/TeamSelect'
-import language from './../../Lib/CutomLanguage'
 
 import ReportsActions from './../../Redux/ReportsRedux'
 import UserActions from './../../Redux/UserRedux'
@@ -65,7 +64,7 @@ class ReportSelectTeamScreen extends React.Component {
    // callback()
   }
   render () {
-    const { navigation, design } = this.props
+    const { navigation, design, language } = this.props
     const { review } = this.state
     const validated = this._validated()
     return (
@@ -121,7 +120,8 @@ const mapStateToProps = state => {
     teamList: state.user.teamList,
   //  reportState: state.reports,
     reportTeamSelected: state.reports.reportTeamSelected,
-    design: state.user.design
+    design: state.user.design,
+    language: state.language.Languages
   }
 }
 

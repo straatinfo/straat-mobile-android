@@ -1,7 +1,7 @@
 import { ReportStatus, ReportTypes } from '../Services/Constant'
 import { Colors } from '../Themes'
 import { isExpired, isAfterADayDone } from '../Lib/Helper/TimeUtils'
-import DebugConfig from '../Config/DebugConfig';
+import DebugConfig from '../Config/DebugConfig'
 /**
  *
  * @description use to filter data from parse in backend used by getreportNearBty
@@ -54,7 +54,7 @@ export const flatReports = (reports) => {
  */
 export const flatReport = (report, index) => {
   if (report.status === ReportStatus.new && isExpired(report.createdAt)) {
-    console.log('expired: ', report )
+    console.log('expired: ', report)
     report.status = ReportStatus.expired
   }
 
@@ -153,4 +153,32 @@ export const reportStatusFixer = (value) => {
     // then convert string type to int type reportStatus Constant
     statusType.findIndex((status) => status.toUppreCase() === value.toUppreCase())
   }
+}
+
+/**
+ *
+ * @description sort cattegories && let others to end of array
+ *
+ */
+export const sortCategories = (categoriesList) => {
+  const categories = [].concat(categoriesList)
+  // find others category
+  const other = categories.filter((cat) => cat.name.toUpperCase() === 'other'.toUpperCase() || cat.name.toUpperCase() === 'overige'.toUpperCase())
+
+  categories.sort((cur, next) => {
+    const curN = cur.name.toUpperCase()
+    const NexN = next.name.toUpperCase()
+    if (curN < NexN) {
+      return -1
+    }
+    if (curN > NexN) {
+      return 1
+    }
+    return 0
+  })
+  if (other && other.length > 0) {
+    return [...categories.filter((cat) => !(cat.name.toUpperCase() === 'other'.toUpperCase() || cat.name.toUpperCase() === 'overige'.toUpperCase())), ...other]
+  }
+
+  return categories
 }

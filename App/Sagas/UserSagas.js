@@ -10,9 +10,9 @@ import { messageLoginPopup } from './../Transforms/Filters'
 import { showAlertBox, logStore, AppData, showSuccesstBox, showSuccessBox, showAlertBoxWithTitle } from './../Redux/commonRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
-import language from '../Lib/CutomLanguage'
 import { teamGetIsApproved } from '../Transforms/TeamHelper'
-import { getSuccessMessage, getLoginParams } from '../Transforms/RegistrationHelper';
+import { getSuccessMessage, getLoginParams } from '../Transforms/RegistrationHelper'
+import { getLanguageState } from './../Redux/LanguageRedux'
 
 /**
  *
@@ -22,7 +22,8 @@ import { getSuccessMessage, getLoginParams } from '../Transforms/RegistrationHel
  *
  */
 
-export function * registerUser (API, action) {
+export const registerUser = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { registrationData, navigation, route } = action.registrationDatNavRoute
   // const user = yield select(getUser)
   __DEV__ && console.log('registerUser* registrationData', registrationData)
@@ -38,8 +39,8 @@ export function * registerUser (API, action) {
     // status success
     if (registrationResult.ok && registrationResult.data.status === 1) {
       userWithToken = {...registrationResult.data.data.user, token: registrationResult.data.data.token}
-      const successMessage = getSuccessMessage(registrationData.isVolunteer, registrationData._team ? true : false)
-      const loginParams = getLoginParams(registrationData.isVolunteer, registrationData._team ? true : false, registrationData.username, registrationData.password)
+      const successMessage = getSuccessMessage(registrationData.isVolunteer, !!registrationData._team)
+      const loginParams = getLoginParams(registrationData.isVolunteer, !!registrationData._team, registrationData.username, registrationData.password)
       __DEV__ && console.log('requestedUserAccount', registrationResult)
       __DEV__ && console.log('userWithToken', userWithToken)
       global.usersAccount = userWithToken
@@ -60,13 +61,12 @@ export function * registerUser (API, action) {
     } else {
       throw new Error(language.networkError)
     }
-
   } catch (e) {
 //    yield put(LoginActions.loginFailure(e.message))
     yield call(showAlertBox, e.message)
     __DEV__ && console.log(e.message)
   }
-  
+
   yield call(loaderHandler.hideLoader)
   // yield call(logStore)
 }
@@ -78,7 +78,8 @@ export function * registerUser (API, action) {
  *
  */
 
-export function * validateEmail (API, action) {
+export const validateEmail = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { userEmail } = action
   __DEV__ && console.log('action', action)
   try {
@@ -119,7 +120,8 @@ export function * validateEmail (API, action) {
  *
  */
 
-export function * validateUserName (API, action) {
+export const validateUserName = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { userName, primeUserName } = action
   __DEV__ && console.log('action', action)
   try {
@@ -163,7 +165,8 @@ export function * validateUserName (API, action) {
  *
  */
 
-export function * validatePostalCode (API, action) {
+export const validatePostalCode = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { postalCode } = action
   __DEV__ && console.log('action', action)
   try {
@@ -204,7 +207,8 @@ export function * validatePostalCode (API, action) {
  *
  */
 
-export function * validateCity (API, action) {
+export const validateCity = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { city } = action
 
   const user = yield select(getUserState)
@@ -224,6 +228,9 @@ export function * validateCity (API, action) {
       yield put(UserActions.mergeState({isValidatedCity: true})) // un finished <-------|
       yield put(UserActions.mergeState({hostId: validationResult.data.data._host}))
     } else if (validationResult.ok && validationResult.data.status === 0) {
+      if (validationResult.data.data && validationResult.data.data.error) {
+        throw new Error(validationResult.data.data.error)
+      }
       throw new Error(language.city + ' ' + language.invalid)
     } else {
       throw new Error(language.request + ' ' + language.failed)
@@ -245,7 +252,8 @@ export function * validateCity (API, action) {
  *
  */
 
-export function * validatePhoneNumber (API, action) {
+export const validatePhoneNumber = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { phoneNumber } = action
   __DEV__ && console.log('action', action)
   try {
@@ -293,7 +301,8 @@ export function * validatePhoneNumber (API, action) {
  *
  */
 
-export function * validateTeamName (API, action) {
+export const validateTeamName = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { teamName, isVolunteer } = action
   __DEV__ && console.log('action', action)
   try {
@@ -335,7 +344,8 @@ export function * validateTeamName (API, action) {
  *
  */
 
-export function * validateTeamEmail (API, action) {
+export const validateTeamEmail = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { teamEmail } = action
   __DEV__ && console.log('action', action)
   try {
@@ -378,7 +388,8 @@ export function * validateTeamEmail (API, action) {
  *
  */
 
-export function * getTeamlist (API, action) {
+export const getTeamlist = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { filter } = action
   __DEV__ && console.log(' filter: ', filter)
 
@@ -416,7 +427,8 @@ export function * getTeamlist (API, action) {
  *
  */
 
-export function * uploadTeamPhoto (API, action) {
+export const uploadTeamPhoto = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { photo } = action
   let data = new FormData()
  // data.append('photo', photo)
@@ -455,7 +467,8 @@ export function * uploadTeamPhoto (API, action) {
  *
  */
 
-export function * requestPassword (API, action) {
+export const requestPassword = function * (API, action) {
+  const language = yield select(getLanguageState)
   const { eMail, callback } = action
   __DEV__ && console.log('action', action)
   try {
@@ -466,7 +479,7 @@ export function * requestPassword (API, action) {
       throw new Error(language.email + ' ' + language.invalid)
     }
 
-    const result = yield call(API.postForgotPassword, { email: eMail})
+    const result = yield call(API.postForgotPassword, {email: eMail})
     __DEV__ && console.log('forgot password result: ', result)
 
     // status success

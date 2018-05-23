@@ -4,16 +4,15 @@ import { showAlertBox, logStore, AppData } from '../Redux/commonRedux'
 import { changeto } from '../Redux/ScreenRedux'
 import { popUpAlert } from '../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from '../Transforms/Filters'
-import Lang from '../Lib/CutomLanguage'
 import { fail } from 'assert'
 import { getUser } from '../Redux/UserRedux'
-import language from '../Lib/CutomLanguage'
 import { backEndConstEnum } from '../Services/Constant'
 import { hasError } from '../Transforms/responseHelper'
 
 import TeamActions, { getTeamId, putEditTeamState } from '../Redux/TeamRedux'
 import AddNewTeamActions from '../Redux/AddNewTeamRedux'
 import TeamListActions from '../Redux/TeamListRedux'
+import { getLanguageState } from '../Redux/LanguageRedux'
 
 export function * getTeamProfile (API, action) {
   try {
@@ -72,26 +71,31 @@ export function * getTeamDetails (API, action) {
   yield put(TeamActions.teamMergeState({getTeamInfoFetching: false}))
 }
 
-export function * teamAcceptRequest (API, action) {
+export const teamAcceptRequest = function * (API, { teamInvite }) {
   console.log('-- accepting request -- ')
   try {
+    yield put(TeamActions.teamMergeState({getTeamInfoFetching: true}))
     console.log('-- accepting request -- ')
-    const _user = action.user._id
+    const {_user: { _id: userId }, _team: {_id: teamId }, _id: teamInviteId } = teamInvite
     const user = yield select(getUser)
-    const teamId = yield select(getTeamId)
-    const acceptUserResponse = yield call(API.acceptUserRequest, {_user, _team: teamId}, user)
+    // const teamId = yield select(getTeamId)
+    const acceptUserResponse = yield call(API.acceptUserRequest, {_user: userId, _team: teamId}, user)
     __DEV__ && console.log('acceptUserResponse', acceptUserResponse)
 
     if (acceptUserResponse.ok && acceptUserResponse.data.status === 1) {
-     // yield put(TeamActions.requestSuccess(acceptUserResponse.data))
-      yield put(TeamActions.getTeamDetails(action.params))
+      // yield put(TeamListActions.listtarsTeam(teamInvite))
+      // yield put(TeamActions.tarsTeam(teamInvite, acceptUserResponse.data.data.teamMembers ))
+      yield put(TeamActions.getTeamDetails({}))                         // reset team details
+      yield put(TeamListActions.teamlistGetList({}))                    // reset teamList
     }
   } catch (error) {
     console.log(error)
     yield put(TeamActions.requestFailed(error))
   }
+  yield put(TeamActions.teamMergeState({getTeamInfoFetching: false}))
 }
 
+ 
 export function * teamRejectRequest (API, action) {
   try {
     console.log('-- accepting request -- ')
@@ -104,7 +108,8 @@ export function * teamRejectRequest (API, action) {
     if (rejectUserResponse.ok && rejectUserResponse.data.status === 1) {
      // yield put(TeamActions.requestSuccess(acceptUserResponse.data))
      // refresh list
-      yield put(TeamActions.getTeamDetails(action.params))
+      yield put(TeamActions.getTeamDetails({}))                         // reset team details
+      yield put(TeamListActions.teamlistGetList({}))                    // reset teamList
     }
   } catch (error) {
     console.log(error)
@@ -113,6 +118,7 @@ export function * teamRejectRequest (API, action) {
 }
 
 export function * addNewTeam (API, action) {
+  const Lang = yield select(getLanguageState)
   const { params: { teamLogo, teamName, teamEmail, callBack } } = action
   __DEV__ && console.log('action: ', action)
   const user = yield select(getUser)
@@ -155,6 +161,7 @@ export function * addNewTeam (API, action) {
 }
 
 export function * submiteditTeam (API, action) {
+  const Lang = yield select(getLanguageState)
   const { params: { callBack } } = action
   try {
     console.log('Fetching team data...', action)
@@ -237,6 +244,7 @@ export function * declineUserRequest (API, action) {
  */
 
 export function * addNewTeamUpload (API, action) {
+  const language = yield select(getLanguageState)
   const { photo } = action
   let data = new FormData()
  // data.append('photo', photo)
@@ -286,3 +294,4 @@ export function * getUserTeamList (API, action) {
   }
   yield put(TeamListActions.teamlistMerge({fetching: false}))
 }
+ 

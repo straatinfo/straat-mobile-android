@@ -68,6 +68,7 @@ export const INITIAL_STATE = Immutable({
   reportsListNear: AppConfig.DEBUG ? reportsListNear : [],               // i this this will not be needed , use reportMapMarkerList instead
   reportMapMarkerList: AppConfig.DEBUG ? reportsListNear : [],           // this will be the data of mapview that will use pin icon and has the report tooltip
   reportCategoryList: [],                                        // where all category list base on hostid will be put here so to reduce reduntant fetching
+  reportGeneralCategoryList: [],                                 // where all category list base on hostid will be put here so to reduce reduntant fetching
   reportMainCategoryList: [],                                    // value will be parse from backend when user select in report type
   reportSubCategoryList: [],                                     // will have value if user select in main category
   reportSelectMainCategoryID: 0,                                 // selected main category id will be place in submit
@@ -175,9 +176,10 @@ export const getReportParams = (state) => {
     _reporter: user._id,
     _host: user._host,
     _reportType: reports.reportType._id,
+    reportTypeCode: reports.reportType.code,
     title: reports.reportType.name,
     description: reports.reportDescription,
-    reportUploadedPhotos: reports.reportListImages,
+    reportUploadedPhotos: reports.reportListImages
   }
 
   let requireInType = {}
@@ -216,7 +218,7 @@ export const getReportParams = (state) => {
       requireInType.vehicleInvolvedDescription = reports.reportVehicleInvoledDesc
     }
   }
-  // type B
+  // type C
   if (reports.reportType.code === ReportTypes.COMMUNICATION.code) {
     // validation
     // validation

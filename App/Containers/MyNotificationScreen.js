@@ -7,7 +7,10 @@ import MyNotification from './../Components/MyNotification/MyNotification'
 import { Container } from 'native-base'
 import DrawerHeader from './../Components/DrawerHeader'
 import UnderMigration from './../Components/UnderMigration'
-
+/**
+ *  this is unsed container
+ * 
+ */
 export default class MyNotificationScreen extends Component {
   constructor (props) {
     super(props)

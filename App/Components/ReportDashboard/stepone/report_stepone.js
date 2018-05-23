@@ -10,7 +10,6 @@ import { Icon, Content } from 'native-base'
 import LinearGradient from 'react-native-linear-gradient'
 
 import Images from './../../../Themes/Images'
-import Lang from './../../../Lib/CutomLanguage'
 import ReportStyle from './../ReportStyle'
 import styles from './../stepone/style'
 
@@ -48,7 +47,7 @@ class ReportStepOne extends Component {
     this.props.getCategories({ _host: '5a844e1bf154bc463543b987', _reportType: '' })
   }
   render () {
-    const { reportState: {reportAddress}, design } = this.props
+    const { reportState: {reportAddress}, design, Lang } = this.props
     return (
       
       <ScrollView style={ReportStyle.container}>
@@ -81,7 +80,8 @@ class ReportStepOne extends Component {
 const mapStateToProps = state => {
   return {
     reportState: state.reports,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

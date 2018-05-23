@@ -20,13 +20,13 @@ import ReportStyle from './../ReportStyle'
 import Images from './../../../Themes/Images'
 import styles from '../stepthree/style'
 import ImageContainer from './../Components/ImageContainer'
-import language from '../../../Lib/CutomLanguage'
 
 import { connect } from 'react-redux'
 import ReportsActions from './../../../Redux/ReportsRedux'
 import { showAlertBox, showAlertBoxWithTitle } from '../../../Redux/commonRedux'
 import HorizontalSelection from '../Components/HorizontalSelection'
 import { ReportTypes } from '../../../Services/Constant'
+import { sortCategories } from '../../../Transforms/ReportHelper';
 
 /**
  *  maybe i should rework this module later, this module works by pass dev
@@ -60,10 +60,11 @@ class ReportStepThree extends Component {
     __DEV__ && console.log('selectedMainCategoryId', selectedMainCategoryId)
     __DEV__ && console.log('selected itemIndex', itemIndex)
     const { reportMergeState, reportState: { reportMainCategoryList, reportSubCategoryList } } = this.props
+    const subCatList = reportMainCategoryList.find((item) => item._id === selectedMainCategoryId).subCategories.filter((item) => item)
     reportMergeState({
       reportSelectMainCategoryID: selectedMainCategoryId,
       reportSelectSubCategoryID: 0,    // reset selection for sub category
-      reportSubCategoryList: reportMainCategoryList.find((item) => item._id === selectedMainCategoryId).subCategories.filter((item) => item)})
+      reportSubCategoryList: sortCategories(subCatList)})
       // this.props.onMainCategoryUpdate(catObj)
     this.enableButton()
     this.validate()
@@ -100,7 +101,7 @@ class ReportStepThree extends Component {
   }
 
   _onPressIsUrgent (isUrgentNewValue) {
-    const { reportState: { reportIsUrgent, reportType } } = this.props
+    const { reportState: { reportIsUrgent, reportType }, language } = this.props
     const isUrgent = !reportIsUrgent
 
     if (ReportTypes.SAFETY.code === reportType.code && isUrgent) {
@@ -180,7 +181,7 @@ class ReportStepThree extends Component {
     const { reportState: {
       reportIsUrgent, reportDescription, reportMainCategoryList, submitButton, reportIsPersonInvoled, reportIsVehicleInvoled, reportType,
       reportPersonInvoledCount, reportVehicleInvoledCount, reportPersonInvoledDesc, reportVehicleInvoledDesc,
-      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design } = this.props
+      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design, language } = this.props
     const validated = this.validate()
     return (
       <View style={ReportStyle.container}>
@@ -345,7 +346,8 @@ const mapStateToProps = state => {
   return {
     reportState: state.reports,
     user: state.user.user,
-    design: state.user.design
+    design: state.user.design,
+    language: state.language.Languages
   }
 }
 

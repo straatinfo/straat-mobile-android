@@ -102,7 +102,7 @@ class ChatScreen extends Component {
       _conversation: conversationId,
       _id: onSendMessage[0]._id,
       _author: user._id,
-      user: this.user,
+      user: this.state.user,
       text: onSendMessage[0].text,
       createdAt: new Date()
     }

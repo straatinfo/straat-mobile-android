@@ -1,22 +1,19 @@
-import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-import UserActions, { getUser } from './../Redux/UserRedux'
 import MyReportActions from './../Redux/MyReportRedux'
 import ReportsActions from './../Redux/ReportsRedux'
-import { reportCoordinate } from './../Redux/ReportsRedux'
-import { showAlertBox, logStore, showSuccesstBox } from './../Redux/commonRedux'
+import { flatReports, flatReport } from '../Transforms/ReportHelper'
+import { getLanguageState } from '../Redux/LanguageRedux'
+import { getUser, getUserHost } from './../Redux/UserRedux'
 import { put, call, select } from 'redux-saga/effects'
-import Lang from './../Lib/CutomLanguage'
-import language from './../Lib/CutomLanguage'
-import { orderBy, flatReports, flatReport } from '../Transforms/ReportHelper'
-import { ReportTypes } from '../Services/Constant'
+import { showAlertBox, logStore } from './../Redux/commonRedux'
 
-export function * myReportRequest (API, action) {
+export const myReportRequest = function * (API, action) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
-  yield put(MyReportActions.myReportMerge({fetching: true, error: ''})) // set loader
+  const host = yield select(getUserHost)
+  yield put(MyReportActions.myReportMerge({fetching: true, error: ''}))
   try {
-    const reports = yield call(API.getReportsByReporter, {params: {}, user})
+    const reports = yield call(API.getReportsByReporter, {params: {}, user, host})
     if (reports.ok && reports.data.status === 1) {
-      __DEV__ && console.log('reports result', reports)
       yield put(MyReportActions.myReportMerge({fetching: false, error: '', myReportList: flatReports(reports.data.data)}))
     } else {
       throw new Error(language.failed)
@@ -28,14 +25,15 @@ export function * myReportRequest (API, action) {
   yield call(logStore)
 }
 
-export function * myReportDetailRequest (API, action) {
+export const myReportDetailRequest = function * (API, action) {
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
+  const host = yield select(getUserHost)
   const { _id } = action
-  yield put(MyReportActions.myReportMerge({fetchingDetails: true, errorDetails: ''})) // set loader
+  yield put(MyReportActions.myReportMerge({fetchingDetails: true, errorDetails: ''}))
   try {
-    const report = yield call(API.getReportById, {params: {_id}, user})
+    const report = yield call(API.getReportById, {params: {_id}, user, host})
     if (report.ok && report.data.status === 1) {
-      __DEV__ && console.log('reports result', report)
       yield put(MyReportActions.myReportMerge({fetchingDetails: false, errorDetails: '', typeAList: report.data.data}))
       yield put(ReportsActions.reportMergeState({reportDetails: flatReport(report.data.data)}))
     } else {

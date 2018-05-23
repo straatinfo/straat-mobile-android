@@ -103,7 +103,7 @@ export default {
 
   /** @description Invalid Credentials */
   invalidCredentials: 'Invalid Credentials',
-  
+
   // REGISTRATION
   // Data
   txt_D01: 'Data',
@@ -289,7 +289,7 @@ export default {
   // Report
   txt_E10: 'Create New Report',
 
-  //MY TEAM
+  // MY TEAM
   txt_F01: 'Add extra team',
 
   txt_F02: 'Change Team Profile',
@@ -360,9 +360,9 @@ export default {
   checkOutTheReport: 'check out the report',
   selectMainCategory: 'Choose Main Category',
   selectSubCategory: 'Choose Sub Category',
-  
+
   continue: 'continue',
-  
+
   category: 'Category',
   team: 'team',
   // change status
@@ -494,37 +494,12 @@ export default {
 
   /** @description General Information */
   generalInformation: 'General Information',
- 
+
   /** @description Request */
   request: 'Request',
-  
+
   /** @description Already Taken */
   alreadyTaken: 'Already Taken',
-
-  // MY TEAM
-  txt_F01: 'Add extra team',
-
-  txt_F02: 'Change Team Profile',
-
-  txt_F03: 'New member requests',
-
-  txt_F04: 'Invite friends',
-
-  txt_F05: 'Current members',
-
-  txt_F06: 'Township',
-
-  txt_F07: 'Team Name',
-
-  txt_F08: 'Team e-mail address',
-
-  txt_F09: 'Adjust Team ID',
-
-  txt_F10: 'Start a new team',
-
-  txt_F11: 'Select team logo',
-
-  txt_F12: 'REGISTER',
 
   // GLOBAL LANGUAGE
   // is under maintenance
@@ -545,7 +520,7 @@ export default {
   txt_Z06: 'Browse',
 
   txt_Z07: 'Add Team',
-  
+
   /** @description  Send Request */
   sendRequest: 'Send Request',
 
@@ -611,40 +586,39 @@ export default {
 
   /** @description No */
   No: 'No',
-  
+
   /** @description Error Message */
   errorMessage: 'Error Message',
 
   modify: 'Modify',
-  
+
   sendMessage: 'Send Message',
 
   noChanges: 'No changes',
 
-
   // Setting Module
   // Report Time A
    // Name
-   txt_Z08: 'Name',
+  txt_Z08: 'Name',
 
    // Problem
-   txt_Z09: 'Please write your problem with the app or hint to improve here.',
+  txt_Z09: 'Please write your problem with the app or hint to improve here.',
 
-   txt_Z10: 'Submit',
+  txt_Z10: 'Submit',
 
-   //About Us module
-   txt_Z11: 'Straat.info has been developed, tested and used with neighborhood prevention teams in their daily work. We do our best on your user experience so high   possible to be.',
+   // About Us module
+  txt_Z11: 'Straat.info has been developed, tested and used with neighborhood prevention teams in their daily work. We do our best on your user experience so high   possible to be.',
 
-   txt_Z12: 'If you have questions or tips to improve the app then we are very interested. Let us know!',
-  
-   txt_Z13: 'GIVE FEEDBACK',
+  txt_Z12: 'If you have questions or tips to improve the app then we are very interested. Let us know!',
 
-   txt_Z14: 'No new requests.',
+  txt_Z13: 'GIVE FEEDBACK',
 
-   txt_Z15: 'No members on the team.',
-   
-   //Setting Module
-  //Report Time A
+  txt_Z14: 'No new requests.',
+
+  txt_Z15: 'No members on the team.',
+
+   // Setting Module
+  // Report Time A
   txt_S01: 'Report Type A',
 
   // Report Time B
@@ -692,5 +666,8 @@ export default {
 
   txt_END: 'END',
 
-  txt_CONVERSATION_TITLE: 'Conversation Title' 
+  txt_CONVERSATION_TITLE: 'Conversation Title',
+
+  /** @description Show */
+  show: 'Show'
 }

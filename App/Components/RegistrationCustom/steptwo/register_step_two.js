@@ -8,16 +8,15 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
- 
-import Lang from './../../../Lib/CutomLanguage'
+
 import TabContentTitle from './../Components/TabContentTitle'
 import styles from '../steptwo/style'
-import Spacer from '../../Spacer';
-import Footer from '../../Footer';
+import Spacer from '../../Spacer'
+import Footer from '../../Footer'
 
 class RegistrationStepTwo extends Component {
   render () {
-    const { design } = this.props
+    const { design, Lang } = this.props
     return (
       <View style={styles.container}>
         <TabContentTitle title={Lang.txt_D23} />
@@ -50,7 +49,8 @@ class RegistrationStepTwo extends Component {
 
 const mapStateToProps = state => {
   return {
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

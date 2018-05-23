@@ -10,7 +10,6 @@ import LinearGradient from 'react-native-linear-gradient'
 // import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Images from './../../../Themes/Images'
-import Lang from './../../../Lib/CutomLanguage'
 import styles from '../steptwo/style'
 import ReportStyle from './../ReportStyle'
 
@@ -39,20 +38,58 @@ class ReportStepTwo extends Component {
    *
    */
   _onChangeReportType (reportType) {
-    const { onSubmit } = this.props
-    const { reportState: { reportCategoryList }, reportMergeState } = this.props
+    const { onSubmit, host: { isSpecific } } = this.props
+    const { reportState: { reportCategoryList, reportGeneralCategoryList }, reportMergeState } = this.props
     __DEV__ && console.log('reportCategoryList', reportCategoryList)
+
+    /**
+     *
+     *  if user host is specific
+     *     will use specific in reportype A and
+     *     will use general categories in type B and C
+     *
+     *  if use host is general
+     *     will use general in report type A - B - C
+     *
+     */
+
+    let Categories = []
+    if (reportType.code === ReportTypes.SAFETY.code || reportType.code === ReportTypes.COMMUNICATION.code) {
+      // general
+      Categories = reportGeneralCategoryList.filter((item) => item._reportType.code === reportType.code)
+    }
+
+    if (reportType.code === ReportTypes.PUBLIC_SPACE.code) {
+      // general or specific
+      if (isSpecific) {
+        Categories = reportCategoryList.filter((item) => item._reportType.code === reportType.code)
+      }
+
+      if (!isSpecific) {
+        Categories = reportGeneralCategoryList.filter((item) => item._reportType.code === reportType.code)
+      }
+    }
+
+    // reportMergeState({
+    //   ...resetForm,
+    //   ...{
+    //     reportType: reportType,
+    //     reportMainCategoryList: reportCategoryList.filter((item) => item._reportType.code === reportType.code)
+    //   }})
+
     reportMergeState({
       ...resetForm,
       ...{
         reportType: reportType,
-        reportMainCategoryList: reportCategoryList.filter((item) => item._reportType.code === reportType.code)
-      }})
+        reportMainCategoryList: Categories
+      }
+    })
+
     onSubmit(reportType)
   }
   render () {
     const { isVolunteer } = this.props.user
-    const { design } = this.props
+    const { design, Lang } = this.props
     return (
       <View style={ReportStyle.container}>
         <View style={ReportStyle.cancelBtnContainer}>
@@ -77,9 +114,11 @@ class ReportStepTwo extends Component {
 
 const mapStateToProps = state => {
   return {
+    host: state.user.host,
     user: state.user.user,
     reportState: state.reports,
-    design: state.user.design
+    design: state.user.design,
+    Lang: state.language.Languages
   }
 }
 

@@ -21,7 +21,7 @@ class ReportListTypeC extends Component {
 
   render () {
     const { fetching, reportList, navigation, reportMergeState } = this.props
-    console.log(this.props)
+     
     return (
     (fetching && <CircleLoader color='blue' />) ||
     (!fetching &&
