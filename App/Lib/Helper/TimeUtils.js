@@ -14,7 +14,7 @@ export const GetDate = (time) => {
  */
 export const GetDateEutype = (time) => {
   const date = new Date(time)
-  return '' + date.getDate() + '-' + (1 + date.getMonth()).toString() + '-' + date.getFullYear()
+  return '' + date.getDate() + '/' + (1 + date.getMonth()).toString() + '/' + date.getFullYear()
 }
 
 export const GetTime = (time) => {
