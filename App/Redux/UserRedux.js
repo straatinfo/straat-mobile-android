@@ -25,7 +25,8 @@ const { Types, Creators } = createActions({
   forgotPasswordRequest: ['eMail', 'callback'],
   userReset: ['params'],
   userChangeRadius: ['radius'],
-  updateUser: ['user']
+  updateUser: ['user'],
+  teamlistGetuser: ['user'],
 })
 
 export const CurrentUserTypes = Types
@@ -73,7 +74,7 @@ export const INITIAL_STATE = Immutable({
   radius: radius,
   error: null,
   fetching: false,
-
+  userTeamList: [],
   // for registration
   isValidatedUserEmail: false,
   isValidatedPostalCode: false,

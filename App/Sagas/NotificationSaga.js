@@ -55,6 +55,7 @@ export function * notifactionRequestTypeC (API, action) {
   yield put(NotificationActions.notificationMerge({fetchingC: true, errorC: ''}))
   try {
     const reports = yield call(API.getPublicReports, { _reportType: ReportTypes.COMMUNICATION._id, user, host })
+    __DEV__ && console.log('reports C: ', reports)
     if (reports.ok && reports.data.status === 1) {
       yield put(NotificationActions.notificationMerge({fetchingC: false, errorC: '', typeCList: flatReports(reports.data.data)}))
     } else {
