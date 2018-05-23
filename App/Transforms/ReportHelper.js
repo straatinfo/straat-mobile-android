@@ -163,7 +163,7 @@ export const reportStatusFixer = (value) => {
 export const sortCategories = (categoriesList) => {
   const categories = [].concat(categoriesList)
   // find others category
-  const other = categories.find((cat) => cat.name.toUpperCase() === 'other'.toUpperCase() || cat.name.toUpperCase() === 'overige'.toUpperCase())
+  const other = categories.filter((cat) => cat.name.toUpperCase() === 'other'.toUpperCase() || cat.name.toUpperCase() === 'overige'.toUpperCase())
 
   categories.sort((cur, next) => {
     const curN = cur.name.toUpperCase()
@@ -176,8 +176,8 @@ export const sortCategories = (categoriesList) => {
     }
     return 0
   })
-  if (other) {
-    return [...categories.filter((cat) => !(cat.name.toUpperCase() === 'other'.toUpperCase() || cat.name.toUpperCase() === 'overige'.toUpperCase())), other]
+  if (other && other.length > 0) {
+    return [...categories.filter((cat) => !(cat.name.toUpperCase() === 'other'.toUpperCase() || cat.name.toUpperCase() === 'overige'.toUpperCase())), ...other]
   }
 
   return categories

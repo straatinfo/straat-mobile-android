@@ -36,7 +36,7 @@ class TeamSelect extends Component {
       teams: [],
       mainCategoryName: '',
       subCategoryName: ''
-     // reportImages: [{uri: 'content://media/external/images/media/19486'}, {uri: 'content://media/external/images/media/19486'}] // 0 to 9
+     //  reportImages: [{uri: 'content://media/external/images/media/19486'}, {uri: 'content://media/external/images/media/19486'}] // 0 to 9
 
     }
   }
@@ -109,8 +109,9 @@ class TeamSelect extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user.user,
-    teamList: state.user.teamList,
-  //  reportState: state.reports,
+    // teamList: state.user.teamList,
+    teamList: state.teamList.teamList,
+    // reportState: state.reports,
     reportTeamSelected: state.reports.reportTeamSelected,
     categoryList: state.reports.reportCategoryList,
     mainCategoryID: state.reports.reportSelectMainCategoryID,

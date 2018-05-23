@@ -44,6 +44,8 @@ import ReportStyle from './../../Components/ReportDashboard/ReportStyle.js'
 import styles from './style'
 import { reportCoordinate, getReportsNearbyRequest } from '../../Redux/ReportsRedux'
 import { cropWH } from '../../Transforms/Cloudinary'
+import DebugConfig from './../../Config/DebugConfig'
+
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
  *
@@ -466,6 +468,9 @@ class ReportMapContainer extends Component {
     const confirmChangeStatus = this.confirmChangeStatus.bind(this)
     const pinImage = this.pinImage
     const heights = this.getHeight()
+    if (!DebugConfig.displayGoogleMap) {
+      return null
+    }
     return (
       <View style={styles.container}>
         {renderIf(this.state.mapReset === 1)(
@@ -511,13 +516,13 @@ class ReportMapContainer extends Component {
               </MapView.Callout>
             </MapView.Marker >}
             <MapView.Circle
-              center={reportState.reportCoordinate}
-              radius={user.radius}
+              center={reportState.userPosition}
+              radius={300}
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.30)'}
                     />
             <MapView.Circle
-              center={reportState.reportCoordinate}
+              center={reportState.userPosition}
               radius={5}
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.60)'} />

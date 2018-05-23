@@ -7,7 +7,7 @@ import FeedbackActions from '../../Redux/FeedbackRedux'
 import LinearGradient from 'react-native-linear-gradient'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './FeedbackScreenStyles'
-
+import DeviceInfo from 'react-native-device-info'
 class FeedBack extends Component {
   constructor (props) {
     super(props)
@@ -19,7 +19,7 @@ class FeedBack extends Component {
       submitStatus: false
     }
   }
-
+  feedbackInfo = []
   _handleChangeName = text => {
     // handles change of text in name
     this.setState({ name: text })
@@ -44,12 +44,44 @@ class FeedBack extends Component {
       data: {
         feedback: problem,
         reporterName: name,
-        reporterEmail: email
+        reporterEmail: email,
+        info: this.feedbackInfo
       }
     }
     this.props.sendFeedback(params)
   }
+  componentDidMount () {
+    // this.feedbackInfo = [
+    //   {title: 'Device Manufacturer', info: DeviceInfo.getManufacturer()},
+    //   {title: 'Device Model', info: DeviceInfo.getModel()},
+    //   {title: 'Device System Name', info: DeviceInfo.getSystemName()},
+    //   {title: 'Device Version', info: DeviceInfo.getSystemVersion()},
 
+    //   {title: 'Bundle Id', info: DeviceInfo.getBundleId()},
+    //   {title: 'Build Number', info: DeviceInfo.getBuildNumber()},
+    //   {title: 'App Version', info: DeviceInfo.getVersion()},
+    //   {title: 'App Version (Readable)', info: DeviceInfo.getReadableVersion()}
+    // ]
+
+    this.feedbackInfo = [
+      {title: 'Device Manufacturer', info: DeviceInfo.getManufacturer()},
+      {title: 'Device Name', info: DeviceInfo.getDeviceName()},
+      {title: 'Device Model', info: DeviceInfo.getModel()},
+      {title: 'Device Unique ID', info: DeviceInfo.getUniqueID()},
+      {title: 'Device Locale', info: DeviceInfo.getDeviceLocale()},
+      {title: 'Device Country', info: DeviceInfo.getDeviceCountry()},
+      {title: 'User Agent', info: DeviceInfo.getUserAgent()},
+
+      {title: 'Device System Name', info: DeviceInfo.getSystemName()},
+      {title: 'Device ID', info: DeviceInfo.getDeviceId()},
+      {title: 'Device Version', info: DeviceInfo.getSystemVersion()},
+
+      {title: 'Bundle Id', info: DeviceInfo.getBundleId()},
+      {title: 'Build Number', info: DeviceInfo.getBuildNumber()},
+      {title: 'App Version', info: DeviceInfo.getVersion()},
+      {title: 'App Version (Readable)', info: DeviceInfo.getReadableVersion()}
+    ]
+  }
   render () {
     const { title, navigation, design, Lang } = this.props
     const { name, email, problem, submitStatus } = this.state

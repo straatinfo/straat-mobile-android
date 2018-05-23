@@ -1,37 +1,24 @@
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation } from 'react-native'
-import { Button, Text as NBText, Contant, Form, Item, Input, Label } from 'native-base'
-
-import LoginActions from '../Redux/LoginRedux'
-import ScreenActions from './../Redux/ScreenRedux'
-import SplashActions from './../Redux/SplashRedux'
-import ReportsActions from './../Redux/ReportsRedux'
-
-import RootStyles from './Styles/RootContainerStyles'
-import { Images } from '../Themes'
-import Styles from './Styles/SplashStyle'
-
-import AlertBox from '../Components/AlertBox'
-// import Lang from './../Lib/CutomLanguage'
+import React from 'react'
 import { AppData } from '../Redux/commonRedux'
-import { designDefault } from '../Transforms/themeHelper'
+import { connect } from 'react-redux'
 import { Design } from '../Services/Constant'
+import { Images } from '../Themes'
+import { Text as NBText } from 'native-base'
+import { View, Image } from 'react-native'
+import AlertBox from '../Components/AlertBox'
 import Footer from '../Components/Footer'
 import FastImage from 'react-native-fast-image'
+import ReportsActions from './../Redux/ReportsRedux'
+import RootStyles from './Styles/RootContainerStyles'
+import ScreenActions from './../Redux/ScreenRedux'
+import SplashActions from './../Redux/SplashRedux'
+import Styles from './Styles/SplashStyle'
 
-class LoginScreen extends React.Component {
+class SplashScreen extends React.Component {
   constructor (props) {
     super(props)
-    // props.Lang.txt_A03
     this.state = { progressMessage: '', design: Design }
-
-    // set defulat theme
     global.appSetting = Design
-
-    // this.props.appStart()            shift startupsaga
-    // this.start()                     shift startupsaga
-    // console.log('this.start()',)
   }
   geo () {
     return new Promise((resolve, reject) => {
@@ -47,11 +34,8 @@ class LoginScreen extends React.Component {
 
   async getLocation () {
     const { Lang, reportMergeState, reportState: { reportCoordinate } } = this.props
-
-    console.log('use lang here')
     try {
       const location = await this.geo()
-      console.log(location)
       reportMergeState({reportCoordinate: {...reportCoordinate, ...location}})
       this._processedNext()
     } catch (e) {
@@ -64,51 +48,29 @@ class LoginScreen extends React.Component {
     const { Lang } = this.props
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // gps running
         this.props.changeLoadingMessage('')
         this._processedNext()
-      },
-      (err) => {
-        this.props.changeLoadingMessage('')
-        AlertBox.alert('', Lang.txt_A02, [{text: Lang.txt_A01, onPress: () => this._processedNext()}], { cancelable: false })
-      }
+      }, (err) => {
+      console.log(err)
+      this.props.changeLoadingMessage('')
+      AlertBox.alert('', Lang.txt_A02, [{text: Lang.txt_A01, onPress: () => this._processedNext()}], { cancelable: false })
+    }
      // { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 },
     )
   }
-  // async start () {
-  //   // this code is for this component only
-  //   // pre set is set by his.props.appStart()
-
-  //   const theme = await AppData.getTheme()
-  //   const design = JSON.parse(theme)
-  //   if (design !== null && design.button !== undefined) {
-  //     this.setState({design: design})
-  //     console.log('design', design)
-  //   }
-
-  //   // clean
-  //   //  const clean = await AppData.clear()
-
-  //   // check if not logout
-  // }
-
   componentDidMount () {
     const { Lang } = this.props
     this.props.changeLoadingMessage(Lang.txt_A03)
 
     let interval = setInterval(() => {
-      // this.promtGPS()
       this.getLocation()
       this.props.changeLoadingMessage('')
-      __DEV__ && console.log('global.appSetting', global.appSetting)
       clearInterval(interval)
     }, 2000)
   }
 
   async _processedNext () {
     const navigation = this.props.navigation
-    // change current navigation
-
     const login = await AppData.getLogin()
     const user = JSON.parse(login)
     if (user && user.username && user.password) {
@@ -119,7 +81,7 @@ class LoginScreen extends React.Component {
   }
 
   render () {
-    const { loadingMessage, designR } = this.props
+    const { loadingMessage } = this.props
     const { design } = this.state
     return (
       <View style={[RootStyles.container]}>
@@ -153,4 +115,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen)

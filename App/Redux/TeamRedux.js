@@ -22,13 +22,14 @@ const { Types, Creators } = createActions({
   declineRequest: ['decline'],
   declineSuccess: ['reject'],
   declineFailed: ['error'],
-  teamAcceptRequest: ['user'],
+  teamAcceptRequest: ['teamInvite'],
   teamRejectRequest: ['user'],
   editfieldTeam: ['fields'],
 
   submiteditTeam: ['params'],
   teamReset: [],
-  teamMergeState: ['newState']
+  teamMergeState: ['newState'],
+  tarsTeam: ['teamInvite', 'teamMembers']
 })
 
 export const TeamTypes = Types
@@ -142,8 +143,17 @@ export const declineFailed = (state, { error }) => {
 }
 // ---
 
-export const teamAcceptRequest = (state, { user }) => {
+export const teamAcceptRequest = (state, { teamInvite }) => {
   return state
+}
+
+// tarsTeam - team accept request success
+export const tarsTeam = (state, { teamInvite, teamMembers }) => {
+  __DEV__ && console.log('ruuning tarsTeam:', teamMembers)
+  return state.merge({
+    join: state.join.filter(invite => invite._id !== teamInvite._id),
+    team: {...state.team, teamMembers: teamMembers}
+  })
 }
 
 export const teamRejectRequest = (state, { user }) => {
@@ -196,7 +206,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SUBMITEDIT_TEAM]: submiteditTeam,
   [Types.TEAM_RESET]: teamReset,
 
-  [Types.TEAM_MERGE_STATE]: teamMergeState
+  [Types.TEAM_MERGE_STATE]: teamMergeState,
+  [Types.TARS_TEAM]: tarsTeam
+  
 })
 
 /* -------------selector ------------- */

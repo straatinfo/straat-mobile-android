@@ -8,7 +8,8 @@ const { Types, Creators } = createActions({
   teamlistAddteam: ['team'],
   teamlistGetList: ['params'],
   replaceTeamlist: ['team'],
-  teamlistMerge: ['newState']
+  teamlistMerge: ['newState'],
+  listtarsTeam: ['teamInvite']
 })
 
 export const TeamListTypes = Types
@@ -49,6 +50,20 @@ export const teamlistMerge = (state, {newState}) => {
   return state.merge(newState)
 }
 
+// tarsTeam - team accept request success
+// @param teamInvite
+export const listtarsTeam = (state, { teamInvite: {_id, _team}, teamMembers }) => {
+   // remove notification on the right side of team
+  const team = state.teamList.find(team => team._id === _team)
+  if (team && team.teamInvites && team.teamInvites.length > 0) {
+    __DEV__ && console.log('ruuning listtarsTeam:', teamMembers)
+    return state.merge({
+      teamList: [{...team, teamInvites: team.teamInvites.filter(invite => invite !== _id)}, ...state.teamList]
+    })
+  }
+  return state
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -57,5 +72,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.REPLACE_TEAMLIST]: replaceTeamlist,
 
   [Types.TEAMLIST_GET_LIST]: teamlistGetList,
-  [Types.TEAMLIST_MERGE]: teamlistMerge
+  [Types.TEAMLIST_MERGE]: teamlistMerge,
+  [Types.LISTTARS_TEAM]: listtarsTeam
+
 })
