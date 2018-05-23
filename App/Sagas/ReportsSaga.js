@@ -157,8 +157,8 @@ export const getCategories = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.fetching)
   const { reportsParams: { _reportType } } = action
-  const { _host, _hostIsSpecific, token, language: lang } = yield select(getUser)
-  const { isSpecific } = yield select(getUserHost)
+  const { _host, token} = yield select(getUser)
+  const { isSpecific, language: lang } = yield select(getUserHost)
 
   __DEV__ && console.log('saga getCategories reportsParams', action)
   try {
