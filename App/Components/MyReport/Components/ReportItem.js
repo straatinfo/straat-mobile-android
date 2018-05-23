@@ -100,7 +100,7 @@ class ReportItem extends Component {
         { item.hasOwnProperty('_mainCategory') === true && item._mainCategory !== null && item._mainCategory.hasOwnProperty('name') === true && (<Text style={styles.title} >{ item._mainCategory.name }</Text>) || (<Text style={styles.title} >  </Text>)}
         {/* <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.location}>{item.location}</Text> */}
-        <Text style={styles.date}>{ GetDateEutype(item.createdAt) } / { GetTime(item.createdAt) } </Text>
+        <RowView left><Text style={styles.date}>{ GetDateEutype(item.createdAt) }</Text><Text style={[styles.date, {fontStyle: 'italic'}]}>  { GetTime(item.createdAt) } </Text></RowView>
         <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={() => this._navigation()} ><Text style={[styles.view, {color: getStyleStatusInPin(item.status)}]}>{Lang.checkOutTheReport}</Text></TouchableOpacity>
       </View>
       { item.hasOwnProperty('attachments') === true && item.attachments.length > 0 && crop(100, item.attachments[0].secure_url) && <FastImage
