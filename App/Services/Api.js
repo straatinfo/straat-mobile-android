@@ -279,7 +279,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
-  const getTeamList = ({ filter: queryObject }) => {
+  const getTeamList = ({ filter: queryObject, user }) => {
     /**
      * @param {hostId && isVolunteer }
      * && means optional to right
