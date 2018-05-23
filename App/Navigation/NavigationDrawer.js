@@ -20,6 +20,7 @@ import MyReportScreen from './../Containers/MyReport/MyReportScreen'
 import TeamListScreen          from '../Containers/MyTeam/TeamListScreen'
 import { Icon as IconBase } from 'native-base'
 
+import Configuration           from './../Config/AppConfig'
 /** dev only */
 let test = {}
 if (__DEV__) {
@@ -105,7 +106,7 @@ const NavigationDrawer = DrawerNavigator(
   drawerData,
   {
     initialRouteName: 'ReportMap',
-    initialRouteName: !__DEV__ ? 'ReportMap' : 'testOnlyScreen',
+    initialRouteName: !Configuration.DEBUG ? 'ReportMap' : 'testOnlyScreen',
     contentComponent: props => <DrawerContent {...props} itemData={drawerData} />,
     drawerPosition: 'right'
   }
