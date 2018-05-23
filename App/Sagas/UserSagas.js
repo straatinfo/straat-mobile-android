@@ -228,6 +228,9 @@ export const validateCity = function * (API, action) {
       yield put(UserActions.mergeState({isValidatedCity: true})) // un finished <-------|
       yield put(UserActions.mergeState({hostId: validationResult.data.data._host}))
     } else if (validationResult.ok && validationResult.data.status === 0) {
+      if (validationResult.data.data && validationResult.data.data.error) {
+        throw new Error(validationResult.data.data.error)
+      }
       throw new Error(language.city + ' ' + language.invalid)
     } else {
       throw new Error(language.request + ' ' + language.failed)
