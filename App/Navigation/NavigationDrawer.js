@@ -25,9 +25,9 @@ let test = {}
 if (__DEV__) {
   test = {
     testOnlyScreen: {
-      screen: MyProfile,
-      drawerLabel: 'testOnlyScreen',
-      iconName: 'home',
+      screen: FeedBack,
+      drawerLabel: 'FeedBack',
+      iconName: 'FeedBack',
       iconImage: <Icon name='home' {...Styles.icon} />
     }
   }
@@ -105,7 +105,7 @@ const NavigationDrawer = DrawerNavigator(
   drawerData,
   {
     initialRouteName: 'ReportMap',
-    initialRouteName: !__DEV__ ? 'ReportMap' : 'ReportMap',
+    initialRouteName: !__DEV__ ? 'ReportMap' : 'testOnlyScreen',
     contentComponent: props => <DrawerContent {...props} itemData={drawerData} />,
     drawerPosition: 'right'
   }
