@@ -36,7 +36,7 @@ import NavigationDrawer        from './NavigationDrawer'
 const defaultRoute = {
   headerMode: 'none',
   navigationOptions: { headerStyle: styles.header },
-  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'TestOnly'
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'NavigationDrawer'
 }
 
 // Manifest of possible screens 
