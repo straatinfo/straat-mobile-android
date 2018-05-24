@@ -26,7 +26,7 @@ const { Types, Creators } = createActions({
   userReset: ['params'],
   userChangeRadius: ['radius'],
   updateUser: ['user'],
-  teamlistGetuser: ['user'],
+  teamlistGetuser: ['user']
 })
 
 export const CurrentUserTypes = Types
@@ -52,15 +52,15 @@ export const testDataTeamList = [
 ]
 const radius = 300
 export const tempUser = {
-  _id: '5af5593fe0936b0014615dc5', // '5af5573ce0936b0014615dba', //'5a8b4afbac58ad00141a352e',
-  username: 'test User',
+  _id: '5a8b4afbac58ad00141a352e', // '5af5573ce0936b0014615dba', //'5a8b4afbac58ad00141a352e',
+  username: 'jTestr',
   radius: radius,
   accessToken: 'no access code',
   isVolunteer: true,
   _host: '5a7b485a039e2860cf9dd19a',
   teamList: [],
-  language: 'nl', 
-  token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YThiNGFmYmFjNThhZDAwMTQxYTM1MmUiLCJpYXQiOjE1MjAxOTE5OTU5NjZ9.XDYrx8rMdZse6VCS902G8GwLIJM0BBIQF9yRHG_bLqY',
+  language: 'nl',
+  token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YThiNGFmYmFjNThhZDAwMTQxYTM1MmUiLCJpYXQiOjE1MjcxNDA5MTY5OTV9.UDacF19-c8nbabww_8VrYXKZbjpnHTYlImKMviKfhZ0',
   _activeTeam: { _id: 'teamIdSample' }
 }
 /* ------------- Intial State ------------- */
