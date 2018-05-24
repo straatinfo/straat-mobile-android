@@ -28,25 +28,25 @@ class Conversation extends Component {
   chatScreen (conversation) {
     const { clearNotification } = this.props
     clearNotification({type: notificationTypes.chat})
-
-    // this.props.navigation.navigate('Chat', {
-    //   conversationId: conversation._id,
-    //   title: conversation.title,
-    //   messages: [],
-    //   option: convoOption.BYID,
-    //   target: {_id: conversation._id}  //  {_id: '5adf2b173e894d0014c77f53'},
-    //   // type: ConvoTypes.USER
-    // })
-
-    // used till back end fix
+ 
     this.props.navigation.navigate('Chat', {
       conversationId: conversation._id,
       title: conversation.title,
       messages: [],
-      option: convoOption.BYTYPE,
-      target: {_id: conversation._id},  //  {_id: '5adf2b173e894d0014c77f53'},
-      type: ConvoTypes.TEAM
+      option: convoOption.BYID,
+      target: {_id: conversation._id}  //  {_id: '5adf2b173e894d0014c77f53'},
+      // type: ConvoTypes.USER
     })
+ 
+    // used till back end fix
+    // this.props.navigation.navigate('Chat', {
+    //   conversationId: conversation._id,
+    //   title: conversation.title,
+    //   messages: [],
+    //   option: convoOption.BYTYPE,
+    //   target: {_id: conversation._id},  //  {_id: '5adf2b173e894d0014c77f53'},
+    //   type: ConvoTypes.TEAM
+    // })
   }
 //   {logo
 //     ? <Thumbnail large source={{ uri: crop(200, logo) }} />
