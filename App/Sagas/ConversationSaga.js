@@ -31,6 +31,7 @@ export const createConversation = function * (API, action) {
 export const getConversationList = function * (API, action) {
   const user = yield select(getUser)
   try {
+    yield put(ConversationActions.convoMerge({fetching: false}))
     const conversationResponse = yield call(API.getConversationList, { user })
     __DEV__ && console.log(conversationResponse)
     if (conversationResponse.ok && conversationResponse.data.status === 1) {
@@ -41,6 +42,9 @@ export const getConversationList = function * (API, action) {
   } catch (error) {
     yield put(ConversationActions.fetchConversationFailure(error))
   }
+
+  yield put(ConversationActions.convoMerge({fetching: false}))
+
 }
 
 // use when chat general for team only
