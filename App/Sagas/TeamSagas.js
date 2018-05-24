@@ -146,7 +146,7 @@ export function * addNewTeam (API, action) {
       yield put(TeamListActions.teamlistAddteam(newTeamResponse.data.data))
 
       yield put(TeamActions.getDetailsSuccess(newTeamResponse))
-    } else if (hasError(newTeamResponse.data)) {
+    } else if (!newTeamResponse && hasError(newTeamResponse.data)) {
       throw new Error(hasError(newTeamResponse.data))
     } else {
       throw new Error(Lang.networkError)
