@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native'
 
 const MyReportStyle = StyleSheet.create({
   subTitle: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 13
   }
 })
 
