@@ -1,7 +1,7 @@
 import ConversationActions from '../Redux/ConversationRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { getUser } from '../Redux/UserRedux'
-import { fixConversationListingForTeam } from '../Transforms/messagesHelper'
+import { fixConversationListingForTeam, fixConversationListing } from '../Transforms/messagesHelper'
 
 export const fetchConversation = function * (API, action) {
   try {
@@ -31,13 +31,30 @@ export const createConversation = function * (API, action) {
 export const getConversationList = function * (API, action) {
   const user = yield select(getUser)
   try {
-    const conversationResponse = yield call(API.getUserTeamList, { user })
+    const conversationResponse = yield call(API.getConversationList, { user })
+    __DEV__ && console.log(conversationResponse)
     if (conversationResponse.ok && conversationResponse.data.status === 1) {
       yield put(ConversationActions.convoMerge({
-        conversationList: fixConversationListingForTeam(conversationResponse.data.data, user._id)
+        conversationList: fixConversationListing(conversationResponse.data.payload, user._id)
       }))
     }
   } catch (error) {
     yield put(ConversationActions.fetchConversationFailure(error))
   }
 }
+
+// use when chat general for team only
+// export const getConversationList = function * (API, action) {
+//   const user = yield select(getUser)
+//   try {
+//     const conversationResponse = yield call(API.getUserTeamList, { user })
+//     if (conversationResponse.ok && conversationResponse.data.status === 1) {
+//       yield put(ConversationActions.convoMerge({
+//         conversationList: fixConversationListingForTeam(conversationResponse.data.data, user._id)
+//       }))
+//     }
+//   } catch (error) {
+//     yield put(ConversationActions.fetchConversationFailure(error))
+//   }
+// }
+ 
