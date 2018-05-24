@@ -142,7 +142,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
-  const getPublicReports = ({ _reportType, user:{ _id, token }, host:{ language } }) => {
+  const getPublicReports = ({ _reportType, user: { _id, token }, host: { language } }) => {
     return api.get('v1/api/report/public',
       {
         _reporter: _id,
@@ -159,7 +159,6 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
-  
   /**               ACCESS CODE                */
   const postConfirmAccessCode = ({ accessCode }) => {
     return api.post('v1/api/registration/validation/host', {
@@ -355,7 +354,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
- 
+
   const getCategoriesByHost = (reportParams) => {
     // console.log('photo on API', data)
     return api.get('v1/api/category/mainCategory/hostId/' + reportParams._host,
@@ -436,9 +435,14 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   }
 
   const getConversationList = ({user: { _id, token }}) => {
-    return api.get('v2/api/conversation?type=TEAM&_user=' + _id, {},
-    // return api.get('v2/api/conversation?type=PRIVATE,GROUP,TEAM&_user=' + user._id, {},
-    // return api.get('v2/api/conversation?_user=5aab7079ce0881001442296b', {},
+    // return api.get('v2/api/conversation?type=TEAM&_user=' + _id, {},
+    // return api.get('v2/api/conversation?type=PRIVATE,GROUP,TEAM&_user=' + user._id,
+    return api.get('v2/api/conversation',
+      {
+        type: 'PRIVATE,GROUP,TEAM',
+        _user: _id
+      },
+      // return api.get('v2/api/conversation?_user=5aab7079ce0881001442296b', {},
       {
         method: 'GET',
         headers: {
@@ -556,7 +560,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
-  const acceptUserRequest = (params,  { token }) => {
+  const acceptUserRequest = (params, { token }) => {
     const { _user, _team } = params
     console.log('acceptUserRequest', params)
     return api.get('v1/api/teamInvite/acceptRequest/' + _user + '/' + _team,
@@ -570,7 +574,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
-  const declineTeamRequest = (params,  { token }) => {
+  const declineTeamRequest = (params, { token }) => {
     const { _user, _team } = params
     return api.get('v1/api/teamInvite/declineRequest/' + _user + '/' + _team,
     {},
@@ -645,7 +649,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     // user
     postForgotPassword,
     postProfileUploadPhoto,
-    
+
     // registration API
     postRegisterUser,
     postValidateUserEmail,
