@@ -5,7 +5,7 @@
  */
 export const hasError = (ResquestResponse) => {
   console.log('ResquestResponse, ResquestResponse')
-  if (ResquestResponse.error && ResquestResponse.message) {
+  if (ResquestResponse && ResquestResponse.error && ResquestResponse.message) {
     return ResquestResponse.message
   } else {
     return false
