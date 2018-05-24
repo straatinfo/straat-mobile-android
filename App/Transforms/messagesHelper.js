@@ -16,12 +16,12 @@ export const fixGiftChatMessages = (messages = []) => {
 }
 
 export const fixConvo = (conversation, _user) => {
-  const {_id, type, title, participants, messages} = conversation
+  const {_id, type, title, participants, messages, _profilePic} = conversation
   if (!_id) {
     return false
   }
 
-  const lastMesasge = '' // messages[0] ? messages[0]._author.username + ': ' + messages[0].body : ''
+  const lastMesasge = messages[0] ? messages[0]._author.username + ': ' + messages[0].body : ''
   if (type === ConvoTypes.USER) {
     const otherUser = participants.find((participant) => {
       if (!participant._user) {
@@ -37,14 +37,16 @@ export const fixConvo = (conversation, _user) => {
       _id: _id,
       type: type,
       title: title || '',
-      lastMessage: lastMesasge
+      lastMessage: lastMesasge,
+      _profilePic: otherUser._user._profilePic
     }
   }
   return {
     _id: _id,
     type: type,
     title: title || '',
-    lastMessage: lastMesasge
+    lastMessage: lastMesasge,
+    _profilePic: _profilePic
   }
 }
 // for test

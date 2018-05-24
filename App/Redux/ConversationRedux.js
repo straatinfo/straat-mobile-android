@@ -23,7 +23,7 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   conversation: null,
   error: null,
-  fetching: false,
+  fetching: true,
   conversationId: null,
   conversationList: []
 })

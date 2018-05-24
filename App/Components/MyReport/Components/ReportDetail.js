@@ -28,6 +28,7 @@ import AlertBox from '../../AlertBox'
 import CircleLoader from '../../CircleLoader'
 import ReportImageHolders from '../../ReportImageHolders'
 
+import { ReportTypes } from './../../../Services/Constant'
 const { width } = Dimensions.get('window')
 const fixColorBorder = '#aaa'
 const fixColor = '#4f555e'
@@ -140,6 +141,8 @@ class ReportDetail extends Component {
         </View> }
         <ScrollView bounces scrollEventThrottle={16}>
           <View style={styles.listContainer}>
+            {/**  dont display if report type c */}
+            { ReportTypes.COMMUNICATION.code !== report._reportType.code &&
             <View style={[ styles.rowContainer, styles.twoCol ]} >{ /** report address conatainer */ }
               <View >
                 <Icon name='place' size={50} color={fixColor} />
@@ -149,7 +152,7 @@ class ReportDetail extends Component {
                 <Text style={[ styles.address, styles.f14 ]} >{ report.location }</Text>
               </View>
             </View>
-
+            }
             <View style={[ styles.rowContainer ]} >{ /** report datetime conatainer */ }
 
               <View style={[ styles.lineContainer ]} >{ /** report date container */ }

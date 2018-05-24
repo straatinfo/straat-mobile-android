@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, BackHandler } from 'react-native'
-import { Container, Content } from 'native-base'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { Container, Content, Title } from 'native-base'
+import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import { connect } from 'react-redux'
 import MessageActions from '../Redux/MessageRedux'
 
@@ -36,7 +36,7 @@ class ChatScreen extends Component {
     // option: byId, byType - refId = (userID, teamID, reportId)
 
     const { navigation, chatMerge, user: { _id, token }, getMessagesByConvoId, createPostConvo } = this.props
-    const { title, option, type, target, _team, _profilePic } = navigation.state.params ||  
+    const { title, option, type, target, _team, _profilePic } = navigation.state.params ||
     { title: 'test title', option: 'testOption', type: 'testType', target: 'tesTarget', _team: 'testOption', _profilePic: null }
 
     chatMerge({title: title})
@@ -113,6 +113,32 @@ class ChatScreen extends Component {
     this.connection.emit(SocketTypes.SEND_MESSAGE, message, (test) => {})
   }
 
+  renderBubble (_user, props) {
+    if (props.isSameUser(props.currentMessage, props.previousMessage) && props.isSameDay(props.currentMessage, props.previousMessage)) {
+      return (
+        <Bubble
+          {...props}
+        />
+      )
+    }
+
+    if (props.currentMessage.user._id === _user) {
+      return (
+        <Bubble
+          {...props}
+        />
+      )
+    }
+
+    return (
+      <View>
+        <Title style={{color: 'gray', padding: 5, fontSize: 13, textAlign: 'left', paddingLeft: 0, margin: 0}}>{props.currentMessage.user.name}</Title>
+        <Bubble
+          {...props}
+        />
+      </View>
+    )
+  }
   render () {
     const { fetching, user: {_id, username}, navigation, messages, title, fetchingConvo } = this.props
     // if (fetchingConvo) {
@@ -129,6 +155,7 @@ class ChatScreen extends Component {
               messages={messages}
               onSend={this.onSend}
               user={{ _id: _id, name: username }}
+              renderBubble={this.renderBubble.bind(this, _id)}
             />}
           </View>
         </Content>

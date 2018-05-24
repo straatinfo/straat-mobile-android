@@ -29,10 +29,10 @@ export default {
   txt_B05: 'Confirmations E-mail Address',
 
   //  Enter any message here
-  txt_B06: 'Vul hier een eventuele boodschap in',
+  txt_B06: 'Enter any message here',
 
   //  Keep me posted
-  txt_B07: 'Hou mij op de hoogte',
+  txt_B07: 'Keep me posted',
 
   //  failed in access code: You entered none or not the right code. Please try again, or make a different choice.
   txt_B08: 'You entered none or not the right code. Please try again, or make a different choice.',

@@ -9,7 +9,6 @@ import ImagePicker from 'react-native-image-picker'
 
 import RowView from '../../RowView'
 import CenterView from '../../CenterView'
-import Lang from './../../../Lib/CutomLanguage'
 import GeneralDesign from './../../../Lib/GeneralDesign'
 import Images from './../../../Themes/Images'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -26,7 +25,6 @@ import { colorMinus, getTeamListBySelectedIdFromTeamList } from '../../../Transf
 import CircleLoader from '../../CircleLoader'
 
 import ReportStyle from './../ReportStyle'
-import language from './../../../Lib/CutomLanguage'
 import MainButton from './../../../Components/MainButton'
 // import Images from './../../../Themes/Images'
 class TeamSelect extends Component {
@@ -59,11 +57,24 @@ class TeamSelect extends Component {
   }
 
   getCategoryName (_id) {
-    const { categoryList } = this.props
+    // const { reportMainCategoryList, reportSubCategoryList  } = this.props
+    const { categoryList, reportMainCategoryList, reportSubCategoryList } = this.props
+    // const categoryList = [...reportMainCategoryList, ...reportSubCategoryList]
     const catName = categoryList.find((category) => category._id === _id)
     return catName ? catName.name : ' '
   }
 
+  getMainCategoryName (_id) {
+    const { reportMainCategoryList } = this.props
+    const catName = reportMainCategoryList.find((category) => category._id === _id)
+    return catName ? catName.name : ' '
+  }
+
+  getSubCategoryName (_id) {
+    const { reportSubCategoryList } = this.props
+    const catName = reportSubCategoryList.find((category) => category._id === _id)
+    return catName ? catName.name : ' '
+  }
   render () {
     // const { source: reportImages } = this.props
     // const style = {
@@ -71,7 +82,7 @@ class TeamSelect extends Component {
     //   row: { flex: 1, backgroundColor: 'white' }
     // }
    // const { count } = this.state
-    const { teamList, reportTeamSelected, navigation, onBack, onSubmit, mainCategoryID, subCategoryID, text } = this.props
+    const { teamList, reportTeamSelected, navigation, onBack, onSubmit, mainCategoryID, subCategoryID, text, language } = this.props
     const { teams } = this.state
     return (
       <Content style={ReportStyle.formContent} >
@@ -79,8 +90,8 @@ class TeamSelect extends Component {
 
         {this.reportTitle(language.generalInformation)}
         <View style={[ReportStyle.viewBorder, ReportStyle.viewBorderInner]} >
-          {this.reportContent(this.getCategoryName(mainCategoryID), 'mainCategoryID')}
-          {subCategoryID !== 0 && this.reportContent(this.getCategoryName(subCategoryID), 'subCategoryID')}
+          {this.reportContent(this.getMainCategoryName(mainCategoryID), 'mainCategoryID')}
+          {subCategoryID !== 0 && this.reportContent(this.getSubCategoryName(subCategoryID), 'subCategoryID')}
         </View>
 
         {this.reportTitle(language.message)}
@@ -115,9 +126,12 @@ const mapStateToProps = state => {
     reportTeamSelected: state.reports.reportTeamSelected,
     categoryList: state.reports.reportCategoryList,
     mainCategoryID: state.reports.reportSelectMainCategoryID,
+    reportMainCategoryList: state.reports.reportMainCategoryList,
+    reportSubCategoryList: state.reports.reportSubCategoryList,
     subCategoryID: state.reports.reportSelectSubCategoryID,
     text: state.reports.reportDescription,
-    fetchTeam: state.reports.fetchTeam
+    fetchTeam: state.reports.fetchTeam,
+    language: state.language.Languages
   }
 }
 
