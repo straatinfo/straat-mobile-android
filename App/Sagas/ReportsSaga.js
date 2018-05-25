@@ -210,6 +210,7 @@ export const getCategories = function * (API, action) {
 export const submitReport = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
+  const { _id, token } = yield select(getUser)
 
   const { reportParams: params } = action
   __DEV__ && console.log('saga submitReports', action)
@@ -238,7 +239,7 @@ export const submitReport = function * (API, action) {
       }
 
       // send socket notification
-      const socketConnection = CONNECTION.getConnection()
+      const socketConnection = CONNECTION.getConnection(_id, token)
       if (reportParams.type !== 'C') {
         socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: data})
       } else if (reportParams.type === 'C') {
