@@ -31,7 +31,7 @@ class RootContainer extends Component {
       <Root style={styles.applicationView}>
         <StatusBar barStyle='light-content' />
         {renderIf(loadedLaguage)(<ReduxNavigation />)}
-        {renderIf(!loadedLaguage)(<Text>Loading</Text>)}
+        {renderIf(!loadedLaguage)(<Text></Text>)}
         <BusyIndicator />
       </Root>
     )
