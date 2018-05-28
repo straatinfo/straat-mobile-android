@@ -29,8 +29,8 @@ class ReportChatIcon extends Component {
   render () {
     const { report, Lang } = this.props
     return (
-      <View style={{flexDirection: 'row', marginTop: 5, marginLeft: 30}}>
-        <Badge style={{backgroundColor: 'gray'}}><Text style={{fontWeight: '400', color: 'white'}}>0</Text></Badge>
+      <View style={{flexDirection: 'row',  alignItems: 'center', paddingVertical: 3}}>
+        <Badge style={{backgroundColor: 'gray', alignItems: 'center', justifyContent:'center'}}><Text style={{fontWeight: '400', color: 'white'}}>0</Text></Badge>
         <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.chatScreen(report)}><Text style={{fontWeight: '400', color: 'blue'}}>{Lang.messages}</Text></TouchableOpacity>
         <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.chatScreen(report)}><Text style={{fontWeight: '400', color: 'blue'}}>{Lang.show}</Text></TouchableOpacity>
       </View>

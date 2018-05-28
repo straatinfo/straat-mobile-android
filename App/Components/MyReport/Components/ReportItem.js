@@ -17,7 +17,8 @@ import { getStyleStatusInPin } from '../../../Transforms/ReportHelper'
 import ReportChatIcon from './ReportChatIcon';
 import { getCategoryName, hasCategoryName } from '../../../Transforms/CategoryHelper';
 import { Spacer } from '../..';
- 
+import * as Animatable from 'react-native-animatable'
+
 const tempUrl = 'https://res.cloudinary.com/hvina6sjo/image/upload/v1519079967/sample/20180216_013543.jpg_Mon%20Feb%2019%202018%2022:39:25%20GMT%2B0000%20%28UTC%29.jpg'
 
 const shadow = {
@@ -28,7 +29,7 @@ const shadow = {
   },
   shadowOpacity: 1.0,
   shadowRadius: 2,
-  elevation: 1,
+  elevation: 2,
   borderRadius: 10
 }
 const styles = {
@@ -44,8 +45,6 @@ const styles = {
   },
   item: {
     flexDirection: 'row',
-
-    ...shadow
   },
   info: {
     flex: 1,
@@ -53,19 +52,20 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'flex-start',
     marginLeft: 10,
-    marginTop: 10,
-    marginBottom: 10
+    marginTop: 5,
+    marginBottom: 5
   },
   title: {
     color: '#475a77',
     fontSize: 22,
     textAlign: 'left',
     fontWeight: 'bold',
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    overflow: 'hidden'
   },
   date: {
     color: '#475a77',
-    fontSize: 20
+    fontSize: 19,
   },
   location: {
     color: '#475a77',
@@ -105,7 +105,7 @@ class ReportItem extends Component {
   _renderBody () {
     const { item, Lang, navigation } = this.props
     return (          
-      <View style={styles.itemContainer}>
+      <Animatable.View animation="bounceInLeft" easing="ease-out" duration={2000} delay={1000} style={styles.itemContainer} >
         <View style={styles.item}>
           <View style={styles.info}>
             { hasCategoryName(item._mainCategory) ? 
@@ -115,6 +115,7 @@ class ReportItem extends Component {
             <Text style={styles.location}>{item.location}</Text> */}
             <RowView left><Text style={styles.date}>{ GetDateEutype(item.createdAt) }</Text><Text style={[styles.date, {fontStyle: 'italic'}]}>  { GetTime(item.createdAt) } </Text></RowView>
             <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={() => this._navigation()} ><Text style={[styles.view, {color: getStyleStatusInPin(item.status)}]}>{Lang.checkOutTheReport}</Text></TouchableOpacity>
+            <ReportChatIcon report={item} navigation={navigation}/>
           </View>
           { item.hasOwnProperty('attachments') === true && item.attachments.length > 0 && crop(100, item.attachments[0].secure_url) && <FastImage
             source={{uri: cropWH(styles.image.width, styles.image.height, item.attachments[0].secure_url), priority: FastImage.priority.normal}}
@@ -122,8 +123,8 @@ class ReportItem extends Component {
           { item.isUrgent === true && <Text style={styles.urgent}>!</Text>}
         </View>
 
-          <ReportChatIcon report={item} navigation={navigation}/>
-    </View>
+          
+    </Animatable.View>
     )
   }
   render () {
@@ -143,8 +144,6 @@ class ReportItem extends Component {
     return (
       <SwipeRow
         leftOpenValue={100}
-        disableLeftSwipe={true}
-        disableRightSwipe={true}
         body = {this._renderBody()}
         left={
                 <Button danger onPress={() => onRemove(item)}>
