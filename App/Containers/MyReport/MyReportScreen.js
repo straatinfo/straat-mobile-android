@@ -58,7 +58,7 @@ class ReportMapScreen extends React.Component {
             </Button>
           </Right>
         </Header>
-        <MyReportList navigation={navigation} />
+        <MyReportList navigation={navigation} Lang={Lang} />
       </Container>
     )
   }

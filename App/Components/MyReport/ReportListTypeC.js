@@ -34,8 +34,8 @@ class ReportListTypeC extends Component {
                 <Badge style={{backgroundColor: 'gray'}}><Text style={{fontWeight: '400', color: 'white'}}>0</Text></Badge>
                 <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.navigateToReportChat(report)}><Text style={{fontWeight: '400', color: 'blue'}}>Berichten</Text></TouchableOpacity>
                 <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.navigateToReportChat(report)}><Text style={{fontWeight: '400', color: 'blue'}}>Toon</Text></TouchableOpacity>
-              </View> */}
-              <ReportChatIcon report={report} navigation={navigation} />
+              </View> 
+              <ReportChatIcon report={report} navigation={navigation} />*/}
             </View>
              )}
         <Spacer />
