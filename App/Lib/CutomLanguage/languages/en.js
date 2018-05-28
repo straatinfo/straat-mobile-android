@@ -357,7 +357,7 @@ export default {
   inProgress: 'In Progress',
   done: 'Done',
   expired: 'Expired',
-  checkOutTheReport: 'check out the report',
+  checkOutTheReport: 'Check Out The Report', // 'check out the report',
   selectMainCategory: 'Choose Main Category',
   selectSubCategory: 'Choose Sub Category',
 
@@ -492,6 +492,9 @@ export default {
   /** @description Urgent? First call 112 */
   txt_J44: 'Urgent? First call 112',
 
+  /** @description Are you sure you want to delete the report? */
+  txt_J45: 'Are you sure you want to delete the report?',
+
   /** @description General Information */
   generalInformation: 'General Information',
 
@@ -500,6 +503,12 @@ export default {
 
   /** @description Already Taken */
   alreadyTaken: 'Already Taken',
+
+  /** @description Report has been deleted */
+  ReportHasBeenDeleted: 'Report has been deleted',
+
+
+  
 
   // GLOBAL LANGUAGE
   // is under maintenance
@@ -669,5 +678,12 @@ export default {
   txt_CONVERSATION_TITLE: 'Conversation Title',
 
   /** @description Show */
-  show: 'Show'
+  show: 'Show',
+
+  /** @description Confirmation */
+  confirmation: 'Confirmation',
+  
+  /** @description Extra */
+  extra: 'Extra'
+  
 }
