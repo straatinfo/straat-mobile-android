@@ -477,12 +477,12 @@ class ReportMapContainer extends Component {
           <MapView
             ref={c => { this.reportMap = c }}
             style={[styles.map, { height: heights.hmap }]}
-            showsUserLocation={false}
-            followUserLocation={false}
+            showsUserLocation={true}
+            followUserLocation={true}
             showsMyLocationButton={false}
             showsCompass={false}
             followsUserLocation={false}
-            loadingEnabled={false}
+            loadingEnabled={true}
             toolbarEnabled={false}
             // zoomEnabled={false}
             rotateEnabled
