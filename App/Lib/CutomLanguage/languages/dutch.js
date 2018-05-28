@@ -208,7 +208,39 @@ export default {
   txt_D32: 'Ik accepteer hierbij de algemene voorwaarden',
 
   // The app straat.info is meant volunteers
-  txt_D33: 'De app straat.info is bedoeld voor het ondersteunen van buurtpreventie. Het gebruik van de app voor andere doeleinden, die niet binnen de gangbare uitleg van buurtpreventie passen, is niet toegestaan.\n\nDe app is nadrukkelijk niet bedoeld om het normale communicatie verkeer met instanties zoals de politie, de brandweer, ambulance en gemeenten te vervangen. \n\nBel bij spoed altijd eerst 112 \n\nSeqretary b.v. is eigenaar van de app straat.info en aanvaardt geen enkele aansprakelijkheid voor schade op welke wijze dan ook, door het gebruik van de app.',
+  txt_D33: `Bel bij spoed altijd eerst 112
+
+
+De app straat.info is bedoeld voor het ondersteunen van buurtpreventie onder andere voor het doorgeven van meldingen aan de gemeente. Het gebruik van de app voor andere doeleinden, die niet binnen de gangbare uitleg van buurtpreventie passen, is niet toegestaan.
+
+De app is nadrukkelijk niet bedoeld om het normale communicatie verkeer met instanties zoals de politie, de brandweer, ambulance en gemeenten te vervangen.
+
+Bel bij spoed altijd eerst 112
+
+Seqretary b.v. is eigenaar van de app straat.info en aanvaardt geen enkele aansprakelijkheid voor schade op welke wijze dan ook, door het gebruik van de app. Seqretary b.v. kan de algemene voorwaarden wijzigen.
+
+
+Over privacy en jouw gegevens:
+
+Om je gegevens beter te beschermen, maakt de app straat.info gebruik van een chatnaam. Je mag zelf bepalen welke naam je daarvoor gebruikt. Je telefoonnummer en al je andere persoonlijke gegevens worden in het openbare deel van de app straat.info aan niemand bekend gemaakt.
+
+Als je lid bent van een team, dan zien je teamleden wel je naam, maar niet je overige gegevens. Zij zien dus niet je telefoonnummer, adres etc.
+
+De teamcoördinator van je team heeft wel inzage in je gegevens. Hiermee kan de coördinator controleren of de juiste persoon in het team zit.
+
+De gemeente en politie kunnen desgevraagd indien noodzakelijk inzage krijgen in jouw gegevens en gegevens die met deze app straat.info worden gegenereerd.
+
+
+De meldingen met de bijbehorende berichten die met de app straat.info worden gemaakt, worden een beperkte tijd bewaard. Daarna worden deze vernietigd. Teams en de gemeente krijgen een afschrift van de meldingen.
+
+Wij maken geen analyse van het gebruik van de app, anders dan ter verbetering van onze dienstverlening.
+
+Wij verkopen je gegevens niet aan andere organisaties.
+
+Je kunt het gebruik van de app straat.info beëindigen en je gegevens laten verwijderen uit ons bestand door ons via de mail een verzoek daartoe te versturen.
+
+Met het accepteren van deze algemene voorwaarden stem je in met het hier beschreven gebruik van je gegevens.`,
+  // txt_D33: 'De app straat.info is bedoeld voor het ondersteunen van buurtpreventie. Het gebruik van de app voor andere doeleinden, die niet binnen de gangbare uitleg van buurtpreventie passen, is niet toegestaan.\n\nDe app is nadrukkelijk niet bedoeld om het normale communicatie verkeer met instanties zoals de politie, de brandweer, ambulance en gemeenten te vervangen. \n\nBel bij spoed altijd eerst 112 \n\nSeqretary b.v. is eigenaar van de app straat.info en aanvaardt geen enkele aansprakelijkheid voor schade op welke wijze dan ook, door het gebruik van de app.',
 
   // when you are a volunteer, for example
   txt_D34: 'Als u vrijwilliger bent, bijvoorbeeld aan een BIT of BPT meedoet, kies dan “ja”. Als u bijvoorbeeld bij de overheid werkt en u de app voor uw werk wilt gebruiken, klik dan “nee”',

@@ -207,7 +207,39 @@ export default {
   txt_D32: 'I hereby accept the general terms.',
 
   // The app straat.info is meant volunteers
-  txt_D33: 'The app straat.info is meant volunteers to support neighbourhood watch. The use of this app for any other means is not permitted. \n\nThe app is no replacement for normal communication with professionals like police, hospitals etc.\n\nIn case of urgency always first call 112\n\nSeqretary b.v. is the owner of the app straat.info and accepts no liability of any kind for damages etc using this app.',
+  txt_D33: `Always call 112 first
+
+
+  The app street.info is intended for supporting neighborhood prevention, among other things, for passing on reports to the municipality. The use of the app for other purposes, which do not fit within the current explanation of neighborhood prevention, is not permitted.
+  
+  The app is emphatically not intended to replace normal communication traffic with agencies such as the police, the fire brigade, ambulance and municipalities.
+  
+  Always call 112 first
+  
+  Seqretary e.g. owns the app straat.info and accepts no liability for damage in any way whatsoever, through the use of the app. Seqretary e.g. can change the terms and conditions.
+  
+  
+  About privacy and your data:
+  
+  To protect your data better, the app street.info uses a chat name. You can decide for yourself which name you use. Your phone number and all your other personal details will not be disclosed to anyone in the public part of the app street.info.
+  
+  If you are a member of a team, your team members will see your name, but not your other details. They do not see your phone number, address etc.
+  
+  The team coordinator of your team does have access to your data. This allows the coordinator to check whether the right person is in the team.
+  
+  On request, the municipality and police can, if necessary, inspect your data and data generated with this street app.
+  
+  
+  The notifications with the corresponding messages that are created with the app straat.info are kept for a limited time. Then they are destroyed. Teams and the municipality receive a copy of the reports.
+  
+  We do not analyze the use of the app, other than to improve our services.
+  
+  We do not sell your data to other organizations.
+  
+  You can terminate the use of the app straat.info and have your data removed from our database by sending us a request via email.
+  
+  By accepting these terms and conditions you agree to the use of your data described here.`,
+  // txt_D33: 'The app straat.info is meant volunteers to support neighbourhood watch. The use of this app for any other means is not permitted. \n\nThe app is no replacement for normal communication with professionals like police, hospitals etc.\n\nIn case of urgency always first call 112\n\nSeqretary b.v. is the owner of the app straat.info and accepts no liability of any kind for damages etc using this app.',
 
   // when you are a volunteer, for example
   txt_D34: 'When you are a volunteer, for example want to join a neighbourhood watch, then choose `yes`. When you are going to use this app as a professional, please choose ´no´',
