@@ -14,6 +14,9 @@ import ImageTumb from './ImageTumb'
 import { cropWH, crop } from '../../../Transforms/Cloudinary'
 import Urgency from './Urgency'
 import { getStyleStatusInPin } from '../../../Transforms/ReportHelper'
+import ReportChatIcon from './ReportChatIcon';
+import { getCategoryName, hasCategoryName } from '../../../Transforms/CategoryHelper';
+import { Spacer } from '../..';
  
 const tempUrl = 'https://res.cloudinary.com/hvina6sjo/image/upload/v1519079967/sample/20180216_013543.jpg_Mon%20Feb%2019%202018%2022:39:25%20GMT%2B0000%20%28UTC%29.jpg'
 
@@ -29,21 +32,26 @@ const shadow = {
   borderRadius: 10
 }
 const styles = {
-  item: {
+  itemContainer: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 0,
     marginLeft: 20,
-    marginRight: 20,
+    marginRight: 0,
     backgroundColor: 'white',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
+    ...shadow
+  },
+  item: {
+    flexDirection: 'row',
+
     ...shadow
   },
   info: {
     flex: 1,
     backgroundColor: 'white',
     flexDirection: 'column',
-    alignItems: 'stretch',
+    alignItems: 'flex-start',
     marginLeft: 10,
     marginTop: 10,
     marginBottom: 10
@@ -52,7 +60,8 @@ const styles = {
     color: '#475a77',
     fontSize: 22,
     textAlign: 'left',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    alignSelf: 'stretch'
   },
   date: {
     color: '#475a77',
@@ -93,21 +102,57 @@ class ReportItem extends Component {
     navigation.navigate('ReportDetails', {report: item})
     reportMergeState({reportDetails: item})
   }
+  _renderBody () {
+    const { item, Lang, navigation } = this.props
+    return (          
+      <View style={styles.itemContainer}>
+        <View style={styles.item}>
+          <View style={styles.info}>
+            { hasCategoryName(item._mainCategory) ? 
+              <Text style={styles.title} >{ getCategoryName(item._mainCategory) }</Text> : <Text style={styles.title} >  </Text>
+              }
+            {/* <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.location}>{item.location}</Text> */}
+            <RowView left><Text style={styles.date}>{ GetDateEutype(item.createdAt) }</Text><Text style={[styles.date, {fontStyle: 'italic'}]}>  { GetTime(item.createdAt) } </Text></RowView>
+            <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={() => this._navigation()} ><Text style={[styles.view, {color: getStyleStatusInPin(item.status)}]}>{Lang.checkOutTheReport}</Text></TouchableOpacity>
+          </View>
+          { item.hasOwnProperty('attachments') === true && item.attachments.length > 0 && crop(100, item.attachments[0].secure_url) && <FastImage
+            source={{uri: cropWH(styles.image.width, styles.image.height, item.attachments[0].secure_url), priority: FastImage.priority.normal}}
+            style={styles.image} /> || <Image style = {styles.image} source={Images.empty} />}
+          { item.isUrgent === true && <Text style={styles.urgent}>!</Text>}
+        </View>
+
+          <ReportChatIcon report={item} navigation={navigation}/>
+    </View>
+    )
+  }
   render () {
-    const { item, Lang } = this.props
-    return (<View style={styles.item}>
-      <View style={styles.info}>
-        { item.hasOwnProperty('_mainCategory') === true && item._mainCategory !== null && item._mainCategory.hasOwnProperty('name') === true && (<Text style={styles.title} >{ item._mainCategory.name }</Text>) || (<Text style={styles.title} >  </Text>)}
-        {/* <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.location}>{item.location}</Text> */}
-        <RowView left><Text style={styles.date}>{ GetDateEutype(item.createdAt) }</Text><Text style={[styles.date, {fontStyle: 'italic'}]}>  { GetTime(item.createdAt) } </Text></RowView>
-        <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={() => this._navigation()} ><Text style={[styles.view, {color: getStyleStatusInPin(item.status)}]}>{Lang.checkOutTheReport}</Text></TouchableOpacity>
-      </View>
-      { item.hasOwnProperty('attachments') === true && item.attachments.length > 0 && crop(100, item.attachments[0].secure_url) && <FastImage
-        source={{uri: cropWH(styles.image.width, styles.image.height, item.attachments[0].secure_url), priority: FastImage.priority.normal}}
-        style={styles.image} /> || <Image style = {styles.image} source={Images.empty} />}
-      { item.isUrgent === true && <Text style={styles.urgent}>!</Text>}
-    </View>)
+    const { item, Lang, navigation, swiper, onRemove } = this.props
+    if (!swiper) {
+      return (
+        <SwipeRow
+          leftOpenValue={100}
+          disableLeftSwipe={true}
+          disableRightSwipe={true}
+          body = {this._renderBody()}
+          left={<Spacer />}
+        />
+      )
+    }
+
+    return (
+      <SwipeRow
+        leftOpenValue={100}
+        disableLeftSwipe={true}
+        disableRightSwipe={true}
+        body = {this._renderBody()}
+        left={
+                <Button danger onPress={() => onRemove(item)}>
+                  <Icon active name="trash" />
+                </Button>
+              }
+      />
+    )
   }
 }
 
