@@ -43,7 +43,7 @@ class ReportMapScreen extends React.Component {
     console.log(this.props.navigation.state.routeName)
     return (
       <Container>
-        <Header style={[GlobalStyle.header, {backgroundColor: design.header}]} hasTabs>
+        <Header style={[GlobalStyle.header, {backgroundColor: design.header}]}>
           <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
               <Icon name='md-arrow-back' />
