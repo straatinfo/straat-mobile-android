@@ -68,7 +68,7 @@ export const tempUser = {
 export const INITIAL_STATE = Immutable({
   user: __DEV__ ? tempUser : {language: 'nl'},
   accessCode: null,
-  host: null,
+  host: {_id: 'testHostId', language: 'nl'},
   hostId: null,
   _teamActive: '',
   radius: radius,
