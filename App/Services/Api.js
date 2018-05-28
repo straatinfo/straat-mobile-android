@@ -159,6 +159,18 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
+  const deleteReport = ({ _report, user: { _id, token }, host: { language } }) => {
+    return api.delete('v1/api/report/' + _report,
+      {},
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
   /**               ACCESS CODE                */
   const postConfirmAccessCode = ({ accessCode }) => {
     return api.post('v1/api/registration/validation/host', {
@@ -672,6 +684,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postReport,                  // creating report
     postReportTypeC,
     putReport,                   // updating report
+    deleteReport,
 
     // conversation
     getUserTeamList,
