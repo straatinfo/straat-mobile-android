@@ -333,7 +333,7 @@ export default {
   inProgress: 'Behandeling',
   done: 'Afgehandeld',
   expired: 'Verlopen',
-  checkOutTheReport: 'BEKIJK MELDING',
+  checkOutTheReport: 'Bekijk Melding', // 'BEKIJK MELDING',
   selectMainCategory: 'Kies Hoofdcategorie',
   selectSubCategory: 'Kies Subcategorie',
 
@@ -469,6 +469,9 @@ export default {
   /** @description Urgent? First call 112 */
   txt_J44: 'Spoed? Bel eerst 112',
 
+  /** @description Are you sure you want to delete the report? */
+  txt_J45: 'Weet je zeker dat je het rapport wilt verwijderen?',
+
   /** @description General Information */
   generalInformation: 'Algemene Informatie',
 
@@ -506,6 +509,9 @@ export default {
   txt_F11: 'Selecteer teamlogo',
 
   txt_F12: 'REGISTEREN',
+
+  /** @description Report has been deleted */
+  ReportHasBeenDeleted: 'Rapport is verwijderd',
 
   // GLOBAL LANGUAGE
   //  is  Under Migration
@@ -675,5 +681,13 @@ export default {
   txt_CONVERSATION_TITLE: 'Gespreks Titel',
 
   /** @description Show */
-  show: 'Toon'
+  show: 'Toon',
+  
+  /** @description Confirmation */
+  confirmation: 'Bevestiging',
+
+  
+
+  /** @description Extra */
+  extra: 'Extra'
 }

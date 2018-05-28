@@ -32,7 +32,7 @@ import { registerUser, validateEmail, validateUserName, validatePostalCode, vali
 import { getNearbyReports, getReportAddress, uploadPhoto, getCategories, submitReport, changeStatus } from './ReportsSaga'
 import { fetchConversation, createConversation, getConversationList } from './ConversationSaga'
 import { fetchMessage, sendMessage, getMessagesByConvoId, postConvo } from './MessageSaga'
-import { myReportRequest, myReportDetailRequest } from './MyReportSagas'
+import { myReportRequest, myReportDetailRequest, myReportDeleteRequest } from './MyReportSagas'
 import { notifactionRequestTypeA, notifactionRequestTypeB, notifactionRequestTypeC, updateByNotification } from './NotificationSaga'
 import { sendFeedback } from './FeedbackSaga'
 import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam } from './TeamSagas'
@@ -111,6 +111,7 @@ export default function * root () {
     /**          MY REPORT             */
     takeLatest(MyReportTypes.MY_REPORT_REQUEST, myReportRequest, api),
     takeLatest(MyReportTypes.MY_REPORT_DETAIL_REQUEST, myReportDetailRequest, api),
+    takeLatest(MyReportTypes.DELETE_MYREPORT, myReportDeleteRequest, api),
 
     /**          NOTIFICATION          */
     takeLatest(NotificationTypes.NOTIFICATION_REQUEST_TYPE_A, notifactionRequestTypeA, api),

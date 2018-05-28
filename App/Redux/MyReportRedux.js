@@ -6,7 +6,9 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   myReportRequest: ['data'],
   myReportDetailRequest: ['_id'],
-  myReportMerge: ['newState']
+  myReportMerge: ['newState'],
+  deleteMyreport: ['_id'],
+  removeMyreport: ['_id']
 })
 
 export const MyReportTypes = Types
@@ -34,6 +36,17 @@ export const myReportDetailRequest = (state, {data}) => {
   return state.merge({ fetchingDetails: true })
 }
 
+export const deleteMyreport = (state, {data}) => {
+  return state
+}
+
+export const removeMyreport = (state, {_id}) => {
+  // console.log(_id)
+  // return state.myReportList.merge({ fetchingDetails: true })
+  // const toRemove = state.myReportList.findIndex(report => report._id === _id )
+  return state.merge({myReportList: state.myReportList.filter(report => report._id !== _id)})
+}
+
 export const myReportMerge = (state, { newState }) => {
   return state.merge(newState)
 }
@@ -43,7 +56,10 @@ export const myReportMerge = (state, { newState }) => {
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.MY_REPORT_REQUEST]: myReportRequest,
   [Types.MY_REPORT_DETAIL_REQUEST]: myReportDetailRequest,
-  [Types.MY_REPORT_MERGE]: myReportMerge
+  [Types.MY_REPORT_MERGE]: myReportMerge,
+  [Types.DELETE_MYREPORT]: deleteMyreport,
+  [Types.REMOVE_MYREPORT]: removeMyreport
+
 })
 
 /* ------------- Selectors ------------- */
@@ -55,4 +71,3 @@ export const reducer = createReducer(INITIAL_STATE, {
 export const getMyReportList = (state) => {
   return state.myReport.myReportList
 }
-

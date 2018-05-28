@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { View, StatusBar, Text } from 'react-native'
-import ReduxNavigation from '../Navigation/ReduxNavigation'
+import { Root, StyleProvider } from 'native-base'
 import { connect } from 'react-redux'
+import ReduxNavigation from '../Navigation/ReduxNavigation'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 import BusyIndicator from 'react-native-busy-indicator'
 
-import { Root } from 'native-base'
+import renderIf from 'render-if'
 
 // Styles
 import styles from './Styles/RootContainerStyles'
-
+import getTheme from './../Themes/native-base-theme/components'
+import material from './../Themes/native-base-theme/variables/material'
 // import Language from '../Redux/LanguageRedux'
-import renderIf from 'render-if'
 
 class RootContainer extends Component {
 
@@ -29,8 +30,9 @@ class RootContainer extends Component {
     const { loadedLaguage } = this.props
     return (
       <Root style={styles.applicationView}>
+       
         <StatusBar barStyle='light-content' />
-        {renderIf(loadedLaguage)(<ReduxNavigation />)}
+        {renderIf(loadedLaguage)(<StyleProvider style={getTheme(material)}><ReduxNavigation /></StyleProvider>)}
         {renderIf(!loadedLaguage)(<Text></Text>)}
         <BusyIndicator />
       </Root>

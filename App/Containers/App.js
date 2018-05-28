@@ -7,8 +7,8 @@ import createStore from '../Redux'
 
 import BusyIndicator from 'react-native-busy-indicator'
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-import { setStart } from '../Redux/commonRedux';
-import { Design } from '../Services/Constant';
+import { setStart } from '../Redux/commonRedux'
+import { Design } from '../Services/Constant'
 
 // create our store
 export const store = createStore()
@@ -36,6 +36,8 @@ class App extends Component {
 }
 
 // allow reactotron overlay for fast design in dev mode
-export default DebugConfig.useReactotron
-  ? console.tron.overlay(App)
-  : App
+// export default DebugConfig.useReactotron
+//   ? console.tron.overlay(App)
+//   : App
+
+export default App

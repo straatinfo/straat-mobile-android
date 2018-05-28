@@ -16,7 +16,6 @@ export const confirmAccessCode = function * (API, action) {
   const { accessCode, navigation, route } = action.accessCodeContainer
   try {
     yield call(loaderHandler.showLoader, language.authenticating)
-
     const requestedHostId = yield call(API.postConfirmAccessCode, {accessCode})
     if (requestedHostId.ok && requestedHostId.data.status === 1) {
       const hostID = requestedHostId.data.data._id

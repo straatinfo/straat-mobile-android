@@ -26,8 +26,8 @@ let test = {}
 if (__DEV__) {
   test = {
     testOnlyScreen: {
-      screen: FeedBack,
-      drawerLabel: 'FeedBack',
+      screen: MyReportScreen,
+      drawerLabel: 'MyReport',
       iconName: 'FeedBack',
       iconImage: <Icon name='home' {...Styles.icon} />
     }
