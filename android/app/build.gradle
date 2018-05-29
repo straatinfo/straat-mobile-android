@@ -145,45 +145,18 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.getRequested().getGroup() == 'com.google.android.gms') {
+            details.useVersion('11.8.0')
+        }
+    }
+}
+
 dependencies {
     compile project(':react-native-linear-gradient')
     compile project(':react-native-spinkit')
-    compile(project(':react-native-maps')) {
-        exclude group: 'com.google.android.gms', module: 'play-services-base'
-        exclude group: 'com.google.android.gms', module: 'play-services-maps'
-    }
-    compile 'com.google.android.gms:play-services-base:11.6.2'
-    compile 'com.google.android.gms:play-services-maps:11.6.2'
- 
-    // compile 'com.google.android.gms:play-services-base:11.+'
-    // compile 'com.google.android.gms:play-services-maps:11.+'
-    // compile(project(':react-native-maps')) {
-    //     exclude group: 'com.google.android.gms', module: 'play-services-base'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-maps'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-gcm'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-iid'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-stats'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-tasks'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-basement'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-base-license'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-maps-license'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-basement-license'
-    //     exclude group: 'com.google.android.gms', module: 'play-services-tasks-license'
-    // }
-    // compile 'com.google.android.gms:play-services-base:11.8.0'
-    // compile 'com.google.android.gms:play-services-maps:11.8.0'
-    // compile 'com.google.android.gms:play-services-gcm:11.8.0'
-    // compile 'com.google.android.gms:play-services-iid:11.8.0'
-    // compile 'com.google.android.gms:play-services-stats:11.8.0'
-    // compile 'com.google.android.gms:play-services-tasks:11.8.0'
-    // compile 'com.google.android.gms:play-services-basement:11.8.0'
-    // compile 'com.google.android.gms:play-services-base-license:11.8.0'
-    // compile 'com.google.android.gms:play-services-basement:11.8.0'
-    // compile 'com.google.android.gms:play-services-maps-license:11.8.0'
-    // compile 'com.google.android.gms:play-services-basement-license:11.8.0'
-    // compile 'com.google.android.gms:play-services-tasks-license:11.8.0'
- 
-
+    compile project(':react-native-maps')
     compile project(':react-native-image-picker')
     compile project(':react-native-file-uploader')
     compile project(':react-native-fast-image')
