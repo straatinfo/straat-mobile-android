@@ -22,7 +22,10 @@
     "lint": "standard --verbose | snazzy",
     "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy",
     "fixcode": "standard --fix",
-    "git-hook": "npm run lint -s && npm run test -s"
+    "git-hook": "npm run lint -s && npm run test -s",
+    "reset": "npm start -- --reset-cache"
+    
+
   },
   "dependencies": {
     "AsyncStorage": "^0.1.5",
