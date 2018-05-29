@@ -95,7 +95,8 @@ export const isDisplayPin = (report, teamList) => {
     if (report.isPublic !== undefined && report.isPublic === false) {
       // this mean it is public report: only member can see this
       // find report team if user has access
-      return teamList.filter((team) => team._id === report._team).length > 0
+      const reportTeamID = report._team ? report._team._id : report._team
+      return teamList.filter((team) => team._id === reportTeamID).length > 0
     } else {
       // this mean the backend is not yet fix so i will display the report for now
       return true
