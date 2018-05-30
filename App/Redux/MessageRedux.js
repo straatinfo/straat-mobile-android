@@ -112,6 +112,7 @@ export const sendlocalMessage = (state, { params }) => {
 }
 
 const filterRemoveTempMessage = (message, receive) => {
+  console.log('receive', receive)
   return message._id !== receive.sourceId
 }
 
@@ -119,7 +120,11 @@ export const messageReceive = (state, { param }) => {
   console.log('messageReceive', param)
   const { payload, _conversation } = param
   if (_conversation === state.conversationId) {
-    return state.merge({messages: [payload, ...state.messages.filter((message) => filterRemoveTempMessage(message, payload))]})
+    return state.merge({messages: [
+      payload,
+      ...state.messages.filter((message) => filterRemoveTempMessage(message, payload)).filter((message) => message._id !== payload._id)
+    
+    ]})
   }
   return state
 }
