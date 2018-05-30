@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './Styles'
 import TeamActions from '../../Redux/TeamRedux'
-
+import { Spacer } from './../../Components'
 class ChangeTeamProfile extends Component {
   constructor (props) {
     super(props)
@@ -41,6 +41,11 @@ class ChangeTeamProfile extends Component {
     }
     __DEV__ && console.log('data', data)
     this.props.navigation.navigate('ChangeTeamLogo', data)
+  }
+
+  _updateTeamDetails = () => {
+    const { submiteditTeam, navigation } = this.props
+    submiteditTeam({ callBack: () => { navigation.goBack() } })
   }
 
   render () {
@@ -98,8 +103,16 @@ class ChangeTeamProfile extends Component {
               </LinearGradient>
             </TouchableOpacity>
           </View>
-
-        </Content>
+          <Spacer />
+          <View style={Styles.buttonContainer}>
+            <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={this._updateTeamDetails.bind(this)}>
+              <LinearGradient colors={['#96c54a', '#639938']} style={Styles.linearGradient}>
+                <Text style={Styles.buttonText}>{Lang.txt_F09.toUpperCase()}</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+          <Spacer />
+        </Content> 
       </Container>
     )
   }
@@ -118,7 +131,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editfieldTeam: (fields) => dispatch(TeamActions.editfieldTeam(fields))
+    editfieldTeam: (fields) => dispatch(TeamActions.editfieldTeam(fields)),
+    submiteditTeam: (params) => dispatch(TeamActions.submiteditTeam(params))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeTeamProfile)

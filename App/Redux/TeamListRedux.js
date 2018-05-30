@@ -37,6 +37,8 @@ export const teamlistAddteam = (state, {team}) => {
 }
 
 export const replaceTeamlist = (state, {team}) => {
+  console.log('state', state)
+  console.log('team', team)
   return state.merge({teamList: [team, ...state.teamList.filter(cteam => cteam._id !== team._id)]})
  // return state.teamList.replace({teamList: [team, ...state.teamList.filter(cteam => cteam._id !== team._id)]})
 }

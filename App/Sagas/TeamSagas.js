@@ -164,26 +164,24 @@ export function * submiteditTeam (API, action) {
   const Lang = yield select(getLanguageState)
   const { params: { callBack } } = action
   try {
-    console.log('Fetching team data...', action)
-    console.log('Fetching team data API...', API)
     const user = yield select(getUser)
     const params = yield select(putEditTeamState)
     if (!params) {
       throw new Error('no changes')
     }
     yield call(loaderHandler.showLoader, Lang.saving)
-    console.log('submiteditTeam params: ', params)
 
     const editTeamResponse = yield call(API.editTeamProfile, { params: params.data, _team: params._team, user })
     __DEV__ && console.log('Fetching success', editTeamResponse)
 
     if (editTeamResponse.ok && editTeamResponse.data.status === 1) {
-      console.log('Fetching success', editTeamResponse)
       // yield put(TeamActions.teamMergeState({team: teamDataResponse.data.data}))
       // yield put(TeamActions.getDetailsSuccess(editTeamResponse))
       yield call(popUpAlert, { title: '', message: Lang.success, pressok: callBack })
     //  yield put(TeamActions.teamMergeState({team: editTeamResponse.data.data}))
       yield put(TeamListActions.replaceTeamlist(editTeamResponse.data.data))
+      yield put(TeamActions.editTeamSuccess(editTeamResponse.data.data))
+      
     } else if (editTeamResponse.status === 400) {
       throw new Error(Lang.invalidCredentials)
     } else {
