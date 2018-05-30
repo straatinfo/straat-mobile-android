@@ -714,11 +714,12 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
 
   /** @description Show */
   show: 'Toon',
-  
+
   /** @description Confirmation */
   confirmation: 'Bevestiging',
 
-  
+  /** @description Member team is required */
+  teamRequired: 'Lid team is verplicht',
 
   /** @description Extra */
   extra: 'Extra'

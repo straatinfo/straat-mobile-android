@@ -715,6 +715,9 @@ export default {
   /** @description Confirmation */
   confirmation: 'Confirmation',
   
+  /** @description Member team is required */
+  teamRequired: 'Member team is required',
+
   /** @description Extra */
   extra: 'Extra'
   
