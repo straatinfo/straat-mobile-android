@@ -2,11 +2,10 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import { showAlertBox } from './../Redux/commonRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { popUpAlertV2 } from '../Lib/Helper/alertHelper'
-import language from '../Lib/CutomLanguage'
 import { ReportStatus, SocketTypes } from '../Services/Constant'
 import { getUser, getTeamList, getUserHost } from '../Redux/UserRedux'
 import { filterReportsByMapView, sortCategories } from '../Transforms/ReportHelper'
-
+import { getLanguageState } from './../Redux/LanguageRedux'
 import ReportsActions, { processReport, getReportParams, stripUploadedPhoto, getReportMapMarkerList } from './../Redux/ReportsRedux'
 import MyReportActions, { getMyReportList } from './../Redux/MyReportRedux'
 import { CONNECTION } from '../Services/AppSocket'
@@ -73,7 +72,7 @@ export const getNearbyReports = function * (API, action) {
  */
 export const getReportAddress = function * (API, action) {
   const { coordinate } = action // no need for token cuuse it only get from googleAPI
-
+  const language = yield select(getLanguageState)
   const user = yield select(getUser)
   try {
     // show loader
@@ -110,6 +109,7 @@ export const getReportAddress = function * (API, action) {
  *
  */
 export const uploadPhoto = function * (API, action) {
+  const language = yield select(getLanguageState)
   // show loader
   yield call(loaderHandler.showLoader, language.uploading)
 
@@ -154,6 +154,7 @@ export const uploadPhoto = function * (API, action) {
  */
 
 export const getCategories = function * (API, action) {
+  const language = yield select(getLanguageState)
   // show loader
   yield call(loaderHandler.showLoader, language.fetching)
   const { reportsParams: { _reportType } } = action
@@ -208,6 +209,7 @@ export const getCategories = function * (API, action) {
  */
 
 export const submitReport = function * (API, action) {
+  const language = yield select(getLanguageState)
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
   const { _id, token } = yield select(getUser)
@@ -273,6 +275,7 @@ export const submitReport = function * (API, action) {
  */
 
 export const changeStatus = function * (API, action) {
+  const language = yield select(getLanguageState)
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
   const user = yield select(getUser)
