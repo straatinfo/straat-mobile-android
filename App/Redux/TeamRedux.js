@@ -8,7 +8,7 @@ const { Types, Creators } = createActions({
   getDetailsSuccess: ['details'],
   getDetailsFailed: ['error'],
   editTeamDetails: ['params'],
-  editTeamSuccess: ['details'],
+  editTeamSuccess: ['team'],
   editTeamFailure: ['error'],
   getTeamRequest: ['teamId'],
   getRequestSuccess: ['join'],
@@ -75,8 +75,10 @@ export const editRequest = (state, {params}) => {
   return state.merge({ fetching: true })
 }
 
-export const editSuccess = (state, { details }) => {
-  state.merge({ fetching: false, error: null, details, isSuccess: true })
+export const editTeamSuccess = (state, { team }) => {
+  const { teamEmail, teamName, _profilePic } = team
+  return state.merge({ team: {...state.team, teamEmail, teamName, _profilePic} })
+  // state.merge({ fetching: false, error: null, details, isSuccess: true })
 }
 
 export const editFailure = (state, { error }) => {
@@ -160,9 +162,9 @@ export const teamRejectRequest = (state, { user }) => {
   return state
 }
 export const editfieldTeam = (state, { fields }) => {
-  __DEV__ && console.log('editfieldTeam = (state, { fields })', fields)
-  __DEV__ && console.log('state.editTeam', state.editTeam)
-  __DEV__ && console.log('state.team', state.team)
+  // __DEV__ && console.log('editfieldTeam = (state, { fields })', fields)
+  // __DEV__ && console.log('state.editTeam', state.editTeam)
+  // __DEV__ && console.log('state.team', state.team)
 
   return state.merge({editTeam: {...state.editTeam, ...fields}})
 }
@@ -188,7 +190,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.GET_REQUEST_SUCCESS]: requestSuccess,
   [Types.GET_REQUEST_FAILED]: requestFailed,
   [Types.EDIT_TEAM_DETAILS]: editRequest,
-  [Types.EDIT_TEAM_SUCCESS]: editSuccess,
+  [Types.EDIT_TEAM_SUCCESS]: editTeamSuccess,
   [Types.EDIT_TEAM_FAILURE]: editFailure,
   [Types.EDITFIELD_TEAM]: editfieldTeam,
 
