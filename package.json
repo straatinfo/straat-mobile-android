@@ -29,8 +29,6 @@
     "fixcode": "standard --fix",
     "git-hook": "npm run lint -s && npm run test -s",
     "reset": "npm start -- --reset-cache"
-    
-
   },
   "dependencies": {
     "AsyncStorage": "^0.1.5",
@@ -45,7 +43,7 @@
     "ramda": "^0.25.0",
     "random-string": "^0.2.0",
     "react": "16.3.1",
-    "react-native": "0.55.1",
+    "react-native": "0.55.3",
     "react-native-animatable": "^1.2.4",
     "react-native-busy-indicator": "https://github.com/jaylordTorres/react-native-busy-indicator/archive/v1.1.1.tar.gz",
     "react-native-config": "^0.10.0",
