@@ -27,6 +27,7 @@ export const reducers = combineReducers({
   notification: require('./NotificationRedux').reducer,
   feedback: require('./FeedbackRedux').reducer,
   userProfile: require('./ProfileRedux').reducer,
+  userinfo: require('./UserinfoRedux').reducer,
   socket: require('./SocketRedux').reducer
 })
 

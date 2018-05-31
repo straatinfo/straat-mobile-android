@@ -171,7 +171,7 @@ class ReportMapContainer extends Component {
     const { reportMergeState } = this.props
     const { reportCoordinate, userPosition } = this.props.reportState
 
-    this.setState({ mapState: reportCoordinate })
+    this.setState({ mapState: userPosition })
     try {
       /** is separate user position and report position couse pin in map can be move */
       this.watchID = navigator.geolocation.watchPosition((position) => {

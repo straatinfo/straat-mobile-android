@@ -718,6 +718,12 @@ export default {
   /** @description Member team is required */
   teamRequired: 'Member team is required',
 
+  /** @description Member team is required */
+  hostCoordinateIsInvalid: 'Host coordinate is invalid.',
+
+  /** @description Position Error */
+  posistionError: 'Position Error',
+
   /** @description Extra */
   extra: 'Extra'
   

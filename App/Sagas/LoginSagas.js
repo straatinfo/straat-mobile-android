@@ -1,15 +1,18 @@
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
+import { put, call, select } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import UserActions, { setTheme, INITIAL_STATE as USER_INITIAL_STATE } from './../Redux/UserRedux'
 import { showAlertBox, logStore, AppData } from './../Redux/commonRedux'
 import LanguageActions, { getLanguageState } from './../Redux/LanguageRedux'
-import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
+import RepoertsActions from '../Redux/ReportsRedux'
 
 import { popUpAlert } from './../Lib/Helper/alertHelper'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
 
 import { convertActiveDesignToDesign, designDefault, getHostLangauge } from '../Transforms/themeHelper'
+import validator from 'validator'
+import { isOffGPS } from '../Redux/SettingRedux'
 
 /**
  * try log in user
@@ -18,6 +21,7 @@ import { convertActiveDesignToDesign, designDefault, getHostLangauge } from '../
 
 export const login = function * (API, action) {
   const language = yield select(getLanguageState)
+  const isHasGPS = yield select(isOffGPS)
   const {username, password, navigation, route, params} = action.userpassnavroute
   try {
     yield call(loaderHandler.showLoader, language.txt_C08)
@@ -55,11 +59,22 @@ export const login = function * (API, action) {
       yield call(AppData.setTheme, design)
       yield call(AppData.setLogin, { username: username, password: password })  // save user login data to local
       yield put(UserActions.mergeState({design: design, host: userHost}))
-     
+
       yield call(AppData.setLanguage, {code: userLanguage})
       yield put(LanguageActions.setLanguage(userLanguage))
 
       yield call(AppData.setHost, userHost)  // save host
+
+      // initalizse login
+      const {lat, long} = userHost
+      if (!isHasGPS) {
+        if (validator.isLatLong(`${lat},${long}`)) {
+          yield put(RepoertsActions.setlogininitReport({lat: lat, long: long}))
+        } else {
+          // if host coordinate is invalid
+          yield call(popUpAlert, { title: language.posistionError, message: language.hostCoordinateIsInvalid, pressok: () => {} })
+        }
+      }
 
       // filter if it has login message
       const hasBlocker = yield call(onloginPopUp, {userData: userWithToken})

@@ -19,6 +19,7 @@ import { NotificationTypes } from './../Redux/NotificationRedux'
 import { TeamTypes } from '../Redux/TeamRedux'
 import { FeedbackTypes } from '../Redux/FeedbackRedux'
 import { ProfileTypes } from '../Redux/ProfileRedux'
+import { UserinfoTypes } from '../Redux/UserinfoRedux'
 import { AddNewTeamTypes } from '../Redux/AddNewTeamRedux'
 
 /* ------------- Sagas ------------- */
@@ -38,6 +39,7 @@ import { sendFeedback } from './FeedbackSaga'
 import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam } from './TeamSagas'
 import { editUserProfile, uploadUserPhoto, validateUserNameProfile, validateEmailProfile, validatePhoneNumberProfile, validateCityProfile, validatePostalCodeProfile } from './ProfileSaga'
 import { TeamListTypes } from '../Redux/TeamListRedux'
+import { getUserinfo } from './UserinfoSagas';
 /* ------------- API ------------- */
 
 // The API we use is only used from Sagas, so we create it here and pass along
@@ -129,8 +131,11 @@ export default function * root () {
 
     takeLatest(ProfileTypes.SETUSERNAME_PROFILE, validateUserNameProfile, api),
 
-    takeLatest(ProfileTypes.UPLOAD_EDITPROFILE, uploadUserPhoto, api)
+    takeLatest(ProfileTypes.UPLOAD_EDITPROFILE, uploadUserPhoto, api),
 
+    // USER INFO PROFILE
+
+    takeLatest(UserinfoTypes.USERINFO_REQUEST, getUserinfo, api),
     // some sagas receive extra parameters in addition to an action
     // takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ])

@@ -6,8 +6,13 @@ import CenterView from './CenterView'
 
 class HeaderInDrawer extends Component {
   componentDidMount () {
+    const { nhBack } = this.props
     BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.goBack()
+      if (!nhBack) {
+        this.props.navigation.goBack()
+      } else {
+        return false
+      }
     })
   }
   componentWillUnmount () {

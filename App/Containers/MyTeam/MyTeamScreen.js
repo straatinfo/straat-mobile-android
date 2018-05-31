@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, BackHandler } from 'react-native'
+import { View, BackHandler, TouchableOpacity } from 'react-native'
 import { Text, Container, Content, Button, Right, Body, Icon, Left, List, ListItem, Thumbnail, H1, Card, CardItem } from 'native-base'
 import { connect } from 'react-redux'
 import { Col, Row, Grid } from 'react-native-easy-grid'
@@ -35,8 +35,8 @@ class MyTeamScreen extends Component {
 
   componentDidMount () {
     BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.goBack()
-      return true
+     //  this.props.navigation.goBack()
+      return false
     })
   }
   _getTeamData () {
@@ -185,7 +185,7 @@ class MyTeamScreen extends Component {
     )
   }
   _renderMemberRequestLst (isTeamLeader) {
-    const { requests, Lang, fetching } = this.props
+    const { navigation: { navigate }, requests, Lang, fetching } = this.props
     const teamAcceptRequest = this.teamAcceptRequest.bind(this)
     const teamRejectRequest = this.teamRejectRequest.bind(this)
 
@@ -207,7 +207,7 @@ class MyTeamScreen extends Component {
         { requests.map((teamInvite) => (
           <ListItem key={teamInvite._user._id}>
             <Body>
-              <Text>{GetChatName(teamInvite._user)}</Text>
+            <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: teamInvite._user})}><Text>{GetFullName(teamInvite._user)}</Text></TouchableOpacity>
             </Body>
             <Right>
               <Row>
@@ -221,7 +221,7 @@ class MyTeamScreen extends Component {
     )
   }
   _renderTeamMemberList () {
-    const { team: { teamMembers }, userId, Lang } = this.props
+    const { navigation: { navigate }, team: { teamMembers }, userId, Lang } = this.props
     __DEV__ && console.log('team members', this.props)
     if (!(teamMembers && teamMembers.length > 1)) {
       return null
@@ -239,7 +239,7 @@ class MyTeamScreen extends Component {
 
             <ListItem key={user._user._id}>
               <Body>
-                <Text>{GetChatName(user._user)}</Text>
+                <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: user._user})}><Text>{GetFullName(user._user)}</Text></TouchableOpacity>
               </Body>
               <Right>
                 <Icon name='chatbubbles' onPress={() => this.chatScreen(user._user)} />

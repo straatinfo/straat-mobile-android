@@ -633,6 +633,18 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
+  const getUserinfo = ({data, user: {_id, token}}) => {
+    const { _user } = data
+    return api.get('v1/api/user/profile/' + _user,
+      {},
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
   // ------
   // STEP 3
   // ------
@@ -712,7 +724,8 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     // profile
     editUserProfile,
     postFeedback,
-    getTeamRequest
+    getTeamRequest,
+    getUserinfo
   }
 }
 

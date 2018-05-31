@@ -12,6 +12,7 @@ import ReportsActions from './../Redux/ReportsRedux'
 import RootStyles from './Styles/RootContainerStyles'
 import ScreenActions from './../Redux/ScreenRedux'
 import SplashActions from './../Redux/SplashRedux'
+import SettingActions from './../Redux/SettingRedux'
 import Styles from './Styles/SplashStyle'
 
 class SplashScreen extends React.Component {
@@ -20,25 +21,34 @@ class SplashScreen extends React.Component {
     this.state = { progressMessage: '', design: Design }
     global.appSetting = Design
   }
+
   geo () {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          // console.log('locaiton', position)
           resolve(position.coords)
         },
         (err) => {
+          // console.log('locaiton err', err)
           reject(err)
         })
     })
   }
 
   async getLocation () {
-    const { Lang, reportMergeState, reportState: { reportCoordinate } } = this.props
+    const { Lang, reportMergeState, settingMergeState, setlogininitReport, reportState: { reportCoordinate } } = this.props
     try {
       const location = await this.geo()
-      reportMergeState({reportCoordinate: {...reportCoordinate, ...location}})
+      console.log('location', location)
+      // reportMergeState({reportCoordinate: {...reportCoordinate, ...location}}) // will be shift to report redux
+
+      setlogininitReport({lat: location.latitude, long: location.longitude})
+      settingMergeState({hasGPS: true})
+
       this._processedNext()
     } catch (e) {
+      __DEV__ && console.log(e)
       this.props.changeLoadingMessage('')
       AlertBox.alert('', Lang.txt_A02, [{text: Lang.txt_A01, onPress: () => this._processedNext()}], { cancelable: false })
     }
@@ -111,7 +121,9 @@ const mapDispatchToProps = dispatch => {
   return {
     changeLoadingMessage: (loadingMessage) => dispatch(SplashActions.changeLoadingMessage(loadingMessage)),
     change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
-    reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState))
+    reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState)),
+    setlogininitReport: (params) => dispatch(ReportsActions.setlogininitReport(params)),
+    settingMergeState: (newState) => dispatch(SettingActions.settingMergeState(newState))
   }
 }
 
