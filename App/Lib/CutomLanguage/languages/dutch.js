@@ -721,6 +721,13 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   /** @description Member team is required */
   teamRequired: 'Lid team is verplicht',
 
+  /** @description Member team is required */
+  hostCoordinateIsInvalid: 'Hostcoördinaat is ongeldig.',
+
+  /** @description Position Error */
+  posistionError: 'Positiefout',
+
   /** @description Extra */
   extra: 'Extra'
 }
+
