@@ -1,4 +1,5 @@
 import { StackNavigator }      from 'react-navigation'
+import UserInfoScreen          from '../Containers/UserInfoScreen'
 import styles                  from './Styles/NavigationStyles'
 
 import AccessCodeScreen        from './../Containers/AccessCodeScreen'
@@ -36,37 +37,36 @@ import NavigationDrawer        from './NavigationDrawer'
 const defaultRoute = {
   headerMode: 'none',
   navigationOptions: { headerStyle: styles.header },
-  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'NavigationDrawer'
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'UserInfoScreen'
 }
 
 // Manifest of possible screens 
-const PrimaryNav = StackNavigator(
-  {
-    AccessCodeScreen:    { screen: AccessCodeScreen },
-    ForgotPassword:      { screen: ForgotPasswordScreen },
-    Login:               { screen: Login },
-    RegistrationForm:    { screen: RegistrationForm },
-    ReportDetails:       { screen: ReportDetailsScreen },
-    ReportSelectTeam:    { screen: ReportSelectTeamScreen },
-    Splash:              { screen: Splash },
+const PrimaryNav = StackNavigator({
+  UserInfoScreen:      { screen: UserInfoScreen },
+  AccessCodeScreen:    { screen: AccessCodeScreen },
+  ForgotPassword:      { screen: ForgotPasswordScreen },
+  Login:               { screen: Login },
+  RegistrationForm:    { screen: RegistrationForm },
+  ReportDetails:       { screen: ReportDetailsScreen },
+  ReportSelectTeam:    { screen: ReportSelectTeamScreen },
+  Splash:              { screen: Splash },
 
-    AddTeam:             { screen: AddTeamScreen },
-    ChangeTeamProfile:   { screen: ChangeTeamProfileScreen },
-    ChangeTeamLogo:      { screen: ChangeTeamLogoScreen },
-    MyTeam:              { screen: MyTeam },                   // unused screen
-    MyTeamScreen:        { screen: MyTeamScreen },
- //    TeamList:            { screen: TeamListScreen },
-    Chat:                { screen: ChatScreen },
-    NavigationDrawer:    { screen: NavigationDrawer },
-
-    TestOnly:            { screen: TestOnly },
-    // ReportMap2:          { screen: ReportMap2 },
-    
-    // ReportChat:          { screen: ReportChatScreen },  // not need now
-    // TeamChat:            { screen: TeamChatScreen },    // not need now
-    // PersonalChat:        { screen: PersonalChatScreen },// not need now
-    
-    // TeamList:            { screen: TeamListScreen },
+  AddTeam:             { screen: AddTeamScreen },
+  ChangeTeamProfile:   { screen: ChangeTeamProfileScreen },
+  ChangeTeamLogo:      { screen: ChangeTeamLogoScreen },
+  MyTeam:              { screen: MyTeam },                   // unused screen
+  MyTeamScreen:        { screen: MyTeamScreen },
+//    TeamList:            { screen: TeamListScreen },
+  Chat:                { screen: ChatScreen },
+  NavigationDrawer:    { screen: NavigationDrawer },
+  TestOnly:            { screen: TestOnly },
+  // ReportMap2:          { screen: ReportMap2 },
+  
+  // ReportChat:          { screen: ReportChatScreen },  // not need now
+  // TeamChat:            { screen: TeamChatScreen },    // not need now
+  // PersonalChat:        { screen: PersonalChatScreen },// not need now
+  
+  // TeamList:            { screen: TeamListScreen },
   },
   defaultRoute
 )
