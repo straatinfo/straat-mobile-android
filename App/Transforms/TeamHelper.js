@@ -17,6 +17,9 @@ export const colorMinus = (team) => {
  *
 */
 export const getTeamLogo = (team) => {
+  if (!team) {
+    return false
+  }
   if (team.logoSecuredUrl) {
     return team.logoSecuredUrl
   }
