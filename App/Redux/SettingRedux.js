@@ -14,6 +14,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
+  hasGPS: false,
   radius: 0.25
 })
 
@@ -22,7 +23,7 @@ export const INITIAL_STATE = Immutable({
 export const changeRadius = (state, radius) => {
   return state.merge({ radius: radius })
 }
- 
+
 export const settingMergeState = (state, { newState }) => {
   return state.merge(newState)
 }
@@ -33,3 +34,12 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.CHANGE_RADIUS]: changeRadius,
   [Types.SETTING_MERGE_STATE]: settingMergeState
 })
+
+/**
+ * @param is app using gps or not
+ *
+ */
+
+export const isOffGPS = (state) => {
+  return state.setting.hasGPS
+}

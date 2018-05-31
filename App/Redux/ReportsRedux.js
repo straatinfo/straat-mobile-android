@@ -17,7 +17,8 @@ const { Types, Creators } = createActions({
   reportSubmit: ['reportParams'],                               // listeen here is effect that submit report to the server
   reportMergeState: ['newState'],
   reportChangeStatus: ['report'],
-  reportReset: ['params']
+  reportReset: ['params'],
+  setlogininitReport: ['params']
 
 })
 export const ReportsTypes = Types
@@ -109,6 +110,14 @@ export const setReportAddressByCoordinate = (state, { coordinate }) => {
   return state.merge({ reportCoordinate: coordinate })
 }
 
+export const setlogininitReport = (state, { params }) => {
+  const { long, lat } = params
+  return state.merge({
+    reportCoordinate: {...state.reportCoordinate, longitude: long, latitude: lat},
+    userPosition: {...state.userPosition, longitude: long, latitude: lat}
+  })
+}
+
 export const setMainCategory = (state, { reportParam }) => {
   return state
 }
@@ -157,7 +166,8 @@ export const reducer = createReducer(INITIAL_STATE, {
 
   [Types.REPORT_CHANGE_STATUS]: reportChangeStatus,
   [Types.REPORT_MERGE_STATE]: reportMergeState,
-  [Types.REPORT_RESET]: reportReset
+  [Types.REPORT_RESET]: reportReset,
+  [Types.SETLOGININIT_REPORT]: setlogininitReport
 })
 
 /* ------------- Selectors ---------------- */
