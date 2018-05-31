@@ -207,7 +207,7 @@ class MyTeamScreen extends Component {
         { requests.map((teamInvite) => (
           <ListItem key={teamInvite._user._id}>
             <Body>
-              <Text>{GetChatName(teamInvite._user)}</Text>
+              <Text>{GetFullName(teamInvite._user)}</Text>
             </Body>
             <Right>
               <Row>
@@ -239,7 +239,7 @@ class MyTeamScreen extends Component {
 
             <ListItem key={user._user._id}>
               <Body>
-                <Text>{GetChatName(user._user)}</Text>
+                <Text>{GetFullName(user._user)}</Text>
               </Body>
               <Right>
                 <Icon name='chatbubbles' onPress={() => this.chatScreen(user._user)} />
