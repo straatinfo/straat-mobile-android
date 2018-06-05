@@ -188,6 +188,7 @@ class MyTeamScreen extends Component {
     const { navigation: { navigate }, requests, Lang, fetching } = this.props
     const teamAcceptRequest = this.teamAcceptRequest.bind(this)
     const teamRejectRequest = this.teamRejectRequest.bind(this)
+    const renderUserName = this._userName.bind(this)
 
     if (requests.length === 0) {
       return null
@@ -207,7 +208,9 @@ class MyTeamScreen extends Component {
         { requests.map((teamInvite) => (
           <ListItem key={teamInvite._user._id}>
             <Body>
-            <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: teamInvite._user})}><Text>{GetFullName(teamInvite._user)}</Text></TouchableOpacity>
+              {/* only allow to redir if admin of this team */}
+              {renderUserName(teamInvite._user, isTeamLeader, navigate)}
+              {/* <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: teamInvite._user})}><Text>{GetFullName(teamInvite._user)}</Text></TouchableOpacity> */}
             </Body>
             <Right>
               <Row>
@@ -220,8 +223,15 @@ class MyTeamScreen extends Component {
       </List>
     )
   }
-  _renderTeamMemberList () {
+  _userName (user, isTeamLeader, navigate) {
+    if (!isTeamLeader) {
+      return <Text>{GetFullName(user)}</Text>
+    }
+    return <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: user})}><Text>{GetFullName(user)}</Text></TouchableOpacity>
+  }
+  _renderTeamMemberList (isTeamLeader) {
     const { navigation: { navigate }, team: { teamMembers }, userId, Lang } = this.props
+    const renderUserName = this._userName.bind(this)
     __DEV__ && console.log('team members', this.props)
     if (!(teamMembers && teamMembers.length > 1)) {
       return null
@@ -239,7 +249,9 @@ class MyTeamScreen extends Component {
 
             <ListItem key={user._user._id}>
               <Body>
-                <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: user._user})}><Text>{GetFullName(user._user)}</Text></TouchableOpacity>
+                {/* only allow to redir if admin of this team */}
+                {renderUserName(user._user, isTeamLeader, navigate)}
+                {/* <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: user._user})}><Text>{GetFullName(user._user)}</Text></TouchableOpacity> */}
               </Body>
               <Right>
                 <Icon name='chatbubbles' onPress={() => this.chatScreen(user._user)} />
@@ -282,7 +294,7 @@ class MyTeamScreen extends Component {
           <Spacer />
 
           { this._renderMemberRequestLst(isTeamLeader) }
-          { this._renderTeamMemberList() }
+          { this._renderTeamMemberList(isTeamLeader) }
           <Spacer />
         </Content>
         { ifActiveTeam === true ? <MainButton title={Lang.txt_F04} onPress={() => console.log('invite clicked')} styles={{width: '90%', flex: 0, alignSelf: 'center'}} /> : null }
