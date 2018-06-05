@@ -28,7 +28,7 @@ export const Url = {
    * @description Url for local backed access
    *
    */
-  LOCAL: 'http://192.168.0.8:5000/',
+  LOCAL: 'http://192.168.0.33:5000/',
 
   /**
    *
