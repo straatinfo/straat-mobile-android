@@ -113,10 +113,8 @@ class RegistrationStepThree extends Component {
     const { teamList, onRegisterSubmit, design, Lang } = this.props
     const { regOptions } = this.state
     const { teamID, register_option: registerOption, validation: { personalDataForm, volunteerOptionForm, teamOptionForm } } = this.props.parentState
-    __DEV__ && console.log('personalDataForm, volunteerOptionForm, teamOptionForm', personalDataForm, volunteerOptionForm, teamOptionForm)
     const formThreeSubmitButtonEnabled = personalDataForm && volunteerOptionForm && teamOptionForm
     const { MainButton } = GeneralDesign
-    console.log('teamList in step 3', teamList)
 
     return (
       <View style={styles.container}>
@@ -133,7 +131,7 @@ class RegistrationStepThree extends Component {
               onValueChange={(itemValue, itemIndex) => { this.selectedTeam(itemValue, itemIndex) }}>
               <Picker.Item value={'default'} label={Lang.txt_D41} enabled={false} key={'default'} />
               {/** __DEV__ && <Picker.Item value={'devId'} label={'devName'} key={'devkey'} /> */}
-              {teamList.map((l, i) => { console.log('team', l); return <Picker.Item value={l._id} label={l.teamName} key={l._id} /> })}
+              {teamList.map((l, i) => { return <Picker.Item value={l._id} label={l.teamName} key={l._id} /> })}
             </Picker>
           </View>
         }

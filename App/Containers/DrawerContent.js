@@ -52,7 +52,6 @@ class DrawerContent extends Component {
           <List
             dataArray={items}
             renderRow={(item) => {
-              console.log('renderRow={(item', item)
               if (itemData[item.routeName].visible === undefined || itemData[item.routeName].visible === true) {
                 console.log(item)
                 return (

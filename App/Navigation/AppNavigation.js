@@ -37,7 +37,7 @@ import NavigationDrawer        from './NavigationDrawer'
 const defaultRoute = {
   headerMode: 'none',
   navigationOptions: { headerStyle: styles.header },
-  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'UserInfoScreen'
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'RegistrationForm'
 }
 
 // Manifest of possible screens 

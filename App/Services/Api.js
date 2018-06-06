@@ -242,6 +242,20 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+
+  const postValidateHouseNumber = ({ postalCode, houseNumber }) => {
+    return api.post('v1/api/registration/validation',
+      { postalCode: postalCode,
+        houseNumber: houseNumber
+      },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
   /**
    * @description fetch coordinate from neo
    * @param { city }
@@ -679,6 +693,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postValidateUserEmail,
     postValidateUserName,
     postValidatePostalCode,
+    postValidateHouseNumber,
     postValidateLocate,
     postValidateTeamName,
     postValidateTeamEmail,
@@ -758,6 +773,7 @@ const googleAPI = (baseURL = AppConfig.url.GOOGLEAPIS) => {
     getAddressByCoordinate
   }
 }
+
 // let's return back our create method as the default.
 export default {
   create, googleAPI

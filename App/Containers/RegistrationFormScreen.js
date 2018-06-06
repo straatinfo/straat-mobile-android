@@ -91,7 +91,8 @@ class NewUserForm extends React.Component {
             <NBText>isValidatedPhoneNumber:{ this.props.isValidatedPhoneNumber ? 'true' : 'false'}</NBText>
             <NBText>isValidatedTeamName:   { this.props.isValidatedTeamName ? 'true' : 'false'}</NBText>
             <NBText>isValidatedTeamEmail:  { this.props.isValidatedTeamEmail ? 'true' : 'false'}</NBText>
-
+            <NBText>isValidatedHouseNumber:{ this.props.isValidatedHouseNumber ? 'true' : 'false'}</NBText>
+            
             <NBText>registrationUserName:  { this.props.registrationUserName }</NBText>
             <NBText>accessCode:            { this.props.accessCode ? this.props.accessCode : 'false'}</NBText>
             <NBText>teamList:              { this.props.teamList ? 'true' : 'false'}{ console.log('teamlist in form screen', this.props.teamList)}</NBText>
@@ -112,12 +113,16 @@ const mapStateToProps = state => {
     registrationUserName: state.user.registrationUserName,
     registrationUserEmail: state.user.registrationUserEmail,
     registrationPostalCode: state.user.registrationPostalCode,
+    registrationGeoLocation: state.user.registrationGeoLocation,
+    registrationStreetName: state.user.registrationStreetName,
+    registrationCity: state.user.registrationCity,
     registratioPhoneNumber: state.user.registratioPhoneNumber,
 //    validatedCreateTeam: state.user.validatedCreateTeam,
     registrationTeamName: state.user.registrationTeamName,
 //    registrationTeamEmail: state.user.registrationTeamEmail,
     isValidatedUserEmail: state.user.isValidatedUserEmail,
     isValidatedPostalCode: state.user.isValidatedPostalCode,
+    isValidatedHouseNumber: state.user.isValidatedHouseNumber,
     isValidatedCity: state.user.isValidatedCity,
     isValidatedPhoneNumber: state.user.isValidatedPhoneNumber,
     isValidatedUserName: state.user.isValidatedUserName,
@@ -136,6 +141,7 @@ const mapDispatchToProps = dispatch => {
     registerSetUsername: (userName, primeUserName) => dispatch(UserActions.registerSetUsername(userName, primeUserName)),
     registerSetEmail: (userEmail) => dispatch(UserActions.registerSetEmail(userEmail)),
     registerSetPostalcode: (postalCode) => dispatch(UserActions.registerSetPostalcode(postalCode)),
+    registerSetHouseNumber: (postalCode, houseNumber) => dispatch(UserActions.registerSetHouseNumber(postalCode, houseNumber)),
     registerSetCity: (city) => dispatch(UserActions.registerSetCity(city)),
     registerSetPhonenumber: (phoneNumber) => dispatch(UserActions.registerSetPhonenumber(phoneNumber)),
     registerSetTeamname: (teamName, isVolunteer) => dispatch(UserActions.registerSetTeamname(teamName, isVolunteer)),

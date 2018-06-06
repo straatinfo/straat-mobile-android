@@ -28,7 +28,7 @@ export const Url = {
    * @description Url for local backed access
    *
    */
-  LOCAL: 'http://192.168.0.8:5000/',
+  LOCAL: 'http://192.168.0.33:5000/',
 
   /**
    *
@@ -49,7 +49,14 @@ export const Url = {
    * @description Url for goolglemap  access
    *
   */
-  GOOGLEAPIS: 'https://maps.googleapis.com/'
+  GOOGLEAPIS: 'https://maps.googleapis.com/',
+
+  /**
+   *
+   * @description access https://www.postcodeapi.nu/docs/
+   *
+  */
+  POSTCODEAPIS: 'https://api.postcodeapi.nu/'
 
 }
 
@@ -59,7 +66,14 @@ export const Keys = {
    * @description For map keys used by generating maps end parsing coordinate to location address
    *
   */
-  GOOGLE_MAP_KEY: 'AIzaSyCYDM_gyqp1UGVClhh05ek_4G0zr4n55xA'
+  GOOGLE_MAP_KEY: 'AIzaSyCYDM_gyqp1UGVClhh05ek_4G0zr4n55xA',
+
+  /**
+   *
+   * @description For map keys used by generating maps end parsing coordinate to location address
+   *
+  */
+  POSTCODE_KEY: ''
 
 }
 
@@ -145,7 +159,6 @@ export const SocketTypes = {
   EXIT_CONVO: 'exit-convo',
   RECEIVE_MESSAGE: 'new-message'
 
-  
 }
 /**
  *
@@ -180,7 +193,6 @@ export const notificationTypes = {
   reportC: 'reportC'
 }
 
-
 /**
  *
  * @description noitifcation types
@@ -196,7 +208,3 @@ export const backEndConstEnum = {
  *
  */
 export const usernameSeparator = '_ID:'
-
-
-
-

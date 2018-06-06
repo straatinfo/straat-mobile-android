@@ -22,7 +22,7 @@ export const convertActiveDesignToDesign = (_activeDesign = {}) => {
   const button2 = _activeDesign.colorOne ? lighten(0.45, _activeDesign.colorOne) : lighten(0.45, designDefault.button)                                    // minus button color ,use in grandients
   const header = _activeDesign.colorTwo ? _activeDesign.colorTwo : designDefault.header
   const background = _activeDesign.colorThree ? _activeDesign.colorThree : designDefault.background
-  const secureUrl = _activeDesign.secure_url ? _activeDesign.secure_url : ''
+  const secureUrl = _activeDesign._profilePic ? _activeDesign._profilePic.secure_url || '' : ''
   return {button, button2, header, background, secureUrl, isSpecific}
 }
 
