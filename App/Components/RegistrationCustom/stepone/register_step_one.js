@@ -24,7 +24,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Footer from '../../Footer'
 import Spacer from '../../Spacer'
 import { errorAlert } from '../../../Lib/Helper/alertHelper'
-import { checkPassword } from '../../../Transforms/RegistrationHelper';
+import { checkPassword } from '../../../Transforms/RegistrationHelper'
 
 class RegistrationStepOne extends Component {
   constructor (props) {
@@ -91,17 +91,17 @@ class RegistrationStepOne extends Component {
 
   render () {
     const { languages, genders } = this.state
-    const { onValidate, liveValidation, gotoLogin, showInvalid, onSubmit, design, Lang } = this.props
+    const { registrationCity, registrationStreetName, onValidate, liveValidation, gotoLogin, showInvalid, onSubmit, design, Lang } = this.props
 
     // parents state use for reload of components
     const { gender, first_name, last_name, username, postUserName, password,
-      street_name, house_num, postal_code, city, email_address, mobile_num, language, terms, finished } = this.props.parentState
+      house_num, postal_code, email_address, mobile_num, language, terms, finished } = this.props.parentState
 
     // console.log(`Rendering RegistrationStepOne View`)
     const validatePassword = this.validatePassword.bind(this)
     // const validate = null // showInvalid(false)
     const validate = showInvalid(false)
-
+    __DEV__ && console.log('')
     return (
       <View style={styles.container}>
         <TabContentTitle title={Lang.txt_D04} />
@@ -153,18 +153,18 @@ class RegistrationStepOne extends Component {
           <View style={[styles.textInputContainer, {flex: 2}]}>
             <TextInput
               style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
-              onEndEditing={(e) => { onValidate() }}
-              placeholder={Lang.txt_D12}
+              onEndEditing={(e) => { onValidate(); liveValidation('postalCode', e.nativeEvent.text) }}
+              placeholder={Lang.txt_D14}
               underlineColorAndroid='transparent'
-              onChangeText={(text) => this.props.onStreetNameTextChange(text)}
-              multiline={false} value={street_name} />
+              onChangeText={(text) => this.props.onPostalCodeTextChange(text)}
+              multiline={false} value={postal_code} />
           </View>
           <View style={styles.horizontalSpacing} />
           <View style={[styles.textInputContainer, {flex: 1}]}>
             <TextInput
               keyboardType='numeric'
               style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
-              onEndEditing={(e) => { onValidate() }}
+              onEndEditing={(e) => { onValidate(); liveValidation('houseNumber', e.nativeEvent.text) }}
               placeholder={Lang.txt_D13}
               underlineColorAndroid='transparent'
               onChangeText={(text) => this.props.onHouseNumTextChange(text)}
@@ -174,23 +174,27 @@ class RegistrationStepOne extends Component {
         <View style={styles.verticalFieldsSpacing} />
         <View style={styles.horizontalContainer}>
           <View style={styles.textInputContainer}>
-            <TextInput
+            <Text style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1, textAlignVertical: 'center' }}>{registrationStreetName || Lang.txt_D12 }</Text>
+            {/* <TextInput
+              editable={false}
               style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
-              onEndEditing={(e) => { onValidate(); liveValidation('postalCode', e.nativeEvent.text) }}
-              placeholder={Lang.txt_D14}
+              onEndEditing={(e) => { onValidate() }}
+              placeholder={Lang.txt_D12}
               underlineColorAndroid='transparent'
-              onChangeText={(text) => this.props.onPostalCodeTextChange(text)}
-              multiline={false} value={postal_code} />
+              onChangeText={(text) => this.props.onStreetNameTextChange(text)}
+              multiline={false} value={registrationStreetName} /> */}
           </View>
           <View style={styles.horizontalSpacing} />
           <View style={styles.textInputContainer}>
-            <TextInput
+            <Text style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1, textAlignVertical: 'center'  }}>{registrationCity || Lang.txt_D15}</Text>
+            {/* <TextInput
+              editable={false}
               style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
               onEndEditing={(e) => { onValidate(); liveValidation('city', e.nativeEvent.text) }}
               placeholder={Lang.txt_D15}
               underlineColorAndroid='transparent'
               onChangeText={(text) => this.props.onCityTextChange(text)}
-              multiline={false} value={city} />
+              multiline={false} value={registrationCity} /> */}
           </View>
         </View>
         <HorizontalSpace />
@@ -265,6 +269,8 @@ class RegistrationStepOne extends Component {
 
 const mapStateToProps = state => {
   return {
+    registrationStreetName: state.user.registrationStreetName,
+    registrationCity: state.user.registrationCity,
     design: state.user.design,
     Lang: state.language.Languages
   }

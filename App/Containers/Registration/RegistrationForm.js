@@ -42,7 +42,7 @@ import FastImage from 'react-native-fast-image'
 
 import RandomString from 'random-string'
 import AppConfig from '../../Config/AppConfig'
-import { usernameSeparator, Languages } from '../../Services/Constant';
+import { usernameSeparator, Languages } from '../../Services/Constant'
 
 const {width, height} = Dimensions.get('window')
 
@@ -217,10 +217,10 @@ class RegistrationForm extends ValidationComponent {
       last_name: {required: true},
       username: {required: true},
       password: {required: true},
-      street_name: {required: true},
+  //    street_name: {required: true},
       house_num: {required: true},
       postal_code: {required: true},
-      city: {required: true},
+  //    city: {required: true},
       email_address: {required: true},
       mobile_num: {required: true},
       language: {required: true}
@@ -241,7 +241,19 @@ class RegistrationForm extends ValidationComponent {
   }
 
   registerAccount () {
-    const { accessCode, hostId, teamList, teamPhotoUploaded, registrationTeamName, registrationUserEmail, registrationPostalCode, registrationUserName } = this.props
+    const { accessCode, hostId, teamList, teamPhotoUploaded,
+      registrationTeamName, registrationUserEmail, registrationPostalCode, registrationUserName,
+      registrationGeoLocation, registrationStreetName, registrationCity
+    } = this.props
+    // address
+    let lat = 0
+    let long = 0
+    let geolocation = {}
+    if (registrationGeoLocation && registrationGeoLocation.coordinates && registrationGeoLocation.coordinates.length > 1) {
+      lat = registrationGeoLocation.coordinates[1]
+      long = registrationGeoLocation.coordinates[0]
+      geolocation = registrationGeoLocation
+    }
 
     // here will submit the registration
     // new api format
@@ -252,15 +264,16 @@ class RegistrationForm extends ValidationComponent {
       lname: this.state.last_name,
       username: registrationUserName,
       password: this.state.password,
-      streetName: this.state.street_name,
+      streetName: registrationStreetName,
       houseNumber: this.state.house_num,
       postalCode: registrationPostalCode,
-      city: this.state.city,
+      city: registrationCity,
       email: registrationUserEmail,
       phoneNumber: this.state.mobile_num,
       isVolunteer: this.state.is_volunteer,
-      lat: this.state.lat,
-      long: this.state.lng,
+      lat: lat,
+      long: long,
+      geoLocation: geolocation,
       _host: hostId, // host ID
       _team: this.state.teamID, // team ID
       language: this.state.language,
@@ -528,7 +541,7 @@ class RegistrationForm extends ValidationComponent {
   validatePersonalDataForm () {
     const { terms, isValidPassword } = this.state
     // get data from redux
-    const { isValidatedUserEmail, isValidatedUserName, isValidatedPostalCode, isValidatedCity, isValidatedPhoneNumber } = this.props
+    const { isValidatedUserEmail, isValidatedUserName, isValidatedPostalCode, isValidatedHouseNumber, isValidatedPhoneNumber } = this.props
     const invalidate = () => {
       this.setState({finished: {...this.state.finished, step1: false, step2: false}, validation: {...this.state.validation, personalDataForm: false}})
     }
@@ -539,10 +552,10 @@ class RegistrationForm extends ValidationComponent {
       last_name: {required: true},
       username: {required: true},
       password: {required: true},
-      street_name: {required: true},
+      //   street_name: {required: true},
       house_num: {required: true},
       postal_code: {required: true},
-      city: {required: true},
+      //   city: {required: true},
       email_address: {required: true},
       mobile_num: {required: true},
       language: {required: true}
@@ -558,7 +571,7 @@ class RegistrationForm extends ValidationComponent {
     }
 
     // validate email, username, postalcode
-    if (!isValidatedUserEmail && !isValidatedUserName && !isValidatedPostalCode && !isValidatedCity && !isValidatedPhoneNumber) {
+    if (!isValidatedUserEmail && !isValidatedUserName && !isValidatedPostalCode && !isValidatedHouseNumber && !isValidatedPhoneNumber) {
       return null
     }
 
@@ -628,6 +641,11 @@ class RegistrationForm extends ValidationComponent {
       this.props.registerSetPostalcode(value)
     }
 
+    if (key === 'houseNumber') {
+      __DEV__ && console.log('liveValidate houseNumber', value)
+      this.props.registerSetHouseNumber(this.state.postal_code, value)
+    }
+
     if (key === 'teamName') {
       __DEV__ && console.log('liveValidate teamName', value)
       this.props.registerSetTeamname(value, this.state.is_volunteer)
@@ -658,7 +676,7 @@ class RegistrationForm extends ValidationComponent {
   }
   showInvalid (display = true) {
     let errorList = []
-    const { isValidatedUserEmail, isValidatedUserName, isValidatedPostalCode, isValidatedCity, isValidatedPhoneNumber, Lang } = this.props
+    const { isValidatedUserEmail, isValidatedUserName, isValidatedPostalCode, isValidatedHouseNumber, isValidatedPhoneNumber, Lang } = this.props
     const showAlert = (message) => {
       return Lang.invalid + ': ' + message
     }
@@ -675,12 +693,12 @@ class RegistrationForm extends ValidationComponent {
     if (!isValidatedUserName) {
       errorList.push(showAlert(Lang.txt_D11))
     }
-    if (!formAFieldValidate('streetName', this.state.street_name)) {
-      errorList.push(showAlert(Lang.txt_D12))
-    }
-    if (!formAFieldValidate('houseNum', this.state.house_num)) {
-      errorList.push(showAlert(Lang.txt_D13b))
-    }
+    // if (!formAFieldValidate('streetName', this.state.street_name)) {
+    //   errorList.push(showAlert(Lang.txt_D12))
+    // }
+    // if (!formAFieldValidate('houseNum', this.state.house_num)) {
+    //   errorList.push(showAlert(Lang.txt_D13b))
+    // }
     if (!isValidatedPostalCode) {
       errorList.push(showAlert(Lang.txt_D14))
     }
@@ -688,8 +706,8 @@ class RegistrationForm extends ValidationComponent {
     //   errorList.push(showAlert(Lang.txt_D15))
     // }
 
-    if (!isValidatedCity) {
-      errorList.push(showAlert(Lang.txt_D15))
+    if (!isValidatedHouseNumber) {
+      errorList.push(showAlert(Lang.txt_D13b))
     }
     if (!isValidatedUserEmail) {
       errorList.push(showAlert(Lang.txt_D16))
@@ -716,7 +734,6 @@ class RegistrationForm extends ValidationComponent {
   }
 
   render () {
-    console.log(this.props)
     const { showCreateTeam } = this.state
     const activeHeaderButton = this.state.status
     const { isValidatedTeamEmail, isValidatedTeamName, getTeamlist, teamList, setTeamPhoto, design, Lang } = this.props
