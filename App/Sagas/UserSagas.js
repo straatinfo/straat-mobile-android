@@ -11,7 +11,7 @@ import { showAlertBox, logStore, AppData, showSuccesstBox, showSuccessBox, showA
 import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
 import { teamGetIsApproved } from '../Transforms/TeamHelper'
-import { getSuccessMessage, getLoginParams } from '../Transforms/RegistrationHelper'
+import { getSuccessMessage, getLoginParams, cleanPostalCode } from '../Transforms/RegistrationHelper'
 import { getLanguageState } from './../Redux/LanguageRedux'
 
 /**
@@ -31,6 +31,8 @@ export const registerUser = function * (API, action) {
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.registering)
+    __DEV__ && console.log('registrationData', registrationData)
+    // return true
     // fetch result
     const registrationResult = yield call(API.postRegisterUser, { registrationData })
 
@@ -178,21 +180,68 @@ export const validatePostalCode = function * (API, action) {
       throw new Error(language.invalid + ' ' + language.postalCode)
     }
     yield put(UserActions.mergeState({isValidatedPostalCode: true}))
-    /*
+     
     // validate from backend
-    const validationResult = yield call(API.postConfirmAccessCode, { postalCode })
+    const validationResult = yield call(API.postValidatePostalCode, { postalCode: cleanPostalCode(postalCode) })
     __DEV__ && console.log('userName validationResult', validationResult)
 
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
       yield put(UserActions.mergeState({isValidatedPostalCode: true}))
     } else {
-      throw new Error('invalid postal code')
+      throw new Error(language.invalid + ' ' + language.postalCode)
     }
-    */
+    
   } catch (e) {
     __DEV__ && console.log(e)
     yield put(UserActions.mergeState({isValidatedPostalCode: false}))
+    showAlertBox(e.message)
+  }
+  // clean screen
+  yield call(loaderHandler.hideLoader)
+  // yield call(logStore)
+}
+
+/**
+ * @description validate city: this will be base to get coordinate
+ * @param (API, { city })
+ * it listen to REGISTER_SET_CITY
+ *
+ */
+
+export const validateHousenumber = function * (API, action) {
+  const language = yield select(getLanguageState)
+  const { houseNumber, postalCode } = action
+  // const user = yield select(getUserState)
+  try {
+    // show loader
+    yield call(loaderHandler.showLoader, language.verifying + ' ' + language.city)
+    const validationResult = yield call(API.postValidateHouseNumber, { postalCode: cleanPostalCode(postalCode), houseNumber: houseNumber })
+    __DEV__ && console.log('houseNumber validationResult', validationResult)
+
+    // status success
+    if (validationResult.ok && validationResult.data.status === 1) {
+      const {_host, houseNumber, streetName, city, postalCode, geoLocation} = validationResult.data.data
+      yield put(UserActions.mergeState({
+        hostId: _host,
+        registrationCity: city,
+      //   registrationHouseNumber: houseNumber,
+        registrationGeoLocation: geoLocation,
+        registrationPostalCode: postalCode,
+        registrationStreetName: streetName,
+        isValidatedHouseNumber: true
+      })) 
+    } else if (validationResult.ok && validationResult.data.status === 0) {
+      if (validationResult.data.data && validationResult.data.data.error) {
+        throw new Error(validationResult.data.data.error)
+      }
+      throw new Error(language.city + ' ' + language.invalid)
+    } else {
+      throw new Error(language.request + ' ' + language.failed)
+    }
+  } catch (e) {
+    __DEV__ && console.log(e)
+    yield put(UserActions.mergeState({isValidatedHouseNumber: false}))
     showAlertBox(e.message)
   }
   // clean screen
@@ -224,6 +273,7 @@ export const validateCity = function * (API, action) {
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
       __DEV__ && console.log('validationResult', validationResult)
+
       // success in getting _host
       yield put(UserActions.mergeState({isValidatedCity: true})) // un finished <-------|
       yield put(UserActions.mergeState({hostId: validationResult.data.data._host}))

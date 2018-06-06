@@ -29,7 +29,7 @@ import { login, appStart } from './LoginSagas'
 import { getUserAvatar } from './GithubSagas'
 import { change } from './ScreenSagas'
 import { confirmAccessCode, registerAccessCode } from './AccessCodeSagas'
-import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity } from './UserSagas'
+import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber } from './UserSagas'
 import { getNearbyReports, getReportAddress, uploadPhoto, getCategories, submitReport, changeStatus } from './ReportsSaga'
 import { fetchConversation, createConversation, getConversationList } from './ConversationSaga'
 import { fetchMessage, sendMessage, getMessagesByConvoId, postConvo } from './MessageSaga'
@@ -73,6 +73,9 @@ export default function * root () {
     takeLatest(CurrentUserTypes.REGISTER_SET_USERNAME, validateUserName, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_EMAIL, validateEmail, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_POSTALCODE, validatePostalCode, api),
+    takeLatest(CurrentUserTypes.REGISTER_SET_HOUSE_NUMBER, validateHousenumber, api),
+
+    
     takeLatest(CurrentUserTypes.REGISTER_SET_CITY, validateCity, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_PHONENUMBER, validatePhoneNumber, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_TEAMNAME, validateTeamName, api),

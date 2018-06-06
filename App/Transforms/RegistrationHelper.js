@@ -142,3 +142,7 @@ export const toUserModel = (user) => {
   usr['usernamePre'] = obuserName.name
   return usr
 }
+
+export const cleanPostalCode = (postalCode) => {
+  return postalCode.replace(/\s+/g, '')
+}

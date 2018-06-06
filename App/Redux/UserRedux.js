@@ -14,6 +14,7 @@ const { Types, Creators } = createActions({
   registerSetUsername: ['userName', 'primeUserName'],                        // usrname = username + postUserName, primeUserName = userName only
   registerSetEmail: ['userEmail'],
   registerSetPostalcode: ['postalCode'],
+  registerSetHouseNumber: ['postalCode', 'houseNumber'],
   registerSetCity: ['city'],
   registerSetPhonenumber: ['phoneNumber'],
   registerSetTeamname: ['teamName', 'isVolunteer'],
@@ -78,6 +79,7 @@ export const INITIAL_STATE = Immutable({
   // for registration
   isValidatedUserEmail: false,
   isValidatedPostalCode: false,
+  isValidatedHouseNumber: false,
   isValidatedUserName: false,
   isValidatedTeamName: false,
   isValidatedTeamEmail: false,
@@ -87,6 +89,9 @@ export const INITIAL_STATE = Immutable({
   registrationUserName: '',
   registrationUserEmail: '',
   registrationPostalCode: '',
+  registrationHouseNumber: '',
+  registrationStreetName: '',
+  registrationGeoLocation: {},
   registrationCity: '',
   registrationTeamName: '',
   registrationTeamEmail: '',
@@ -171,6 +176,12 @@ export const registerSetPostalcode = (state, {postalCode}) => {
   })
 }
 
+export const registerSetHouseNumber = (state, {houseNumber}) => {
+  return state.merge({
+    registrationHouseNumber: houseNumber
+  })
+}
+
 export const registerSetCity = (state, {city}) => {
   return state.merge({
     registrationCity: city
@@ -243,6 +254,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.REGISTER_SET_USERNAME]: registerSetUsername,
   [Types.REGISTER_SET_EMAIL]: registerSetEmail,
   [Types.REGISTER_SET_POSTALCODE]: registerSetPostalcode,
+  [Types.REGISTER_SET_HOUSE_NUMBER]: registerSetHouseNumber,
+
   [Types.REGISTER_SET_CITY]: registerSetCity,
   [Types.REGISTER_SET_TEAMNAME]: registerSetTeamname,
   [Types.REGISTER_SET_TEAMEMAIL]: registerSetTeamemail,
