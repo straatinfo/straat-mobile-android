@@ -30,7 +30,7 @@ import { Images, Metrics } from './../Themes'
 /**  actionsyles */
 import { formatDate } from './../Transforms/DateTransformer'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
-import CenterView from '../Components/CenterView';
+import CenterView from '../Components/CenterView'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import Icon from 'react-native-vector-icons/Ionicons'
@@ -60,7 +60,7 @@ class ReportMapScreen extends React.Component {
       userMergeState({_teamActive: ''})
     }
   }
-  
+
   componentWillUnmount () {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
@@ -104,12 +104,13 @@ class ReportMapScreen extends React.Component {
    */
     __DEV__ && console.log('this.props', this.props)
     __DEV__ && console.log(this.props.userState._teamActive)
-    const { design, typeCount_A, typeCount_B, typeCount_C, chatCount } = this.props
-    const notificationCount = typeCount_A + typeCount_B + typeCount_C + chatCount
+    const { design,
+      countedListA, countedListB, countedListC, chatCount } = this.props
+    const notificationCount = countedListA + countedListB + countedListC + chatCount
     return (
       <Container>
         <Header style={{ height: 40, backgroundColor: design.header }}>
-          <Left style={{flex:1}}>
+          <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.navigate('MyNotification')}>
               <Icon name='md-chatbubbles' />
               { notificationCount > 0 ? <Badge style={{alignContent: 'center', justifyContent: 'center'}}><Title style={{color: 'white'}}>{notificationCount}</Title></Badge> : null }
@@ -139,9 +140,9 @@ const mapStateToProps = state => {
     userPosition: state.reports.userPosition,
     reportState: state.reports,
     design: state.user.design,
-    typeCount_A: state.notification.typeCount_A,
-    typeCount_B: state.notification.typeCount_B,
-    typeCount_C: state.notification.typeCount_C,
+    countedListA: state.notification.countedListA.length,
+    countedListB: state.notification.countedListB.length,
+    countedListC: state.notification.countedListC.length,
     chatCount: state.notification.chatCount,
     Lang: state.language.Languages
   }
