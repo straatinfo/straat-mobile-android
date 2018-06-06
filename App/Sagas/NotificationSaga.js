@@ -90,18 +90,21 @@ export const updateByNotification = function * (API, action) {
           merging.typeAList = [content, ...NotifactionState.typeAList]
           if (content._reporter._id !== user._id || displayNotificationCountOfHisReport) {
             merging.typeCount_A = NotifactionState.typeCount_A + 1
+            merging.countedListA = [...NotifactionState.countedListA, content._id]
           }
         }
         if (content._reportType && content._reportType.code === ReportTypes.SAFETY.code) {
           merging.typeBList = [content, ...NotifactionState.typeBList]
           if (content._reporter._id !== user._id || displayNotificationCountOfHisReport) {
             merging.typeCount_B = NotifactionState.typeCount_B + 1
+            merging.countedListB = [...NotifactionState.countedListB, content._id]
           }
         }
         if (content._reportType && content._reportType.code === ReportTypes.COMMUNICATION.code) {
           merging.typeCList = [content, ...NotifactionState.typeCList]
           if (content._reporter._id !== user._id || displayNotificationCountOfHisReport) {
             merging.typeCount_C = NotifactionState.typeCount_C + 1
+            merging.countedListC = [...NotifactionState.countedListC, content._id]
           }
         }
       }
