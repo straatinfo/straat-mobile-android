@@ -45,15 +45,16 @@ class ReportMapScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    const { language, navigation, design, user: { isVolunteer }, notificationtState: { typeCount_A, typeCount_B, typeCount_C, chatCount } } = this.props
-    const notificationCount = typeCount_A + typeCount_B + typeCount_C + chatCount
+    const { language, navigation, design, user: { isVolunteer },
+      countedListA, countedListB, countedListC, chatCount } = this.props
+    const notificationCount = countedListA + countedListB + countedListC + chatCount
     return (
       <Container>
         <Header style={[GlobalStyle.header, {backgroundColor: design.header}]} hasTabs>
           <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.navigate('ReportMap')}>
               <Icon name='map' />
-              { notificationCount.count > 0 ? <Badge style={{alignContent: 'center', justifyContent: 'center'}}><Title style={{color: 'white'}}>{notificationCount}</Title></Badge> : null }
+              { notificationCount > 0 ? <Badge style={{alignContent: 'center', justifyContent: 'center'}}><Title style={{color: 'white'}}>{notificationCount}</Title></Badge> : null }
             </Button>
           </Left>
           <CenterView style={{ flex: 6 }}>
@@ -66,13 +67,13 @@ class ReportMapScreen extends React.Component {
           </Right>
         </Header>
         <Tabs locked={false}>
-          <Tab heading={this._getSubHeading(language.publicSpace, typeCount_A)}>
+          <Tab heading={this._getSubHeading(language.publicSpace, countedListA)}>
             <ReportListTypeA navigation={navigation} />
           </Tab>
-          <Tab heading={this._getSubHeading(language.suspiciousSituation, typeCount_B)}>
+          <Tab heading={this._getSubHeading(language.suspiciousSituation, countedListB)}>
             <ReportListTypeB navigation={navigation} />
           </Tab>
-          {isVolunteer === false && <Tab heading={this._getSubHeading(language.messages, typeCount_C)}>
+          {isVolunteer === false && <Tab heading={this._getSubHeading(language.messages, countedListC)}>
             <ReportListTypeC navigation={navigation} />
           </Tab>}
           <Tab heading={this._getSubHeading(language.chat, chatCount)}>
@@ -90,6 +91,10 @@ const mapStateToProps = state => {
     user: state.user.user,
     userState: state.user,
     design: state.user.design,
+    countedListA: state.notification.countedListA.length,
+    countedListB: state.notification.countedListB.length,
+    countedListC: state.notification.countedListC.length,
+    chatCount: state.notification.chatCount,
     notificationtState: state.notification,
     language: state.language.Languages
   }
