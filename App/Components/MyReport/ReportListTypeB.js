@@ -1,17 +1,11 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
-import { Content } from 'native-base'
+import { Content, View } from 'native-base'
+import { CircleLoader } from './../../Components'
 import { connect } from 'react-redux'
+import { Colors } from './../../Themes'
 import NotificationActions from './../../Redux/NotificationRedux'
 import ReportsActions from './../../Redux/ReportsRedux'
-
-import { Fonts, Colors } from './../../Themes'
-
-import CircleLoader from '../CircleLoader'
-import Spacer from './../../Components/Spacer'
-
 import ReportItem from './Components/ReportItem'
-import ReportChatIcon from './Components/ReportChatIcon';
 
 class ReporTypeBtList extends Component {
   componentDidMount () {
@@ -38,7 +32,6 @@ class ReporTypeBtList extends Component {
               <ReportChatIcon report={report} navigation={navigation} /> */}
             </View>
             )}
-        <Spacer />
       </Content>)
     )
   }

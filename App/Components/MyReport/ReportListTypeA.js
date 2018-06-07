@@ -1,22 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import { Content, Badge } from 'native-base'
+import { Content, View } from 'native-base'
+import { CircleLoader } from './../../Components'
 import { connect } from 'react-redux'
+import { Colors } from './../../Themes'
 import NotificationActions from './../../Redux/NotificationRedux'
-import ReportsActions from './../../Redux/ReportsRedux'
-import ReportChat from '../../Containers/ReportChat'
-import { Fonts, Colors } from './../../Themes'
-
-import CircleLoader from '../CircleLoader'
-import Spacer from './../../Components/Spacer'
-
-import ReportItem from './Components/ReportItem'
-// import { CONNECTION } from '../../Services/AppSocket'
 import ConversationActions from '../../Redux/ConversationRedux'
-
+import ReportsActions from './../../Redux/ReportsRedux'
+import ReportItem from './Components/ReportItem'
 import SocketActions from '../../Redux/SocketRedux'
-import { SocketTypes } from '../../Services/Constant'
-import ReportChatIcon from './Components/ReportChatIcon';
 
 class ReportTypeAList extends Component {
   conversationId = null
@@ -103,7 +94,6 @@ class ReportTypeAList extends Component {
               <ReportChatIcon report={report} navigation={navigation} />*/}
             </View>
              )}
-        <Spacer />
       </Content>
     )
   }

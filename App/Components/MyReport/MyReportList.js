@@ -1,18 +1,11 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
-import { Content } from 'native-base'
+import { Content, View } from 'native-base'
+import { AlertBox, CircleLoader } from './../../Components'
 import { connect } from 'react-redux'
-import ReportsActions from './../../Redux/ReportsRedux'
+import { Colors } from './../../Themes'
 import MyReportActions from './../../Redux/MyReportRedux'
-
-import { Fonts, Colors } from './../../Themes'
-
-import CircleLoader from '../CircleLoader'
-import Spacer from './../../Components/Spacer'
-
 import ReportItem from './Components/ReportItem'
-import ReportChatIcon from './Components/ReportChatIcon'
-import { AlertBox } from './../../Components'
+import ReportsActions from './../../Redux/ReportsRedux'
 
 class MyReportList extends Component {
   componentDidMount () {
@@ -67,7 +60,6 @@ const mapDispatchToProps = dispatch => {
     myReportRequest: (data) => dispatch(MyReportActions.myReportRequest(data)),
     myReportMerge: (newState) => dispatch(MyReportActions.myReportMerge(newState)),
     deleteMyreport: (_id) => dispatch(MyReportActions.deleteMyreport(_id))
-
 
   }
 }
