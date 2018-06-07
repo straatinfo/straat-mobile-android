@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
+import { Text } from 'native-base'
 import {Fonts, Colors} from './../Themes'
 import LinearGradient from 'react-native-linear-gradient'
 
