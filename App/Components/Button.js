@@ -13,6 +13,7 @@ export default class Button extends Component {
     onPress: PropTypes.func.isRequired
   }
   static defaultProps = {
+    active: true,
     disabled: false,
     title: '',
     design: {},
@@ -20,17 +21,17 @@ export default class Button extends Component {
     onPressDisabled: () => {}
   }
   __getColors () {
-    const { design, disabled } = this.props
-    return disabled ? ['#a6b2c1', '#7f8893'] : [ design.button2, design.button ]
+    const { design, disabled, active } = this.props
+    return disabled || !active ? ['#a6b2c1', '#7f8893'] : [ design.button2, design.button ]
   }
   __getOnPress () {
-    const { onPress, onPressDisabled, disabled } = this.props
-    return disabled ? onPressDisabled : onPress
+    const { onPress, onPressDisabled, active } = this.props
+    return !active ? onPressDisabled : onPress
   }
   render () {
-    const { title, disabled } = this.props
+    const { title, disabled, active } = this.props
     return (
-      <TouchableOpacity disabled={disabled}
+      <TouchableOpacity disabled={disabled} active={active}
         style={styles.buttonContainer}
         underlayColor='rgba(0,0,0,0.0)'
         onPress={this.__getOnPress()}
