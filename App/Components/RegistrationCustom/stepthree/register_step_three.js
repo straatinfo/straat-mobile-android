@@ -1,29 +1,15 @@
 import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  Picker,
-  NetInfo,
-  Alert
-} from 'react-native'
+import { TouchableOpacity, Picker, NetInfo, Alert } from 'react-native'
+import { Text, View } from 'native-base'
 import { connect } from 'react-redux'
-
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
-import LinearGradient from 'react-native-linear-gradient'
-import renderIf from 'render-if'
-
 import Api from './../../../Lib/Common/Api'
 import ApiUtil from './../../../Lib/Common/ApiUtil'
-
-import CircleButton from './../../../Components/CircleButton'
-import styles from '../stepthree/style'
 import GeneralDesign from './../../../Lib/GeneralDesign'
+import LinearGradient from 'react-native-linear-gradient'
 import RegistrationOptionSelectiom from './../Components/RegistrationOptionSelection'
-import Spacer from '../../Spacer';
-import Footer from '../../Footer';
+import Spacer from '../../Spacer'
+import styles from '../stepthree/style'
+import Footer from '../../Footer'
 
 class RegistrationStepThree extends Component {
   constructor (props) {

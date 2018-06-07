@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
-import {
-  TouchableOpacity
-} from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { Text, View, Input } from 'native-base'
 import { connect } from 'react-redux'
 import { AlertBox, Spacer, Button } from './../../../Components'
 // import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import { CheckBox } from 'react-native-elements'
-import HorizontalSpace from './../../RegistrationCustom/Components/HorizontalSpace'
-import styles from './../stepone/style'
-// import LanguageSelection from './../Components/LanguageSelection'
-import GenderSelection from './../Components/GenderSelection'
-import TabContentTitle from './../Components/TabContentTitle'
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import Footer from '../../Footer'
 import { errorAlert } from '../../../Lib/Helper/alertHelper'
 import { checkPassword } from '../../../Transforms/RegistrationHelper'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Footer from '../../Footer'
+import GenderSelection from './../Components/GenderSelection'
+import HorizontalSpace from './../../RegistrationCustom/Components/HorizontalSpace'
+import styles from './../stepone/style'
+import TabContentTitle from './../Components/TabContentTitle'
+// import LanguageSelection from './../Components/LanguageSelection'
 
 class RegistrationStepOne extends Component {
   constructor (props) {
@@ -116,7 +114,7 @@ class RegistrationStepOne extends Component {
         </View>
         <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.textInputContainer}>
-          <View><TouchableOpacity style={{ alignSelf: 'center'}} onPress={() => { this._onPressUserNamehelp() }}><Icon size={25} style={{flex: 1, alignSelf: 'center', textAlignVertical: 'center' }} name='help-outline' /></TouchableOpacity></View>
+          <View><TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => { this._onPressUserNamehelp() }}><Icon size={25} style={{ flex: 1, alignSelf: 'center', textAlignVertical: 'center' }} name='help-outline' /></TouchableOpacity></View>
           <Input
             style={{ flex: 3, paddingRight: 0, marginRight: 0 }}
             onEndEditing={(e) => { onValidate(); liveValidation('userName', e.nativeEvent.text) }}

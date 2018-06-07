@@ -1,50 +1,24 @@
-import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Image,
-  Text,
-  Dimensions,
-  Platform,
-  NetInfo,
-  Alert,
-  PermissionsAndroid,
-  ListView,
-  Modal,
-  TouchableHighlight
-} from 'react-native'
-import ValidationComponent from 'react-native-form-validator'
-import validator from 'validator'
-import renderIf from 'render-if'
-import Triangle from 'react-native-triangle'
-import SlidingUpPanel from 'rn-sliding-up-panel'
-import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-
+import React from 'react'
+import { Image, NetInfo, Alert, TouchableHighlight } from 'react-native'
+import { Container, Content, Text, View } from 'native-base'
+import { AlertBox, renderIf, Triangle, ValidationComponent } from './../../Components'
+import { errorAlert } from './../../Lib/Helper/alertHelper'
+import { formAFieldValidate, getLocation } from '../../Transforms/RegistrationHelper'
+import { isValidUserName } from '../../Redux/UserRedux'
+import { usernameSeparator } from '../../Services/Constant'
 import Api from './../../Lib/Common/Api'
 import AppData from './../../Lib/Common/AppData'
+import AppConfig from '../../Config/AppConfig'
 import ApiUtil from './../../Lib/Common/ApiUtil'
-import { errorAlert } from './../../Lib/Helper/alertHelper'
-
+import FastImage from 'react-native-fast-image'
+import CreateTeam from './../../Components/RegistrationCustom/Components/CreateTeam'
+import Images from './../../Themes/Images'
+import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
+import RandomString from 'random-string'
 import RegistrationStepOne from './../../Components/RegistrationCustom/stepone/register_step_one'
 import RegistrationStepTwo from './../../Components/RegistrationCustom/steptwo/register_step_two'
 import RegistrationStepThree from './../../Components/RegistrationCustom/stepthree/register_step_three'
-import CreateTeam from './../../Components/RegistrationCustom/Components/CreateTeam'
-
 import styles from './styles'
-import Images from './../../Themes/Images'
-import { Button } from 'react-native-elements'
-import { showAlertBox } from '../../Redux/commonRedux'
-import { formAFieldValidate, getLocation } from '../../Transforms/RegistrationHelper'
-import { isValidUserName } from '../../Redux/UserRedux'
-import Footer from '../../Components/Footer'
-import FastImage from 'react-native-fast-image'
-
-import RandomString from 'random-string'
-import AppConfig from '../../Config/AppConfig'
-import { usernameSeparator, Languages } from '../../Services/Constant'
-
-const {width, height} = Dimensions.get('window')
 
 class RegistrationForm extends ValidationComponent {
   static navigationOptions = {
@@ -228,7 +202,7 @@ class RegistrationForm extends ValidationComponent {
 
     if (this.getErrorMessages()) {
       loaderHandler.hideLoader()
-      Alert.alert(
+      AlertBox.alert(
                 'Error',
                 this.getErrorMessages(), [{text: 'OK', onPress: () => console.log('OK Pressed')}],
                 { cancelable: false }
@@ -772,92 +746,89 @@ class RegistrationForm extends ValidationComponent {
         break
     }
     return (
-      <View style={{flex: 1}}>
-        { AppConfig.DEBUG === true && <View>
-          <Button onPress={() => this._submit()} title={'test'} /><Text>ACCESS CODE : {this.props.accessCode}  ; HOST ID : {this.props.hostId}</Text></View>
-        }
-        { !showCreateTeam && <ScrollView bounces={false}>
+      <Container >
+        { !showCreateTeam && <Content>
           {/** here will show registrations with 3 tabs and form contetns But hide when click register in create new team mode, must remember that the state will preserve */}
-          <View style={styles.container}>
-            <View style={styles.upperboxContainer}>
-              <View style={styles.upperbox}>
-                <View style={styles.logoHolder}>
-                  { design.secureUrl === '' && <Image source={Images.logo} style={styles.logo} /> }
-                  { design.secureUrl !== '' && <FastImage source={{uri: design.secureUrl}} style={styles.logo} /> }
-                </View>
-              </View>
-              <View style={styles.registerStepContainer}>
-                <View style={styles.registerStep}>
-                  <View style={[{flex: 1}, headerButtonStyleFirststep]}>
-                    <TouchableHighlight disabled={this.state.finished.step1 !== true} onPress={() => { this.setState({status: 'firststep'}) }}>
-                      <Text style={[styles.registerText, {color: this.state.status === 'firststep' || this.state.finished.step1 === true ? '#4f6a85' : '#bdcadc'}]}>{Lang.txt_D01}</Text>
-                    </TouchableHighlight>
-                  </View>
-                  <View style={[{flex: 1}, headerButtonStyleSecondstep]}>
-                    <TouchableHighlight disabled={this.state.finished.step2 !== true} onPress={() => { this.setState({status: 'secondstep'}) }}>
-                      <Text style={[styles.registerText, {color: this.state.status === 'secondstep' || this.state.finished.step2 === true ? '#4f6a85' : '#bdcadc', backgroundColor: this.state.status === 'secondstep' ? '#bdcadc' : 'white'}]}>{Lang.txt_D02}</Text>
-                    </TouchableHighlight>
-                  </View>
-                  <View style={[{flex: 1}, headerButtonStyleThirdstep]}>
-                    <TouchableHighlight disabled={this.state.finished.step3 !== true} onPress={() => { this.setState({status: 'thirdstep'}) }}>
-                      <Text style={[styles.registerText, {color: this.state.status === 'thirdstep' || this.state.finished.step3 === true ? '#4f6a85' : '#bdcadc'}]}>{Lang.txt_D03}</Text>
-                    </TouchableHighlight>
-                  </View>
-                </View>
+          {/* <View style={styles.container}> */}
+          <View style={styles.upperboxContainer}>
+            <View style={styles.upperbox}>
+              <View style={styles.logoHolder}>
+                { design.secureUrl === '' && <Image source={Images.logo} style={styles.logo} /> }
+                { design.secureUrl !== '' && <FastImage source={{uri: design.secureUrl}} style={styles.logo} /> }
               </View>
             </View>
-            <View style={[styles.horizontalSpacing, styles.backgroundColorWhite]} />
-            <View style={[styles.triangleContainer, {justifyContent: 'space-around'}]}>
-              <Triangle width={90} height={30} direction={'down'} color={this.state.status === 'firststep' ? 'white' : 'transparent'} />
-              <Triangle width={90} height={30} direction={'down'} color={this.state.status === 'secondstep' ? 'white' : 'transparent'} />
-              <Triangle width={90} height={30} direction={'down'} color={this.state.status === 'thirdstep' ? 'white' : 'transparent'} />
-            </View>
-            <View style={styles.horizontalSpacing} />
-            <View style={[styles.horizontalSpacing]} />
-            <View style={styles.container}>
-              {
-                renderIf(this.state.status === 'firststep')(
-                  <RegistrationStepOne
-                    parentState={this.state}
-                    parentChangeState={this.setState.bind(this)}
-                    onGenderSelect={this.onGenderSelect.bind(this)}
-                    onSelectLanguage={this.onSelectLanguage.bind(this)}
-                    onValidate={this.validatePersonalDataForm.bind(this)}
-                    onFirstNameTextChange={this.onFirstNameTextChange.bind(this)}
-                    onLastNameTextChange={this.onLastNameTextChange.bind(this)}
-                    onUsernameTextChange={this.onUsernameTextChange.bind(this)}
-                    onStreetNameTextChange={this.onStreetNameTextChange.bind(this)}
-                    onHouseNumTextChange={this.onHouseNumTextChange.bind(this)}
-                    onPostalCodeTextChange={this.onPostalCodeTextChange.bind(this)}
-                    onCityTextChange={this.onCityTextChange.bind(this)}
-                    onEmailTextChange={this.onEmailTextChange.bind(this)}
-                    onMobileTextChange={this.onMobileTextChange.bind(this)}
-                    onPasswordTextChange={this.onPasswordTextChange.bind(this)}
-                    gotoLogin={this.gotoLogin.bind(this)}
-                    liveValidation={this.liveValidation.bind(this)}
-                    showInvalid={this.showInvalid.bind(this)}
-                    onSubmit={this.enableSecondStep.bind(this)} />
-                )
-              }
-              {
-                renderIf(this.state.status === 'secondstep')(
-                  <RegistrationStepTwo onVolunteerSubmit={this.onUserVolunteer.bind(this)} />
-                )
-              }
-              {
-                renderIf(this.state.status === 'thirdstep')(
-                  <RegistrationStepThree
-                    parentState={this.state}
-                    parentChangeState={this.setState.bind(this)}
-                    onTeamIDSelect={this.onTeamIDSelect.bind(this)}
-                    onRegOptionSelect={this.onRegOption.bind(this)}
-                    teamList={teamList}
-                    onRegisterSubmit={this.registerAccount.bind(this)} />
-                )
-              }
+            <View style={styles.registerStepContainer}>
+              <View style={styles.registerStep}>
+                <View style={[{flex: 1}, headerButtonStyleFirststep]}>
+                  <TouchableHighlight disabled={this.state.finished.step1 !== true} onPress={() => { this.setState({status: 'firststep'}) }}>
+                    <Text style={[styles.registerText, {color: this.state.status === 'firststep' || this.state.finished.step1 === true ? '#4f6a85' : '#bdcadc'}]}>{Lang.txt_D01}</Text>
+                  </TouchableHighlight>
+                </View>
+                <View style={[{flex: 1}, headerButtonStyleSecondstep]}>
+                  <TouchableHighlight disabled={this.state.finished.step2 !== true} onPress={() => { this.setState({status: 'secondstep'}) }}>
+                    <Text style={[styles.registerText, {color: this.state.status === 'secondstep' || this.state.finished.step2 === true ? '#4f6a85' : '#bdcadc', backgroundColor: this.state.status === 'secondstep' ? '#bdcadc' : 'white'}]}>{Lang.txt_D02}</Text>
+                  </TouchableHighlight>
+                </View>
+                <View style={[{flex: 1}, headerButtonStyleThirdstep]}>
+                  <TouchableHighlight disabled={this.state.finished.step3 !== true} onPress={() => { this.setState({status: 'thirdstep'}) }}>
+                    <Text style={[styles.registerText, {color: this.state.status === 'thirdstep' || this.state.finished.step3 === true ? '#4f6a85' : '#bdcadc'}]}>{Lang.txt_D03}</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
             </View>
           </View>
-        </ScrollView>}
+          <View style={[styles.horizontalSpacing, styles.backgroundColorWhite]} />
+          <View style={[styles.triangleContainer, {justifyContent: 'space-around'}]}>
+            <Triangle width={90} height={30} direction={'down'} color={this.state.status === 'firststep' ? 'white' : 'transparent'} />
+            <Triangle width={90} height={30} direction={'down'} color={this.state.status === 'secondstep' ? 'white' : 'transparent'} />
+            <Triangle width={90} height={30} direction={'down'} color={this.state.status === 'thirdstep' ? 'white' : 'transparent'} />
+          </View>
+          <View style={styles.horizontalSpacing} />
+          <View style={[styles.horizontalSpacing]} />
+          <View style={styles.container}>
+            {
+              renderIf(this.state.status === 'firststep')(
+                <RegistrationStepOne
+                  parentState={this.state}
+                  parentChangeState={this.setState.bind(this)}
+                  onGenderSelect={this.onGenderSelect.bind(this)}
+                  onSelectLanguage={this.onSelectLanguage.bind(this)}
+                  onValidate={this.validatePersonalDataForm.bind(this)}
+                  onFirstNameTextChange={this.onFirstNameTextChange.bind(this)}
+                  onLastNameTextChange={this.onLastNameTextChange.bind(this)}
+                  onUsernameTextChange={this.onUsernameTextChange.bind(this)}
+                  onStreetNameTextChange={this.onStreetNameTextChange.bind(this)}
+                  onHouseNumTextChange={this.onHouseNumTextChange.bind(this)}
+                  onPostalCodeTextChange={this.onPostalCodeTextChange.bind(this)}
+                  onCityTextChange={this.onCityTextChange.bind(this)}
+                  onEmailTextChange={this.onEmailTextChange.bind(this)}
+                  onMobileTextChange={this.onMobileTextChange.bind(this)}
+                  onPasswordTextChange={this.onPasswordTextChange.bind(this)}
+                  gotoLogin={this.gotoLogin.bind(this)}
+                  liveValidation={this.liveValidation.bind(this)}
+                  showInvalid={this.showInvalid.bind(this)}
+                  onSubmit={this.enableSecondStep.bind(this)} />
+              )
+            }
+            {
+              renderIf(this.state.status === 'secondstep')(
+                <RegistrationStepTwo onVolunteerSubmit={this.onUserVolunteer.bind(this)} />
+              )
+            }
+            {
+              renderIf(this.state.status === 'thirdstep')(
+                <RegistrationStepThree
+                  parentState={this.state}
+                  parentChangeState={this.setState.bind(this)}
+                  onTeamIDSelect={this.onTeamIDSelect.bind(this)}
+                  onRegOptionSelect={this.onRegOption.bind(this)}
+                  teamList={teamList}
+                  onRegisterSubmit={this.registerAccount.bind(this)} />
+              )
+            }
+          </View>
+          {/* </View> */}
+        </Content>}
         {/** here is container for team cration: i think it would be better if i use slide up instead of screen, so state will preserve and has good animation */}
         { showCreateTeam && <CreateTeam
           title={Lang.txt_D37} onClose={this._showCreateTeam.bind(this)}
@@ -869,7 +840,7 @@ class RegistrationForm extends ValidationComponent {
           onRegisterSubmit={this.registerAccount.bind(this)}
           setTeamPhoto={setTeamPhoto}
         />}
-      </View>
+      </Container>
     )
   }
 }

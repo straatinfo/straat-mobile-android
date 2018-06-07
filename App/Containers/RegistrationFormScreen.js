@@ -1,26 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation } from 'react-native'
-import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container,
-   Card, CardItem, ListItem, Right, Radio, Left, Content, Segment, Header, Tabs, Tab, TabHeading, Icon} from 'native-base'
+import { LayoutAnimation } from 'react-native'
 import { connect } from 'react-redux'
-import Styles from './Styles/LoginScreenStyles'
-import { Images, Metrics } from '../Themes'
+import { Metrics } from '../Themes'
 import { ScreenActions } from '../Redux/ScreenRedux'
-import UserActions from '../Redux/UserRedux'
-//import LoginActions from '../Redux/LoginRedux'
-
-import AlertMessage from './../Components/AlertMessage'
-import BusyIndicator from 'react-native-busy-indicator'
-import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
-import HeaderBigCenterLogo from './../Components/HeaderBigCenterLogo'
-import HeaderTextField from './../Components/HeaderTextField'
-import RegisterUserData from './../Components/RegisterUserData'
-import UnderMigration from './../Components/UnderMigration'
 import RegistrationForm from './../Containers/Registration/RegistrationForm'
-import AppConfig from '../Config/AppConfig';
+import UserActions from '../Redux/UserRedux'
 
-class NewUserForm extends React.Component {
+class RegistrationContainer extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func,
     fetching: PropTypes.bool,
@@ -47,7 +34,6 @@ class NewUserForm extends React.Component {
       show: true
     }
     this.isAttempting = false
-    
   }
 
   componentWillMount () {
@@ -80,27 +66,7 @@ class NewUserForm extends React.Component {
   }
 
   render () {
-    return (
-      <Container>
-        {/** for debugging  */}
-        { AppConfig.DEBUG === true &&
-          <View>
-            <NBText>isValidatedUserName:   { this.props.isValidatedUserName ? 'true' : 'false'}</NBText>
-            <NBText>isValidatedUserEmail:  { this.props.isValidatedUserEmail ? 'true' : 'false'}</NBText>
-            <NBText>isValidatedPostalCode: { this.props.isValidatedPostalCode ? 'true' : 'false'}</NBText>
-            <NBText>isValidatedPhoneNumber:{ this.props.isValidatedPhoneNumber ? 'true' : 'false'}</NBText>
-            <NBText>isValidatedTeamName:   { this.props.isValidatedTeamName ? 'true' : 'false'}</NBText>
-            <NBText>isValidatedTeamEmail:  { this.props.isValidatedTeamEmail ? 'true' : 'false'}</NBText>
-            <NBText>isValidatedHouseNumber:{ this.props.isValidatedHouseNumber ? 'true' : 'false'}</NBText>
-            
-            <NBText>registrationUserName:  { this.props.registrationUserName }</NBText>
-            <NBText>accessCode:            { this.props.accessCode ? this.props.accessCode : 'false'}</NBText>
-            <NBText>teamList:              { this.props.teamList ? 'true' : 'false'}{ console.log('teamlist in form screen', this.props.teamList)}</NBText>
-          </View>
-        }
-        <RegistrationForm {...this.props} />
-      </Container>
-    )
+    return <RegistrationForm {...this.props} />
   }
 }
 
@@ -150,12 +116,8 @@ const mapDispatchToProps = dispatch => {
     setTeamPhoto: (photo) => dispatch(UserActions.setTeamPhoto(photo)),
     registerRequest: (registrationData, navigation, route) => dispatch(UserActions.registerRequest({registrationData, navigation, route})),
     change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
-    userMergeState: (newState) => dispatch(UserActions.mergeState(newState)),
+    userMergeState: (newState) => dispatch(UserActions.mergeState(newState))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewUserForm)
-
-/**
-{() => this.password._root.focus()} />
- */
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationContainer)

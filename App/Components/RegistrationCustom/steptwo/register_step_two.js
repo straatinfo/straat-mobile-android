@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  TouchableOpacity
-} from 'react-native'
+import { TouchableOpacity } from 'react-native'
+import { Text, View } from 'native-base'
 import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
-
 import TabContentTitle from './../Components/TabContentTitle'
 import styles from '../steptwo/style'
 import Spacer from '../../Spacer'
