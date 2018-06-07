@@ -2,6 +2,8 @@ import LinearGradientComponent from 'react-native-linear-gradient'
 import ValidationComponentComponent from 'react-native-form-validator'
 import validatorComponent from 'validator'
 import renderIfComponent from 'render-if'
+import TriangleComponent from 'react-native-triangle'
+import SlidingUpPanelComponent from 'rn-sliding-up-panel'
 
 import AlertBoxComponent from './AlertBox'
 import BannerLogoComponent from './BannerLogo'
@@ -35,3 +37,7 @@ export const validator = validatorComponent
 export const renderIf = renderIfComponent
 
 export class ValidationComponent extends ValidationComponentComponent {}
+
+export class Triangle extends TriangleComponent {}
+
+export class SlidingUpPanel extends SlidingUpPanelComponent {}
