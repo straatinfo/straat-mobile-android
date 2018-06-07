@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-    Text
-  } from 'react-native'
+import { Text } from 'native-base'
 
 export default (props) => {
   const { title } = props
