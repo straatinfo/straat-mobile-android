@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity } from 'react-native'
-import { Text, Badge } from 'native-base'
+import { TouchableOpacity } from 'react-native'
+import { Badge, View, Text } from 'native-base'
 import { connect } from 'react-redux'
 import { ConvoTypes, convoOption } from '../../../Services/Constant'
 
