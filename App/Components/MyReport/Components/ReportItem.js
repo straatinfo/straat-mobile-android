@@ -10,6 +10,7 @@ import { Fonts, Images } from './../../../Themes'
 // import style from './style'
 import CenterView from './../../../Components/CenterView'
 import RowView from './../../../Components/RowView'
+import NotificationActions from './../../../Redux/NotificationRedux'
 import ImageTumb from './ImageTumb'
 import { cropWH, crop } from '../../../Transforms/Cloudinary'
 import Urgency from './Urgency'
@@ -98,8 +99,9 @@ const styles = {
 
 class ReportItem extends Component {
   _navigation () {
-    const {reportMergeState, navigation, item} = this.props
+    const {reportMergeState, notificationOpen, navigation, item} = this.props
     navigation.navigate('ReportDetails', {report: item})
+    notificationOpen(item, 'REPORT')
     reportMergeState({reportDetails: item})
   }
   _renderBody () {
@@ -163,6 +165,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    notificationOpen: (target, type) => dispatch(NotificationActions.notificationOpen({target, type}))
+     
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ReportItem)

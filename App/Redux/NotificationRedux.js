@@ -11,7 +11,8 @@ const { Types, Creators } = createActions({
   notificationMerge: ['newState'],
   updateByNotification: ['source', 'data'],
   addNotification: ['data'],
-  clearNotification: ['data']
+  clearNotification: ['data'],
+  notificationOpen: ['data']
 
 })
 
@@ -37,7 +38,10 @@ export const INITIAL_STATE = Immutable({
 
   errorC: null,
   fetchingC: true,
-  dataReceive: []
+  dataReceive: [],
+  countedListA: [], //  ['5b18295ffc0d7d0014021364'],
+  countedListB: [], //  ['5b182a46fc0d7d001402136b'],
+  countedListC: [] //  ['5b10f77eec26920014ca10ee']
 })
 
 /* ------------- Reducers ------------- */
@@ -95,6 +99,34 @@ export const notificationMerge = (state, { newState }) => {
   return state.merge(newState)
 }
 
+export const notificationOpen = (state, { data: {target, type} }) => {
+  __DEV__ && console.log('opening notification: ', target, type)
+  const _id = target._id
+  // this will reduce counter on red icon
+  if (type === 'REPORT') {
+    // type a
+    if (target._reportType && target._reportType.code === ReportTypes.PUBLIC_SPACE.code) {
+      if (state.countedListA.indexOf(_id) !== -1) {
+        return state.merge({countedListA: state.countedListA.filter(i => i !== _id)})
+      }
+    }
+    if (target._reportType && target._reportType.code === ReportTypes.SAFETY.code) {
+      if (state.countedListB.indexOf(_id) !== -1) {
+        return state.merge({countedListB: state.countedListB.filter(i => i !== _id)})
+      }
+    }
+    if (target._reportType && target._reportType.code === ReportTypes.COMMUNICATION.code) {
+      if (state.countedListC.indexOf(_id) !== -1) {
+        return state.merge({countedListC: state.countedListC.filter(i => i !== _id)})
+      }
+    }
+  }
+  if (type === 'CHAT') {
+
+  }
+  return state
+}
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -104,7 +136,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.NOTIFICATION_MERGE]: notificationMerge,
   [Types.UPDATE_BY_NOTIFICATION]: updateByNotification,
   [Types.ADD_NOTIFICATION]: addNotification,
-  [Types.CLEAR_NOTIFICATION]: clearNotification
+  [Types.CLEAR_NOTIFICATION]: clearNotification,
+  [Types.NOTIFICATION_OPEN]: notificationOpen
 
 })
 
