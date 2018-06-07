@@ -1,22 +1,11 @@
 import React from 'react'
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  ScrollView,
-  TouchableOpacity
-} from 'react-native'
+import { Image, TouchableOpacity } from 'react-native'
+import { View, Text, Content, Input } from 'native-base'
+import { Spacer, RowView, Triangle, ValidationComponent, Button } from './../../Components'
 import { Images } from './../../Themes'
 import Footer from '../../Components/Footer'
 import FastImage from 'react-native-fast-image'
-
-import LinearGradient from 'react-native-linear-gradient'
-import RowView from '../../Components/RowView'
-import Spacer from './../../Components/Spacer'
 import styles from './../Login/styles'
-import Triangle from 'react-native-triangle'
-import ValidationComponent from 'react-native-form-validator'
 
 /**
  *
@@ -59,7 +48,7 @@ class Login extends ValidationComponent {
     const { onNewUser, isKeyboardVisible, design, navigation, Lang } = this.props
     const { submitStatus } = this.state
     return (
-      <ScrollView bounces={false}>
+      <Content>
         <View style={styles.container}>
           <View style={styles.upperboxContainer}>
             {!isKeyboardVisible && <View style={[styles.upperbox]}>
@@ -82,7 +71,7 @@ class Login extends ValidationComponent {
             </RowView>
             <View ><Text style={styles.inLoginTxt}>{Lang.txt_C01b}</Text></View>
             <View style={[styles.textInputContainer]}>
-              <TextInput
+              <Input
                 onEndEditing={(e) => this._submitFilter(e.nativeEvent.text)}
                 onChangeText={(text) => this.setState({username: text})}
                 underlineColorAndroid='transparent'
@@ -90,7 +79,7 @@ class Login extends ValidationComponent {
                 placeholder={Lang.txt_C02} />
             </View>
             <View style={styles.textInputContainer}>
-              <TextInput
+              <Input
                 onEndEditing={(e) => this._submitFilter(e.nativeEvent.text)}
                 secureTextEntry
                 onChangeText={(text) => this.setState({password: text})}
@@ -100,12 +89,7 @@ class Login extends ValidationComponent {
             </View>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity disabled={!submitStatus} underlayColor='rgba(0,0,0,0.0)' onPress={this.login.bind(this)}>
-
-              <LinearGradient colors={[submitStatus ? design.button2 : '#a6b2c1', submitStatus ? design.button : '#7f8893']} style={styles.linearGradient}>
-                <Text style={styles.buttonText}>{Lang.txt_C01.toUpperCase()}</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <Button disabled={!submitStatus} title={Lang.txt_C01.toUpperCase()} design={design} onPress={this.login.bind(this)} />
           </View>
           <View style={styles.spacing} />
           <TouchableOpacity onPress={() => { navigation.navigate('ForgotPassword') }}>
@@ -127,7 +111,7 @@ class Login extends ValidationComponent {
           <View style={styles.spacing} />
         </View>
         <Footer show />
-      </ScrollView>
+      </Content>
     )
   }
 }
