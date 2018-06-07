@@ -1,28 +1,19 @@
 import React, { Component } from 'react'
 import {
-  View,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Platform,
-  Alert
+  TouchableOpacity
 } from 'react-native'
+import { Text, View, Input } from 'native-base'
 import { connect } from 'react-redux'
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
-import LinearGradient from 'react-native-linear-gradient'
-
+import { AlertBox, Spacer, Button } from './../../../Components'
+// import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import { CheckBox } from 'react-native-elements'
 import HorizontalSpace from './../../RegistrationCustom/Components/HorizontalSpace'
 import styles from './../stepone/style'
-import TestOnlyScreen from '../../../Containers/TestOnlyScreen'
-import RowView from '../../RowView'
-import LanguageSelection from './../Components/LanguageSelection'
+// import LanguageSelection from './../Components/LanguageSelection'
 import GenderSelection from './../Components/GenderSelection'
 import TabContentTitle from './../Components/TabContentTitle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Footer from '../../Footer'
-import Spacer from '../../Spacer'
 import { errorAlert } from '../../../Lib/Helper/alertHelper'
 import { checkPassword } from '../../../Transforms/RegistrationHelper'
 
@@ -66,14 +57,14 @@ class RegistrationStepOne extends Component {
   }
   _onPressUserNamehelp () {
     const { Lang } = this.props
-    Alert.alert(' ', Lang.txt_D35,
+    AlertBox.alert(' ', Lang.txt_D35,
       [{text: 'OK', onPress: () => {}}],
       { cancelable: true })
   }
   showTerms () {
     const { Lang } = this.props
     // Ik accepteer hierbij de algemene voorwaarden
-    Alert.alert(Lang.txt_D31, Lang.txt_D33,
+    AlertBox.alert(Lang.txt_D31, Lang.txt_D33,
       [{text: 'Cancel', onPress: () => this._onSelectTerms(false)}, {text: Lang.txt_D32, onPress: () => this._onSelectTerms(true)}],
       { cancelable: false })
   }
@@ -90,18 +81,14 @@ class RegistrationStepOne extends Component {
   }
 
   render () {
-    const { languages, genders } = this.state
+    const { genders } = this.state
     const { registrationCity, registrationStreetName, onValidate, liveValidation, gotoLogin, showInvalid, onSubmit, design, Lang } = this.props
 
     // parents state use for reload of components
     const { gender, first_name, last_name, username, postUserName, password,
       house_num, postal_code, email_address, mobile_num, language, terms, finished } = this.props.parentState
-
-    // console.log(`Rendering RegistrationStepOne View`)
     const validatePassword = this.validatePassword.bind(this)
-    // const validate = null // showInvalid(false)
     const validate = showInvalid(false)
-    __DEV__ && console.log('')
     return (
       <View style={styles.container}>
         <TabContentTitle title={Lang.txt_D04} />
@@ -109,50 +96,45 @@ class RegistrationStepOne extends Component {
         <View style={styles.textInputContainer}>
           <GenderSelection genders={genders} selected={gender} onSelectGender={this._onClickGender.bind(this)} title={Lang.txt_D29} />
         </View>
-        <View style={styles.verticalFieldsSpacing} />
+        <Spacer />
         <View style={styles.textInputContainer}>
-          <TextInput
-            style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
+          <Input
             onEndEditing={(e) => { onValidate() }}
             placeholder={Lang.txt_D09}
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.props.onFirstNameTextChange(text)}
             multiline={false} value={first_name} />
         </View>
-        <View style={styles.verticalFieldsSpacing} />
+        <Spacer />
         <View style={styles.textInputContainer}>
-          <TextInput
-            style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
+          <Input
             onEndEditing={(e) => { onValidate() }}
             placeholder={Lang.txt_D10}
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.props.onLastNameTextChange(text)}
             multiline={false} value={last_name} />
         </View>
-        <View style={styles.verticalFieldsSpacing} />
-        <HorizontalSpace />
+        <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.textInputContainer}>
-          <View><TouchableOpacity onPress={() => { this._onPressUserNamehelp() }}><Icon size={25} style={{flex: 1, alignSelf: 'center', margin: 5, marginTop: 7}} name='help-outline' /></TouchableOpacity></View>
-          <TextInput
-            style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 3, paddingRight: 0, marginRight: 0 }}
+          <View><TouchableOpacity style={{ alignSelf: 'center'}} onPress={() => { this._onPressUserNamehelp() }}><Icon size={25} style={{flex: 1, alignSelf: 'center', textAlignVertical: 'center' }} name='help-outline' /></TouchableOpacity></View>
+          <Input
+            style={{ flex: 3, paddingRight: 0, marginRight: 0 }}
             onEndEditing={(e) => { onValidate(); liveValidation('userName', e.nativeEvent.text) }}
             placeholder={Lang.txt_D11}
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.props.onUsernameTextChange(text)}
             multiline={false} value={username} />
-          <TextInput
+          <Input
             editable={false}
-            style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1, paddingLeft: 0, marginLeft: 0 }}
+            style={{ flex: 1, paddingLeft: 0, marginLeft: 0 }}
             placeholder={username.length > 0 ? postUserName : ''}
             underlineColorAndroid='transparent'
             multiline={false} value={''} />
         </View>
-        <View style={styles.verticalFieldsSpacing} />
-        <HorizontalSpace />
+        <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.horizontalContainer}>
           <View style={[styles.textInputContainer, {flex: 2}]}>
-            <TextInput
-              style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
+            <Input
               onEndEditing={(e) => { onValidate(); liveValidation('postalCode', e.nativeEvent.text) }}
               placeholder={Lang.txt_D14}
               underlineColorAndroid='transparent'
@@ -161,9 +143,8 @@ class RegistrationStepOne extends Component {
           </View>
           <View style={styles.horizontalSpacing} />
           <View style={[styles.textInputContainer, {flex: 1}]}>
-            <TextInput
+            <Input
               keyboardType='numeric'
-              style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
               onEndEditing={(e) => { onValidate(); liveValidation('houseNumber', e.nativeEvent.text) }}
               placeholder={Lang.txt_D13}
               underlineColorAndroid='transparent'
@@ -171,37 +152,19 @@ class RegistrationStepOne extends Component {
               multiline={false} value={house_num} />
           </View>
         </View>
-        <View style={styles.verticalFieldsSpacing} />
+        <Spacer />
         <View style={styles.horizontalContainer}>
           <View style={styles.textInputContainer}>
-            <Text style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1, textAlignVertical: 'center' }}>{registrationStreetName || Lang.txt_D12 }</Text>
-            {/* <TextInput
-              editable={false}
-              style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
-              onEndEditing={(e) => { onValidate() }}
-              placeholder={Lang.txt_D12}
-              underlineColorAndroid='transparent'
-              onChangeText={(text) => this.props.onStreetNameTextChange(text)}
-              multiline={false} value={registrationStreetName} /> */}
+            { registrationStreetName ? <Input value={registrationStreetName} editable={false} /> : <Input value={Lang.txt_D12} editable={false} style={{ color: 'gray' }} /> }
           </View>
           <View style={styles.horizontalSpacing} />
           <View style={styles.textInputContainer}>
-            <Text style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1, textAlignVertical: 'center'  }}>{registrationCity || Lang.txt_D15}</Text>
-            {/* <TextInput
-              editable={false}
-              style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
-              onEndEditing={(e) => { onValidate(); liveValidation('city', e.nativeEvent.text) }}
-              placeholder={Lang.txt_D15}
-              underlineColorAndroid='transparent'
-              onChangeText={(text) => this.props.onCityTextChange(text)}
-              multiline={false} value={registrationCity} /> */}
+            { registrationCity ? <Input value={registrationCity} editable={false} /> : <Input value={Lang.txt_D12} editable={false} style={{ color: 'gray' }} /> }
           </View>
         </View>
-        <HorizontalSpace />
-        <View style={styles.verticalFieldsSpacing} />
+        <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.textInputContainer}>
-          <TextInput
-            style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
+          <Input
             onEndEditing={(e) => { onValidate(); liveValidation('userEmail', e.nativeEvent.text) }}
             placeholder={Lang.txt_D16}
             underlineColorAndroid='transparent'
@@ -210,29 +173,23 @@ class RegistrationStepOne extends Component {
         </View>
         <View style={styles.verticalFieldsSpacing} />
         <View style={styles.textInputContainer}>
-          <TextInput
-            style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
+          <Input
             onEndEditing={(e) => { onValidate(); liveValidation('phoneNumber', e.nativeEvent.text) }}
             placeholder={Lang.txt_D17}
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.props.onMobileTextChange(text)}
             multiline={false} value={mobile_num} />
         </View>
-        <HorizontalSpace />
+        <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.textInputContainer}>
-          <TextInput
-            style={{ height: (Platform.OS === 'ios') ? 30 : 40, flex: 1 }}
+          <Input
             onEndEditing={(e) => { validatePassword(e.nativeEvent.text) }}
             placeholder={Lang.txt_D18}
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.props.onPasswordTextChange(text)}
             multiline={false} value={password} />
         </View>
-        <HorizontalSpace />
-        {/* <View style={styles.textInputContainer}>
-          <LanguageSelection languages={languages} selected={language} onSelectLanguage={this._onClickLanguage.bind(this)} />
-        </View>
-        <HorizontalSpace /> */}
+        <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.textInputContainer}>
           <CheckBox
             style={{alignItems: 'flex-start', flex: 1, paddingBottom: 10}}
@@ -241,26 +198,15 @@ class RegistrationStepOne extends Component {
             onPress={() => this.showTerms()}
           />
         </View>
-        <View style={styles.verticalFieldsSpacing} />
-        <View style={styles.verticalFieldsSpacing} />
-        <View style={styles.verticalFieldsSpacing} />
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          underlayColor='rgba(0,0,0,0.0)'
-          // onPress={finished.step1 ? this.props.onSubmit : this.props.showInvalid}
-          onPress={validate ? onSubmit : showInvalid}>
-          <LinearGradient colors={[validate ? design.button2 : '#a6b2c1', validate ? design.button : '#7f8893']} style={styles.linearGradient}>
-            <Text style={styles.buttonText}>{Lang.txt_D20}</Text>
-          </LinearGradient>{/**  disabled={!finished.step1} */}
-        </TouchableOpacity>
-        <View style={styles.verticalFieldsSpacing} />
+        <Spacer count={2} />
+        <Button active={validate} onPress={onSubmit} onPressDisabled={showInvalid} design={design} title={Lang.txt_D20.toUpperCase()} />
+        <Spacer />
         <TouchableOpacity onPress={() => { gotoLogin() }}>
           <Text style={styles.alreadyuser}>
             {Lang.txt_D19}
           </Text>
         </TouchableOpacity>
-        <Spacer /><Spacer /><Spacer />
-        <Spacer />
+        <Spacer count={4} />
         <Footer show />
       </View>
     )
