@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import { Button, Container, Content } from 'native-base'
+import { Button, Text, View, Container, Content } from 'native-base'
 import { connect } from 'react-redux'
 import HeaderInDrawer from '../../Components/HeaderInDrawer'
 import Styles from './Styles'

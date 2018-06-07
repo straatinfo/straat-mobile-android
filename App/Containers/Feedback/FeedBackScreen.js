@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import { Container, Content, Form, Item, Input } from 'native-base'
+import { TouchableOpacity } from 'react-native'
+import { Container, View, Text, Content, Form, Item, Input } from 'native-base'
 import { connect } from 'react-redux'
 import { Metrics } from '../../Themes'
 import FeedbackActions from '../../Redux/FeedbackRedux'
