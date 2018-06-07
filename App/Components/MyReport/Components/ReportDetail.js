@@ -1,34 +1,24 @@
 import React, { Component } from 'react'
 import {
-  View,
-  Text,
-  Image,
   Dimensions,
   ScrollView,
   StyleSheet,
   TouchableOpacity
 } from 'react-native'
-
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import renderIf from 'render-if'
-import ImageLoad from 'react-native-image-placeholder'
-import BusyIndicator from 'react-native-busy-indicator'
-
-import { connect } from 'react-redux'
-import ReportsActions from './../../../Redux/ReportsRedux'
-import MyReportActions from './../../../Redux/MyReportRedux'
-
+import { Text, View } from 'native-base'
+import { AlertBox, CircleLoader, renderIf } from './../../../Components'
+import { ReportTypes } from './../../../Services/Constant'
 import { GetDate, GetTime } from './../../../Lib/Helper/TimeUtils'
 import { FontSizes, WidthSizes } from './../../../Lib/Common/Constants'
-
 import { GetFullName } from './../../../Transforms/NameUtils'
 import { ReportStatus } from '../../../Services/Constant'
 import { Report } from '../../../Services/ReportDefaults'
-import AlertBox from '../../AlertBox'
-import CircleLoader from '../../CircleLoader'
+import { connect } from 'react-redux'
+import ReportsActions from './../../../Redux/ReportsRedux'
+import MyReportActions from './../../../Redux/MyReportRedux'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import ReportImageHolders from '../../ReportImageHolders'
 
-import { ReportTypes } from './../../../Services/Constant'
 const { width } = Dimensions.get('window')
 const fixColorBorder = '#aaa'
 const fixColor = '#4f555e'
