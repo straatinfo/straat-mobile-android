@@ -1,4 +1,7 @@
 import LinearGradientComponent from 'react-native-linear-gradient'
+import ValidationComponentComponent from 'react-native-form-validator'
+import validatorComponent from 'validator'
+import renderIfComponent from 'render-if'
 
 import AlertBoxComponent from './AlertBox'
 import BannerLogoComponent from './BannerLogo'
@@ -26,3 +29,9 @@ export class LinearGradient extends LinearGradientComponent {}
 export class RowView extends RowViewComponent {}
 
 export class Spacer extends SpacerComponent {}
+
+export const validator = validatorComponent
+
+export const renderIf = renderIfComponent
+
+export class ValidationComponent extends ValidationComponentComponent {}
