@@ -1,7 +1,7 @@
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import { put, call, select } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
-import UserActions, { setTheme, INITIAL_STATE as USER_INITIAL_STATE } from './../Redux/UserRedux'
+import UserActions, { setTheme, INITIAL_STATE as USER_INITIAL_STATE, defualtCoordinate } from './../Redux/UserRedux'
 import { showAlertBox, logStore, AppData } from './../Redux/commonRedux'
 import LanguageActions, { getLanguageState } from './../Redux/LanguageRedux'
 import { changeto } from '../Redux/ScreenRedux'
@@ -23,8 +23,11 @@ export const login = function * (API, action) {
   const language = yield select(getLanguageState)
   const isHasGPS = yield select(isOffGPS)
   const {username, password, navigation, route, params} = action.userpassnavroute
+  const { noLoader, onFailed } = params
   try {
-    yield call(loaderHandler.showLoader, language.txt_C08)
+    if (!noLoader) {
+      yield call(loaderHandler.showLoader, language.txt_C08)
+    }
     const requestedUserAccount = yield call(API.postLogin, { username, password })
     let userWithToken = {}
     if (requestedUserAccount.ok && requestedUserAccount.data.status === 1) {
@@ -66,7 +69,7 @@ export const login = function * (API, action) {
       yield call(AppData.setHost, userHost)  // save host
 
       // initalizse login
-      const {lat, long} = userHost
+      const {lat, long} = userHost || defualtCoordinate
       if (!isHasGPS) {
         if (validator.isLatLong(`${lat},${long}`)) {
           yield put(RepoertsActions.setlogininitReport({lat: lat, long: long}))
@@ -97,7 +100,12 @@ export const login = function * (API, action) {
   } catch (e) {
     __DEV__ && console.log('e.message: ', e)
     yield put(LoginActions.loginFailure(e.message))
-    yield call(showAlertBox, e.message)
+    // run cb from referense
+    if (noLoader) {
+      onFailed()
+    } else {
+      yield call(showAlertBox, e.message)
+    }
   }
   // clean screen
   yield call(loaderHandler.hideLoader)

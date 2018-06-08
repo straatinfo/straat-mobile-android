@@ -24,7 +24,7 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   loadingMessage: {
-    fontSize: 30,
+    fontSize: 20,
     color: '#d1307b',
     textAlign: 'center'
   }

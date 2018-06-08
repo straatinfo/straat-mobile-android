@@ -66,6 +66,10 @@ export const lighten = (p, c0, c1) => {
 }
 
 export const getHostLangauge = (host) => {
+  if (!host) {
+    return Languages.DUTCH
+  }
+  
   const languageSetting = host.language
   if (languageSetting) {
     if (

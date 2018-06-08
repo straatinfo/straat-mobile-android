@@ -64,6 +64,11 @@ export const tempUser = {
   token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YThiNGFmYmFjNThhZDAwMTQxYTM1MmUiLCJpYXQiOjE1MjcxNDA5MTY5OTV9.UDacF19-c8nbabww_8VrYXKZbjpnHTYlImKMviKfhZ0',
   _activeTeam: { _id: 'teamIdSample' }
 }
+
+export const defualtCoordinate = {
+  lat: 53.2729807,
+  long: 5.985930199999999
+}
 /* ------------- Intial State ------------- */
 
 export const INITIAL_STATE = Immutable({

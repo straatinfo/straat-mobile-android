@@ -10,6 +10,7 @@ import Footer from '../Components/Footer'
 import FastImage from 'react-native-fast-image'
 import ReportsActions from './../Redux/ReportsRedux'
 import RootStyles from './Styles/RootContainerStyles'
+import LoginActions from '../Redux/LoginRedux'
 import ScreenActions from './../Redux/ScreenRedux'
 import SplashActions from './../Redux/SplashRedux'
 import SettingActions from './../Redux/SettingRedux'
@@ -49,7 +50,7 @@ class SplashScreen extends React.Component {
       this._processedNext()
     } catch (e) {
       __DEV__ && console.log(e)
-      this.props.changeLoadingMessage('')
+      // this.props.changeLoadingMessage('')
       AlertBox.alert('', Lang.txt_A02, [{text: Lang.txt_A01, onPress: () => this._processedNext()}], { cancelable: false })
     }
   }
@@ -72,10 +73,9 @@ class SplashScreen extends React.Component {
     const { Lang } = this.props
     this.props.changeLoadingMessage(Lang.txt_A03)
 
-    let interval = setInterval(() => {
+    setTimeout(() => {
       this.getLocation()
-      this.props.changeLoadingMessage('')
-      clearInterval(interval)
+      // this.props.changeLoadingMessage('')
     }, 2000)
   }
 
@@ -84,7 +84,15 @@ class SplashScreen extends React.Component {
     const login = await AppData.getLogin()
     const user = JSON.parse(login)
     if (user && user.username && user.password) {
-      return navigation.navigate('Login', {login: true, username: user.username, password: user.password, popup: false})
+      // return navigation.navigate('Login', {login: true, username: user.username, password: user.password, popup: false, noLoader: true})
+      this.props.attemptLogin(user.username, user.password, this.props.navigation, 'NavigationDrawer',
+        {
+          popup: false,
+          noLoader: true,
+          onFailed: () => {
+            this.props.navigation.navigate('Login')
+          }}) // change to dashboard
+      return true
     }
 
     this.props.change(navigation, 'AccessCodeScreen')
@@ -123,7 +131,9 @@ const mapDispatchToProps = dispatch => {
     change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
     reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState)),
     setlogininitReport: (params) => dispatch(ReportsActions.setlogininitReport(params)),
-    settingMergeState: (newState) => dispatch(SettingActions.settingMergeState(newState))
+    settingMergeState: (newState) => dispatch(SettingActions.settingMergeState(newState)),
+    attemptLogin: (username, password, navigation, route, params) => dispatch(LoginActions.loginRequest({username, password, navigation, route, params}))
+
   }
 }
 
