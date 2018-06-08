@@ -6,6 +6,9 @@ import { getUser, getUserHost } from './../Redux/UserRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { ReportTypes, SocketTypes } from '../Services/Constant'
 import { showAlertBox, logStore } from './../Redux/commonRedux'
+import { createReportNotification } from '../Transforms/NotificationHelper'
+import { getAppSetting } from '../Redux/SettingRedux'
+import { localNotification } from '../Services/NotificationService'
 
 const displayNotificationCountOfHisReport = DebugConfig.displayNotificationCountOfHisReport
 
@@ -79,39 +82,38 @@ export const updateByNotification = function * (API, action) {
   try {
     const NotifactionState = yield select(getNotification)
     const user = yield select(getUser)
+    const appSetting = yield select(getAppSetting)
+
     const { source, data: {data: {TYPE, content}} } = action
     let merging = { }
     // notification here
     // this will be refactor some day
     if (source === SocketTypes.RECEIVE_GLOBAL) {
-      if (TYPE && TYPE === SocketTypes.REPORT) {
+      if (TYPE && TYPE === SocketTypes.REPORT && content._reporter._id !== user._id) {
         // process report noti here
         if (content._reportType && content._reportType.code === ReportTypes.PUBLIC_SPACE.code) {
           merging.typeAList = [content, ...NotifactionState.typeAList]
-          if (content._reporter._id !== user._id || displayNotificationCountOfHisReport) {
-            merging.typeCount_A = NotifactionState.typeCount_A + 1
-            merging.countedListA = [...NotifactionState.countedListA, content._id]
-          }
+          merging.typeCount_A = NotifactionState.typeCount_A + 1
+          merging.countedListA = [...NotifactionState.countedListA, content._id]
         }
         if (content._reportType && content._reportType.code === ReportTypes.SAFETY.code) {
           merging.typeBList = [content, ...NotifactionState.typeBList]
-          if (content._reporter._id !== user._id || displayNotificationCountOfHisReport) {
-            merging.typeCount_B = NotifactionState.typeCount_B + 1
-            merging.countedListB = [...NotifactionState.countedListB, content._id]
-          }
+          merging.typeCount_B = NotifactionState.typeCount_B + 1
+          merging.countedListB = [...NotifactionState.countedListB, content._id]
         }
         if (content._reportType && content._reportType.code === ReportTypes.COMMUNICATION.code) {
           merging.typeCList = [content, ...NotifactionState.typeCList]
-          if (content._reporter._id !== user._id || displayNotificationCountOfHisReport) {
-            merging.typeCount_C = NotifactionState.typeCount_C + 1
-            merging.countedListC = [...NotifactionState.countedListC, content._id]
-          }
+          merging.typeCount_C = NotifactionState.typeCount_C + 1
+          merging.countedListC = [...NotifactionState.countedListC, content._id]
         }
+
+        // push notification to device
+        yield call(localNotification, createReportNotification(content), appSetting)
       }
     }
     merging.dataReceive = [...NotifactionState.dataReceive, content || {}]
     yield put(NotificationActions.notificationMerge(merging))
   } catch (e) {
-
+    console.log(e)
   }
 }

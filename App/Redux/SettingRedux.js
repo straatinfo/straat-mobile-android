@@ -1,6 +1,19 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 
+export const notificaitonOption = {
+  autoCancel: true,
+  largeIcon: 'ic_launcher',
+  smallIcon: 'ic_notification',
+  color: 'green',
+  vibrate: true,
+  vibration: 300,
+  title: '',
+  message: '',
+  playSound: true,
+  soundName: 'default'
+}
+
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
@@ -15,7 +28,8 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   hasGPS: false,
-  radius: 0.25
+  radius: 0.25,
+  ...notificaitonOption
 })
 
 /* ------------- Reducers ------------- */
@@ -42,4 +56,13 @@ export const reducer = createReducer(INITIAL_STATE, {
 
 export const isOffGPS = (state) => {
   return state.setting.hasGPS
+}
+
+/**
+ * @param is app using gps or not
+ *
+ */
+
+export const getAppSetting = ({setting}) => {
+  return setting
 }
