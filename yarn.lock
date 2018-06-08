@@ -8159,6 +8159,10 @@ react-native-fast-image@^4.0.14:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-fcm@^15.0.2:
+  version "15.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-15.0.2.tgz#11448c0c494c2b03dcf1d1cf223e8a579f72e743"
+
 react-native-file-uploader@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/react-native-file-uploader/-/react-native-file-uploader-0.0.2.tgz#cfd2c8b52c78a256da59c69beb0cfa5c16530c4e"
