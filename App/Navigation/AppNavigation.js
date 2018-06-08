@@ -26,6 +26,10 @@ import MyTeamScreen            from '../Containers/MyTeam/MyTeamScreen'
 import NavigationDrawer        from './NavigationDrawer'
 // import ReportMap2               from './../Containers/ReportMapScreen'
 
+// test
+import testAccessCode        from './../Components/AccessCode/RegisterAccessCode'
+import NotificationTestScreen        from './../Containers/Notification/NotificationTestScreen'
+
 
 /**
  *
@@ -37,7 +41,7 @@ import NavigationDrawer        from './NavigationDrawer'
 const defaultRoute = {
   headerMode: 'none',
   navigationOptions: { headerStyle: styles.header },
-  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'RegistrationForm'
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'NotificationTest'
 }
 
 // Manifest of possible screens 
@@ -60,13 +64,18 @@ const PrimaryNav = StackNavigator({
   Chat:                { screen: ChatScreen },
   NavigationDrawer:    { screen: NavigationDrawer },
   TestOnly:            { screen: TestOnly },
+  
   // ReportMap2:          { screen: ReportMap2 },
   
   // ReportChat:          { screen: ReportChatScreen },  // not need now
   // TeamChat:            { screen: TeamChatScreen },    // not need now
   // PersonalChat:        { screen: PersonalChatScreen },// not need now
+
+  testAccessCode:            { screen: testAccessCode },
+  NotificationTest:            { screen: NotificationTestScreen },
   
   // TeamList:            { screen: TeamListScreen },
+
   },
   defaultRoute
 )

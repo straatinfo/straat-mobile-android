@@ -46,4 +46,12 @@ export default {
       data: {data: {}, status: 1}
     }
   },
+
+  geReports: (para) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/reports.json')
+    }
+  }
+
 }
