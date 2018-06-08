@@ -62,6 +62,7 @@
     "react-native-maps": "0.20.1",
     "react-native-modal": "^6.0.0",
     "react-native-picker": "4.3.5",
+    "react-native-push-notification": "^3.0.2",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-socket.io-client": "^1.4.8",
     "react-native-spinkit": "^1.1.1",
