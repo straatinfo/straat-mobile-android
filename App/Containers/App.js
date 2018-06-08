@@ -5,6 +5,8 @@ import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 
+import { pushNotifications } from './../Services'
+
 import BusyIndicator from 'react-native-busy-indicator'
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import { setStart } from '../Redux/commonRedux'
@@ -12,7 +14,9 @@ import { Design } from '../Services/Constant'
 
 // create our store
 export const store = createStore()
-console.disableYellowBox = true
+
+pushNotifications.configure()
+
 // set start up something
 // setStart()
 
