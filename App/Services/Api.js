@@ -535,6 +535,18 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+
+  const putFcmToken = ({user: { _id, token }, fcmToken}) => {
+    return api.put('/v1/api/user/fcm',
+      { fcmToken, _user: _id },
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
   // TEAM
   // used by teamsagas
   const getUserTeams = ({user: { _id, token }}) => {
@@ -687,6 +699,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     // user
     postForgotPassword,
     postProfileUploadPhoto,
+    putFcmToken,
 
     // registration API
     postRegisterUser,
