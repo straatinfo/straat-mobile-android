@@ -73,6 +73,7 @@ export const defualtCoordinate = {
 
 export const INITIAL_STATE = Immutable({
   user: __DEV__ ? tempUser : {language: 'nl'},
+  isLogged: false,
   accessCode: null,
   host: {_id: 'testHostId', language: 'nl'},
   hostId: null,
@@ -132,7 +133,8 @@ export const setHostId = (state, { hostId }) => {
 
 export const setCurrentUser = (state, { user }) => {
   return state.merge({
-    user: user
+    user: user,
+    isLogged: true
   })
 }
 
