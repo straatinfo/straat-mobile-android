@@ -13,10 +13,10 @@ import renderIf from 'render-if'
 import styles from './Styles/RootContainerStyles'
 import getTheme from './../Themes/native-base-theme/components'
 import material from './../Themes/native-base-theme/variables/material'
+import PrivateComponent from '../Components/PrivateComponent'
 // import Language from '../Redux/LanguageRedux'
 
 class RootContainer extends Component {
-
   componentDidMount () {
     // if redux persist is not active fire startup action
     if (!ReduxPersist.active) {
@@ -27,13 +27,13 @@ class RootContainer extends Component {
   }
 
   render () {
-    const { loadedLaguage } = this.props
+    const { loadedLaguage, isLogged } = this.props
     return (
       <Root style={styles.applicationView}>
-       
         <StatusBar barStyle='light-content' />
         {renderIf(loadedLaguage)(<StyleProvider style={getTheme(material)}><ReduxNavigation /></StyleProvider>)}
-        {renderIf(!loadedLaguage)(<Text></Text>)}
+        {renderIf(isLogged)(<PrivateComponent />)}
+        {renderIf(!loadedLaguage)(<Text />)}
         <BusyIndicator />
       </Root>
     )
@@ -42,7 +42,8 @@ class RootContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    loadedLaguage: state.language.loadedLaguage
+    loadedLaguage: state.language.loadedLaguage,
+    isLogged: state.user.isLogged
   }
 }
 
