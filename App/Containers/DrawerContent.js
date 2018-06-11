@@ -19,22 +19,22 @@ import MessageActions from './../Redux/MessageRedux'
 class DrawerContent extends Component {
   connection = null
   componentDidMount () {
-    const {_user, token, updateByNotification, messageReceive, convoReceiveMessage, addNotification} = this.props
-    this.connection = CONNECTION.getConnection(_user, token)
-    this.connection.on(SocketTypes.RECEIVE_GLOBAL, (data) => updateByNotification(SocketTypes.RECEIVE_GLOBAL, data))
-    this.connection.on(SocketTypes.RECEIVE_MESSAGE, (data) => {
-   //   console.log('convoReceiveMessage', data)
-      // update conversation list
-      convoReceiveMessage(data)
-      // update current message screenList
-      messageReceive(data)
-      // uopdate notification
-      if (data.payload.user._id !== _user) {
-        __DEV__ && console.log('data', data)
-        addNotification({convo: data.conversation, count: 1})
+  //   const {_user, token, updateByNotification, messageReceive, convoReceiveMessage, addNotification} = this.props
+  //   this.connection = CONNECTION.getConnection(_user, token)
+  //   this.connection.on(SocketTypes.RECEIVE_GLOBAL, (data) => updateByNotification(SocketTypes.RECEIVE_GLOBAL, data))
+  //   this.connection.on(SocketTypes.RECEIVE_MESSAGE, (data) => {
+  //  //   console.log('convoReceiveMessage', data)
+  //     // update conversation list
+  //     convoReceiveMessage(data)
+  //     // update current message screenList
+  //     messageReceive(data)
+  //     // uopdate notification
+  //     if (data.payload.user._id !== _user) {
+  //       __DEV__ && console.log('data', data)
+  //       addNotification({convo: data.conversation, count: 1})
 
-      }
-    })
+  //     }
+  //   })
   }
 
   render () {
