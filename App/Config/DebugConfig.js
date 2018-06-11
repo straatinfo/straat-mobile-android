@@ -8,6 +8,7 @@ export default {
   useReactotron: true,
   displayEpiredReportsInMap: false,
   displayNotificationCountOfHisReport: false,
+  displayNotificationAlertOfHisReport: false,
   displayGoogleMap: true,
   ScreenTest: true
 }

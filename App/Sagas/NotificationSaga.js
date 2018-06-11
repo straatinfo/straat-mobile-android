@@ -12,6 +12,7 @@ import { localNotification } from '../Services/NotificationService'
 
 const displayNotificationCountOfHisReport = DebugConfig.displayNotificationCountOfHisReport
 
+
 export const notifactionRequestTypeA = function * (API, action) {
   const language = yield select(getLanguageState)
   const user = yield select(getUser)
@@ -79,6 +80,7 @@ export function * notifactionRequestTypeC (API, action) {
  */
 
 export const updateByNotification = function * (API, action) {
+  console.log('updateByNotification action', action)
   try {
     const NotifactionState = yield select(getNotification)
     const user = yield select(getUser)
@@ -89,7 +91,7 @@ export const updateByNotification = function * (API, action) {
     // notification here
     // this will be refactor some day
     if (source === SocketTypes.RECEIVE_GLOBAL) {
-      if (TYPE && TYPE === SocketTypes.REPORT && content._reporter._id !== user._id) {
+      if (TYPE && TYPE === SocketTypes.REPORT && (content._reporter._id !== user._id || DebugConfig.displayNotificationAlertOfHisReport)) {
         // process report noti here
         if (content._reportType && content._reportType.code === ReportTypes.PUBLIC_SPACE.code) {
           merging.typeAList = [content, ...NotifactionState.typeAList]
