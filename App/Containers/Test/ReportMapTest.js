@@ -20,30 +20,21 @@ import {
   TabHeading,
   Icon, Badge, Item, Input
 } from 'native-base'
-import MapView from 'react-native-maps'
-import ReportMapContainer from './../Containers/ReportMap/ReportMapContainer'
-import UnderMigration from './../Components/UnderMigration'
-import {drawerData} from './../Navigation/NavigationDrawer'
-import ReportsActions from './../Redux/ReportsRedux'
-import UsersActions from './../Redux/UserRedux'
-/**  styles */
-import styles from './Styles/ReportMapStyle'
+import ReportsActions from './../../Redux/ReportsRedux'
+import UsersActions from './../../Redux/UserRedux'
 // import Images from './../Themes/Images'
-import { Images, Metrics } from './../Themes'
+import { Images, Metrics } from './../../Themes'
 /**  actionsyles */
-import { formatDate } from './../Transforms/DateTransformer'
-import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
-import CenterView from '../Components/CenterView'
+import CenterView from '../../Components/CenterView'
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import * as Animatable from 'react-native-animatable'
 import renderIf from 'render-if'
-import ReportMapFilter from '../Components/ReportDashboard/Components/ReportMapFilter'
-import ReportMapSearch from '../Components/ReportDashboard/Components/ReportMapSearch'
+import ReportMapFilter from '../../Components/ReportDashboard/Components/ReportMapFilter'
+import ReportMapSearch from '../../Components/ReportDashboard/Components/ReportMapSearch'
+import ReportMapSearchItems from '../../Components/ReportDashboard/Components/ReportMapSearchItems';
 
 // import Icon from 'react-native-vector-icons/Ionicons'
 
-class ReportMapScreen extends React.Component {
+class ReportMapTest extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -110,6 +101,10 @@ class ReportMapScreen extends React.Component {
       </TabHeading>
     )
   }
+
+  _mapNavigate (location) {
+__DEV__ && console.log(location)
+  }
   render () {
     /**
      * under migraiotn so this page must only return migration page
@@ -142,9 +137,11 @@ class ReportMapScreen extends React.Component {
             </Button>
           </Right>
         </Header>
-        {renderIf( isOnSearch)(<ReportMapSearch />)}
         {renderIf(!isOnSearch)(<ReportMapFilter />)}
-        <ReportMapContainer {...this.props} />
+        {renderIf(isOnSearch)(<ReportMapSearch />)}
+        <View style={{flex: 1}}>
+          {renderIf(isOnSearch)(<ReportMapSearchItems mapNavigate={this._mapNavigate.bind(this)} />)}
+        </View>
       </Container>
     )
   }
@@ -178,4 +175,4 @@ const mapDispatchToProps = dispatch => {
     reportChangeStatus: (_report) => dispatch(ReportsActions.reportChangeStatus(_report))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ReportMapScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ReportMapTest)

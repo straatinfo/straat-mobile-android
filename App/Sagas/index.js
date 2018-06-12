@@ -40,12 +40,14 @@ import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, team
 import { editUserProfile, uploadUserPhoto, validateUserNameProfile, validateEmailProfile, validatePhoneNumberProfile, validateCityProfile, validatePostalCodeProfile } from './ProfileSaga'
 import { TeamListTypes } from '../Redux/TeamListRedux'
 import { getUserinfo } from './UserinfoSagas';
+import { ReportmapsearchTypes } from '../Redux/ReportmapsearchRedux';
+import { getReportmapsearch } from './ReportmapsearchSagas';
 /* ------------- API ------------- */
 
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
 const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
-const googleAPI = API.googleAPI()
+const googleAPI = DebugConfig.useFixtures ? FixtureAPI : API.googleAPI()
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -136,6 +138,10 @@ export default function * root () {
 
     takeLatest(ProfileTypes.UPLOAD_EDITPROFILE, uploadUserPhoto, api),
 
+    // SEACH IN MAP
+    takeLatest(ReportmapsearchTypes.REPORTMAPSEARCH_REQUEST, getReportmapsearch, api, googleAPI),
+
+    
     // USER INFO PROFILE
 
     takeLatest(UserinfoTypes.USERINFO_REQUEST, getUserinfo, api),

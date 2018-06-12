@@ -45,6 +45,7 @@ import styles from './style'
 import { reportCoordinate, getReportsNearbyRequest } from '../../Redux/ReportsRedux'
 import { cropWH } from '../../Transforms/Cloudinary'
 import DebugConfig from './../../Config/DebugConfig'
+import ReportMapSearchItems from '../../Components/ReportDashboard/Components/ReportMapSearchItems'
 
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
@@ -460,29 +461,45 @@ class ReportMapContainer extends Component {
     }
     return Images.pinNew
   }
+
+  _remapMapMarkerList (reportMapMarkerList, mapFilterCode) {
+    // const {  } = this.props
+
+    return reportMapMarkerList.filter((report) => report._reportType.code === mapFilterCode)
+  }
+
+  _mapNavigate (location) {
+    // this.mapViewToRegion({latitude: location.lat, longitude: location.lng}, 400)
+    this.moveReportCircle({latitude: location.lat, longitude: location.lng})
+    __DEV__ && console.log(location)
+  }
+
   render () {
-    const { reportMergeState, reportState, user, navigation, design, Lang } = this.props
+    const { reportMergeState, reportState, user, navigation, design, Lang, reportMapState: {mapFilterCode}} = this.props
     // console.log('reportState ', reportState)
     const { currentCoordinate, reportPosition, mapState } = this.state
     const calloutOnPress = this.calloutOnClick.bind(this)
     const confirmChangeStatus = this.confirmChangeStatus.bind(this)
+    const mapMarketList = this._remapMapMarkerList(reportState.reportMapMarkerList, mapFilterCode)
+
     const pinImage = this.pinImage
     const heights = this.getHeight()
-    if (!DebugConfig.displayGoogleMap) {
-      return null
-    }
+    // if (!DebugConfig.displayGoogleMap) {
+    //   return null
+    // }
     return (
       <View style={styles.container}>
-        {renderIf(this.state.mapReset === 1)(
+        <ReportMapSearchItems mapNavigate={this._mapNavigate.bind(this)} />
+        {renderIf(this.state.mapReset === 1 && DebugConfig.displayGoogleMap)(
           <MapView
             ref={c => { this.reportMap = c }}
-            style={[styles.map, { height: heights.hmap }]}
-            showsUserLocation={true}
-            followUserLocation={true}
+            style={[styles.map, { height: heights.hmap }, { height: '100%' }]}
+            showsUserLocation
+            followUserLocation
             showsMyLocationButton={false}
             showsCompass={false}
             followsUserLocation={false}
-            loadingEnabled={true}
+            loadingEnabled
             toolbarEnabled={false}
             // zoomEnabled={false}
             rotateEnabled
@@ -527,7 +544,7 @@ class ReportMapContainer extends Component {
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.60)'} />
 
-            { reportState.reportMapMarkerList.length > 0 && reportState.reportMapMarkerList.map(function (marker, index) {
+            { mapMarketList.length > 0 && mapMarketList.map(function (marker, index) {
               return <MapView.Marker
                 coordinate={{ longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
                 // title={''}

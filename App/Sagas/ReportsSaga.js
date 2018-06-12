@@ -76,7 +76,7 @@ export const getReportAddress = function * (API, action) {
   const user = yield select(getUser)
   try {
     // show loader
-    yield call(loaderHandler.showLoader, language.fetching)
+    // yield call(loaderHandler.showLoader, language.fetching)
 
     __DEV__ && console.log('freportsParamss', action)
     const nearestAddress = yield call(API.getAddressByCoordinate, { coordinate })
@@ -93,7 +93,7 @@ export const getReportAddress = function * (API, action) {
     yield call(showAlertBox, e.message)
   }
   // clean screen
-  yield call(loaderHandler.hideLoader)
+  // yield call(loaderHandler.hideLoader)
   // yield call(logStore)
 }
 
