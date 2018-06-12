@@ -46,6 +46,7 @@ import { reportCoordinate, getReportsNearbyRequest } from '../../Redux/ReportsRe
 import { cropWH } from '../../Transforms/Cloudinary'
 import DebugConfig from './../../Config/DebugConfig'
 import ReportMapSearchItems from '../../Components/ReportDashboard/Components/ReportMapSearchItems'
+import ReportCreateStep1 from '../../Components/ReportDashboard/Components/ReportCreateStep1';
 
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
@@ -634,7 +635,7 @@ class ReportMapContainer extends Component {
         {/** because slide menu is so slow i will make alternative for now i will not make it animated: maybe later on */}
         {/** show location with next button */}
         {reportState.isReportFormActive === true && this.state.slidingPanelPage === 'report-location' && <View style={[styles.slideUpMenu, {height: heights.sldeUp, width: width}]}>
-          <ReportStepOne onCancel={this.hideCreateReport} onSubmit={() => this.setState({slidingPanelPage: 'report-type'})} address={reportState.reportAddress} />
+          <ReportCreateStep1 onCancel={this.hideCreateReport} onSubmit={() => this.setState({slidingPanelPage: 'report-type'})} address={reportState.reportAddress} />
           </View>}
         {/** here will select what type of reports */}
         {reportState.isReportFormActive === true && this.state.slidingPanelPage === 'report-type' && <View style={[styles.slideUpMenu, {height: heights.sldeUp, width: width}]}>
