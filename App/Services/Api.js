@@ -101,7 +101,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + reportParams.accessToken
+          'Authorization': 'Bearer ' + reportParams.token
         }
       })
   }
