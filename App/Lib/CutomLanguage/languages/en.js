@@ -182,8 +182,8 @@ export default {
   // I am an individual reporter
   txt_D24: 'I am an individual reporter',
 
-  // I access street info from my bpt
-  txt_D25: 'I access street info from my bpt',
+  // I want happy to join an existing team
+  txt_D25: 'I want happy to join an existing team',
 
   // I want to start a new team
   txt_D26: 'I want to start a new team',
