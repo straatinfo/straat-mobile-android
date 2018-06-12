@@ -321,21 +321,16 @@ export const validatePhoneNumber = function * (API, action) {
     if (!isValidMobileNumber(phoneNumber)) {
       throw new Error(language.invalid + ' ' + language.mobileNumber)
     }
-
-    yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))
-
-    /*
     // validate from backend
-    const validationResult = yield call(API.postConfirmAccessCode, { postalCode })
-    __DEV__ && console.log('userName validationResult', validationResult)
+    const validationResult = yield call(API.postConfirmAccessCode, { phoneNumber })
+    __DEV__ && console.log('phoneNumber validationResult', validationResult)
 
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
-      yield put(UserActions.mergeState({isValidatedPostalCode: true}))
+      yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))
     } else {
-      throw new Error('invalid postal code')
+      throw new Error(language.invalidPhoneNumberM)
     }
-    */
   } catch (e) {
     __DEV__ && console.log(e)
     yield put(UserActions.mergeState({isValidatedPhoneNumber: false}))

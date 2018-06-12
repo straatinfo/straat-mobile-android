@@ -730,6 +730,8 @@ export default {
   /** @description  search */
   _search: 'Search address',
 
+  invalidPhoneNumberM: 'This number is already in use, please enter a different number or contact us through info@straat.info',
+
   /** @description Extra */
   extra: 'Extra'
   

@@ -271,6 +271,21 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
+  /**
+   * @description fetch coordinate from neo
+   * @param { city }
+   */
+  const postValidatePhoneNumber = ({ phoneNumber }) => {
+    return api.post('v1/api/registration/validation',
+      { phoneNumber },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
   const postValidateTeamName = ({ teamName }) => {
     return api.post('v1/api/registration/validation',
       { teamName: teamName },
@@ -707,6 +722,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postValidateUserName,
     postValidatePostalCode,
     postValidateHouseNumber,
+    postValidatePhoneNumber,
     postValidateLocate,
     postValidateTeamName,
     postValidateTeamEmail,

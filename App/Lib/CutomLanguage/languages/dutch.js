@@ -733,6 +733,8 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   /** @description  search */
   _search: 'Zoek adres',
 
+  invalidPhoneNumberM: 'Dit nummer is al in gebruik. Voer een ander nummer in of neem contact op via info@straat.info',
+
   /** @description Extra */
   extra: 'Extra'
 }
