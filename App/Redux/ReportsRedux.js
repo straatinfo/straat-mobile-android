@@ -178,20 +178,20 @@ export const reducer = createReducer(INITIAL_STATE, {
  * @param {*} state
  */
 export const getReportParams = (state) => {
-  const { reports, user: { user } } = state
-  const { accessToken } = user
+  const { reports, user: { user: { _id, _host, token, _activeTeam }, host: { language } } } = state
   console.log('state', state)
   // set first only required
   const reportParams = {
-    _reporter: user._id,
-    _host: user._host,
+    _reporter: _id,
+    _host: _host,
     _reportType: reports.reportType._id,
     reportTypeCode: reports.reportType.code,
     title: reports.reportType.name,
     description: reports.reportDescription,
-    reportUploadedPhotos: reports.reportListImages
+    reportUploadedPhotos: reports.reportListImages,
+    language: language
   }
-
+ 
   let requireInType = {}
   requireInType.teamList = []
 
@@ -204,7 +204,7 @@ export const getReportParams = (state) => {
     if (reports.reportSelectSubCategoryID) {
       requireInType._subCategory = reports.reportSelectSubCategoryID
     }
-    requireInType._team = user._activeTeam._id // pan samantagal lnagto 
+    requireInType._team = _activeTeam._id // pan samantagal lnagto 
     requireInType.isUrgent = reports.reportIsUrgent
     requireInType.location = reports.reportAddress
     requireInType.long = reports.reportCoordinate.longitude
@@ -241,7 +241,7 @@ export const getReportParams = (state) => {
     requireInType.location = ''
     requireInType.teamList = reports.reportTeamSelected
   }
-  return {data: { ...reportParams, ...requireInType }, accessToken, type: reports.reportType.code}
+  return {data: { ...reportParams, ...requireInType }, token, type: reports.reportType.code }
 }
 
 /* ------------- Some methods ------------- */

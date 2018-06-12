@@ -221,10 +221,10 @@ export const submitReport = function * (API, action) {
     const reportParams = yield select(getReportParams)
     __DEV__ && console.log('reportParams', reportParams)
     __DEV__ && console.log('reportParams', JSON.stringify(reportParams))
-    const result = yield call(API.postReport, {reportParams})
+    const result = yield call(API.postReport, { reportParams })
     __DEV__ && console.log(reportParams)
     __DEV__ && console.log('API.postReport', result)
-
+ 
     // status success
     if (result.ok && result.data.status === 1) {
       // yield put(ReportsActions.reportMergeState({reportCategoryList: result.data.data}))
