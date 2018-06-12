@@ -64,7 +64,9 @@ class RegistrationContainer extends React.Component {
       topLogo: { width: Metrics.screenWidth - 40 }
     })
   }
-
+  componentDidMount () {
+    this.props.registerInit()
+  }
   render () {
     return <RegistrationForm {...this.props} />
   }
@@ -116,7 +118,8 @@ const mapDispatchToProps = dispatch => {
     setTeamPhoto: (photo) => dispatch(UserActions.setTeamPhoto(photo)),
     registerRequest: (registrationData, navigation, route) => dispatch(UserActions.registerRequest({registrationData, navigation, route})),
     change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
-    userMergeState: (newState) => dispatch(UserActions.mergeState(newState))
+    userMergeState: (newState) => dispatch(UserActions.mergeState(newState)),
+    registerInit: () => dispatch(UserActions.registerInit())
   }
 }
 

@@ -27,7 +27,8 @@ const { Types, Creators } = createActions({
   userReset: ['params'],
   userChangeRadius: ['radius'],
   updateUser: ['user'],
-  teamlistGetuser: ['user']
+  teamlistGetuser: ['user'],
+  registerInit: ['user']
 })
 
 export const CurrentUserTypes = Types
@@ -117,6 +118,34 @@ export const INITIAL_STATE = Immutable({
   position: null,
   isCoor: false
 })
+
+export const registerInit = (state, action) => {
+  // reset registration here
+  return state.merge({
+    isValidatedUserEmail: false,
+    isValidatedPostalCode: false,
+    isValidatedHouseNumber: false,
+    isValidatedUserName: false,
+    isValidatedTeamName: false,
+    isValidatedTeamEmail: false,
+    isValidatedPhoneNumber: false,
+    isUploadingPhoto: false,
+    filter: {},
+    registrationUserName: '',
+    registrationUserEmail: '',
+    registrationPostalCode: '',
+    registrationHouseNumber: '',
+    registrationStreetName: '',
+    registrationGeoLocation: {},
+    registrationCity: '',
+    registrationTeamName: '',
+    registrationTeamEmail: '',
+    registrationPhoneNumber: '',
+    teamList: [],
+    teamPhotoLocal: {},
+    teamPhotoUploaded: { url: '', secure_url: '' }
+  })
+}
 
 export const setAccessCode = (state, {accessCodeContainer: { accessCode }}) => {
   return state.merge({
@@ -267,6 +296,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.REGISTER_SET_TEAMNAME]: registerSetTeamname,
   [Types.REGISTER_SET_TEAMEMAIL]: registerSetTeamemail,
   [Types.REGISTER_SET_PHONENUMBER]: registerSetPhonenumber,
+  [Types.REGISTER_INIT]: registerInit,
 
   [Types.GET_TEAMLIST]: getTeamlist,
   [Types.SET_TEAM_PHOTO]: setTeamPhoto,
