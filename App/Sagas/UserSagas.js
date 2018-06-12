@@ -169,7 +169,7 @@ export const validateUserName = function * (API, action) {
 
 export const validatePostalCode = function * (API, action) {
   const language = yield select(getLanguageState)
-  const { postalCode } = action
+  const { postalCode, houseNumber } = action
   __DEV__ && console.log('action', action)
   try {
     // show loader
@@ -180,7 +180,7 @@ export const validatePostalCode = function * (API, action) {
       throw new Error(language.invalid + ' ' + language.postalCode)
     }
     yield put(UserActions.mergeState({isValidatedPostalCode: true}))
-     
+
     // validate from backend
     const validationResult = yield call(API.postValidatePostalCode, { postalCode: cleanPostalCode(postalCode) })
     __DEV__ && console.log('userName validationResult', validationResult)
@@ -188,10 +188,12 @@ export const validatePostalCode = function * (API, action) {
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
       yield put(UserActions.mergeState({isValidatedPostalCode: true}))
+      if (houseNumber) {
+        yield put(UserActions.registerSetHouseNumber(postalCode, houseNumber)) // updating hause number
+      }
     } else {
       throw new Error(language.invalid + ' ' + language.postalCode)
     }
-    
   } catch (e) {
     __DEV__ && console.log(e)
     yield put(UserActions.mergeState({isValidatedPostalCode: false}))
@@ -230,7 +232,7 @@ export const validateHousenumber = function * (API, action) {
         registrationPostalCode: postalCode,
         registrationStreetName: streetName,
         isValidatedHouseNumber: true
-      })) 
+      }))
     } else if (validationResult.ok && validationResult.data.status === 0) {
       if (validationResult.data.data && validationResult.data.data.error) {
         throw new Error(validationResult.data.data.error)

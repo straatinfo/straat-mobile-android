@@ -13,7 +13,7 @@ const { Types, Creators } = createActions({
   registerFailure: ['error'],
   registerSetUsername: ['userName', 'primeUserName'],                        // usrname = username + postUserName, primeUserName = userName only
   registerSetEmail: ['userEmail'],
-  registerSetPostalcode: ['postalCode'],
+  registerSetPostalcode: ['houseNumber', 'postalCode'],
   registerSetHouseNumber: ['postalCode', 'houseNumber'],
   registerSetCity: ['city'],
   registerSetPhonenumber: ['phoneNumber'],

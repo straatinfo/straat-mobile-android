@@ -106,7 +106,7 @@ const mapDispatchToProps = dispatch => {
   return {
     registerSetUsername: (userName, primeUserName) => dispatch(UserActions.registerSetUsername(userName, primeUserName)),
     registerSetEmail: (userEmail) => dispatch(UserActions.registerSetEmail(userEmail)),
-    registerSetPostalcode: (postalCode) => dispatch(UserActions.registerSetPostalcode(postalCode)),
+    registerSetPostalcode: (houseNumber, postalCode) => dispatch(UserActions.registerSetPostalcode(houseNumber, postalCode)),
     registerSetHouseNumber: (postalCode, houseNumber) => dispatch(UserActions.registerSetHouseNumber(postalCode, houseNumber)),
     registerSetCity: (city) => dispatch(UserActions.registerSetCity(city)),
     registerSetPhonenumber: (phoneNumber) => dispatch(UserActions.registerSetPhonenumber(phoneNumber)),
