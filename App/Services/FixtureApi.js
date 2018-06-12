@@ -52,6 +52,12 @@ export default {
       ok: true,
       data: require('../Fixtures/reports.json')
     }
-  }
+  },
 
+  getSearchInMap: (para) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/reportMapSearchResult.json')
+    }
+  }
 }
