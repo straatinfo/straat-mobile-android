@@ -241,16 +241,18 @@ export const submitReport = function * (API, action) {
       }
 
       // send socket notification
-      const socketConnection = CONNECTION.getConnection(_id, token)
-      if (reportParams.type !== 'C') {
-        socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: data})
-      } else if (reportParams.type === 'C') {
-        data.success.map(report => {
-          socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: report})
-        })
-      } else {
-        console.log('no noti to')
-      }
+      // shift to backend
+      // const socketConnection = CONNECTION.getConnection(_id, token)
+      // if (reportParams.type !== 'C') {
+      //   socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: data})
+      // } else if (reportParams.type === 'C') {
+      //   data.success.map(report => {
+      //     socketConnection.emit(SocketTypes.SEND_GLOBAL, {TYPE: 'REPORT', content: report})
+      //   })
+      // } else {
+      //   console.log('no noti to')
+      // }
+
     } else if (result.ok && result.data.status === 0) {
       throw new Error(result.data.data.error) // success sending but error on something
     } else {

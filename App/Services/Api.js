@@ -357,7 +357,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getCategories = (reportParams) => {
     // console.log('photo on API', data)
     // un used
-    return api.get('v1/api/category/mainCategory/withGeneral/hostId/' + reportParams._host,
+    return api.get('v1/api/category/app/mainCategory/withGeneral/hostId/' + reportParams._host,
       {language: reportParams.language},
       {
         headers: {
@@ -370,7 +370,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
 
   const getCategoriesGeneral = (reportParams) => {
     __DEV__ && console.log('getting general cat: ', reportParams)
-    return api.get('v1/api/category/mainCategory/general',
+    return api.get('v1/api/category/app/mainCategory/general',
       { code: 'ABC', language: reportParams.language },
       {
         headers: {
