@@ -727,6 +727,12 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   /** @description Position Error */
   posistionError: 'Positiefout',
 
+  /** @description  map */
+  map: 'Kaart',
+
+  /** @description  search */
+  _search: 'Zoek adres',
+
   /** @description Extra */
   extra: 'Extra'
 }

@@ -724,6 +724,12 @@ export default {
   /** @description Position Error */
   posistionError: 'Position Error',
 
+  /** @description  map */
+  map: 'Map',
+
+  /** @description  search */
+  _search: 'Search address',
+
   /** @description Extra */
   extra: 'Extra'
   
