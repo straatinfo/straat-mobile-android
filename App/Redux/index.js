@@ -28,6 +28,9 @@ export const reducers = combineReducers({
   feedback: require('./FeedbackRedux').reducer,
   userProfile: require('./ProfileRedux').reducer,
   userinfo: require('./UserinfoRedux').reducer,
+  reportMap: require('./ReportMapRedux').reducer,
+  reportmapsearch: require('./ReportmapsearchRedux').reducer,
+  
   socket: require('./SocketRedux').reducer
 })
 

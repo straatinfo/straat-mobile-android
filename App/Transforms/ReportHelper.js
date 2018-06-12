@@ -183,3 +183,37 @@ export const sortCategories = (categoriesList) => {
 
   return categories
 }
+
+export const getReportTypesFilterSelect = (Lang) => {
+  return [
+    {
+      name: Lang.publicSpace,
+      code: 'A'
+    },
+    {
+      name: Lang.suspiciousSituation,
+      code: 'B'
+    }
+  ]
+}
+
+const addressRemoveLastText = (text = '') => {
+  const t = text.split(',')
+  t.pop()
+  return t.join(',')
+}
+
+export const formatMapSearchResult = (payload) => {
+  return payload.results.map(
+    d => {
+      return {
+        _id: d.place_id,
+        title: d.name,
+        subTitle: addressRemoveLastText(d.formatted_address),
+        icon: d.icon,
+        location: d.geometry.location
+      }
+    }
+  )
+
+}

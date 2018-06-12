@@ -283,3 +283,13 @@ export const processReport = (reportParams = {}) => {
 export const getReportMapMarkerList = (state) => {
   return state.reports.reportMapMarkerList
 }
+
+/**
+ *
+ * @description getReportMapMarkerList
+ * @param state
+ *
+ */
+export const getUserPosition = (state) => {
+  return state.reports.userPosition
+}

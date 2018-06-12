@@ -15,7 +15,10 @@ import {
   Left,
   Right,
   Body,
-  Icon, Badge
+  Tabs,
+  Tab,
+  TabHeading,
+  Icon, Badge, Item, Input
 } from 'native-base'
 import MapView from 'react-native-maps'
 import ReportMapContainer from './../Containers/ReportMap/ReportMapContainer'
@@ -31,7 +34,12 @@ import { Images, Metrics } from './../Themes'
 import { formatDate } from './../Transforms/DateTransformer'
 import { onloginPopUp, getApprovedTeamList } from './../Transforms/Filters'
 import CenterView from '../Components/CenterView'
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import * as Animatable from 'react-native-animatable'
+import renderIf from 'render-if'
+import ReportMapFilter from '../Components/ReportDashboard/Components/ReportMapFilter'
+import ReportMapSearch from '../Components/ReportDashboard/Components/ReportMapSearch'
 
 // import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -39,7 +47,8 @@ class ReportMapScreen extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      visibleHeight: Metrics.screenHeight
+      visibleHeight: Metrics.screenHeight,
+      onSearch: false
     }
   }
   keyboardDidShowListener = {};
@@ -93,6 +102,14 @@ class ReportMapScreen extends React.Component {
     })
   }
 
+  _renderHeaederNotifIcon (title, count) {
+    return (
+      <TabHeading>
+        <Title style={{color: 'white'}}>{title}</Title>
+        {count > 0 ? <Badge style={{alignContent: 'center', justifyContent: 'center'}}><Title style={{color: 'white'}}>{count}</Title></Badge> : null}
+      </TabHeading>
+    )
+  }
   render () {
     /**
      * under migraiotn so this page must only return migration page
@@ -105,11 +122,11 @@ class ReportMapScreen extends React.Component {
     __DEV__ && console.log('this.props', this.props)
     __DEV__ && console.log(this.props.userState._teamActive)
     const { design,
-      countedListA, countedListB, countedListC, chatCount } = this.props
+      countedListA, countedListB, countedListC, chatCount, reportMapState: {isOnSearch} } = this.props
     const notificationCount = countedListA + countedListB + countedListC + chatCount
     return (
       <Container>
-        <Header style={{ height: 40, backgroundColor: design.header }}>
+        <Header style={{ height: 40, backgroundColor: design.header }} >
           <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.navigate('MyNotification')}>
               <Icon name='md-chatbubbles' />
@@ -125,6 +142,8 @@ class ReportMapScreen extends React.Component {
             </Button>
           </Right>
         </Header>
+        {renderIf( isOnSearch)(<ReportMapSearch />)}
+        {renderIf(!isOnSearch)(<ReportMapFilter />)}
         <ReportMapContainer {...this.props} />
       </Container>
     )
@@ -144,6 +163,8 @@ const mapStateToProps = state => {
     countedListB: state.notification.countedListB.length,
     countedListC: state.notification.countedListC.length,
     chatCount: state.notification.chatCount,
+    reportMapState: state.reportMap,
+    
     Lang: state.language.Languages
   }
 }

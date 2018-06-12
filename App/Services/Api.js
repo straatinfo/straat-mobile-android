@@ -782,8 +782,27 @@ const googleAPI = (baseURL = AppConfig.url.GOOGLEAPIS) => {
         }
       })
   }
+
+  const getSearchInMap = ({ text, coordinate, radius }) => {
+    console.log('getAddressByCoordinate', coordinate)
+    return api.get('maps/api/place/textsearch/json',
+      {
+        location: '' + coordinate.latitude + ',' + coordinate.longitude,
+        query: text,
+        radius: radius,
+        key: AppConfig.keys.GOOGLE_MAP_KEY
+      },
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+ 
   return {
-    getAddressByCoordinate
+    getAddressByCoordinate,
+    getSearchInMap
   }
 }
 
