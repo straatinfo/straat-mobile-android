@@ -1,0 +1,30 @@
+note: fb-06-10-18
+3.1: changing postal code while already have house number: done -->
+3.2: registration phone number existing validation: done -->
+3.3: registration change option caption in team: done -->
+
+3.4: registraion reset state when new: done -->
+3.5: changePassword <--
+3.6: teamName user names, number: done -->
+
+4.1: done -->
+4.2: need clarification: tell what must be done
+4.2.3: problem in logic: 
+4.3: socket live notifcation to map: need to test this again ---
+4.4: team selection: 'malabo pa sa sabaw ng pusit'
+4.5: categories in C: maybe in db  must checkout to db <-- 
+4.6: language of report viewer: done -->
+4.7: after create report- newly report must show its infoblock: done -->
+4.8: team name on report email to host: done -->
+4.9: subject to nieuwe melding openbare ruimte: done -->
+4.10: team name on report email to host: done -->
+4.11: team email on report email to host: done -->
+
+5: socket re implement : need to test this again ---
+
+6.1 currently working:  need to test this again ---
+
+<-- = 'working: ongoing'
+--> = 'done: test on new relesse'
+
+--- = 'test again'
