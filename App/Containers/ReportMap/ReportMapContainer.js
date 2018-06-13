@@ -46,7 +46,7 @@ import { reportCoordinate, getReportsNearbyRequest } from '../../Redux/ReportsRe
 import { cropWH } from '../../Transforms/Cloudinary'
 import DebugConfig from './../../Config/DebugConfig'
 import ReportMapSearchItems from '../../Components/ReportDashboard/Components/ReportMapSearchItems'
-import ReportCreateStep1 from '../../Components/ReportDashboard/Components/ReportCreateStep1';
+import ReportCreateStep1 from '../../Components/ReportDashboard/Components/ReportCreateStep1'
 
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
@@ -64,6 +64,7 @@ const thankYouMessage = 'Thank you for your report! From now on everybody can se
 const ZERO = 0
 
 class ReportMapContainer extends Component {
+  reportMarkers = {}
   constructor (props) {
     super(props)
 
@@ -236,7 +237,15 @@ class ReportMapContainer extends Component {
 
     setReportAddressByCoordinate(currentCoordinate)
   }
-  submitReport () {
+
+  submitReport (pinRef) {
+    if (!pinRef) {
+      return true
+    }
+    // console.log('this.reportMarkers', this.reportMarkers)
+    if (this.reportMarkers['M' + pinRef]) {
+      setTimeout(() => this.reportMarkers['M' + pinRef].showCallout(), 1500)
+    }
   }
 
   onReportTypeSelect (value) {
@@ -545,8 +554,9 @@ class ReportMapContainer extends Component {
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.60)'} />
 
-            { mapMarketList.length > 0 && mapMarketList.map(function (marker, index) {
+            { mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
               return <MapView.Marker
+                ref={m => { this.reportMarkers['M' + marker._id] = m }}
                 coordinate={{ longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
                 // title={''}
                 image={pinImage(marker.status)}
@@ -653,7 +663,6 @@ class ReportMapContainer extends Component {
             navigation={navigation}
             />
           </View>}
-
         {/** crate report button */}
         {renderIf(this.state.slideMenuUp === true && reportState.isReportFormActive === false)(
           <View style={[ styles.txt_E10_container, { ...this.state.txt_e10Height, width: '90%' } ]}>

@@ -18,7 +18,8 @@ const { Types, Creators } = createActions({
   reportMergeState: ['newState'],
   reportChangeStatus: ['report'],
   reportReset: ['params'],
-  setlogininitReport: ['params']
+  setlogininitReport: ['params'],
+  reportCreatesuccess: ['reportsParams']
 
 })
 export const ReportsTypes = Types
@@ -143,6 +144,10 @@ export const reportSubmit = (state, { reportParams }) => {
   return state
 }
 
+export const reportCreatesuccess = (state, { reportParams }) => {
+  return state.merge({reportCoordinate: {...state.reportCoordinate, ...state.userPosition}})
+}
+
 export const reportChangeStatus = (state, { _report }) => {
   return state
 }
@@ -163,7 +168,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPLOAD_PHOTO]: uploadPhoto,
   [Types.ADD_REPORT_PHOTO]: addReportPhoto,
   [Types.REPORT_SUBMIT]: reportSubmit,
-
+  [Types.REPORT_CREATESUCCESS]: reportCreatesuccess,
+  
   [Types.REPORT_CHANGE_STATUS]: reportChangeStatus,
   [Types.REPORT_MERGE_STATE]: reportMergeState,
   [Types.REPORT_RESET]: reportReset,
