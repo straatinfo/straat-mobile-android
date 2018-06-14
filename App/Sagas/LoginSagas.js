@@ -23,7 +23,7 @@ export const login = function * (API, action) {
   const language = yield select(getLanguageState)
   const isHasGPS = yield select(isOffGPS)
   const {username, password, navigation, route, params} = action.userpassnavroute
-  const { noLoader, onFailed } = params
+  const { noLoader, onFailed } = params || { noLoader: false, onFailed: () => {} }
   try {
     if (!noLoader) {
       yield call(loaderHandler.showLoader, language.txt_C08)
@@ -50,7 +50,7 @@ export const login = function * (API, action) {
 
       yield call(AppData.setUserInfo, userWithToken)
 
-      // set user info to states for fast retrieving
+      // set user info to states for fast retrievinggs
       yield put(UserActions.setCurrentUser(userWithToken))
 
       // save to global for faster access to use account
