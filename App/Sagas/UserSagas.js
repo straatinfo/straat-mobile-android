@@ -327,7 +327,7 @@ export const validatePhoneNumber = function * (API, action) {
 
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
-      yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))      
+      yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))
     } else {
       throw new Error(language.invalidPhoneNumberM)
     }
@@ -493,6 +493,8 @@ export const uploadTeamPhoto = function * (API, action) {
     // status success
     if (result.ok && result.data.status === 1) {
       yield put(UserActions.mergeState({teamPhotoUploaded: result.data.data}))
+    } else if (!result.ok && result.problem === 'TIMEOUT_ERROR') {
+      throw new Error(language.networkError)
     } else {
       throw new Error(language.uploading + ' ' + language.failed)
     }
