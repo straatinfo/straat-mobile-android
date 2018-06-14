@@ -124,7 +124,7 @@ class RegistrationStepOne extends Component {
             multiline={false} value={username} />
           <Input
             editable={false}
-            style={{ flex: 1, paddingLeft: 0, marginLeft: 0 }}
+            style={{ flex: 2, paddingLeft: 0, marginLeft: 0 }}
             placeholder={username.length > 0 ? postUserName : ''}
             underlineColorAndroid='transparent'
             multiline={false} value={''} />
