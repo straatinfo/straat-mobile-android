@@ -211,7 +211,7 @@ class RegistrationForm extends ValidationComponent {
     }
 
     this.setState({status: 'secondstep'})
-    this.setState({finished: {...this.state.finished, step1: true, step2: true}})
+    this.setState({finished: {...this.state.finished, step1: true, step2: true}, validation: {...this.state.validation, personalDataForm: true}})
   }
 
   registerAccount () {
@@ -612,7 +612,7 @@ class RegistrationForm extends ValidationComponent {
 
     if (key === 'postalCode') {
       __DEV__ && console.log('liveValidate postalCode', value)
-      this.props.registerSetPostalcode(value)
+      this.props.registerSetPostalcode(this.state.house_num, value)
     }
 
     if (key === 'houseNumber') {

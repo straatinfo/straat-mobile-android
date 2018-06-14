@@ -26,7 +26,7 @@ import ReportsActions from './../../../Redux/ReportsRedux'
 import { showAlertBox, showAlertBoxWithTitle } from '../../../Redux/commonRedux'
 import HorizontalSelection from '../Components/HorizontalSelection'
 import { ReportTypes } from '../../../Services/Constant'
-import { sortCategories } from '../../../Transforms/ReportHelper';
+import { sortCategories } from '../../../Transforms/ReportHelper'
 
 /**
  *  maybe i should rework this module later, this module works by pass dev
@@ -157,7 +157,7 @@ class ReportStepThree extends Component {
    // submit report
     if (this.validate()) {
       console.log('submit')
-      this.props.reportSubmit({ callback: () => this.props.onCancel() })
+      this.props.reportSubmit({ callback: (pinRef) => { this.props.onCancel(); this.props.onReportSubmit(pinRef) } })
     }
   }
   _onSlectPersonInvolve (value) {

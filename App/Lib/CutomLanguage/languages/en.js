@@ -182,8 +182,8 @@ export default {
   // I am an individual reporter
   txt_D24: 'I am an individual reporter',
 
-  // I access street info from my bpt
-  txt_D25: 'I access street info from my bpt',
+  // I want happy to join an existing team
+  txt_D25: 'I want happy to join an existing team',
 
   // I want to start a new team
   txt_D26: 'I want to start a new team',
@@ -494,6 +494,9 @@ export default {
   /** @description type B Suspicious situation */
   suspiciousSituation: 'Suspicious Situation',
 
+  /** @description type B Suspicious situation */
+  allReports: 'All Reports',
+
   /** @description type C Messages */
   messages: 'Messages',
 
@@ -729,6 +732,8 @@ export default {
 
   /** @description  search */
   _search: 'Search address',
+
+  invalidPhoneNumberM: 'This number is already in use, please enter a different number or contact us through info@straat.info',
 
   /** @description Extra */
   extra: 'Extra'

@@ -46,6 +46,7 @@ import { reportCoordinate, getReportsNearbyRequest } from '../../Redux/ReportsRe
 import { cropWH } from '../../Transforms/Cloudinary'
 import DebugConfig from './../../Config/DebugConfig'
 import ReportMapSearchItems from '../../Components/ReportDashboard/Components/ReportMapSearchItems'
+import ReportCreateStep1 from '../../Components/ReportDashboard/Components/ReportCreateStep1'
 
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
@@ -63,6 +64,7 @@ const thankYouMessage = 'Thank you for your report! From now on everybody can se
 const ZERO = 0
 
 class ReportMapContainer extends Component {
+  reportMarkers = {}
   constructor (props) {
     super(props)
 
@@ -235,7 +237,15 @@ class ReportMapContainer extends Component {
 
     setReportAddressByCoordinate(currentCoordinate)
   }
-  submitReport () {
+
+  submitReport (pinRef) {
+    if (!pinRef) {
+      return true
+    }
+    // console.log('this.reportMarkers', this.reportMarkers)
+    if (this.reportMarkers['M' + pinRef]) {
+      setTimeout(() => this.reportMarkers['M' + pinRef].showCallout(), 1500)
+    }
   }
 
   onReportTypeSelect (value) {
@@ -263,7 +273,7 @@ class ReportMapContainer extends Component {
   }
 
   hideCreateReport () {
-    const { reportMergeState } = this.props
+    const { reportMergeState, reportCreatesuccess } = this.props
     this.setState({slidingPanelPage: 'report-location', slideMenuUp: true})
     reportMergeState({isReportFormActive: false})
     // this._panel.transitionTo(0)
@@ -290,6 +300,7 @@ class ReportMapContainer extends Component {
       is_person_involved: 0,
       person_involved_num: 0
     })
+    reportCreatesuccess()
   }
 
   showCreateReport () {
@@ -465,7 +476,7 @@ class ReportMapContainer extends Component {
   _remapMapMarkerList (reportMapMarkerList, mapFilterCode) {
     // const {  } = this.props
 
-    return reportMapMarkerList.filter((report) => report._reportType.code === mapFilterCode)
+    return reportMapMarkerList.filter((report) => mapFilterCode.indexOf(report._reportType.code) >= 0)
   }
 
   _mapNavigate (location) {
@@ -544,8 +555,9 @@ class ReportMapContainer extends Component {
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.60)'} />
 
-            { mapMarketList.length > 0 && mapMarketList.map(function (marker, index) {
+            { mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
               return <MapView.Marker
+                ref={m => { this.reportMarkers['M' + marker._id] = m }}
                 coordinate={{ longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
                 // title={''}
                 image={pinImage(marker.status)}
@@ -634,7 +646,7 @@ class ReportMapContainer extends Component {
         {/** because slide menu is so slow i will make alternative for now i will not make it animated: maybe later on */}
         {/** show location with next button */}
         {reportState.isReportFormActive === true && this.state.slidingPanelPage === 'report-location' && <View style={[styles.slideUpMenu, {height: heights.sldeUp, width: width}]}>
-          <ReportStepOne onCancel={this.hideCreateReport} onSubmit={() => this.setState({slidingPanelPage: 'report-type'})} address={reportState.reportAddress} />
+          <ReportCreateStep1 onCancel={this.hideCreateReport} onSubmit={() => this.setState({slidingPanelPage: 'report-type'})} address={reportState.reportAddress} />
           </View>}
         {/** here will select what type of reports */}
         {reportState.isReportFormActive === true && this.state.slidingPanelPage === 'report-type' && <View style={[styles.slideUpMenu, {height: heights.sldeUp, width: width}]}>
@@ -652,7 +664,6 @@ class ReportMapContainer extends Component {
             navigation={navigation}
             />
           </View>}
-
         {/** crate report button */}
         {renderIf(this.state.slideMenuUp === true && reportState.isReportFormActive === false)(
           <View style={[ styles.txt_E10_container, { ...this.state.txt_e10Height, width: '90%' } ]}>

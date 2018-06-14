@@ -183,8 +183,8 @@ export default {
   // Ik ben een individuele melder
   txt_D24: 'Ik ben een individuele melder',
 
-  // I access street info from my bpt
-  txt_D25: 'Ik wil toegang tot straat.info van mijn bpt',
+  // I want happy to join an existing team
+  txt_D25: 'Ik wil graag bij een bestaand team',
 
   // I want to start a new team
   txt_D26: 'Ik wil een nieuw team starten',
@@ -471,6 +471,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   /** @description type B Suspicious Situation */
   suspiciousSituation: 'Verdachte Situatie',
 
+  /** @description type B Suspicious situation */
+  allReports: 'Alle Rapporten',
+
   /** @description type C Messages */
   messages: 'Berichten',
 
@@ -733,7 +736,8 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   /** @description  search */
   _search: 'Zoek adres',
 
+  invalidPhoneNumberM: 'Dit nummer is al in gebruik. Voer een ander nummer in of neem contact op via info@straat.info',
+
   /** @description Extra */
   extra: 'Extra'
 }
-

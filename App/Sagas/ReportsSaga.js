@@ -221,10 +221,10 @@ export const submitReport = function * (API, action) {
     const reportParams = yield select(getReportParams)
     __DEV__ && console.log('reportParams', reportParams)
     __DEV__ && console.log('reportParams', JSON.stringify(reportParams))
-    const result = yield call(API.postReport, {reportParams})
+    const result = yield call(API.postReport, { reportParams })
     __DEV__ && console.log(reportParams)
     __DEV__ && console.log('API.postReport', result)
-
+ 
     // status success
     if (result.ok && result.data.status === 1) {
       // yield put(ReportsActions.reportMergeState({reportCategoryList: result.data.data}))
@@ -233,13 +233,14 @@ export const submitReport = function * (API, action) {
       } else {
         popUpAlertV2(language.txt_J27, language.txt_J28ab)
       }
-      params.callback()
       const data = result.data.data
       const pointList = yield select(getReportMapMarkerList)
       if (reportParams.type !== 'C') {
         yield put(ReportsActions.reportMergeState({reportMapMarkerList: [...pointList, data]}))
+        yield put(ReportsActions.reportCreatesuccess(params))
       }
 
+      params.callback(data._id)
       // send socket notification
       // shift to backend
       // const socketConnection = CONNECTION.getConnection(_id, token)

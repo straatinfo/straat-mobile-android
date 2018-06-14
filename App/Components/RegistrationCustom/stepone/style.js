@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     backgroundColor: 'transparent'
   },
+  input: {fontSize: 12},
   alreadyuser: {
     fontSize: 20,
     color: '#96acc7',

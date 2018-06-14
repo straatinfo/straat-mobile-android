@@ -1,4 +1,5 @@
 import { takeLatest, all } from 'redux-saga/effects'
+return API from '../Services/Api'
 import API from '../Services/Api'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
@@ -59,7 +60,7 @@ export default function * root () {
 
     /**             LOGIN             */
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
-    takeLatest(StartupTypes.STARTUP, startup),
+    takeLatest(StartupTypes.STARTUPa, startup),
     takeLatest(StartupTypes.CONFIGURE_APP, configureApp),
     takeLatest(ScreenTypes.CHANGE, change),
 

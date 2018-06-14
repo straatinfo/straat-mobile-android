@@ -101,7 +101,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + reportParams.accessToken
+          'Authorization': 'Bearer ' + reportParams.token
         }
       })
   }
@@ -263,6 +263,21 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const postValidateLocate = ({ city, coordinate, isCoor}) => {
     return api.post('v1/api/registration/validation',
       { city, coordinate, isCoor },
+      {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+  }
+
+  /**
+   * @description fetch coordinate from neo
+   * @param { city }
+   */
+  const postValidatePhoneNumber = ({ phoneNumber }) => {
+    return api.post('v1/api/registration/validation',
+      { phoneNumber },
       {
         headers: {
           Accept: 'application/json',
@@ -707,6 +722,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postValidateUserName,
     postValidatePostalCode,
     postValidateHouseNumber,
+    postValidatePhoneNumber,
     postValidateLocate,
     postValidateTeamName,
     postValidateTeamEmail,
