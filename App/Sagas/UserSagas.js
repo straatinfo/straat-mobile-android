@@ -322,12 +322,12 @@ export const validatePhoneNumber = function * (API, action) {
       throw new Error(language.invalid + ' ' + language.mobileNumber)
     }
     // validate from backend
-    const validationResult = yield call(API.postConfirmAccessCode, { phoneNumber })
+    const validationResult = yield call(API.postValidatePhoneNumber, { phoneNumber })
     __DEV__ && console.log('phoneNumber validationResult', validationResult)
 
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
-      yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))
+      yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))      
     } else {
       throw new Error(language.invalidPhoneNumberM)
     }
