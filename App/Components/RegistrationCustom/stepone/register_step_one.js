@@ -97,6 +97,7 @@ class RegistrationStepOne extends Component {
         <Spacer />
         <View style={styles.textInputContainer}>
           <Input
+            style={styles.input}
             onEndEditing={(e) => { onValidate() }}
             placeholder={Lang.txt_D09}
             underlineColorAndroid='transparent'
@@ -106,6 +107,7 @@ class RegistrationStepOne extends Component {
         <Spacer />
         <View style={styles.textInputContainer}>
           <Input
+            style={styles.input}
             onEndEditing={(e) => { onValidate() }}
             placeholder={Lang.txt_D10}
             underlineColorAndroid='transparent'
@@ -116,7 +118,7 @@ class RegistrationStepOne extends Component {
         <View style={styles.textInputContainer}>
           <View><TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => { this._onPressUserNamehelp() }}><Icon size={25} style={{ flex: 1, alignSelf: 'center', textAlignVertical: 'center' }} name='help-outline' /></TouchableOpacity></View>
           <Input
-            style={{ flex: 3, paddingRight: 0, marginRight: 0 }}
+            style={[styles.input, { flex: 3, paddingRight: 0, marginRight: 0 }]}
             onEndEditing={(e) => { onValidate(); liveValidation('userName', e.nativeEvent.text) }}
             placeholder={Lang.txt_D11}
             underlineColorAndroid='transparent'
@@ -124,7 +126,7 @@ class RegistrationStepOne extends Component {
             multiline={false} value={username} />
           <Input
             editable={false}
-            style={{ flex: 2, paddingLeft: 0, marginLeft: 0 }}
+            style={[styles.input, { flex: 2, paddingLeft: 0, marginLeft: 0 }]}
             placeholder={username.length > 0 ? postUserName : ''}
             underlineColorAndroid='transparent'
             multiline={false} value={''} />
@@ -133,6 +135,7 @@ class RegistrationStepOne extends Component {
         <View style={styles.horizontalContainer}>
           <View style={[styles.textInputContainer, {flex: 2}]}>
             <Input
+              style={[styles.input]}
               onEndEditing={(e) => { onValidate(); liveValidation('postalCode', e.nativeEvent.text) }}
               placeholder={Lang.txt_D14}
               underlineColorAndroid='transparent'
@@ -142,6 +145,7 @@ class RegistrationStepOne extends Component {
           <View style={styles.horizontalSpacing} />
           <View style={[styles.textInputContainer, {flex: 1}]}>
             <Input
+              style={[styles.input]}
               keyboardType='numeric'
               onEndEditing={(e) => { onValidate(); liveValidation('houseNumber', e.nativeEvent.text) }}
               placeholder={Lang.txt_D13}
@@ -153,16 +157,18 @@ class RegistrationStepOne extends Component {
         <Spacer />
         <View style={styles.horizontalContainer}>
           <View style={styles.textInputContainer}>
-            { registrationStreetName ? <Input value={registrationStreetName} editable={false} /> : <Input value={Lang.txt_D12} editable={false} style={{ color: 'gray' }} /> }
+            { registrationStreetName ? <Input value={registrationStreetName} editable={false} /> : <Input value={Lang.txt_D12} editable={false} style={[styles.input, { color: 'gray' }]} /> }
           </View>
           <View style={styles.horizontalSpacing} />
           <View style={styles.textInputContainer}>
-            { registrationCity ? <Input value={registrationCity} editable={false} /> : <Input value={Lang.txt_D12} editable={false} style={{ color: 'gray' }} /> }
+          
+            { registrationCity ? <Input value={registrationCity} editable={false} style={[styles.input]} /> : <Input value={Lang.txt_D12} editable={false} style={[styles.input, { color: 'gray' }]} /> }
           </View>
         </View>
         <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.textInputContainer}>
           <Input
+            style={[styles.input]}
             onEndEditing={(e) => { onValidate(); liveValidation('userEmail', e.nativeEvent.text) }}
             placeholder={Lang.txt_D16}
             underlineColorAndroid='transparent'
@@ -172,6 +178,7 @@ class RegistrationStepOne extends Component {
         <View style={styles.verticalFieldsSpacing} />
         <View style={styles.textInputContainer}>
           <Input
+            style={[styles.input]}
             onEndEditing={(e) => { onValidate(); liveValidation('phoneNumber', e.nativeEvent.text) }}
             placeholder={Lang.txt_D17}
             underlineColorAndroid='transparent'
@@ -181,6 +188,7 @@ class RegistrationStepOne extends Component {
         <Spacer /><HorizontalSpace /><Spacer />
         <View style={styles.textInputContainer}>
           <Input
+            style={[styles.input]}
             onEndEditing={(e) => { validatePassword(e.nativeEvent.text) }}
             placeholder={Lang.txt_D18}
             underlineColorAndroid='transparent'
