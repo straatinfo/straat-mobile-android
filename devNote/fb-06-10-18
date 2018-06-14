@@ -11,7 +11,7 @@ note: fb-06-10-18
 4.2: need clarification: tell what must be done
 4.2.3: problem in logic: 
 4.3: socket live notifcation to map: need to test this again ---
-4.4: team selection: 'malabo pa sa sabaw ng pusit'
+4.4: team selection: 'malabo pa sa sabaw ng pusit': what happen to report sent in volunteer, they dont have a tab for report type C
 4.5: categories in C: maybe in db  must checkout to db <-- 
 4.6: language of report viewer: done -->
 4.7: after create report- newly report must show its infoblock: done -->
