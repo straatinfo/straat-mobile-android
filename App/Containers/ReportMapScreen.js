@@ -175,7 +175,8 @@ const mapDispatchToProps = dispatch => {
     setReportAddressByCoordinate: (coordinate) => dispatch(ReportsActions.setReportAddressByCoordinate(coordinate)),
     getReportsNearbyRequest: (param) => dispatch(ReportsActions.getReportsNearbyRequest(param)),
     userMergeState: (newState) => dispatch(UsersActions.mergeState(newState)),
-    reportChangeStatus: (_report) => dispatch(ReportsActions.reportChangeStatus(_report))
+    reportChangeStatus: (_report) => dispatch(ReportsActions.reportChangeStatus(_report)),
+    reportCreatesuccess: (params) => dispatch(ReportsActions.reportCreatesuccess(params))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ReportMapScreen)

@@ -273,7 +273,7 @@ class ReportMapContainer extends Component {
   }
 
   hideCreateReport () {
-    const { reportMergeState } = this.props
+    const { reportMergeState, reportCreatesuccess } = this.props
     this.setState({slidingPanelPage: 'report-location', slideMenuUp: true})
     reportMergeState({isReportFormActive: false})
     // this._panel.transitionTo(0)
@@ -300,6 +300,7 @@ class ReportMapContainer extends Component {
       is_person_involved: 0,
       person_involved_num: 0
     })
+    reportCreatesuccess()
   }
 
   showCreateReport () {
