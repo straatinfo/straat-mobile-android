@@ -193,6 +193,10 @@ export const getReportTypesFilterSelect = (Lang) => {
     {
       name: Lang.suspiciousSituation,
       code: 'B'
+    },
+    {
+      name: Lang.allReports,
+      code: 'AB'
     }
   ]
 }

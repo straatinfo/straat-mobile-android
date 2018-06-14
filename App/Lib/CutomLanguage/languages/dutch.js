@@ -471,6 +471,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   /** @description type B Suspicious Situation */
   suspiciousSituation: 'Verdachte Situatie',
 
+  /** @description type B Suspicious situation */
+  allReports: 'Alle Rapporten',
+
   /** @description type C Messages */
   messages: 'Berichten',
 

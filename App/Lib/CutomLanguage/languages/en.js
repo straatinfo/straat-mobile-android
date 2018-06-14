@@ -494,6 +494,9 @@ export default {
   /** @description type B Suspicious situation */
   suspiciousSituation: 'Suspicious Situation',
 
+  /** @description type B Suspicious situation */
+  allReports: 'All Reports',
+
   /** @description type C Messages */
   messages: 'Messages',
 

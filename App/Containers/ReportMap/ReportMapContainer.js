@@ -476,7 +476,7 @@ class ReportMapContainer extends Component {
   _remapMapMarkerList (reportMapMarkerList, mapFilterCode) {
     // const {  } = this.props
 
-    return reportMapMarkerList.filter((report) => report._reportType.code === mapFilterCode)
+    return reportMapMarkerList.filter((report) => mapFilterCode.indexOf(report._reportType.code) >= 0)
   }
 
   _mapNavigate (location) {
