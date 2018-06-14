@@ -157,7 +157,7 @@ class RegistrationStepOne extends Component {
         <Spacer />
         <View style={styles.horizontalContainer}>
           <View style={styles.textInputContainer}>
-            { registrationStreetName ? <Input value={registrationStreetName} editable={false} /> : <Input value={Lang.txt_D12} editable={false} style={[styles.input, { color: 'gray' }]} /> }
+            { registrationStreetName ? <Input value={registrationStreetName} editable={false} style={[styles.input]} /> : <Input value={Lang.txt_D12} editable={false} style={[styles.input, { color: 'gray' }]} /> }
           </View>
           <View style={styles.horizontalSpacing} />
           <View style={styles.textInputContainer}>
