@@ -20,5 +20,5 @@ export default {
 
   keys: Keys,
 
-  apiTimeout: 15000
+  apiTimeout: 60000
 }
