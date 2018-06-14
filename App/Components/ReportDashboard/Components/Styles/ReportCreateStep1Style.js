@@ -24,7 +24,8 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 0
+    marginTop: 0,
+    marginBottom: 0
   },
   buttonText: {
     fontSize: 18,
@@ -35,7 +36,7 @@ export default StyleSheet.create({
     color: '#ffffff',
     backgroundColor: 'transparent'
   },
-  content: {flex: 1, marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 10, flexDirection: 'column', justifyContent: 'space-between'},
+  content: {flex: 1, marginLeft: 20, marginRight: 20, marginTop: 0, marginBottom: 3, flexDirection: 'column', justifyContent: 'space-between'},
   title: {fontSize: 18, textAlign: 'left', margin: 5, color: '#96acc7', backgroundColor: 'transparent'},
   address: {fontSize: 16, textAlign: 'left', margin: 5, color: '#96acc7', backgroundColor: 'transparent'},
   subTitle: {fontSize: 14, textAlign: 'center', margin: 5, marginBottom: 20, color: '#96acc7', backgroundColor: 'transparent'}
