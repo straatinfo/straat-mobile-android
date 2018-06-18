@@ -31,9 +31,10 @@ class LogOutScreen extends Component {
     AppData.reset()
 
     const connection = CONNECTION.getConnection()
-    connection.disconnect()
-
+    // connection.disconnect()
+    CONNECTION.logout()
     navigation.navigate('Splash')
+    console.log('connection', connection)
   }
 
   render () {
