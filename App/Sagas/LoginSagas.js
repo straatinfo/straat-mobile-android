@@ -15,8 +15,10 @@ import validator from 'validator'
 import { isOffGPS } from '../Redux/SettingRedux'
 
 /**
+ *
  * try log in user
  * @param {username, password}
+ *
  */
 
 export const login = function * (API, action) {
@@ -31,6 +33,11 @@ export const login = function * (API, action) {
     const requestedUserAccount = yield call(API.postLogin, { username, password })
     let userWithToken = {}
     if (requestedUserAccount.ok && requestedUserAccount.data.status === 1) {
+      // filter if use is blocked
+      if (requestedUserAccount.data.data.user.isBlocked) {
+        throw new Error(language.blockedUser)
+      }
+
       const _host = requestedUserAccount.data.data.user._host ? requestedUserAccount.data.data.user._host._id : null
       const isSpecific = requestedUserAccount.data.data.user._host ? requestedUserAccount.data.data.user._host.isSpecific : false
       const userHost = requestedUserAccount.data.data.user._host
