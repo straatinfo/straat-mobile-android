@@ -1,11 +1,12 @@
 import React from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import { Image, TouchableOpacity, Keyboard } from 'react-native'
 import { View, Text, Content, Input } from 'native-base'
 import { Spacer, RowView, Triangle, ValidationComponent, Button } from './../../Components'
 import { Images } from './../../Themes'
 import Footer from '../../Components/Footer'
 import FastImage from 'react-native-fast-image'
 import styles from './../Login/styles'
+import DebugConfig from './../../Config/DebugConfig'
 
 /**
  *
@@ -17,16 +18,21 @@ class Login extends ValidationComponent {
     super(props)
 
     this.state = {
-      username: '',
-      password: '',
+      username: !DebugConfig.debugMode ? '' : 'nonvolunteerleaderstraat@yopmail.com',
+      password: !DebugConfig.debugMode ? '' : '12345678A',
      // username: __DEV__ ? 'userOne' : '',
      // password: __DEV__ ? 'test' : '',
       submitStatus: false
     }
+
   }
+
+  username = {}
+  password = {}
 
   login (params) {
     const { onSubmit, navigation } = this.props
+    Keyboard.dismiss()
     // process login
     onSubmit(this.state.username, this.state.password, navigation.state.params)
   }
@@ -72,14 +78,16 @@ class Login extends ValidationComponent {
             <View ><Text style={styles.inLoginTxt}>{Lang.txt_C01b}</Text></View>
             <View style={[styles.textInputContainer]}>
               <Input
+                ref={i => this.username = i}
                 onEndEditing={(e) => this._submitFilter(e.nativeEvent.text)}
                 onChangeText={(text) => this.setState({username: text})}
                 underlineColorAndroid='transparent'
                 multiline={false}
-                placeholder={Lang.txt_C02} />
+                placeholder={Lang.txt_C02} /> 
             </View>
             <View style={styles.textInputContainer}>
               <Input
+                ref={i => this.password = i}
                 onEndEditing={(e) => this._submitFilter(e.nativeEvent.text)}
                 secureTextEntry
                 onChangeText={(text) => this.setState({password: text})}
@@ -92,7 +100,7 @@ class Login extends ValidationComponent {
             <Button disabled={!submitStatus} title={Lang.txt_C01.toUpperCase()} design={design} onPress={this.login.bind(this)} />
           </View>
           <View style={styles.spacing} />
-          <TouchableOpacity onPress={() => { navigation.navigate('ForgotPassword') }}>
+          <TouchableOpacity onPress={() => { navigation.navigate('ForgotPassword'); Keyboard.dismiss() }}>
             <Text style={{
               fontSize: 20,
               color: '#96acc7',
