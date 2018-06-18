@@ -472,7 +472,7 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   suspiciousSituation: 'Verdachte Situatie',
 
   /** @description type B Suspicious situation */
-  allReports: 'Alle Rapporten',
+  allReports: 'Alle Meldingen',
 
   /** @description type C Messages */
   messages: 'Berichten',
@@ -708,6 +708,10 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // Change my Data
   txt_P06: 'WIJZIG MIJN GEGEVENS',
 
+  // Unable to create report, no category available.
+  txt_P07: 'Kan rapport niet maken, geen categorie beschikbaar.',
+
+
   /** @description Address */
   address: 'Adres',
 
@@ -737,6 +741,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   _search: 'Zoek adres',
 
   invalidPhoneNumberM: 'Dit nummer is al in gebruik. Voer een ander nummer in of neem contact op via info@straat.info',
+
+  /** @description blockedUser */
+  blockedUser: 'Dit account is geblokkeerd',
 
   /** @description Extra */
   extra: 'Extra'

@@ -443,7 +443,7 @@ export default {
   txt_J27: ' Thank you for your report!',
 
   /** @description From now on everybody can see     */
-  txt_J28ab: 'From now on everybody can see in the app. Ifthe report is about public space, it is also mailed to the host.',
+  txt_J28ab: 'From now on everybody can see in the app. If the report is about public space, it is also mailed to the host.',
   txt_J28c: 'Your message has been sent to the group (s) and is also in your overview that can be found in the menu at the top right.',
 
   /** @description hier kunt u berichten sturen naar de teams A  */
@@ -705,6 +705,10 @@ export default {
   // Change my Data
   txt_P06: 'CHANGE MY DATA',
 
+  // Unable to create report, no category available.
+  txt_P07: 'Unable to create report, no category available.',
+
+
   /** @description Address */
   address: 'Address',
 
@@ -734,6 +738,9 @@ export default {
   _search: 'Search address',
 
   invalidPhoneNumberM: 'This number is already in use, please enter a different number or contact us through info@straat.info',
+
+  /** @description blockedUser */
+  blockedUser: 'This account has been blocked',
 
   /** @description Extra */
   extra: 'Extra'
