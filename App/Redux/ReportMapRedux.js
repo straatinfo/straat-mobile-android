@@ -26,7 +26,7 @@ export const INITIAL_STATE = Immutable({
   serchItems: [ ],
   searchListActive: false,                // can be hide by map viewer - 
   searchSelectedID: 0,
-  mapFilterCode: 'A'      // type A , B , etc
+  mapFilterCode: 'AB'      // type A , B , AB ,etc
 
 })
 
