@@ -20,7 +20,7 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   iconStyle: {
-    fontSize: 30,
+    fontSize: 20,
     color: '#6e85a1',
     margin: 5,
     fontWeight: 'bold'
