@@ -41,7 +41,7 @@ export const registerUser = function * (API, action) {
     // status success
     if (registrationResult.ok && registrationResult.data.status === 1) {
       userWithToken = {...registrationResult.data.data.user, token: registrationResult.data.data.token}
-      const successMessage = getSuccessMessage(registrationData.isVolunteer, !!registrationData._team)
+      const successMessage = getSuccessMessage(registrationData.isVolunteer, !!registrationData._team, language)
       const loginParams = getLoginParams(registrationData.isVolunteer, !!registrationData._team, registrationData.username, registrationData.password)
       __DEV__ && console.log('requestedUserAccount', registrationResult)
       __DEV__ && console.log('userWithToken', userWithToken)
