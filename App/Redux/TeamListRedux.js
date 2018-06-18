@@ -7,6 +7,7 @@ const { Types, Creators } = createActions({
   setTeamId: ['teamId'],
   teamlistAddteam: ['team'],
   teamlistGetList: ['params'],
+  teamlistnonvolGetList: ['params'],
   replaceTeamlist: ['team'],
   teamlistMerge: ['newState'],
   listtarsTeam: ['teamInvite']
@@ -18,8 +19,10 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  identify: null,                         // list of teams user currently leads
+  identify: null,                          // list of teams user currently leads
   teamList: [],                            // fetch team list
+  teamNonList: [],
+  fetchingNon: true,
 
   error: null,
   fetching: true
@@ -44,6 +47,10 @@ export const replaceTeamlist = (state, {team}) => {
 }
 
 export const teamlistGetList = (state, {params}) => {
+  return state
+}
+
+export const teamlistnonvolGetList = (state, {params}) => {
   return state
 }
 
@@ -73,6 +80,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.TEAMLIST_ADDTEAM]: teamlistAddteam,
   [Types.REPLACE_TEAMLIST]: replaceTeamlist,
 
+  [Types.TEAMLISTNONVOL_GET_LIST]: teamlistnonvolGetList,
   [Types.TEAMLIST_GET_LIST]: teamlistGetList,
   [Types.TEAMLIST_MERGE]: teamlistMerge,
   [Types.LISTTARS_TEAM]: listtarsTeam

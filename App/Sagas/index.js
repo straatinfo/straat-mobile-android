@@ -36,7 +36,7 @@ import { fetchMessage, sendMessage, getMessagesByConvoId, postConvo } from './Me
 import { myReportRequest, myReportDetailRequest, myReportDeleteRequest } from './MyReportSagas'
 import { notifactionRequestTypeA, notifactionRequestTypeB, notifactionRequestTypeC, updateByNotification } from './NotificationSaga'
 import { sendFeedback } from './FeedbackSaga'
-import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam } from './TeamSagas'
+import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam, getNonVolTeamList } from './TeamSagas'
 import { editUserProfile, uploadUserPhoto, validateUserNameProfile, validateEmailProfile, validatePhoneNumberProfile, validateCityProfile, validatePostalCodeProfile } from './ProfileSaga'
 import { TeamListTypes } from '../Redux/TeamListRedux'
 import { getUserinfo } from './UserinfoSagas';
@@ -95,8 +95,9 @@ export default function * root () {
     takeLatest(ReportsTypes.SET_REPORT_ADDRESS_BY_COORDINATE, getReportAddress, googleAPI),
 
     /**         TEAM           */
-
+    
     takeLatest(TeamListTypes.TEAMLIST_GET_LIST, getUserTeamList, api),
+    takeLatest(TeamListTypes.TEAMLISTNONVOL_GET_LIST, getNonVolTeamList, api),
     takeLatest(TeamTypes.GET_TEAM_DETAILS, getTeamDetails, api),
     takeLatest(TeamTypes.GET_TEAM_REQUEST, getTeamRequest, api),
     takeLatest(TeamTypes.TEAM_ACCEPT_REQUEST, teamAcceptRequest, api),

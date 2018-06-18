@@ -293,3 +293,25 @@ export function * getUserTeamList (API, action) {
   yield put(TeamListActions.teamlistMerge({fetching: false}))
 }
  
+// teamList vol only used by report
+
+export function * getNonVolTeamList (API, action) {
+  const user = yield select(getUser)
+  yield put(TeamListActions.teamlistMerge({fetchingNon: true}))
+  try {
+        // yield call(loaderHandler.showLoader, Lang.authenticating) 
+
+    const getTeamList = yield call(API.getNonVolTeams, {user: user})
+    console.log('Fetching success', getTeamList)
+
+    if (getTeamList.ok && getTeamList.data.status === 1) {
+
+      yield put(TeamListActions.teamlistMerge({teamNonList: getTeamList.data.data}))
+    }
+  } catch (e) {
+    console.log('Fetching data failed', e)
+    yield put(TeamListActions.teamlistMerge({error: e.message}))
+  }
+  yield put(TeamListActions.teamlistMerge({fetchingNon: false}))
+}
+ 

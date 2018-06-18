@@ -576,6 +576,20 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
+  const getNonVolTeams = ({user: { _id, token, _host }}) => {
+    return api.get('v1/api/team/nonvol/' + _host,
+    {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  
   // MY TEAM
   const addNewTeam = ({ user: { _id, token, _host }, data }) => {
     // return api.post('/v2/api/team/new/' + _id,
@@ -764,6 +778,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     editTeamProfile,
     acceptUserRequest,
     declineTeamRequest,
+    getNonVolTeams,
 
     // profile
     editUserProfile,
