@@ -46,8 +46,8 @@ class ReportMapScreen extends React.Component {
      *
      */
     const { language, navigation, design, user: { isVolunteer },
-      countedListA, countedListB, countedListC, chatCount } = this.props
-    const notificationCount = countedListA + countedListB + countedListC + chatCount
+      countedListA, countedListB, countedListC, countedListD} = this.props
+    const notificationCount = countedListA + countedListB + countedListC + countedListD
     return (
       <Container>
         <Header style={[GlobalStyle.header, {backgroundColor: design.header}]} hasTabs>
@@ -76,7 +76,7 @@ class ReportMapScreen extends React.Component {
           {isVolunteer === false && <Tab heading={this._getSubHeading(language.messages, countedListC)}>
             <ReportListTypeC navigation={navigation} />
           </Tab>}
-          <Tab heading={this._getSubHeading(language.chat, chatCount)}>
+          <Tab heading={this._getSubHeading(language.chat, countedListD)}>
             {/* <ChatScreen navigation={navigation} noHeader />  */}
             <Conversation navigation={navigation} noHeader />
           </Tab>
@@ -94,7 +94,8 @@ const mapStateToProps = state => {
     countedListA: state.notification.countedListA.length,
     countedListB: state.notification.countedListB.length,
     countedListC: state.notification.countedListC.length,
-    chatCount: state.notification.chatCount,
+    countedListD: state.notification.countedListD.length,
+    // chatCount: state.notification.chatCount, 
     notificationtState: state.notification,
     language: state.language.Languages
   }
