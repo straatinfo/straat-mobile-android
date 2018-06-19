@@ -56,7 +56,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getReportsByNearby = ({ coordinate, user: { token, radius }, host: { language } }) => {
     // return api.get('v1/api/report/nearby/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + user.radius.toString(),
     return api.get('v1/api/report/near/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + radius.toString(),
-    { language },
+    { language: 'nl' },
       {
         method: 'GET',
         headers: {
@@ -70,7 +70,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getReportsByReporter = ({ params, user: { _id, token }, host: { language } }) => {
     // return api.get('v1/api/report/reporter/' + _id,
     return api.get('v1/api/report/clean/reporter/' + _id,
-    { language },
+    { language: 'nl' },
       {
         method: 'GET',
         headers: {
@@ -84,7 +84,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getReportById = ({ params, user: { token }, host: { language } }) => {
     const { _id } = params
     return api.get('v1/api/report/' + _id,
-      { language },
+      { language: 'nl' },
       {
         method: 'GET',
         headers: {
@@ -147,7 +147,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       {
         _reporter: _id,
         _reportType: _reportType,
-        language: language
+        language: 'nl'
       },
       {
         method: 'GET',
@@ -373,7 +373,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     // console.log('photo on API', data)
     // un used
     return api.get('v1/api/category/app/mainCategory/withGeneral/hostId/' + reportParams._host,
-      {language: reportParams.language},
+      {language: 'nl'},
       {
         headers: {
           Accept: 'application/json',
@@ -386,7 +386,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getCategoriesGeneral = (reportParams) => {
     __DEV__ && console.log('getting general cat: ', reportParams)
     return api.get('v1/api/category/app/mainCategory/general',
-      { code: 'ABC', language: reportParams.language },
+      { code: 'ABC', language: 'nl' },
       {
         headers: {
           Accept: 'application/json',
@@ -399,14 +399,15 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getCategoriesByHost = (reportParams) => {
     // console.log('photo on API', data)
     return api.get('v1/api/category/mainCategory/hostId/' + reportParams._host,
-      {language: reportParams.language},
+      {language: 'nl'},
       {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + reportParams.token
         }
-      })
+      }
+    )
   }
 
   // MY TEAM
