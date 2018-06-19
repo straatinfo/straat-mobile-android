@@ -32,13 +32,14 @@ const tempdata = {
  */
 export const getNearbyReports = function * (API, action) {
   const { coordinate, user } = action.reportsParams
+  const host = yield select(getUserHost)
   // coordinate { longitude, latitude}, user {accessToken, radius}
   try {
     // show loader
     // yield call(loaderHandler.showLoader, 'getting Nearby Reports') hide loader because it block the map
 
     __DEV__ && console.log('freportsParamss', action)
-    const reports = yield call(API.getReportsByNearby, { coordinate, user })
+    const reports = yield call(API.getReportsByNearby, { coordinate, user, host })
     // test
     // const reports = {ok: true, data: {status: 1, data: [tempdata]}}
 

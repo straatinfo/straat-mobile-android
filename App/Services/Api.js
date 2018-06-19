@@ -53,7 +53,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
   /**               REPORTS                */
-  const getReportsByNearby = ({ coordinate, user: { token, language, radius } }) => {
+  const getReportsByNearby = ({ coordinate, user: { token, radius }, host: { language } }) => {
     // return api.get('v1/api/report/nearby/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + user.radius.toString(),
     return api.get('v1/api/report/near/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + radius.toString(),
     { language },
