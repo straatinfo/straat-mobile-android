@@ -358,8 +358,8 @@ export default {
   //  Suspicious situation
   txt_J03: 'Suspicious Situation',
 
-  // CREATE MESSAGE
-  txt_J04: 'Create Message',
+  // Public Space
+  txt_J04: 'Public Space',
 
   /** You are here */
   txt_J05: 'You are here',
@@ -542,9 +542,6 @@ export default {
   /** @description Report has been deleted */
   ReportHasBeenDeleted: 'Report has been deleted',
 
-
-  
-
   // GLOBAL LANGUAGE
   // is under maintenance
   txt_Z01: ' is under maintenance',
@@ -708,7 +705,6 @@ export default {
   // Unable to create report, no category available.
   txt_P07: 'Unable to create report, no category available.',
 
-
   /** @description Address */
   address: 'Address',
 
@@ -721,7 +717,7 @@ export default {
 
   /** @description Confirmation */
   confirmation: 'Confirmation',
-  
+
   /** @description Member team is required */
   teamRequired: 'Member team is required',
 
@@ -742,7 +738,16 @@ export default {
   /** @description blockedUser */
   blockedUser: 'This account has been blocked',
 
+  /** @description Connected */
+  connected: 'Connected',
+
+  /** @description Connecting */
+  connecting: 'Connecting',
+
+  /** @description Disconnected */
+  disconnected: 'Disconnected',
+
   /** @description Extra */
   extra: 'Extra'
-  
+
 }

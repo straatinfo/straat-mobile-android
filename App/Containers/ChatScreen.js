@@ -13,6 +13,7 @@ import CenterView from '../Components/CenterView'
 import { CONNECTION } from '../Services/AppSocket'
 import { getTeamLogo } from '../Transforms/TeamHelper'
 import { crop } from '../Transforms/Cloudinary'
+import Chatconnection from '../Components/Chatconnection';
 /**
  *
  *  receive -> updateChatRedux ->
@@ -157,6 +158,7 @@ class ChatScreen extends Component {
               user={{ _id: _id, name: username }}
               renderBubble={this.renderBubble.bind(this, _id)}
             />}
+            <Chatconnection />
           </View>
         </Content>
       </Container>

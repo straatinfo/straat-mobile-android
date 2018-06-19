@@ -334,7 +334,7 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   //  Suspicious situation
   txt_J03: 'Verdachte Situatie',
 
-  //   CREATE MESSAGE
+  //  Public Space
   txt_J04: 'Melding Openbare Ruimte',
 
   /** You are here */
@@ -711,7 +711,6 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // Unable to create report, no category available.
   txt_P07: 'Kan rapport niet maken, geen categorie beschikbaar.',
 
-
   /** @description Address */
   address: 'Adres',
 
@@ -744,6 +743,15 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
 
   /** @description blockedUser */
   blockedUser: 'Dit account is geblokkeerd',
+
+  /** @description Connected */
+  connected: 'Verbonden',
+
+  /** @description Connecting */
+  connecting: 'Aansluiten',
+
+  /** @description Disconnected */
+  disconnected: 'Losgekoppeld',
 
   /** @description Extra */
   extra: 'Extra'
