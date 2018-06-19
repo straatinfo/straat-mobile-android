@@ -18,8 +18,8 @@ class Login extends ValidationComponent {
     super(props)
 
     this.state = {
-      username: !DebugConfig.debugMode ? '' : 'nonvolunteerleaderstraat@yopmail.com',
-      password: !DebugConfig.debugMode ? '' : '12345678A',
+      username: !DebugConfig.debugMode ? '' : 'nonvolunteerstraat3@yopmail.com',
+      password: !DebugConfig.debugMode ? '' : '9UW89BDND4GE',
      // username: __DEV__ ? 'userOne' : '',
      // password: __DEV__ ? 'test' : '',
       submitStatus: false
