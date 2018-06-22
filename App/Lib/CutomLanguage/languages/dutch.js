@@ -742,7 +742,7 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   invalidPhoneNumberM: 'Dit nummer is al in gebruik. Voer een ander nummer in of neem contact op via info@straat.info',
 
   /** @description blockedUser */
-  blockedUser: 'Dit account is geblokkeerd',
+  blockedUser: 'Op dit moment is het gebruik van de app geblokkeerd. Als u vragen heeft, neem dan contact met ons op via het formulier op www.straat.info',
 
   /** @description Connected */
   connected: 'Verbonden',

@@ -736,7 +736,7 @@ export default {
   invalidPhoneNumberM: 'This number is already in use, please enter a different number or contact us through info@straat.info',
 
   /** @description blockedUser */
-  blockedUser: 'This account has been blocked',
+  blockedUser: 'At this moment the use of the app has been blocked. If you have any questions, please contact us through the form on www.straat.info',
 
   /** @description Connected */
   connected: 'Connected',
