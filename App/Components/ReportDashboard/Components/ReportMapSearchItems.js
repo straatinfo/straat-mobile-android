@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
-// import { View, Text } from 'react-native'
+import { Keyboard } from 'react-native'
 import { Right, Icon, Content, Left, List, ListItem, Title, Subtitle } from 'native-base'
 import { connect } from 'react-redux'
 import { CircleLoader } from '../..'
 import ReportMapActions from './../../../Redux/ReportMapRedux'
 import * as Animatable from 'react-native-animatable'
 import styles from './Styles/ReportMapSearchItemsStyle'
+import { keyboardCb } from '../../../Transforms/ReportHelper';
 
 class ReportMapSearchItems extends Component {
   _cancelSearch () {
+    Keyboard.dismiss()
     const { mergeReportmap } = this.props
     mergeReportmap({isOnSearch: false})
   }
   _search () {
+    Keyboard.dismiss()
     const { mergeReportmap } = this.props
     mergeReportmap({isOnSearch: false})
   }
@@ -34,11 +37,14 @@ class ReportMapSearchItems extends Component {
   _clickItem (item, index) {
     const { mergeReportmap, searchSelectedID, mapNavigate } = this.props
     const { _id } = item
-    if (searchSelectedID !== _id) {
-      __DEV__ && console.log(item)
-      mapNavigate(item.location)
-      mergeReportmap({searchSelectedID: _id, searchListActive: false})
-    }
+
+    keyboardCb(Keyboard, () => {
+      if (searchSelectedID !== _id) {
+        __DEV__ && console.log(item)
+        mapNavigate(item.location)
+        mergeReportmap({searchSelectedID: _id, searchListActive: false})
+      }
+    })
   }
 
   render () {

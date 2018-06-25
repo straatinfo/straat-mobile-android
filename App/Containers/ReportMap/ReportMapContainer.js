@@ -10,7 +10,8 @@ import {
   AsyncStorage,
   TouchableOpacity,
   PermissionsAndroid,
-  WebView
+  WebView,
+  Keyboard
 } from 'react-native'
 import {
   Header,
@@ -33,7 +34,7 @@ import Api from './../../Lib/Common/Api'
 import ApiUtil from './../../Lib/Common/ApiUtil'
 import AlertBox from './../../Components/AlertBox'
 import Images from './../../Themes/Images'
-import { getStyleStatusInPin } from './../../Transforms/ReportHelper'
+import { getStyleStatusInPin, keyboardCb } from './../../Transforms/ReportHelper'
 
 import MapButton from './../../Components/MapButton'
 import ReportStepThree from './../../Components/ReportDashboard/stepthree/report_stepthree'
@@ -425,14 +426,16 @@ class ReportMapContainer extends Component {
   }
   reportFormShow () {
     const {reportMergeState, reportState: {isReportFormActive, reportCoordinate, userPosition }} = this.props
-    this.mapViewToRegion({latitude: reportCoordinate.latitude, longitude: reportCoordinate.longitude }, 300)
-    // set user address from start of this screen
-    this.setAddress(reportCoordinate)
+    keyboardCb(Keyboard, () => {
+      this.mapViewToRegion({latitude: reportCoordinate.latitude, longitude: reportCoordinate.longitude }, 300)
+      // set user address from start of this screen
+      this.setAddress(reportCoordinate)
 
-    this.setState({slideMenuUp: false, slidingPanelPage: 'report-location'},
-    () => {
-    //  this._panel.transitionTo(this.state.slideMenuHeight + 65)
-      reportMergeState({isReportFormActive: true})
+      this.setState({slideMenuUp: false, slidingPanelPage: 'report-location'},
+      () => {
+      //  this._panel.transitionTo(this.state.slideMenuHeight + 65)
+        reportMergeState({isReportFormActive: true})
+      })  
     })
   }
   getHeight () {
@@ -499,10 +502,11 @@ class ReportMapContainer extends Component {
     //   return null
     // }
     return (
-      <View style={styles.container}>
+      <View style={styles.container} >
         <ReportMapSearchItems mapNavigate={this._mapNavigate.bind(this)} />
         {renderIf(this.state.mapReset === 1 && DebugConfig.displayGoogleMap)(
           <MapView
+            onPress={Keyboard.dismiss}
             ref={c => { this.reportMap = c }}
             style={[styles.map, { height: heights.hmap }, { height: '100%' }]}
             showsUserLocation

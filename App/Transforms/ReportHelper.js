@@ -221,3 +221,11 @@ export const formatMapSearchResult = (payload) => {
   )
 
 }
+
+// run hide keyboard nag callback
+export const keyboardCb = (K, cb) => {
+  K.dismiss()
+  setTimeout(() => {
+    cb()
+  }, 1000)
+}

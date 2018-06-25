@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-// import { View, Text } from 'react-native'
+import { Keyboard } from 'react-native'
 import { Right, Button, Header, Icon, Item, Input } from 'native-base'
 import { connect } from 'react-redux'
 
 import ReportMapActions from './../../../Redux/ReportMapRedux'
 import ReportmapsearchActions from './../../../Redux/ReportmapsearchRedux'
 import styles from './Styles/ReportMapSearchStyle'
+import { keyboardCb } from '../../../Transforms/ReportHelper';
 
 class ReportMapSearch extends Component {
   state={
@@ -20,11 +21,13 @@ class ReportMapSearch extends Component {
 
   _search () {
     const { searchText, searchLast, searching } = this.state
-    if (searchLast !== searchText && !searching) {
-      this.props.reportmapsearchRequest(searchText)
-      this.props.mergeReportmap({searchListActive: true})    // hide result list
-      this.setState({searchLast: searchText})
-    }
+    keyboardCb(Keyboard, () => {
+      if (searchLast !== searchText && !searching) {
+        this.props.reportmapsearchRequest(searchText)
+        this.props.mergeReportmap({searchListActive: true})    // hide result list
+        this.setState({searchLast: searchText})
+      }
+    })
   }
 
   _openResultList () {
