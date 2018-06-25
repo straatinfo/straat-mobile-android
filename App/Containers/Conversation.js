@@ -106,7 +106,7 @@ class Conversation extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('Conversation State: ', state)
+  // console.log('Conversation State: ', state)
   return {
     fetching: state.conversation.fetching,
     user: state.user.user,
