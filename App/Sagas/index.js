@@ -29,7 +29,7 @@ import { login, appStart } from './LoginSagas'
 import { getUserAvatar } from './GithubSagas'
 import { change } from './ScreenSagas'
 import { confirmAccessCode, registerAccessCode } from './AccessCodeSagas'
-import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber } from './UserSagas'
+import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber, blockUser } from './UserSagas'
 import { getNearbyReports, getReportAddress, uploadPhoto, getCategories, submitReport, changeStatus } from './ReportsSaga'
 import { fetchConversation, createConversation, getConversationList } from './ConversationSaga'
 import { fetchMessage, sendMessage, getMessagesByConvoId, postConvo } from './MessageSaga'
@@ -65,6 +65,8 @@ export default function * root () {
 
     /**              USER              */
     takeLatest(CurrentUserTypes.FORGOT_PASSWORD_REQUEST, requestPassword, api),
+    /**              USER              */
+    takeLatest(CurrentUserTypes.USER_BLOCK, blockUser, api),
 
     /**          ACCESS CODE           */
     takeLatest(CurrentUserTypes.SET_ACCESS_CODE, confirmAccessCode, api),

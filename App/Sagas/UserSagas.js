@@ -550,3 +550,34 @@ export const requestPassword = function * (API, action) {
   yield call(loaderHandler.hideLoader)
   // yield call(logStore)
 }
+
+/**
+ * @description request for new pasword using email
+ * @param eMail
+ * it listen to REGISTER_SET_PHONE_NUMBER
+ *
+ */
+
+export const blockUser = function * (API, action) {
+  const language = yield select(getLanguageState)
+  const user = yield select(getUser)
+  const { data: {data, cb} } = action
+  __DEV__ && console.log('action', action)
+  try {
+    console.log(action)
+    if (data.user._id === user._id) {
+      __DEV__ && console.log('user is block: ', user._id)
+
+    // yield put(UserActions.mergeState({passwordRequestSuccess: false}))
+      popUpAlertV2(language.notice, language.blockedUser, cb)
+    }
+  //   () => {
+  //     put(UserActions.mergeState({isBlockedUser: true}))
+  //  }
+  } catch (e) {
+    __DEV__ && console.log(e)
+  }
+  // clean screen
+  // yield call(loaderHandler.hideLoader)
+  // yield call(logStore)
+}

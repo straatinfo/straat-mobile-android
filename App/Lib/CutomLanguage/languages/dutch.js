@@ -753,6 +753,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   /** @description Disconnected */
   disconnected: 'Losgekoppeld',
 
+  /** @description Notice */
+  notice: 'Merk Op',
+
   /** @description Extra */
   extra: 'Extra'
 }

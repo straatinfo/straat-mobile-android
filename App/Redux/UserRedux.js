@@ -28,7 +28,8 @@ const { Types, Creators } = createActions({
   userChangeRadius: ['radius'],
   updateUser: ['user'],
   teamlistGetuser: ['user'],
-  registerInit: ['user']
+  registerInit: ['user'],
+  userBlock: ['data']
 })
 
 export const CurrentUserTypes = Types
@@ -116,7 +117,8 @@ export const INITIAL_STATE = Immutable({
   passwordRequestSuccess: false,                             // requet new password using email: forgot passowd status
 
   position: null,
-  isCoor: false
+  isCoor: false,
+  isBlockedUser: false
 })
 
 export const registerInit = (state, action) => {
@@ -271,6 +273,13 @@ export const updateUser = (state, {user}) => {
   return state.merge({user: {...state.user, ...user, ...addedData}})
 }
 
+export const userBlock = (state, data) => {
+  if (data.data && data.data.user && data.data.user._id) {
+    return state.merge({ isBlockedUser: true })
+  }
+  return state
+}
+
 // use this so not to make many method for setting redux state
 export const mergeState = (state, {newMergingState}) => {
   __DEV__ && console.log('newMergingState', newMergingState)
@@ -304,8 +313,9 @@ export const reducer = createReducer(INITIAL_STATE, {
 
   [Types.FORGOT_PASSWORD_REQUEST]: forgotPasswordRequest,
   [Types.USER_RESET]: userReset,
+  [Types.USER_BLOCK]: userBlock,
   [Types.USER_CHANGE_RADIUS]: userChangeRadius,
-
+  
   [Types.UPDATE_USER]: updateUser
 })
 

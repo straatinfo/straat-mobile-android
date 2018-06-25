@@ -13,6 +13,7 @@ import { SocketTypes, notificationTypes } from '../Services/Constant'
 import NotificationActions from './../Redux/NotificationRedux'
 import ConversationActions from '../Redux/ConversationRedux'
 import MessageActions from './../Redux/MessageRedux'
+import BlockUser from '../Components/BlockUser';
 
 // tinatamad ako mag saga, dito kona icocode yung mga lintek na socket na yan lintek sila
 
@@ -35,15 +36,18 @@ class DrawerContent extends Component {
 
   //     }
   //   })
+
+
   }
 
   render () {
-    const { navigation, itemData, Lang } = this.props
+    const { navigation, itemData, Lang, isBLockUser } = this.props
     const items = this.props.items
     const design = this.props.design
     return (
 
       <View style={[styles.container, {backgroundColor: design.background}]}>
+        { isBLockUser === true && <BlockUser navigation={navigation} /> }
         <View style={styles.logoHolder}>
           { design.secureUrl === '' && <Image source={Images.logo} style={styles.logo} /> }
           { design.secureUrl !== '' && <FastImage source={{uri: design.secureUrl}} style={styles.logo} /> }
@@ -75,7 +79,8 @@ const mapStateToProps = state => {
     design: state.user.design,
     _user: state.user.user._id,
     token: state.user.user.token,
-    Lang: state.language.Languages
+    Lang: state.language.Languages,
+    isBLockUser: state.user.isBlockedUser
   }
 }
 

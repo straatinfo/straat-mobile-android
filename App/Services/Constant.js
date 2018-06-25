@@ -157,7 +157,8 @@ export const SocketTypes = {
   SEND_MESSAGE: 'send-message-v2',
   UPDATE_MESSAGE: 'update-message',
   EXIT_CONVO: 'exit-convo',
-  RECEIVE_MESSAGE: 'new-message'
+  RECEIVE_MESSAGE: 'new-message',
+  BLOCK_USER: 'BLOCK_USER'
 
 }
 /**

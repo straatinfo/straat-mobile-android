@@ -747,6 +747,9 @@ export default {
   /** @description Disconnected */
   disconnected: 'Disconnected',
 
+  /** @description Notice */
+  notice: 'Notice',
+  
   /** @description Extra */
   extra: 'Extra'
 
