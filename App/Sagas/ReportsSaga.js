@@ -240,6 +240,10 @@ export const submitReport = function * (API, action) {
         yield put(ReportsActions.reportMergeState({reportMapMarkerList: [...pointList, data]}))
         yield put(ReportsActions.reportCreatesuccess(params))
       }
+      // console.log(new Date())
+      // setTimeout(() => {
+      //   console.log(new Date())
+      // }, 15000)
 
       params.callback(data._id)
       // send socket notification
