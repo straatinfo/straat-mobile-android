@@ -202,6 +202,11 @@ export const getReportParams = (state) => {
   requireInType.teamList = []
 
   // type A
+  if (reports.reportType.code === ReportTypes.PUBLIC_SPACE.code) {
+    requireInType.isPublic = true
+  }
+
+  // type A - B
   if (reports.reportType.code === ReportTypes.PUBLIC_SPACE.code || reports.reportType.code === ReportTypes.SAFETY.code) {
     // validation
     if (reports.reportSelectMainCategoryID) {
