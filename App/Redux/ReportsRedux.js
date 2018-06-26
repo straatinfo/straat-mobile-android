@@ -98,7 +98,8 @@ export const INITIAL_STATE = Immutable({
   submitButton: false,
   reportDetails: Report,                                          // type: Report  this data will display on after click the callout on map or in message
   fetchTeam: true,
-  errorTeam: ''
+  errorTeam: '',
+  statusSource: null
 })
 
 /* ------------- Reducers ------------- */
@@ -151,6 +152,7 @@ export const reportCreatesuccess = (state, { reportParams }) => {
 export const reportChangeStatus = (state, { _report }) => {
   return state
 }
+
 export const reportReset = (state, { params }) => {
   return INITIAL_STATE
 }

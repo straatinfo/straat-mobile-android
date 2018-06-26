@@ -74,7 +74,7 @@ export const defualtCoordinate = {
 /* ------------- Intial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  user: __DEV__ ? tempUser : {language: 'nl'},
+  user: __DEV__ ? tempUser : {language: 'nl', teamList: []},
   isLogged: false,
   accessCode: null,
   host: {_id: 'testHostId', language: 'nl'},

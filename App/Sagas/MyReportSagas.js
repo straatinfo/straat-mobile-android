@@ -32,6 +32,7 @@ export const myReportDetailRequest = function * (API, action) {
   const user = yield select(getUser)
   const host = yield select(getUserHost)
   const { _id } = action
+  __DEV__ && console.log('action', action)
   yield put(MyReportActions.myReportMerge({fetchingDetails: true, errorDetails: ''}))
   try {
     const report = yield call(API.getReportById, {params: {_id}, user, host})
