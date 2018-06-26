@@ -229,3 +229,9 @@ export const keyboardCb = (K, cb) => {
     cb()
   }, 1000)
 }
+
+// if  its member
+export const hasMember = (teamId, teamList) => {
+  const team = teamList.find((t) => t._id === teamId)
+  return !!team
+}

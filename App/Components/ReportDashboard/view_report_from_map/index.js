@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import {
-  View,
-  Text,
   Image,
   Dimensions,
   ScrollView,
@@ -9,6 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+import { Text, View } from 'native-base'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import renderIf from 'render-if'
 import ImageLoad from 'react-native-image-placeholder'
@@ -20,10 +19,12 @@ import ReportsActions from './../../../Redux/ReportsRedux'
 import { GetDate, GetTime, GetDateEutype } from './../../../Lib/Helper/TimeUtils'
 import { GetFullName, GetChatName } from './../../../Transforms/NameUtils'
 import { FontSizes, WidthSizes } from './../../../Lib/Common/Constants'
-import { ReportStatus } from '../../../Services/Constant'
+import { ReportStatus, ReportTypes } from '../../../Services/Constant'
 import { Report } from '../../../Services/ReportDefaults'
 import AlertBox from '../../AlertBox'
 import ReportImageHolders from '../../ReportImageHolders'
+import { ToPublicButton } from '../..';
+import { hasMember } from '../../../Transforms/ReportHelper';
 
 const { width } = Dimensions.get('window')
 const fixColorBorder = '#aaa'
@@ -105,7 +106,8 @@ class ViewReportFromMap extends Component {
   }
 
   changeStatus (reportID) {
-    this.props.reportChangeStatus({ newData: {status: ReportStatus.done, reportId: reportID}, _report: reportID })
+    const { statusSource } = this.props
+    this.props.reportChangeStatus({ newData: {status: ReportStatus.done, reportId: reportID}, _report: reportID, statusSource: statusSource, field: 'STATUS' })
     // console.log('changeStatus', reportID )
   }
 
@@ -117,11 +119,25 @@ class ViewReportFromMap extends Component {
     )
   }
 
+  changeVisible (reportID) {
+    const { statusSource } = this.props
+    this.props.reportChangeStatus({ newData: {isPublic: true, reportId: reportID}, _report: reportID, statusSource: statusSource, field: 'ISPUBLIC' })
+    // console.log('changeStatus', reportID )
+  }
+
+  confirmChangeVisible (reportID) {
+    const { Lang } = this.props
+    AlertBox.alert(' ',
+      Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeVisible(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
+      { cancelable: false }
+    )
+  }
+
   componentDidMount () {
   }
   render () {
     // default value and eee
-    const { reportDetails, screen, Lang } = this.props
+    const { reportDetails, screen, teamList, Lang } = this.props
     const report = { ...Report, ...reportDetails }
     return (
       <View style={styles.container}>
@@ -177,6 +193,20 @@ class ViewReportFromMap extends Component {
                   </View>
                 </View>
               </View>
+              
+              {renderIf(report._team && report._team._id && report.isPublic === false && report._reportType.code === ReportTypes.SAFETY.code && hasMember(report._team._id, teamList))(
+                <View style={[ styles.lineContainer ]} >
+                  <View style={[ styles.twoCol ]} >
+                    <View style={[ styles.w40 ]}>
+                      <Text style={[ styles.f16 ]}> </Text>
+                    </View>
+                    <View style={[ styles.w50, styles.statusValue ]}>
+                      <ToPublicButton Lang={Lang} isPublic={report.isPublic} onPress={() => this.confirmChangeVisible(report._id)} />
+                    </View>
+                  </View>
+                </View>
+              )}
+              
             </View>{ /** report datetime conatainer --END */ }
             { report._mainCategory !== undefined && report._mainCategory !== null && report._mainCategory.name !== undefined && <View style={[ styles.rowContainer ]} >{ /** report category */ }
               <View style={[ styles.rowTitleContainer ]} >
@@ -304,7 +334,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     reportDetails: state.reports.reportDetails,
-    Lang: state.language.Languages
+    Lang: state.language.Languages,
+    teamList: state.user.user.teamList,
+    statusSource: state.reports.statusSource
   }
 }
 

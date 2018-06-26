@@ -163,7 +163,7 @@ class ReportMapContainer extends Component {
     // this._panel_reportView.transitionTo(this.state.slideMenuHeight + 150 + 65)
           // cnr button, hide report green button
     this.setState({ txt_e10Height: {height: 0} })
-    reportMergeState({reportDetails: marker})
+    reportMergeState({reportDetails: marker, statusSource: 'map'})
   }
 
   resetMap () {

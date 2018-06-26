@@ -6,7 +6,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { Text, View } from 'native-base'
-import { AlertBox, CircleLoader, renderIf } from './../../../Components'
+import { AlertBox, CircleLoader, renderIf, ToPublicButton } from './../../../Components'
 import { ReportTypes } from './../../../Services/Constant'
 import { GetDate, GetTime } from './../../../Lib/Helper/TimeUtils'
 import { FontSizes, WidthSizes } from './../../../Lib/Common/Constants'
@@ -18,6 +18,7 @@ import ReportsActions from './../../../Redux/ReportsRedux'
 import MyReportActions from './../../../Redux/MyReportRedux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import ReportImageHolders from '../../ReportImageHolders'
+import { hasMember } from '../../../Transforms/ReportHelper';
 
 const { width } = Dimensions.get('window')
 const fixColorBorder = '#aaa'
@@ -53,7 +54,7 @@ class Status extends Component {
     /**
      *  0 for new color red
      *  1 for finished color green
-     *  partial 
+     *  partial
      */
     let color = 'red'
     let infoText = ''
@@ -99,7 +100,8 @@ class ReportDetail extends Component {
   }
 
   changeStatus (reportID) {
-    this.props.reportChangeStatus({ newData: {status: ReportStatus.done, reportId: reportID}, _report: reportID })
+    const { statusSource } = this.props
+    this.props.reportChangeStatus({ newData: {status: ReportStatus.done, reportId: reportID}, _report: reportID, statusSource: statusSource, field: 'STATUS' })
     // console.log('changeStatus', reportID )
   }
 
@@ -111,13 +113,27 @@ class ReportDetail extends Component {
     )
   }
 
+  changeVisible (reportID) {
+    const { statusSource } = this.props
+    this.props.reportChangeStatus({ newData: {isPublic: true, reportId: reportID}, _report: reportID, statusSource: statusSource, field: 'ISPUBLIC' })
+    // console.log('changeStatus', reportID )
+  }
+
+  confirmChangeVisible (reportID) {
+    const { Lang } = this.props
+    AlertBox.alert(' ',
+      Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeVisible(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
+      { cancelable: false }
+    )
+  }
+
   componentDidMount () {
     const { myReportDetailRequest, report } = this.props
     myReportDetailRequest(report._id)
   }
   render () {
     // default value and eee
-    const { reportDetails, screen, fetching, Lang } = this.props
+    const { reportDetails, screen, fetching, teamList, Lang } = this.props
     const report = { ...Report, ...reportDetails }
     if (fetching === true) {
       return <CircleLoader color='blue' />
@@ -178,6 +194,18 @@ class ReportDetail extends Component {
                   </View>
                 </View>
               </View>
+              {renderIf(report._team && report._team._id && report.isPublic === false && report._reportType.code === ReportTypes.SAFETY.code && hasMember(report._team._id, teamList))(
+                <View style={[ styles.lineContainer ]} >
+                  <View style={[ styles.twoCol ]} >
+                    <View style={[ styles.w40 ]}>
+                      <Text style={[ styles.f16 ]}> </Text>
+                    </View>
+                    <View style={[ styles.w50, styles.statusValue ]}>
+                      <ToPublicButton Lang={Lang} isPublic={report.isPublic} onPress={() => this.confirmChangeVisible(report._id)} />
+                    </View>
+                  </View>
+                </View>
+              )}
 
             </View>{ /** report datetime conatainer --END */ }
             { report._mainCategory !== undefined && report._mainCategory !== null && report._mainCategory.name !== undefined && <View style={[ styles.rowContainer ]} >{ /** report category */ }
@@ -308,7 +336,10 @@ const mapStateToProps = state => {
     reportDetails: state.reports.reportDetails,
     fetching: state.myReport.fetchingDetails,
     error: state.myReport.errorDetails,
-    Lang: state.language.Languages
+    Lang: state.language.Languages,
+    teamList: state.user.user.teamList,
+    statusSource: state.reports.statusSource
+
   }
 }
 
