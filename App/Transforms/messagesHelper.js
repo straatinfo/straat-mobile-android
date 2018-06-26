@@ -25,7 +25,7 @@ export const fixConvo = (conversation, _user) => {
   const {_id, type, title, participants, messages, _profilePic} = conversation
   if (!_id) {
     return false
-  }
+  } 
 
   const lastMesasge = messages[0] ? messages[0]._author.username + ': ' + messages[0].body : ''
   if (type === ConvoTypes.USER) {

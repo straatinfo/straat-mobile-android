@@ -9,12 +9,11 @@ export const postConvo = function * (API, action) {
   const user = yield select(getUser)
   try {
     const fetching = yield call(API.postConversation, { user, type, param })
-    __DEV__ && console.log('fetching', fetching)
+    __DEV__ && console.log('fetching postConvo', fetching)
     if (fetching.ok && fetching.data.status === 1) {
       const { payload } = fetching.data
-      // const convos = fixConvo(payload, user._id)
-      // const convo = convos || []
-      const convo = []
+      const convos = fixConvo(payload, user._id)
+      const convo = convos || []
       yield put(MessageActions.chatMerge({...convo, fetchingConvo: false}))
 
       yield put(MessageActions.getMessagesByConvoId({target: payload._id, title: convo.title}))
@@ -24,7 +23,7 @@ export const postConvo = function * (API, action) {
     yield put(MessageActions.chatMerge({fetchingConvo: false}))
   }
 }
- 
+  
 export const getMessagesByConvoId = function * (API, action) {
   const { param: { target, title } } = action
   const user = yield select(getUser)
@@ -41,7 +40,7 @@ export const getMessagesByConvoId = function * (API, action) {
   }
 }
 
-export const getConversation = function * (API, action) {
+export const getConversation = function * (API, action) { 
   const { param: { type, target } } = action
   const user = yield select(getUser)
   try {
