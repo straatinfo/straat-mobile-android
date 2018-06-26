@@ -209,3 +209,15 @@ export const backEndConstEnum = {
  *
  */
 export const usernameSeparator = '_ID:'
+
+/**
+ *
+ * @description statusSource
+ *
+*/
+export const StatusSource = {
+  myList: 'myList',
+  reportA: 'reportA',
+  reportB: 'reportB',
+  reportC: 'reportC'
+}
