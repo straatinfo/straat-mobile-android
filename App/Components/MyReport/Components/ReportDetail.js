@@ -40,19 +40,20 @@ class Status extends Component {
     const btnStyle = StyleSheet.create({
       changeStatusCon: {
         backgroundColor: '#09bcad',
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: 5,
+        paddingRight: 5,
         marginLeft: 5,
         borderRadius: 5
       },
       changeStatusbtnTxt: {
-        color: '#fff'
+        color: '#fff',
+        fontSize: 14
       }
     })
     /**
      *  0 for new color red
      *  1 for finished color green
-     *  partial
+     *  partial 
      */
     let color = 'red'
     let infoText = ''
@@ -77,12 +78,12 @@ class Status extends Component {
     }
 
     return (
-      <View style={[ styles.w50, styles.statusValue ]} >
+      <View style={[ styles.w50, styles.statusValue]} >
         <Icon name='lens' size={16} color={color} />
         <Text style={[ styles.f16 ]}>{ infoText }</Text>{/** report status value */ }
         {renderIf(buttonShow)(
           <TouchableOpacity style={btnStyle.changeStatusCon} underlayColor='rgba(0,0,0,0.0)' onPress={() => { this.props.onChangeStatus(this.props.reacordID) }}>
-            <Text style={[ btnStyle.changeStatusbtnTxt, styles.f16 ]} >{Lang.txt_J13}</Text>
+            <Text style={[btnStyle.changeStatusbtnTxt]} >{Lang.txt_J13}</Text>
           </TouchableOpacity>
           )}
       </View>
@@ -259,7 +260,8 @@ const styles = StyleSheet.create({
     paddingTop: 5
   },
   statusValue: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignContent: 'center'
   },
   icon: {
     height: 40,
