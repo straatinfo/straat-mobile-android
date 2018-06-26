@@ -157,3 +157,30 @@ export const reducer = createReducer(INITIAL_STATE, {
 export const getNotification = (state) => {
   return state.notification
 }
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeAList = (state) => {
+  return state.notification.typeAList
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeBList = (state) => {
+  return state.notification.typeBList
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeCList = (state) => {
+  return state.notification.typeCList
+}

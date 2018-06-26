@@ -10,7 +10,8 @@ const { Types, Creators } = createActions({
   teamlistnonvolGetList: ['params'],
   replaceTeamlist: ['team'],
   teamlistMerge: ['newState'],
-  listtarsTeam: ['teamInvite']
+  listtarsTeam: ['teamInvite'],
+  teamlistReset: ['params']
 })
 
 export const TeamListTypes = Types
@@ -73,7 +74,11 @@ export const listtarsTeam = (state, { teamInvite: {_id, _team}, teamMembers }) =
   return state
 }
 
-/* ------------- Hookup Reducers To Types ------------- */
+export const teamlistReset = (state, { params }) => {
+  return INITIAL_STATE
+}
+
+/* ------------ - Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_TEAM_ID]: currentTeamId,
@@ -83,6 +88,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.TEAMLISTNONVOL_GET_LIST]: teamlistnonvolGetList,
   [Types.TEAMLIST_GET_LIST]: teamlistGetList,
   [Types.TEAMLIST_MERGE]: teamlistMerge,
+  [Types.TEAMLIST_RESET]: teamlistReset,
   [Types.LISTTARS_TEAM]: listtarsTeam
 
 })

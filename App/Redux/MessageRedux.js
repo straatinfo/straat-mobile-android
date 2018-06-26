@@ -34,7 +34,8 @@ const { Types, Creators } = createActions({
   messageReceive: ['param'],
   createPostConvo: ['params'],
   sendlocalMessage: ['params'],
-  chatMerge: ['newState']
+  chatMerge: ['newState'],
+  messageReset: ['params']
 })
 
 export const MessageTypes = Types
@@ -129,6 +130,10 @@ export const messageReceive = (state, { param }) => {
   return state
 }
 
+export const messageReset = (state, { params }) => {
+  return INITIAL_STATE
+}
+
 export const chatMerge = (state, { newState }) => {
   return state.merge(newState)
 }
@@ -150,7 +155,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.MESSAGE_RECEIVE]: messageReceive,
   [Types.CREATE_POST_CONVO]: createPostConvo,
   [Types.SENDLOCAL_MESSAGE]: sendlocalMessage,
-
+  [Types.MESSAGE_RESET]: messageReset,
+  
   [Types.CHAT_MERGE]: chatMerge
 
 })
