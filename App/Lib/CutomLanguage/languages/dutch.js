@@ -331,6 +331,10 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // message your group
   txt_J02: 'Bericht uw groep',
 
+  // message your group
+  txt_J02b: 'Communicatie',
+
+
   //  Suspicious situation
   txt_J03: 'Verdachte Situatie',
 
@@ -742,7 +746,7 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   invalidPhoneNumberM: 'Dit nummer is al in gebruik. Voer een ander nummer in of neem contact op via info@straat.info',
 
   /** @description blockedUser */
-  blockedUser: 'Op dit moment is het gebruik van de app geblokkeerd. Als u vragen heeft, neem dan contact met ons op via het formulier op www.straat.info',
+  blockedUser: 'Op dit moment is de app voor jou geblokkeerd. Als je vragen hebt, neem dan contact op via het formulier p www.straat.info',
 
   /** @description Connected */
   connected: 'Verbonden',
@@ -755,6 +759,15 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
 
   /** @description Notice */
   notice: 'Merk Op',
+
+  /** @description Public */
+  public: 'Public',
+
+  /** @description private */
+  private: 'Besloten',
+
+  /** @description change */
+  change: 'Verander',
 
   /** @description Extra */
   extra: 'Extra'

@@ -355,6 +355,9 @@ export default {
   // message your group
   txt_J02: 'Message your group',
 
+  // message your group
+  txt_J02b: 'Communication',
+
   //  Suspicious situation
   txt_J03: 'Suspicious Situation',
 
@@ -529,6 +532,9 @@ export default {
 
   /** @description Are you sure you want to delete the report? */
   txt_J45: 'Are you sure you want to delete the report?',
+
+  // this report has been processed?
+  txt_J46: 'This report has been processed?',
 
   /** @description General Information */
   generalInformation: 'General Information',
@@ -749,7 +755,16 @@ export default {
 
   /** @description Notice */
   notice: 'Notice',
-  
+
+  /** @description Public */
+  public: 'Public',
+
+  /** @description private */
+  private: 'Private',
+
+  /** @description change */
+  change: 'Change',
+
   /** @description Extra */
   extra: 'Extra'
 
