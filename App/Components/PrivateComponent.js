@@ -52,8 +52,8 @@ class PrivateComponent extends Component {
       messageReceive(data)
       // uopdate notification
       __DEV__ && console.log('messageReceive data', data)
-      
-      if (data.payload.user._id !== _user || DebugConfig.debugMode === true) {
+      // if (data.payload.user._id !== _user || DebugConfig.debugMode === true) {
+      if (data.payload.user._id !== _user) {
         addNotification({convo: data.conversation, count: 1})
       }
 
@@ -113,5 +113,5 @@ const mapDispatchToProps = dispatch => {
     userMerge: (param) => dispatch(CurrentUserActions.mergeState(param))
   }
 }
-
+ 
 export default connect(mapStateToProps, mapDispatchToProps)(PrivateComponent)
