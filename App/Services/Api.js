@@ -53,10 +53,10 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
   /**               REPORTS                */
-  const getReportsByNearby = ({ coordinate, user: { token, radius }, host: { language } }) => {
+  const getReportsByNearby = ({ coordinate, user: { token, radius, _id }, host: { language } }) => {
     // return api.get('v1/api/report/nearby/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + user.radius.toString(),
     return api.get('v1/api/report/near/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + radius.toString(),
-    { language: 'nl' },
+      { language: 'nl', _reporter: _id },
       {
         method: 'GET',
         headers: {
@@ -116,8 +116,9 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+
   const putReport = (params) => {
-    return api.put('v1/api/report/status/' + params._report,
+    return api.put('v1/api/report/status/' + params._report + '?language=' + params.user.language,
       params.data,
       {
         headers: {
@@ -127,6 +128,19 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+  
+  const putIsPublic = (params) => {
+    return api.put('v1/api/report/isPublic/' + params._report + '?language=' + params.user.language,
+      params.data,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + params.user.token
+        }
+      })
+  }
+
   /**               REPORTS NOTIFICATION                */
   // temp function
   const getReports = ({ coordinate, user }) => {
@@ -756,6 +770,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postReportTypeC,
     putReport,                   // updating report
     deleteReport,
+    putIsPublic,
 
     // conversation
     getUserTeamList,
