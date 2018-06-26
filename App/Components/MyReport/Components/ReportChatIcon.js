@@ -3,9 +3,11 @@ import { TouchableOpacity } from 'react-native'
 import { Badge, View, Text } from 'native-base'
 import { connect } from 'react-redux'
 import { ConvoTypes, convoOption } from '../../../Services/Constant'
+import { showAlertBox } from '../../../Redux/commonRedux';
 
 class ReportChatIcon extends Component {
   chatScreen (report) {
+    const { Lang } = this.props
     let cPath = {target: {_id: report._id}, type: ConvoTypes.REPORT, title: report._mainCategory ? report._mainCategory.name || '' : '', _team: report._team}
 
     if (report._conversation) {
@@ -15,6 +17,10 @@ class ReportChatIcon extends Component {
       cPath.option = convoOption.BYTYPE
     }
 
+    if (!report._team) {
+      showAlertBox(Lang.txt_E11)
+      return true
+    }
     this.props.navigation.navigate('Chat', cPath)
   }
 

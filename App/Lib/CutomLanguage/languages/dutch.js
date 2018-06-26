@@ -322,6 +322,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // Report
   txt_E10: 'GEEF MELDING DOOR',
 
+  // Chat is diabled for this report
+  txt_E11: 'Chat is uitgeschakeld voor dit rapport',
+
   txt_F13: 'Voeg nieuw team toe',
 
   // REPORTS

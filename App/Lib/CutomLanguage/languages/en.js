@@ -321,6 +321,9 @@ export default {
   // Report
   txt_E10: 'Create New Report',
 
+  // Chat is diabled for this report
+  txt_E11: 'Chat is diabled for this report',
+
   // MY TEAM
   txt_F01: 'Add extra team',
 

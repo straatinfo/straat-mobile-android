@@ -217,7 +217,10 @@ export const getReportParams = (state) => {
     if (reports.reportSelectSubCategoryID) {
       requireInType._subCategory = reports.reportSelectSubCategoryID
     }
-    requireInType._team = _activeTeam._id // pan samantagal lnagto 
+    if (_activeTeam) {
+      // requireInType._team = _activeTeam._id // pan samantagal lnagto 
+    }
+
     requireInType.isUrgent = reports.reportIsUrgent
     requireInType.location = reports.reportAddress
     requireInType.long = reports.reportCoordinate.longitude
