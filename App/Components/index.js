@@ -13,6 +13,7 @@ import CircleButtonComponent from './CircleButton'
 import ButtonComponent from './Button'
 import RowViewComponent from './RowView'
 import SpacerComponent from './Spacer'
+import ToPublicButtonComponent from './ToPublicButton'
  
 export class AlertBox extends AlertBoxComponent {}
 
@@ -32,6 +33,8 @@ export class RowView extends RowViewComponent {}
 
 export class Spacer extends SpacerComponent {}
 
+export class ToPublicButton extends ToPublicButtonComponent {}
+
 export const validator = validatorComponent
 
 export const renderIf = renderIfComponent
@@ -41,3 +44,5 @@ export class ValidationComponent extends ValidationComponentComponent {}
 export class Triangle extends TriangleComponent {}
 
 export class SlidingUpPanel extends SlidingUpPanelComponent {}
+
+

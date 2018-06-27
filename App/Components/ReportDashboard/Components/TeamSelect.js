@@ -60,7 +60,7 @@ class TeamSelect extends Component {
     const { user: {_host, isVolunteer, _id}, teamList } = this.props
     if (teamList.length < 5) {
       // this.props.getTeamlist(_host, isVolunteer, _id)
-      this.props.teamlistGetList({})
+      this.props.teamlistnonvolGetList({})
     }
   }
 
@@ -217,10 +217,10 @@ const mapStateToProps = state => {
   return {
     user: state.user.user,
     // teamList: state.user.teamList,
-    teamList: state.teamList.teamList,
+    teamList: state.teamList.teamNonList,
     //  reportState: state.reports,
     reportTeamSelected: state.reports.reportTeamSelected,
-    fetchTeam: state.teamList.fetching
+    fetchTeam: state.teamList.fetchingNon
   }
 }
 
@@ -228,7 +228,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getTeamlist: (_host, isVolunteer, _user) => dispatch(UserActions.getTeamlist({_host, isVolunteer, _user})),
     reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState)),
-    teamlistGetList: (params) => dispatch(TeamListActions.teamlistGetList(params))
+    teamlistnonvolGetList: (params) => dispatch(TeamListActions.teamlistnonvolGetList(params))
   }
 }
 

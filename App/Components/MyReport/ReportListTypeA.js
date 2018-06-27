@@ -8,6 +8,7 @@ import ConversationActions from '../../Redux/ConversationRedux'
 import ReportsActions from './../../Redux/ReportsRedux'
 import ReportItem from './Components/ReportItem'
 import SocketActions from '../../Redux/SocketRedux'
+import { StatusSource } from '../../Services/Constant';
 
 class ReportTypeAList extends Component {
   conversationId = null
@@ -85,7 +86,7 @@ class ReportTypeAList extends Component {
         {reportList.length > 0 &&
           reportList.map((report, index) =>
             <View key={report._id}>
-              <ReportItem item={report} navigation={navigation} reportMergeState={reportMergeState} />
+              <ReportItem item={report} navigation={navigation} reportMergeState={reportMergeState} statusSource={StatusSource.reportA} />
               {/* <View style={{flexDirection: 'row', marginTop: 5, marginLeft: 30}}>
                 <Badge style={{backgroundColor: 'gray'}}><Text style={{fontWeight: '400', color: 'white'}}>0</Text></Badge>
                 <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.navigateToReportChat(report)}><Text style={{fontWeight: '400', color: 'blue'}}>Berichten</Text></TouchableOpacity>

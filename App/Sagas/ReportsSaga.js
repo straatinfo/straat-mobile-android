@@ -2,13 +2,14 @@ import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import { showAlertBox } from './../Redux/commonRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { popUpAlertV2 } from '../Lib/Helper/alertHelper'
-import { ReportStatus, SocketTypes } from '../Services/Constant'
+import { ReportStatus, SocketTypes, StatusSource } from '../Services/Constant'
+import { CONNECTION } from '../Services/AppSocket'
 import { getUser, getTeamList, getUserHost } from '../Redux/UserRedux'
 import { filterReportsByMapView, sortCategories } from '../Transforms/ReportHelper'
 import { getLanguageState } from './../Redux/LanguageRedux'
 import ReportsActions, { processReport, getReportParams, stripUploadedPhoto, getReportMapMarkerList } from './../Redux/ReportsRedux'
 import MyReportActions, { getMyReportList } from './../Redux/MyReportRedux'
-import { CONNECTION } from '../Services/AppSocket'
+import NotificationActions, { getTypeAList, getTypeBList, getTypeCList } from '../Redux/NotificationRedux'
 
 /**
  * getNearbyReports
@@ -32,13 +33,14 @@ const tempdata = {
  */
 export const getNearbyReports = function * (API, action) {
   const { coordinate, user } = action.reportsParams
+  const host = yield select(getUserHost)
   // coordinate { longitude, latitude}, user {accessToken, radius}
   try {
     // show loader
     // yield call(loaderHandler.showLoader, 'getting Nearby Reports') hide loader because it block the map
 
     __DEV__ && console.log('freportsParamss', action)
-    const reports = yield call(API.getReportsByNearby, { coordinate, user })
+    const reports = yield call(API.getReportsByNearby, { coordinate, user, host })
     // test
     // const reports = {ok: true, data: {status: 1, data: [tempdata]}}
 
@@ -224,7 +226,7 @@ export const submitReport = function * (API, action) {
     const result = yield call(API.postReport, { reportParams })
     __DEV__ && console.log(reportParams)
     __DEV__ && console.log('API.postReport', result)
- 
+
     // status success
     if (result.ok && result.data.status === 1) {
       // yield put(ReportsActions.reportMergeState({reportCategoryList: result.data.data}))
@@ -239,6 +241,10 @@ export const submitReport = function * (API, action) {
         yield put(ReportsActions.reportMergeState({reportMapMarkerList: [...pointList, data]}))
         yield put(ReportsActions.reportCreatesuccess(params))
       }
+      // console.log(new Date())
+      // setTimeout(() => {
+      //   console.log(new Date())
+      // }, 15000)
 
       params.callback(data._id)
       // send socket notification
@@ -253,7 +259,6 @@ export const submitReport = function * (API, action) {
       // } else {
       //   console.log('no noti to')
       // }
-
     } else if (result.ok && result.data.status === 0) {
       throw new Error(result.data.data.error) // success sending but error on something
     } else {
@@ -282,13 +287,22 @@ export const changeStatus = function * (API, action) {
   // show loader
   yield call(loaderHandler.showLoader, language.saving)
   const user = yield select(getUser)
-  const { report: { newData, _report } } = action
-  __DEV__ && console.log('saga _report', _report)
+  const { report: { newData, _report, statusSource, field } } = action
+  __DEV__ && console.log('saga action', action)
   try {
     // fetch from backend
     // const reportParams = yield select(getReportParams)
+    let myReportList, result
+    if (field === 'STATUS') {
+      result = yield call(API.putReport, {data: newData, _report, user})
+    }
 
-    const result = yield call(API.putReport, {data: newData, _report, user})
+    if (field === 'ISPUBLIC') {
+      result = yield call(API.putIsPublic, {data: newData, _report, user})
+    }
+     if (!result) {
+       return true
+     }
     console.log(result)
     __DEV__ && console.log('API.putReport', result)
 
@@ -303,12 +317,33 @@ export const changeStatus = function * (API, action) {
     // updating mapListVIew
       const pointList = yield select(getReportMapMarkerList)
       const data = result.data.data
-      // --                                                               ---------- remove current report ------------------ --add latest ---
-      yield put(ReportsActions.reportMergeState({reportMapMarkerList: [...pointList.filter((report) => report._id !== _report), data], reportDetails: data}))
+      yield put(ReportsActions.reportMergeState({reportDetails: data}))
 
-      // update my report list getMyReportList
-      const myReportList = yield select(getMyReportList)
-      yield put(MyReportActions.myReportMerge({ myReportList: myReportList.map((report) => report._id === data._id ? data : report) }))
+      // --                                                               ---------- remove current report ------------------ --add latest ---
+       // update map
+      if (pointList.find((report) => report._id === _report)) {
+        yield put(ReportsActions.reportMergeState({reportMapMarkerList: [...pointList.filter((report) => report._id !== _report), data]}))
+      }
+
+      if (statusSource === StatusSource.myList) {
+        myReportList = yield select(getMyReportList)
+        yield put(MyReportActions.myReportMerge({ myReportList: myReportList.map((report) => report._id === data._id ? data : report) }))
+      }
+
+      if (statusSource === StatusSource.reportA) {
+        myReportList = yield select(getTypeAList)
+        yield put(NotificationActions.notificationMerge({ typeAList: myReportList.map((report) => report._id === data._id ? data : report) }))
+      }
+
+      if (statusSource === StatusSource.reportB) {
+        myReportList = yield select(getTypeBList)
+        yield put(NotificationActions.notificationMerge({ typeBList: myReportList.map((report) => report._id === data._id ? data : report) }))
+      }
+
+      if (statusSource === StatusSource.reportC) {
+        myReportList = yield select(getTypeCList)
+        yield put(NotificationActions.notificationMerge({ typeCList: myReportList.map((report) => report._id === data._id ? data : report) }))
+      }
     } else if (result.ok && result.data.status === 0) {
       throw new Error(result.data.data.error) // success sending but error on something
     } else {

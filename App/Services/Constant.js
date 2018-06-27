@@ -157,7 +157,8 @@ export const SocketTypes = {
   SEND_MESSAGE: 'send-message-v2',
   UPDATE_MESSAGE: 'update-message',
   EXIT_CONVO: 'exit-convo',
-  RECEIVE_MESSAGE: 'new-message'
+  RECEIVE_MESSAGE: 'new-message',
+  BLOCK_USER: 'BLOCK_USER'
 
 }
 /**
@@ -208,3 +209,15 @@ export const backEndConstEnum = {
  *
  */
 export const usernameSeparator = '_ID:'
+
+/**
+ *
+ * @description statusSource
+ *
+*/
+export const StatusSource = {
+  myList: 'myList',
+  reportA: 'reportA',
+  reportB: 'reportB',
+  reportC: 'reportC'
+}

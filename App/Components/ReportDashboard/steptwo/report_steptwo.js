@@ -38,7 +38,7 @@ class ReportStepTwo extends Component {
    *
    */
   _onChangeReportType (reportType) {
-    const { onSubmit, host: { isSpecific } } = this.props
+    const { onSubmit, host: { isSpecific }, Lang } = this.props
     const { reportState: { reportCategoryList, reportGeneralCategoryList }, reportMergeState } = this.props
     __DEV__ && console.log('reportCategoryList', reportCategoryList)
 
@@ -67,6 +67,10 @@ class ReportStepTwo extends Component {
 
       if (!isSpecific) {
         Categories = reportGeneralCategoryList.filter((item) => item._reportType.code === reportType.code)
+      }
+
+      if (Categories.length === 0) {
+        return popUpAlertV2(Lang.error, Lang.txt_P07)
       }
     }
 

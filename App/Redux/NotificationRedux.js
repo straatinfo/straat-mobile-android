@@ -41,7 +41,8 @@ export const INITIAL_STATE = Immutable({
   dataReceive: [],
   countedListA: [], //  ['5b18295ffc0d7d0014021364'],
   countedListB: [], //  ['5b182a46fc0d7d001402136b'],
-  countedListC: [] //  ['5b10f77eec26920014ca10ee']
+  countedListC: [], //  ['5b10f77eec26920014ca10ee']
+  countedListD: [] //  ['5b10f77eec26920014ca10ee'] // chat list box
 })
 
 /* ------------- Reducers ------------- */
@@ -66,6 +67,7 @@ export const updateByNotification = (state, {data}) => {
 }
 export const addNotification = (state, {data}) => {
   const { convo, count } = data
+  console.log('ConvoTypes.private')
   if (convo.type === ConvoTypes.REPORT) {
     if (convo._report._reportType._id === ReportTypes.PUBLIC_SPACE._id) {
       return state.merge({chatCount: state.typeCount_A + count})
@@ -78,8 +80,9 @@ export const addNotification = (state, {data}) => {
     }
   } else if (convo.type === ConvoTypes.TEAM) {
     // cause 4th tab in notification screen is chat for team only as of now
-    return state.merge({chatCount: state.chatCount + count})
+    return state.merge({chatCount: state.chatCount + count, countedListD: [...state.countedListD, convo._id]})
   } else if (convo.type === ConvoTypes.USER) {
+    return state.merge({chatCount: state.chatCount + count, countedListD: [...state.countedListD, convo._id]})
     // cause 4th tab in notification screen is chat for team only as of now
    // return state.merge({chatCount: state.chatCount + count})
   }
@@ -122,7 +125,9 @@ export const notificationOpen = (state, { data: {target, type} }) => {
     }
   }
   if (type === 'CHAT') {
-
+    if (state.countedListD.indexOf(_id) !== -1) {
+      return state.merge({countedListD: state.countedListD.filter(i => i !== _id)})
+    }
   }
   return state
 }
@@ -151,4 +156,31 @@ export const reducer = createReducer(INITIAL_STATE, {
 
 export const getNotification = (state) => {
   return state.notification
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeAList = (state) => {
+  return state.notification.typeAList
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeBList = (state) => {
+  return state.notification.typeBList
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeCList = (state) => {
+  return state.notification.typeCList
 }

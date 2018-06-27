@@ -122,8 +122,8 @@ class ReportMapScreen extends React.Component {
     __DEV__ && console.log('this.props', this.props)
     __DEV__ && console.log(this.props.userState._teamActive)
     const { design,
-      countedListA, countedListB, countedListC, chatCount, reportMapState: {isOnSearch} } = this.props
-    const notificationCount = countedListA + countedListB + countedListC + chatCount
+      countedListA, countedListB, countedListC, countedListD, reportMapState: {isOnSearch} } = this.props
+    const notificationCount = countedListA + countedListB + countedListC + countedListD
     return (
       <Container>
         <Header style={{ height: 40, backgroundColor: design.header }} >
@@ -162,6 +162,7 @@ const mapStateToProps = state => {
     countedListA: state.notification.countedListA.length,
     countedListB: state.notification.countedListB.length,
     countedListC: state.notification.countedListC.length,
+    countedListD: state.notification.countedListD.length,
     chatCount: state.notification.chatCount,
     reportMapState: state.reportMap,
     

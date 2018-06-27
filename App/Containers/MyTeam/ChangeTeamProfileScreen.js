@@ -68,7 +68,7 @@ class ChangeTeamProfile extends Component {
                   <Input
                     style={{color: '#3e3f42'}}
                     placeholder={team.teamName}
-                    onChangeText={text => this.setState({ teamName: text })}
+                    onChangeText={text => { this.setState({ teamName: text }); editfieldTeam({eteamName: text}) }}
                     onEndEditing={(e) => { editfieldTeam({eteamName: e.nativeEvent.text}) }}
                     value={this.state.teamName} />
                 </Item>
@@ -82,7 +82,7 @@ class ChangeTeamProfile extends Component {
                   <Input
                     placeholder={team.teamEmail}
                     style={{ color: '#3e3f42' }}
-                    onChangeText={text => this.setState({ teamEmail: text })}
+                    onChangeText={text => {this.setState({ teamEmail: text }); editfieldTeam({eteamEmail: text}) }}
                     onEndEditing={(e) => { editfieldTeam({eteamEmail: e.nativeEvent.text}) }}
                     value={this.state.teamEmail} />
                 </Item>

@@ -1,3 +1,3 @@
-export const createReportNotification = (report) => {
-  return { message: `new report on ${report.title}`, title: 'Straat.info' }
+export const createReportNotification = (report, title) => {
+  return { message: `new report on ${title}`, title: 'Straat.info' }
 }

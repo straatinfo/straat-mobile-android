@@ -53,10 +53,10 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
   /**               REPORTS                */
-  const getReportsByNearby = ({ coordinate, user: { token, language, radius } }) => {
+  const getReportsByNearby = ({ coordinate, user: { token, radius, _id }, host: { language } }) => {
     // return api.get('v1/api/report/nearby/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + user.radius.toString(),
     return api.get('v1/api/report/near/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + radius.toString(),
-    { language },
+      { language: 'nl', _reporter: _id },
       {
         method: 'GET',
         headers: {
@@ -70,7 +70,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getReportsByReporter = ({ params, user: { _id, token }, host: { language } }) => {
     // return api.get('v1/api/report/reporter/' + _id,
     return api.get('v1/api/report/clean/reporter/' + _id,
-    { language },
+    { language: 'nl' },
       {
         method: 'GET',
         headers: {
@@ -84,7 +84,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getReportById = ({ params, user: { token }, host: { language } }) => {
     const { _id } = params
     return api.get('v1/api/report/' + _id,
-      { language },
+      { language: 'nl' },
       {
         method: 'GET',
         headers: {
@@ -116,8 +116,9 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+
   const putReport = (params) => {
-    return api.put('v1/api/report/status/' + params._report,
+    return api.put('v1/api/report/status/' + params._report + '?language=' + params.user.language,
       params.data,
       {
         headers: {
@@ -127,6 +128,19 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+  
+  const putIsPublic = (params) => {
+    return api.put('v1/api/report/isPublic/' + params._report + '?language=' + params.user.language,
+      params.data,
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + params.user.token
+        }
+      })
+  }
+
   /**               REPORTS NOTIFICATION                */
   // temp function
   const getReports = ({ coordinate, user }) => {
@@ -147,7 +161,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       {
         _reporter: _id,
         _reportType: _reportType,
-        language: language
+        language: 'nl'
       },
       {
         method: 'GET',
@@ -373,7 +387,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     // console.log('photo on API', data)
     // un used
     return api.get('v1/api/category/app/mainCategory/withGeneral/hostId/' + reportParams._host,
-      {language: reportParams.language},
+      {language: 'nl'},
       {
         headers: {
           Accept: 'application/json',
@@ -386,7 +400,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getCategoriesGeneral = (reportParams) => {
     __DEV__ && console.log('getting general cat: ', reportParams)
     return api.get('v1/api/category/app/mainCategory/general',
-      { code: 'ABC', language: reportParams.language },
+      { code: 'ABC', language: 'nl' },
       {
         headers: {
           Accept: 'application/json',
@@ -399,14 +413,15 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   const getCategoriesByHost = (reportParams) => {
     // console.log('photo on API', data)
     return api.get('v1/api/category/mainCategory/hostId/' + reportParams._host,
-      {language: reportParams.language},
+      {language: 'nl'},
       {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + reportParams.token
         }
-      })
+      }
+    )
   }
 
   // MY TEAM
@@ -576,6 +591,20 @@ const create = (baseURL = AppConfig.ApiUrl) => {
       })
   }
 
+  const getNonVolTeams = ({user: { _id, token, _host }}) => {
+    return api.get('v1/api/team/nonvol/' + _host,
+    {},
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+  }
+
+  
   // MY TEAM
   const addNewTeam = ({ user: { _id, token, _host }, data }) => {
     // return api.post('/v2/api/team/new/' + _id,
@@ -741,6 +770,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postReportTypeC,
     putReport,                   // updating report
     deleteReport,
+    putIsPublic,
 
     // conversation
     getUserTeamList,
@@ -764,6 +794,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     editTeamProfile,
     acceptUserRequest,
     declineTeamRequest,
+    getNonVolTeams,
 
     // profile
     editUserProfile,

@@ -321,6 +321,9 @@ export default {
   // Report
   txt_E10: 'Create New Report',
 
+  // Chat is diabled for this report
+  txt_E11: 'Chat is diabled for this report',
+
   // MY TEAM
   txt_F01: 'Add extra team',
 
@@ -355,11 +358,14 @@ export default {
   // message your group
   txt_J02: 'Message your group',
 
+  // message your group
+  txt_J02b: 'Communication',
+
   //  Suspicious situation
   txt_J03: 'Suspicious Situation',
 
-  // CREATE MESSAGE
-  txt_J04: 'Create Message',
+  // Public Space
+  txt_J04: 'Public Space',
 
   /** You are here */
   txt_J05: 'You are here',
@@ -415,6 +421,9 @@ export default {
   // this report has been processed?
   txt_J18: 'This report has been processed?',
 
+  // Currently, this report can only be seen by you and your team members. You're at the point of making this report public to everybody. Do you wish to continue?
+  txt_J18b: 'Currently, this report can only be seen by you and your team members. You\'re at the point of making this report public to everybody. Do you wish to continue?',
+
   // Yes
   txt_J19: 'Yes',
 
@@ -443,7 +452,7 @@ export default {
   txt_J27: ' Thank you for your report!',
 
   /** @description From now on everybody can see     */
-  txt_J28ab: 'From now on everybody can see in the app. Ifthe report is about public space, it is also mailed to the host.',
+  txt_J28ab: 'From now on everybody can see in the app. If the report is about public space, it is also mailed to the host.',
   txt_J28c: 'Your message has been sent to the group (s) and is also in your overview that can be found in the menu at the top right.',
 
   /** @description hier kunt u berichten sturen naar de teams A  */
@@ -530,6 +539,9 @@ export default {
   /** @description Are you sure you want to delete the report? */
   txt_J45: 'Are you sure you want to delete the report?',
 
+  // this report has been processed?
+  txt_J46: 'This report has been processed?',
+
   /** @description General Information */
   generalInformation: 'General Information',
 
@@ -541,9 +553,6 @@ export default {
 
   /** @description Report has been deleted */
   ReportHasBeenDeleted: 'Report has been deleted',
-
-
-  
 
   // GLOBAL LANGUAGE
   // is under maintenance
@@ -705,6 +714,9 @@ export default {
   // Change my Data
   txt_P06: 'CHANGE MY DATA',
 
+  // Unable to create report, no category available.
+  txt_P07: 'Unable to create report, no category available.',
+
   /** @description Address */
   address: 'Address',
 
@@ -717,7 +729,7 @@ export default {
 
   /** @description Confirmation */
   confirmation: 'Confirmation',
-  
+
   /** @description Member team is required */
   teamRequired: 'Member team is required',
 
@@ -735,7 +747,31 @@ export default {
 
   invalidPhoneNumberM: 'This number is already in use, please enter a different number or contact us through info@straat.info',
 
+  /** @description blockedUser */
+  blockedUser: 'At this moment the use of the app has been blocked. If you have any questions, please contact us through the form on www.straat.info',
+
+  /** @description Connected */
+  connected: 'Connected',
+
+  /** @description Connecting */
+  connecting: 'Connecting',
+
+  /** @description Disconnected */
+  disconnected: 'Disconnected',
+
+  /** @description Notice */
+  notice: 'Notice',
+
+  /** @description Public */
+  public: 'Public',
+
+  /** @description private */
+  private: 'Private',
+
+  /** @description change */
+  change: 'Change',
+
   /** @description Extra */
   extra: 'Extra'
-  
+
 }

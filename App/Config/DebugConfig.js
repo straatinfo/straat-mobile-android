@@ -10,6 +10,8 @@ export default {
   displayNotificationCountOfHisReport: false,
   displayNotificationAlertOfHisReport: false,
   displayGoogleMap: true,
-  ScreenTest: true
+  ScreenTest: true,
+  debugMode: false
 }
+
  

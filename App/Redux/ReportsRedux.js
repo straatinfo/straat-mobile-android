@@ -98,7 +98,8 @@ export const INITIAL_STATE = Immutable({
   submitButton: false,
   reportDetails: Report,                                          // type: Report  this data will display on after click the callout on map or in message
   fetchTeam: true,
-  errorTeam: ''
+  errorTeam: '',
+  statusSource: null
 })
 
 /* ------------- Reducers ------------- */
@@ -151,6 +152,7 @@ export const reportCreatesuccess = (state, { reportParams }) => {
 export const reportChangeStatus = (state, { _report }) => {
   return state
 }
+
 export const reportReset = (state, { params }) => {
   return INITIAL_STATE
 }
@@ -202,6 +204,11 @@ export const getReportParams = (state) => {
   requireInType.teamList = []
 
   // type A
+  if (reports.reportType.code === ReportTypes.PUBLIC_SPACE.code) {
+    requireInType.isPublic = true
+  }
+
+  // type A - B
   if (reports.reportType.code === ReportTypes.PUBLIC_SPACE.code || reports.reportType.code === ReportTypes.SAFETY.code) {
     // validation
     if (reports.reportSelectMainCategoryID) {
@@ -210,7 +217,10 @@ export const getReportParams = (state) => {
     if (reports.reportSelectSubCategoryID) {
       requireInType._subCategory = reports.reportSelectSubCategoryID
     }
-    requireInType._team = _activeTeam._id // pan samantagal lnagto 
+    if (_activeTeam) {
+      requireInType._team = _activeTeam._id // pan samantagal lnagto 
+    }
+
     requireInType.isUrgent = reports.reportIsUrgent
     requireInType.location = reports.reportAddress
     requireInType.long = reports.reportCoordinate.longitude

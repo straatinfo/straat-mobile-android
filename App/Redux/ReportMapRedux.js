@@ -9,7 +9,8 @@ const { Types, Creators } = createActions({
   reportMapFailure: null,
   mergeReportmap: ['newState'],
   reportmapSearchlisttoggle: ['status'],
-  reportMapSearch: null
+  // reportMapSearch: null, 
+  reportmapReset: ['params']
 })
 
 export const ReportMapTypes = Types
@@ -26,7 +27,7 @@ export const INITIAL_STATE = Immutable({
   serchItems: [ ],
   searchListActive: false,                // can be hide by map viewer - 
   searchSelectedID: 0,
-  mapFilterCode: 'A'      // type A , B , etc
+  mapFilterCode: 'AB'      // type A , B , AB ,etc
 
 })
 
@@ -57,6 +58,10 @@ export const failure = state =>
 export const reportmapSearchlisttoggle = (state, { status }) =>
   state.merge({ searchListActive: status })
 
+export const reportmapReset = (state, { params }) => {
+  return INITIAL_STATE
+}
+
 export const mergeReportmap = (state, {newState}) => {
   __DEV__ && console.log('newState', newState)
   return state.merge(newState)
@@ -69,6 +74,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.REPORT_MAP_SUCCESS]: success,
   [Types.REPORT_MAP_FAILURE]: failure,
   [Types.REPORTMAP_SEARCHLISTTOGGLE]: reportmapSearchlisttoggle,
+  // [Types.REPORTMAP_FAILURE]: failure,
+  [Types.REPORTMAP_RESET]: reportmapReset,
   
   [Types.MERGE_REPORTMAP]: mergeReportmap
 })

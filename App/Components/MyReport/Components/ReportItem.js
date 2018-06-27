@@ -19,6 +19,7 @@ import ReportChatIcon from './ReportChatIcon';
 import { getCategoryName, hasCategoryName } from '../../../Transforms/CategoryHelper';
 import { Spacer } from '../..';
 import * as Animatable from 'react-native-animatable'
+import { StatusSource } from '../../../Services/Constant';
 
 const tempUrl = 'https://res.cloudinary.com/hvina6sjo/image/upload/v1519079967/sample/20180216_013543.jpg_Mon%20Feb%2019%202018%2022:39:25%20GMT%2B0000%20%28UTC%29.jpg'
 
@@ -92,17 +93,17 @@ const styles = {
     color: 'red',
     position: 'absolute',
     right: 5,
-    fontWeight: 'bold'
-
+    fontWeight: 'bold',
+    top: 5
   }
 }
 
 class ReportItem extends Component {
   _navigation () {
-    const {reportMergeState, notificationOpen, navigation, item} = this.props
+    const {reportMergeState, notificationOpen, navigation, item, statusSource} = this.props
     navigation.navigate('ReportDetails', {report: item})
     notificationOpen(item, 'REPORT')
-    reportMergeState({reportDetails: item})
+    reportMergeState({reportDetails: item, statusSource: statusSource})
   }
   _renderBody () {
     const { item, Lang, navigation } = this.props

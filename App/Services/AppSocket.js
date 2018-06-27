@@ -33,6 +33,10 @@ class SocketConnection {
       return this.newSocket(userId, token)
     }
   }
+  logout () {
+    this.mainSocket.disconnect()
+    this.mainSocket = null
+  }
 }
 
 export const CONNECTION = new SocketConnection()

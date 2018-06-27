@@ -29,14 +29,14 @@ import { login, appStart } from './LoginSagas'
 import { getUserAvatar } from './GithubSagas'
 import { change } from './ScreenSagas'
 import { confirmAccessCode, registerAccessCode } from './AccessCodeSagas'
-import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber } from './UserSagas'
+import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber, blockUser } from './UserSagas'
 import { getNearbyReports, getReportAddress, uploadPhoto, getCategories, submitReport, changeStatus } from './ReportsSaga'
 import { fetchConversation, createConversation, getConversationList } from './ConversationSaga'
 import { fetchMessage, sendMessage, getMessagesByConvoId, postConvo } from './MessageSaga'
 import { myReportRequest, myReportDetailRequest, myReportDeleteRequest } from './MyReportSagas'
 import { notifactionRequestTypeA, notifactionRequestTypeB, notifactionRequestTypeC, updateByNotification } from './NotificationSaga'
 import { sendFeedback } from './FeedbackSaga'
-import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam } from './TeamSagas'
+import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam, getNonVolTeamList } from './TeamSagas'
 import { editUserProfile, uploadUserPhoto, validateUserNameProfile, validateEmailProfile, validatePhoneNumberProfile, validateCityProfile, validatePostalCodeProfile } from './ProfileSaga'
 import { TeamListTypes } from '../Redux/TeamListRedux'
 import { getUserinfo } from './UserinfoSagas';
@@ -65,6 +65,8 @@ export default function * root () {
 
     /**              USER              */
     takeLatest(CurrentUserTypes.FORGOT_PASSWORD_REQUEST, requestPassword, api),
+    /**              USER              */
+    takeLatest(CurrentUserTypes.USER_BLOCK, blockUser, api),
 
     /**          ACCESS CODE           */
     takeLatest(CurrentUserTypes.SET_ACCESS_CODE, confirmAccessCode, api),
@@ -95,8 +97,9 @@ export default function * root () {
     takeLatest(ReportsTypes.SET_REPORT_ADDRESS_BY_COORDINATE, getReportAddress, googleAPI),
 
     /**         TEAM           */
-
+    
     takeLatest(TeamListTypes.TEAMLIST_GET_LIST, getUserTeamList, api),
+    takeLatest(TeamListTypes.TEAMLISTNONVOL_GET_LIST, getNonVolTeamList, api),
     takeLatest(TeamTypes.GET_TEAM_DETAILS, getTeamDetails, api),
     takeLatest(TeamTypes.GET_TEAM_REQUEST, getTeamRequest, api),
     takeLatest(TeamTypes.TEAM_ACCEPT_REQUEST, teamAcceptRequest, api),

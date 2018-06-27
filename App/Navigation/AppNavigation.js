@@ -30,6 +30,7 @@ import NavigationDrawer        from './NavigationDrawer'
 import testAccessCode        from './../Components/AccessCode/RegisterAccessCode'
 import NotificationTestScreen        from './../Containers/Notification/NotificationTestScreen'
 import ReportMapTestScreen        from './../Containers/Test/ReportMapTest'
+import TestFeedback        from './../Containers/Test/TestFeedback'
 
 
 /**
@@ -42,7 +43,7 @@ import ReportMapTestScreen        from './../Containers/Test/ReportMapTest'
 const defaultRoute = {
   headerMode: 'none',
   navigationOptions: { headerStyle: styles.header },
-  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'ReportMapTest'
+  initialRouteName: !Configuration.DEBUG ? 'Splash' : 'TestFeedback'
 }
 
 // Manifest of possible screens 
@@ -74,7 +75,7 @@ const PrimaryNav = StackNavigator({
 
   testAccessCode:            { screen: testAccessCode },
   NotificationTest:            { screen: NotificationTestScreen },
-  ReportMapTest:            { screen: ReportMapTestScreen },
+  TestFeedback:            { screen: TestFeedback },
   
   // TeamList:            { screen: TeamListScreen },
 

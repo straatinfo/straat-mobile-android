@@ -18,6 +18,7 @@ export const reducers = combineReducers({
   reports: require('./ReportsRedux').reducer,
   setting: require('./SettingRedux').reducer,
   conversation: require('./ConversationRedux').reducer,
+  chatconnection: require('./ChatconnectionRedux').reducer,  // chat or socket
   message: require('./MessageRedux').reducer,
   team: require('./TeamRedux').reducer,
   teamList: require('./TeamListRedux').reducer,

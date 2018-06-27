@@ -121,7 +121,7 @@ const mapStateToProps = state => {
   return {
     user: state.user.user,
     // teamList: state.user.teamList,
-    teamList: state.teamList.teamList,
+    teamList: state.teamList.teamNonList,
     // reportState: state.reports,
     reportTeamSelected: state.reports.reportTeamSelected,
     categoryList: state.reports.reportCategoryList,

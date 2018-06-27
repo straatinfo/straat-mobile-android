@@ -149,10 +149,10 @@ class ReportStepThree extends Component {
   _onSubmit () {
     const {_activeTeam} = this.props.user
     // requird team so we will validated here if it has some team
-    if (!(_activeTeam && _activeTeam._id)) {
-      showAlertBox('Required Team')
-      return true
-    }
+    // if (!(_activeTeam && _activeTeam._id)) {
+    //   showAlertBox('Required Team')
+    //   return true
+    // }
 
    // submit report
     if (this.validate()) {

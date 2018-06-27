@@ -10,7 +10,8 @@ import {
   AsyncStorage,
   TouchableOpacity,
   PermissionsAndroid,
-  WebView
+  WebView,
+  Keyboard
 } from 'react-native'
 import {
   Header,
@@ -33,7 +34,7 @@ import Api from './../../Lib/Common/Api'
 import ApiUtil from './../../Lib/Common/ApiUtil'
 import AlertBox from './../../Components/AlertBox'
 import Images from './../../Themes/Images'
-import { getStyleStatusInPin } from './../../Transforms/ReportHelper'
+import { getStyleStatusInPin, keyboardCb } from './../../Transforms/ReportHelper'
 
 import MapButton from './../../Components/MapButton'
 import ReportStepThree from './../../Components/ReportDashboard/stepthree/report_stepthree'
@@ -65,6 +66,7 @@ const ZERO = 0
 
 class ReportMapContainer extends Component {
   reportMarkers = {}
+  reportPhotoInMarkers = {}
   constructor (props) {
     super(props)
 
@@ -161,7 +163,7 @@ class ReportMapContainer extends Component {
     // this._panel_reportView.transitionTo(this.state.slideMenuHeight + 150 + 65)
           // cnr button, hide report green button
     this.setState({ txt_e10Height: {height: 0} })
-    reportMergeState({reportDetails: marker})
+    reportMergeState({reportDetails: marker, statusSource: 'map'})
   }
 
   resetMap () {
@@ -243,9 +245,26 @@ class ReportMapContainer extends Component {
       return true
     }
     // console.log('this.reportMarkers', this.reportMarkers)
-    if (this.reportMarkers['M' + pinRef]) {
-      setTimeout(() => this.reportMarkers['M' + pinRef].showCallout(), 1500)
-    }
+    __DEV__ && console.log(new Date())
+    setTimeout(() => {
+      if (this.reportMarkers['M' + pinRef]) {
+        this.reportMarkers['M' + pinRef].showCallout()
+        // setTimeout(() => {
+        //   this.reportMarkers['M' + pinRef].hideCallout()
+        //   __DEV__ && console.log(this.reportMarkers['M' + pinRef])
+        //   if (this.reportPhotoInMarkers && this.reportPhotoInMarkers['P' + pinRef] && this.reportPhotoInMarkers['P' + pinRef].reload) {
+        //     setTimeout(() => {
+        //       this.reportMarkers['M' + pinRef].hideCallout()
+        //       setTimeout(() => {
+        //         this.reportMarkers['M' + pinRef].showCallout()
+        //         this.reportPhotoInMarkers['P' + pinRef].reload()
+        //       }, 1500)
+        //     }, 1000)
+        //   }
+        // }, 1500)
+      }
+      __DEV__ && console.log(new Date())
+    }, 5 * 1000) // why 15000 is 3 sec?
   }
 
   onReportTypeSelect (value) {
@@ -425,14 +444,16 @@ class ReportMapContainer extends Component {
   }
   reportFormShow () {
     const {reportMergeState, reportState: {isReportFormActive, reportCoordinate, userPosition }} = this.props
-    this.mapViewToRegion({latitude: reportCoordinate.latitude, longitude: reportCoordinate.longitude }, 300)
-    // set user address from start of this screen
-    this.setAddress(reportCoordinate)
+    keyboardCb(Keyboard, () => {
+      this.mapViewToRegion({latitude: reportCoordinate.latitude, longitude: reportCoordinate.longitude }, 300)
+      // set user address from start of this screen
+      this.setAddress(reportCoordinate)
 
-    this.setState({slideMenuUp: false, slidingPanelPage: 'report-location'},
-    () => {
-    //  this._panel.transitionTo(this.state.slideMenuHeight + 65)
-      reportMergeState({isReportFormActive: true})
+      this.setState({slideMenuUp: false, slidingPanelPage: 'report-location'},
+      () => {
+      //  this._panel.transitionTo(this.state.slideMenuHeight + 65)
+        reportMergeState({isReportFormActive: true})
+      })
     })
   }
   getHeight () {
@@ -499,14 +520,15 @@ class ReportMapContainer extends Component {
     //   return null
     // }
     return (
-      <View style={styles.container}>
+      <View style={styles.container} >
         <ReportMapSearchItems mapNavigate={this._mapNavigate.bind(this)} />
         {renderIf(this.state.mapReset === 1 && DebugConfig.displayGoogleMap)(
           <MapView
+            onPress={Keyboard.dismiss}
             ref={c => { this.reportMap = c }}
             style={[styles.map, { height: heights.hmap }, { height: '100%' }]}
-            showsUserLocation
-            followUserLocation
+            // showsUserLocation
+            // followUserLocation
             showsMyLocationButton={false}
             showsCompass={false}
             followsUserLocation={false}
@@ -549,13 +571,18 @@ class ReportMapContainer extends Component {
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.30)'}
                     />
+            {/* <MapView.Circle
+              center={reportState.userPosition}
+              radius={10}
+              strokeColor={'transparent'}
+              fillColor={'rgba(112,185,213,0.99)'} /> */}
             <MapView.Circle
               center={reportState.userPosition}
-              radius={5}
+              radius={8}
               strokeColor={'transparent'}
-              fillColor={'rgba(112,185,213,0.60)'} />
+              fillColor={'blue'} />
 
-            { mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
+            { reportState.isReportFormActive === false && mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
               return <MapView.Marker
                 ref={m => { this.reportMarkers['M' + marker._id] = m }}
                 coordinate={{ longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
@@ -575,7 +602,9 @@ class ReportMapContainer extends Component {
                   <WebView
                     source={{uri: cropWH(60, 80, marker.attachments[0].secure_url)}}
                     style={{width: 60, height: 80, flex: 1, marginVertical: 5}}
-                    />}
+                    ref={m => { this.reportPhotoInMarkers['P' + marker._id] = m }}
+                    />
+                  }
                 </MapView.Callout>
               </MapView.Marker>
             }) }

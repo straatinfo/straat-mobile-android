@@ -322,6 +322,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // Report
   txt_E10: 'GEEF MELDING DOOR',
 
+  // Chat is diabled for this report
+  txt_E11: 'Chat is uitgeschakeld voor dit rapport',
+
   txt_F13: 'Voeg nieuw team toe',
 
   // REPORTS
@@ -331,10 +334,13 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // message your group
   txt_J02: 'Bericht uw groep',
 
+  // message your group
+  txt_J02b: 'Communicatie',
+
   //  Suspicious situation
   txt_J03: 'Verdachte Situatie',
 
-  //   CREATE MESSAGE
+  //  Public Space
   txt_J04: 'Melding Openbare Ruimte',
 
   /** You are here */
@@ -391,6 +397,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
 
   // this report has been processed
   txt_J18: 'Is deze melding afgehandeld?',
+
+  // Currently, this report can only be seen by you and your team members. You're at the point of making this report public to everybody. Do you wish to continue?
+  txt_J18b: 'Deze melding is op dit moment alleen zichtbaar voor u en uw teamleden. U staat op het punt de melding openbaar te maken. Wilt u doorgaan?',
 
   // Yes
   txt_J19: 'Ja',
@@ -472,7 +481,7 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   suspiciousSituation: 'Verdachte Situatie',
 
   /** @description type B Suspicious situation */
-  allReports: 'Alle Rapporten',
+  allReports: 'Alle Meldingen',
 
   /** @description type C Messages */
   messages: 'Berichten',
@@ -708,6 +717,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // Change my Data
   txt_P06: 'WIJZIG MIJN GEGEVENS',
 
+  // Unable to create report, no category available.
+  txt_P07: 'Kan rapport niet maken, geen categorie beschikbaar.',
+
   /** @description Address */
   address: 'Adres',
 
@@ -737,6 +749,30 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   _search: 'Zoek adres',
 
   invalidPhoneNumberM: 'Dit nummer is al in gebruik. Voer een ander nummer in of neem contact op via info@straat.info',
+
+  /** @description blockedUser */
+  blockedUser: 'Op dit moment is de app voor jou geblokkeerd. Als je vragen hebt, neem dan contact op via het formulier p www.straat.info',
+
+  /** @description Connected */
+  connected: 'Verbonden',
+
+  /** @description Connecting */
+  connecting: 'Aansluiten',
+
+  /** @description Disconnected */
+  disconnected: 'Losgekoppeld',
+
+  /** @description Notice */
+  notice: 'Merk Op',
+
+  /** @description Public */
+  public: 'Public',
+
+  /** @description private */
+  private: 'Besloten',
+
+  /** @description change */
+  change: 'Verander',
 
   /** @description Extra */
   extra: 'Extra'
