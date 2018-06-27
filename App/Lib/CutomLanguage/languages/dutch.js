@@ -337,7 +337,6 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
   // message your group
   txt_J02b: 'Communicatie',
 
-
   //  Suspicious situation
   txt_J03: 'Verdachte Situatie',
 
@@ -398,6 +397,9 @@ Met het accepteren van deze algemene voorwaarden stem je in met het hier beschre
 
   // this report has been processed
   txt_J18: 'Is deze melding afgehandeld?',
+
+  // Currently, this report can only be seen by you and your team members. You're at the point of making this report public to everybody. Do you wish to continue?
+  txt_J18b: 'Deze melding is op dit moment alleen zichtbaar voor u en uw teamleden. U staat op het punt de melding openbaar te maken. Wilt u doorgaan?',
 
   // Yes
   txt_J19: 'Ja',

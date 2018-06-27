@@ -122,7 +122,7 @@ class ReportDetail extends Component {
   confirmChangeVisible (reportID) {
     const { Lang } = this.props
     AlertBox.alert(' ',
-      Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeVisible(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
+      Lang.txt_J18b, [ {text: Lang.txt_J19, onPress: () => this.changeVisible(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
       { cancelable: false }
     )
   }
@@ -194,6 +194,7 @@ class ReportDetail extends Component {
                   </View>
                 </View>
               </View>
+
               {renderIf(report._team && report._team._id && report.isPublic === false && report._reportType.code === ReportTypes.SAFETY.code && hasMember(report._team._id, teamList))(
                 <View style={[ styles.lineContainer ]} >
                   <View style={[ styles.twoCol ]} >

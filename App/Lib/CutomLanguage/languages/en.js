@@ -421,6 +421,9 @@ export default {
   // this report has been processed?
   txt_J18: 'This report has been processed?',
 
+  // Currently, this report can only be seen by you and your team members. You're at the point of making this report public to everybody. Do you wish to continue?
+  txt_J18b: 'Currently, this report can only be seen by you and your team members. You\'re at the point of making this report public to everybody. Do you wish to continue?',
+
   // Yes
   txt_J19: 'Yes',
 
