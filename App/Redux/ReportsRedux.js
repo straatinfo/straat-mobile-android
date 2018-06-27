@@ -218,7 +218,7 @@ export const getReportParams = (state) => {
       requireInType._subCategory = reports.reportSelectSubCategoryID
     }
     if (_activeTeam) {
-      // requireInType._team = _activeTeam._id // pan samantagal lnagto 
+      requireInType._team = _activeTeam._id // pan samantagal lnagto 
     }
 
     requireInType.isUrgent = reports.reportIsUrgent
