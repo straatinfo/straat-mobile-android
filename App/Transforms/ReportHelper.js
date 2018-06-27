@@ -53,7 +53,7 @@ export const flatReports = (reports) => {
  *
  */
 export const removeNoTeam = (report, index, _reporter) => {
-  if (report._team || report._reporter === _reporter) {
+  if (report._team || report._reporter._id === _reporter) {
     return true
   }
   return false
