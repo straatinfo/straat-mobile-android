@@ -41,7 +41,7 @@ class PrivateComponent extends Component {
   }
 
   socketInit () {
-    const {_user, token, updateByNotification, messageReceive, convoReceiveMessage, addNotification, chatconnectionMerge, userBlock, userMerge} = this.props
+    const {_user, token, updateByNotification, notificationUpdatemessage, messageReceive, convoReceiveMessage, addNotification, chatconnectionMerge, userBlock, userMerge} = this.props
     this.connection = CONNECTION.getConnection(_user, token)
     this.connection.on(SocketTypes.RECEIVE_GLOBAL, (data) => updateByNotification(SocketTypes.RECEIVE_GLOBAL, data))
     this.connection.on(SocketTypes.RECEIVE_MESSAGE, (data) => {
@@ -56,6 +56,8 @@ class PrivateComponent extends Component {
       if (data.payload.user._id !== _user) {
         addNotification({convo: data.conversation, count: 1})
       }
+
+      notificationUpdatemessage({source: SocketTypes.RECEIVE_MESSAGE, data: data})
 
       // if (displayNotificationCountOfHisReport) {
       //   addNotification({convo: data.conversation, count: 1})
@@ -108,6 +110,8 @@ const mapDispatchToProps = dispatch => {
     messageReceive: (params) => dispatch(MessageActions.messageReceive(params)),
     convoReceiveMessage: (param) => dispatch(ConversationActions.convoReceiveMessage(param)),
     addNotification: (param) => dispatch(NotificationActions.addNotification(param)),
+    notificationUpdatemessage: (param) => dispatch(NotificationActions.notificationUpdatemessage(param)),
+    
     chatconnectionMerge: (param) => dispatch(ChatconnectionRedux.chatconnectionMerge(param)),
     userBlock: (param) => dispatch(CurrentUserActions.userBlock(param)),
     userMerge: (param) => dispatch(CurrentUserActions.mergeState(param))

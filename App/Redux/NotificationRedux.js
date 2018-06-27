@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import { notificationTypes, ConvoTypes, ReportTypes } from '../Services/Constant'
+import { notificationTypes, ConvoTypes, ReportTypes, SocketTypes } from '../Services/Constant'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -12,8 +12,8 @@ const { Types, Creators } = createActions({
   updateByNotification: ['source', 'data'],
   addNotification: ['data'],
   clearNotification: ['data'],
-  notificationOpen: ['data']
-
+  notificationOpen: ['data'],
+  notificationUpdatemessage: ['params']
 })
 
 export const NotificationTypes = Types
@@ -61,10 +61,37 @@ export const notificationRequestTypeB = (state, {data}) => {
 export const notificationRequestTypeC = (state, {data}) => {
   return state.merge({ fetchingC: true })
 }
-
+ 
 export const updateByNotification = (state, {data}) => {
+
+
   return state
 }
+
+export const notificationUpdatemessage = (state, {params: {data, source}}) => {
+  try {
+    console.log('data, source', data, source)
+    console.log('notification state', state)
+    let reportIndex
+    if (source === SocketTypes.RECEIVE_MESSAGE && data.conversation.type === 'REPORT') {
+      const reportID = data.conversation._report._id
+      const messageID = data.payload._id
+      if (data.conversation._report._reportType.code === 'A') {
+        console.log('index: ', reportID)
+        reportIndex = state.typeAList.findIndex((r) => r._id === reportID)
+        const upt = state.typeAList[reportIndex]._conversation.messages.push(messageID)
+        
+        console.log('upt: ', reportIndex)
+        console.log('upt: ', upt)
+        return upt
+      }
+    }
+  } catch (e) {
+    console.log(e)
+  }
+  return state
+}
+
 export const addNotification = (state, {data}) => {
   const { convo, count } = data
   console.log('ConvoTypes.private')
@@ -142,7 +169,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_BY_NOTIFICATION]: updateByNotification,
   [Types.ADD_NOTIFICATION]: addNotification,
   [Types.CLEAR_NOTIFICATION]: clearNotification,
-  [Types.NOTIFICATION_OPEN]: notificationOpen
+  [Types.NOTIFICATION_OPEN]: notificationOpen,
+  [Types.NOTIFICATION_UPDATEMESSAGE]: notificationUpdatemessage
+  
 
 })
 
