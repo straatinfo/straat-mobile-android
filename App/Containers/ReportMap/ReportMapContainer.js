@@ -264,7 +264,7 @@ class ReportMapContainer extends Component {
         // }, 1500)
       }
       __DEV__ && console.log(new Date())
-    }, 16 * 1000) // why 15000 is 3 sec?
+    }, 5 * 1000) // why 15000 is 3 sec?
   }
 
   onReportTypeSelect (value) {
