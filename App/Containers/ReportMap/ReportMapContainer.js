@@ -527,8 +527,8 @@ class ReportMapContainer extends Component {
             onPress={Keyboard.dismiss}
             ref={c => { this.reportMap = c }}
             style={[styles.map, { height: heights.hmap }, { height: '100%' }]}
-            showsUserLocation
-            followUserLocation
+            // showsUserLocation
+            // followUserLocation
             showsMyLocationButton={false}
             showsCompass={false}
             followsUserLocation={false}
@@ -571,13 +571,18 @@ class ReportMapContainer extends Component {
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.30)'}
                     />
+            {/* <MapView.Circle
+              center={reportState.userPosition}
+              radius={10}
+              strokeColor={'transparent'}
+              fillColor={'rgba(112,185,213,0.99)'} /> */}
             <MapView.Circle
               center={reportState.userPosition}
-              radius={5}
+              radius={8}
               strokeColor={'transparent'}
-              fillColor={'rgba(112,185,213,0.60)'} />
+              fillColor={'blue'} />
 
-            { mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
+            { reportState.isReportFormActive === false && mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
               return <MapView.Marker
                 ref={m => { this.reportMarkers['M' + marker._id] = m }}
                 coordinate={{ longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
