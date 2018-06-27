@@ -1,6 +1,6 @@
 import DebugConfig from './../Config/DebugConfig'
 import NotificationActions, { getNotification } from './../Redux/NotificationRedux'
-import { flatReports } from '../Transforms/ReportHelper'
+import { flatReports, flatReportsNotificationTab } from '../Transforms/ReportHelper'
 import { getLanguageState } from './../Redux/LanguageRedux'
 import { getUser, getUserHost } from './../Redux/UserRedux'
 import { put, call, select } from 'redux-saga/effects'
@@ -22,7 +22,7 @@ export const notifactionRequestTypeA = function * (API, action) {
   try {
     const reports = yield call(API.getPublicReports, { _reportType: ReportTypes.PUBLIC_SPACE._id, user, host })
     if (reports.ok && reports.data.status === 1) {
-      yield put(NotificationActions.notificationMerge({fetchingA: false, errorA: '', typeAList: flatReports(reports.data.data)}))
+      yield put(NotificationActions.notificationMerge({fetchingA: false, errorA: '', typeAList: flatReportsNotificationTab(reports.data.data)}))
     } else {
       throw new Error(language.failed)
     }
@@ -41,7 +41,7 @@ export const notifactionRequestTypeB = function * (API, action) {
   try {
     const reports = yield call(API.getPublicReports, { _reportType: ReportTypes.SAFETY._id, user, host })
     if (reports.ok && reports.data.status === 1) {
-      yield put(NotificationActions.notificationMerge({fetchingB: false, errorB: '', typeBList: flatReports(reports.data.data)}))
+      yield put(NotificationActions.notificationMerge({fetchingB: false, errorB: '', typeBList: flatReportsNotificationTab(reports.data.data)}))
     } else {
       throw new Error(language.failed)
     }
@@ -61,7 +61,7 @@ export function * notifactionRequestTypeC (API, action) {
     const reports = yield call(API.getPublicReports, { _reportType: ReportTypes.COMMUNICATION._id, user, host })
     __DEV__ && console.log('reports C: ', reports)
     if (reports.ok && reports.data.status === 1) {
-      yield put(NotificationActions.notificationMerge({fetchingC: false, errorC: '', typeCList: flatReports(reports.data.data)}))
+      yield put(NotificationActions.notificationMerge({fetchingC: false, errorC: '', typeCList: flatReportsNotificationTab(reports.data.data)}))
     } else {
       throw new Error(language.failed)
     }
