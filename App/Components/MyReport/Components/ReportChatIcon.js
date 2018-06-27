@@ -24,6 +24,13 @@ class ReportChatIcon extends Component {
     this.props.navigation.navigate('Chat', cPath)
   }
 
+  _messageCount (report) {
+    if (report && report._conversation && report._conversation.messages) {
+      return report._conversation.messages.length
+    }
+    return '0'
+  }
+
   _navigation () {
     const {reportMergeState, navigation, item} = this.props
     navigation.navigate('ReportDetails', {report: item})
@@ -36,7 +43,7 @@ class ReportChatIcon extends Component {
     const { report, Lang } = this.props
     return (
       <View style={{flexDirection: 'row',  alignItems: 'center', paddingVertical: 3}}>
-        <Badge style={{backgroundColor: 'gray', alignItems: 'center', justifyContent:'center'}}><Text style={{fontWeight: '400', color: 'white'}}>0</Text></Badge>
+        <Badge style={{backgroundColor: 'gray', alignItems: 'center', justifyContent:'center'}}><Text style={{fontWeight: '400', color: 'white'}}>{this._messageCount(report)}</Text></Badge>
         <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.chatScreen(report)}><Text style={{fontWeight: '400', color: 'blue'}}>{Lang.messages}</Text></TouchableOpacity>
         <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.chatScreen(report)}><Text style={{fontWeight: '400', color: 'blue'}}>{Lang.show}</Text></TouchableOpacity>
       </View>
