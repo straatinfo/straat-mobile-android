@@ -48,6 +48,30 @@ export const flatReports = (reports) => {
 
 /**
  *
+ * @description removeNoTeam
+ * @param reports
+ *
+ */
+export const removeNoTeam = (report, index, _reporter) => {
+  if (report._team || report._reporter._id === _reporter) {
+    return true
+  }
+  return false
+}
+/**
+ *
+ * @description flat reports
+ * @param reports
+ *
+ */
+export const flatReportsNotificationTab = (reports, _reporter) => {
+  return reports.map(flatReport).filter((r, i) => removeNoTeam(r, i, _reporter))
+}
+
+
+
+/**
+ *
  * @description flat reports
  * @param reports
  *

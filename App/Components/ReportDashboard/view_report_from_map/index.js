@@ -128,7 +128,7 @@ class ViewReportFromMap extends Component {
   confirmChangeVisible (reportID) {
     const { Lang } = this.props
     AlertBox.alert(' ',
-      Lang.txt_J18, [ {text: Lang.txt_J19, onPress: () => this.changeVisible(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
+      Lang.txt_J18b, [ {text: Lang.txt_J19, onPress: () => this.changeVisible(reportID)}, {text: Lang.txt_J20, onPress: () => console.log(reportID)} ],
       { cancelable: false }
     )
   }
