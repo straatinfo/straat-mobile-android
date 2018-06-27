@@ -67,23 +67,36 @@ export const updateByNotification = (state, {data}) => {
 
   return state
 }
+ // must update files in myreport
+const updateMessage = (r, messageID) => {
+  return r.updateIn(['_conversation', 'messages'], (messages) => [...messages, messageID])
+}
 
 export const notificationUpdatemessage = (state, {params: {data, source}}) => {
   try {
-    console.log('data, source', data, source)
-    console.log('notification state', state)
     let reportIndex
     if (source === SocketTypes.RECEIVE_MESSAGE && data.conversation.type === 'REPORT') {
       const reportID = data.conversation._report._id
       const messageID = data.payload._id
       if (data.conversation._report._reportType.code === 'A') {
-        console.log('index: ', reportID)
         reportIndex = state.typeAList.findIndex((r) => r._id === reportID)
-        const upt = state.typeAList[reportIndex]._conversation.messages.push(messageID)
-        
-        console.log('upt: ', reportIndex)
-        console.log('upt: ', upt)
-        return upt
+        if (reportIndex >= 0) {
+          return state.merge({typeAList: state.typeAList.map((r, i) => r._id === reportID ? updateMessage(r, messageID) : r)})
+        }
+      }
+
+      if (data.conversation._report._reportType.code === 'B') {
+        reportIndex = state.typeBList.findIndex((r) => r._id === reportID)
+        if (reportIndex >= 0) {
+          return state.merge({typeBList: state.typeBList.map((r, i) => r._id === reportID ? updateMessage(r, messageID) : r)})
+        }
+      }
+
+      if (data.conversation._report._reportType.code === 'C') {
+        reportIndex = state.typeCList.findIndex((r) => r._id === reportID)
+        if (reportIndex >= 0) {
+          return state.merge({typeCList: state.typeCList.map((r, i) => r._id === reportID ? updateMessage(r, messageID) : r)})
+        }
       }
     }
   } catch (e) {
