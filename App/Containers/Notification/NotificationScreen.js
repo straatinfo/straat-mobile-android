@@ -73,9 +73,9 @@ class ReportMapScreen extends React.Component {
           <Tab heading={this._getSubHeading(language.suspiciousSituation, countedListB)}>
             <ReportListTypeB navigation={navigation} />
           </Tab>
-          {isVolunteer === false && <Tab heading={this._getSubHeading(language.messages, countedListC)}>
+          <Tab heading={this._getSubHeading(language.messages, countedListC)}>
             <ReportListTypeC navigation={navigation} />
-          </Tab>}
+          </Tab>
           <Tab heading={this._getSubHeading(language.chat, countedListD)}>
             {/* <ChatScreen navigation={navigation} noHeader />  */}
             <Conversation navigation={navigation} noHeader />
