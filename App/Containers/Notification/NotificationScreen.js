@@ -45,9 +45,8 @@ class ReportMapScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    const { language, navigation, design, user: { isVolunteer },
-      countedListA, countedListB, countedListC, countedListD} = this.props
-    const notificationCount = countedListA + countedListB + countedListC + countedListD
+    const { language, navigation, design, user: { isVolunteer } } = this.props
+    const notificationCount = 0
     return (
       <Container>
         <Header style={[GlobalStyle.header, {backgroundColor: design.header}]} hasTabs>
@@ -67,16 +66,16 @@ class ReportMapScreen extends React.Component {
           </Right>
         </Header>
         <Tabs locked={false}>
-          <Tab heading={this._getSubHeading(language.publicSpace, countedListA)}>
+          <Tab heading={this._getSubHeading(language.publicSpace, 0)}>
             <ReportListTypeA navigation={navigation} />
           </Tab>
-          <Tab heading={this._getSubHeading(language.suspiciousSituation, countedListB)}>
+          <Tab heading={this._getSubHeading(language.suspiciousSituation, 0)}>
             <ReportListTypeB navigation={navigation} />
           </Tab>
-          {isVolunteer === false && <Tab heading={this._getSubHeading(language.messages, countedListC)}>
+          <Tab heading={this._getSubHeading(language.messages, 0)}>
             <ReportListTypeC navigation={navigation} />
-          </Tab>}
-          <Tab heading={this._getSubHeading(language.chat, countedListD)}>
+          </Tab>
+          <Tab heading={this._getSubHeading(language.chat, 0)}>
             {/* <ChatScreen navigation={navigation} noHeader />  */}
             <Conversation navigation={navigation} noHeader />
           </Tab>
