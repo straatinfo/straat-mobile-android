@@ -34,7 +34,6 @@ export default class CreateTeam extends Component {
   }
 
   _addImage () {
-    console.log('add images');
     const { addItem } = this.props
     const options = {
       title: 'Maak een keuze',
@@ -49,7 +48,6 @@ export default class CreateTeam extends Component {
 
     loaderHandler.showLoader(Lang.txt_A03) // NOT NEED becouse of reduz saga
     ImagePicker.showImagePicker(options, (response) => {
-      console.log(options);
       if (response.didCancel || response.error || response.customButton) {
         loaderHandler.hideLoader()
       } else {
