@@ -19,7 +19,6 @@ import { CONNECTION } from '../Services/AppSocket'
 class Conversation extends Component {
   componentDidMount () {
     const { getConversationList } = this.props
-    console.log('Conversation')
     getConversationList({})
   }
   _navigateToTeamChat = () => {

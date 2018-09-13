@@ -36,7 +36,6 @@ export default class TestOnlyComponent extends Component {
 
   _createReportImagesAdd (newImage, _next = () => {}) {
     const { mergeInReport, reportState } = this.props
-    console.log(newImage)
     mergeInReport({createReportImages: [...reportState.createReportImages, newImage]})
     _next()
   }
@@ -51,7 +50,6 @@ export default class TestOnlyComponent extends Component {
   // setState('ref':resultObj)
   render () {
     const { reportState } = this.props
-    console.log(this.props)
     return (
       <Content><Text>location : { reportState.reportAddress } </Text>
         <CenterView><TouchableOpacity onPress={() => { this._addImage() }} ><Text>'add pic</Text></TouchableOpacity></CenterView>

@@ -37,8 +37,6 @@ class PrivateComponent extends Component {
     const { user } = this.props
     FcmService.configure(user)
     FcmService.start(user)
-    //  FcmService.logout()
-    __DEV__ && console.log('fcm starting: ', user)
   }
 
   socketInit () {
@@ -52,7 +50,7 @@ class PrivateComponent extends Component {
       // update current message screenList
       messageReceive(data)
       // uopdate notification
-      __DEV__ && console.log('messageReceive data', data)
+      // __DEV__ && console.log('messageReceive data', data)
       // if (data.payload.user._id !== _user || DebugConfig.debugMode === true) {
       if (data.payload.user._id !== _user) {
         addNotification({convo: data.conversation, count: 1})

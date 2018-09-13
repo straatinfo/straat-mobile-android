@@ -33,6 +33,11 @@ class ChatScreen extends Component {
     this.state = { user: null, chatBox: '' }
   }
 
+  
+  componentWillMount() {
+    this.setState({chatBox: ''})
+  }
+  
   componentDidMount () {
     // option: byId, byType - refId = (userID, teamID, reportId)
 
@@ -47,7 +52,7 @@ class ChatScreen extends Component {
     // must set conversation here
     // only two options 1st is to using conversationID or using createconvo param
 
-    console.log('chatScreen: ', navigation.state.params)
+
     if (option === convoOption.BYTYPE) {
       // getConversation({type, target})
       if (type === ConvoTypes.USER) {
@@ -177,7 +182,6 @@ class ChatScreen extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log('Chat State: ', state)
   return {
     fetching: state.message.fetching,
     fetchingConvo: state.message.fetchingConvo,

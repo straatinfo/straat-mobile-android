@@ -9,6 +9,7 @@ const { Types, Creators } = createActions({
   myReportDetailRequest: ['_id'],
   myReportMerge: ['newState'],
   deleteMyreport: ['_id'],
+  unfollowReport: ['_id'],
   removeMyreport: ['_id'],
   myReportUpdatemessage: ['params']
 })
@@ -39,6 +40,10 @@ export const myReportDetailRequest = (state, {data}) => {
 }
 
 export const deleteMyreport = (state, {data}) => {
+  return state
+}
+
+export const unfollowReport = (state, {data}) => {
   return state
 }
 
@@ -82,6 +87,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.MY_REPORT_MERGE]: myReportMerge,
   [Types.MY_REPORT_UPDATEMESSAGE]: myReportUpdatemessage,
   [Types.DELETE_MYREPORT]: deleteMyreport,
+  [Types.UNFOLLOW_REPORT]: unfollowReport,
   [Types.REMOVE_MYREPORT]: removeMyreport
 
 })

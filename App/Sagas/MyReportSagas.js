@@ -1,4 +1,5 @@
 import MyReportActions from './../Redux/MyReportRedux'
+import NotificationActions from './../Redux/NotificationRedux'
 import ReportsActions from './../Redux/ReportsRedux'
 import loaderHandler from 'react-native-busy-indicator/LoaderHandler'
 import { flatReports, flatReport } from '../Transforms/ReportHelper'
@@ -71,5 +72,27 @@ export const myReportDeleteRequest = function * (API, action) {
   }
   yield call(loaderHandler.hideLoader)
   yield call(logStore)
+}
+
+export const unfollowReportRequest = function * (API, action) {
+  const language = yield select(getLanguageState)
+  try {
+    const host = yield select(getUserHost)
+    const user = yield select(getUser)
+    const result = yield call(API.putUnfollowReport, user, action)
+    console.log('result from MyReportSaga', result);
+
+    if (result.status === 200) {
+      // yield put(NotificationActions.removeTypeAList(action._id))
+      popUpAlertV2(language.success, language.ReportHasBeenDeleted)
+    } else {
+      throw new Error(language.failed)
+    }
+
+  } catch (error) {
+    console.log('result error', error);
+  } finally {
+    console.log('finally')
+  }
 }
 

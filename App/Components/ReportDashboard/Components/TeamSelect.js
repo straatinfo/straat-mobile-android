@@ -80,8 +80,8 @@ class TeamSelect extends Component {
     // }
    // const { count } = this.state
     const { teamList, reportTeamSelected, fetchTeam, navigation } = this.props
-    __DEV__ && console.log('teamList', teamList)
-    __DEV__ && console.log('reportTeamSelected', reportTeamSelected)
+    // __DEV__ && console.log('teamList', teamList)
+    // __DEV__ && console.log('reportTeamSelected', reportTeamSelected)
     if (fetchTeam === true) {
       return (<CircleLoader color='blue' />)
     }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { BackHandler, Image, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { BackHandler, Image, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right, SwipeRow } from 'native-base'
 import { connect } from 'react-redux'
 import FastImage from 'react-native-fast-image'
+import { AlertBox, CircleLoader } from './../../../Components'
 
 import { GetDate, GetTime, GetDateEutype} from './../../../Lib/Helper/TimeUtils'
 
@@ -12,6 +13,7 @@ import CenterView from './../../../Components/CenterView'
 import RowView from './../../../Components/RowView'
 import NotificationActions from './../../../Redux/NotificationRedux'
 import ImageTumb from './ImageTumb'
+import MyReportActions from './../../../Redux/MyReportRedux'
 import { cropWH, crop } from '../../../Transforms/Cloudinary'
 import Urgency from './Urgency'
 import { getStyleStatusInPin } from '../../../Transforms/ReportHelper'
@@ -105,10 +107,24 @@ class ReportItem extends Component {
     notificationOpen(item, 'REPORT')
     reportMergeState({reportDetails: item, statusSource: statusSource})
   }
+
+  // _removeReport (report) {
+  //   const { deleteMyreport, Lang } = this.props
+  //   AlertBox.alert(
+  //     Lang.confirmation, Lang.txt_J45,
+  //     [{text: 'Delete', 
+  //       onPress: () => {
+  //         deleteMyreport(report._id)
+  //       }}, {text: 'Cancel', onPress: () => { }}],
+  //     { cancelable: true }
+  //   )
+  // }
+
   _renderBody () {
-    const { item, Lang, navigation } = this.props
+    const { item, Lang, navigation, onRemove } = this.props
     return (          
       <Animatable.View animation="bounceInLeft" easing="ease-out" duration={2000} delay={1000} style={styles.itemContainer} >
+      <TouchableWithoutFeedback onLongPress={() => onRemove(item)}>
         <View style={styles.item}>
           <View style={styles.info}>
             { hasCategoryName(item._mainCategory) ? 
@@ -125,36 +141,45 @@ class ReportItem extends Component {
             style={styles.image} /> || <Image style = {styles.image} source={Images.empty} />}
           { item.isUrgent === true && <Text style={styles.urgent}>!</Text>}
         </View>
-
+        </TouchableWithoutFeedback>
           
     </Animatable.View>
     )
   }
   render () {
-    const { item, Lang, navigation, swiper, onRemove } = this.props
+    const { item, Lang, navigation, swiper, onRemove, hidden } = this.props
     if (!swiper) {
+      if(hidden === false) {
+        return (
+          <SwipeRow
+            leftOpenValue={100}
+            disableLeftSwipe={true}
+            disableRightSwipe={true}
+            body = {this._renderBody()}
+            left={<Spacer />}
+          />
+        )
+      } else {
+        return false;
+      }
+      
+    }
+
+    if(hidden === false) {
       return (
         <SwipeRow
           leftOpenValue={100}
-          disableLeftSwipe={true}
-          disableRightSwipe={true}
           body = {this._renderBody()}
-          left={<Spacer />}
+          left={
+                  <Button danger onPress={() => onRemove(item)}>
+                    <Icon active name="trash" />
+                  </Button>
+                }
         />
       )
+    } else {
+      return false;
     }
-
-    return (
-      <SwipeRow
-        leftOpenValue={100}
-        body = {this._renderBody()}
-        left={
-                <Button danger onPress={() => onRemove(item)}>
-                  <Icon active name="trash" />
-                </Button>
-              }
-      />
-    )
   }
 }
 
@@ -167,7 +192,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     notificationOpen: (target, type) => dispatch(NotificationActions.notificationOpen({target, type}))
-     
+  
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ReportItem)

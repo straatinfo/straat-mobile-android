@@ -47,11 +47,11 @@ class SettingForm extends ValidationComponent {
   }
 
   radiusPicker () {
-    const { radius } = this.state
+    const { radius } = this.props
     return (
       <Picker
         mode={'dropdown'}
-        selectedValue={radius}
+        selectedValue={parseInt(radius)}
         onValueChange={(itemValue, itemIndex) => { this._onChangeRadius(itemValue, itemIndex) }}>
         {/** __DEV__ && <Picker.Item value={'devId'} label={'devName'} key={'devkey'} /> */}
         {this.state.radiusOptions.map((l, i) => { return <Picker.Item value={l.v} label={l.l} key={l.v} /> })}

@@ -35,14 +35,14 @@ class RegistrationStepOne extends Component {
   }
 
   _onClickLanguage (newLanguage) {
-    if (__DEV__) console.log(newLanguage)
+    // if (__DEV__) console.log(newLanguage)
     this.setState({selectedLanguage: newLanguage})
     this.props.onSelectLanguage(newLanguage)
     this.props.onValidate()
   }
 
   _onClickGender (newGender) {
-    if (__DEV__) console.log(newGender)
+    // if (__DEV__) console.log(newGender)
     this.setState({selectedGender: newGender})
     this.props.onGenderSelect(newGender)
     this.props.onValidate()

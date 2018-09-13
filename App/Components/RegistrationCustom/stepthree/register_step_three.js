@@ -52,8 +52,6 @@ class RegistrationStepThree extends Component {
                   this.setState({
                     teamList: getTeamResult.result
                   })
-                  console.log('team collected')
-                  console.log(getTeamResult)
                 } else {
                   Alert.alert(
                           'Error',
@@ -82,10 +80,10 @@ class RegistrationStepThree extends Component {
     // invalid if index 0 is selected
     if (itemIndex === 0) {
       // 0 index is used for showing label only
-      __DEV__ && console.log('inValid selectrion')
+      // __DEV__ && console.log('inValid selectrion')
       return null
     }
-    __DEV__ && console.log('valid selectrion')
+    // __DEV__ && console.log('valid selectrion')
     this.props.onTeamIDSelect(itemValue)
     this.setState({selectedTeamID: itemValue})
   }

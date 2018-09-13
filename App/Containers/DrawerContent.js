@@ -57,7 +57,7 @@ class DrawerContent extends Component {
             dataArray={items}
             renderRow={(item) => {
               if (itemData[item.routeName].visible === undefined || itemData[item.routeName].visible === true) {
-                console.log(item)
+                // console.log(item)
                 return (
                   <ListItem style={styles.listItem} onPress={() => navigation.navigate(item.routeName)}>
                     { itemData[item.routeName].iconImage }

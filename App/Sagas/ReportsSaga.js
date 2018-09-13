@@ -85,7 +85,8 @@ export const getReportAddress = function * (API, action) {
 
     __DEV__ && console.log('saga: nearestAddress', nearestAddress)
     // status success
-    if (nearestAddress.ok && nearestAddress.data['results'][0]['formatted_address']) {
+    // if (nearestAddress.ok && nearestAddress.data['results'][0]['formatted_address']) {
+    if (nearestAddress.ok && nearestAddress.data['results'].length > 0) {
       __DEV__ && console.log('fetched nearestAddress', nearestAddress)
       yield put(ReportsActions.reportMergeState({reportAddress: nearestAddress.data['results'][0]['formatted_address']}))
     } else {

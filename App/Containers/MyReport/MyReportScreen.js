@@ -21,7 +21,6 @@ class ReportMapScreen extends React.Component {
   }
 
   componentDidMount () {
-    console.log(this.props)
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
@@ -40,7 +39,7 @@ class ReportMapScreen extends React.Component {
      *
      */
     const { navigation, design, Lang } = this.props
-    console.log(this.props.navigation.state.routeName)
+    // console.log(this.props.navigation.state.routeName)
     return (
       <Container>
         <Header style={[GlobalStyle.header, {backgroundColor: design.header}]}>

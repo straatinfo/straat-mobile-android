@@ -41,7 +41,7 @@ class LogOutScreen extends Component {
     // connection.disconnect()
     CONNECTION.logout()
     navigation.navigate('Splash')
-    console.log('connection', connection)
+    // console.log('connection', connection)
   }
 
   render () {

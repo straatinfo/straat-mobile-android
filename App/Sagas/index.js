@@ -29,11 +29,11 @@ import { login, appStart } from './LoginSagas'
 import { getUserAvatar } from './GithubSagas'
 import { change } from './ScreenSagas'
 import { confirmAccessCode, registerAccessCode } from './AccessCodeSagas'
-import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber, blockUser } from './UserSagas'
+import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber, blockUser, mapRadiusSetting } from './UserSagas'
 import { getNearbyReports, getReportAddress, uploadPhoto, getCategories, submitReport, changeStatus } from './ReportsSaga'
 import { fetchConversation, createConversation, getConversationList } from './ConversationSaga'
 import { fetchMessage, sendMessage, getMessagesByConvoId, postConvo } from './MessageSaga'
-import { myReportRequest, myReportDetailRequest, myReportDeleteRequest } from './MyReportSagas'
+import { myReportRequest, myReportDetailRequest, myReportDeleteRequest, unfollowReportRequest } from './MyReportSagas'
 import { notifactionRequestTypeA, notifactionRequestTypeB, notifactionRequestTypeC, updateByNotification } from './NotificationSaga'
 import { sendFeedback } from './FeedbackSaga'
 import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam, getNonVolTeamList } from './TeamSagas'
@@ -67,6 +67,7 @@ export default function * root () {
     takeLatest(CurrentUserTypes.FORGOT_PASSWORD_REQUEST, requestPassword, api),
     /**              USER              */
     takeLatest(CurrentUserTypes.USER_BLOCK, blockUser, api),
+    takeLatest(CurrentUserTypes.USER_CHANGE_RADIUS, mapRadiusSetting, api),
 
     /**          ACCESS CODE           */
     takeLatest(CurrentUserTypes.SET_ACCESS_CODE, confirmAccessCode, api),
@@ -122,6 +123,7 @@ export default function * root () {
     takeLatest(MyReportTypes.MY_REPORT_REQUEST, myReportRequest, api),
     takeLatest(MyReportTypes.MY_REPORT_DETAIL_REQUEST, myReportDetailRequest, api),
     takeLatest(MyReportTypes.DELETE_MYREPORT, myReportDeleteRequest, api),
+    takeLatest(MyReportTypes.UNFOLLOW_REPORT, unfollowReportRequest, api),
 
     /**          NOTIFICATION          */
     takeLatest(NotificationTypes.NOTIFICATION_REQUEST_TYPE_A, notifactionRequestTypeA, api),

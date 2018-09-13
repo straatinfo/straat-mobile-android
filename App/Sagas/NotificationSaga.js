@@ -115,7 +115,7 @@ export const updateByNotification = function * (API, action) {
         }
 
         // push notification to device
-        yield call(localNotification, createReportNotification(content), title, appSetting)
+        // yield call(localNotification, createReportNotification(content), title, appSetting)
       }
     }
     merging.dataReceive = [...NotifactionState.dataReceive, content || {}]

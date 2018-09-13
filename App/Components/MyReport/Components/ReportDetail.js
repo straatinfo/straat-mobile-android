@@ -102,7 +102,6 @@ class ReportDetail extends Component {
   changeStatus (reportID) {
     const { statusSource } = this.props
     this.props.reportChangeStatus({ newData: {status: ReportStatus.done, reportId: reportID}, _report: reportID, statusSource: statusSource, field: 'STATUS' })
-    // console.log('changeStatus', reportID )
   }
 
   confirmChangeStatus (reportID) {
@@ -116,7 +115,6 @@ class ReportDetail extends Component {
   changeVisible (reportID) {
     const { statusSource } = this.props
     this.props.reportChangeStatus({ newData: {isPublic: true, reportId: reportID}, _report: reportID, statusSource: statusSource, field: 'ISPUBLIC' })
-    // console.log('changeStatus', reportID )
   }
 
   confirmChangeVisible (reportID) {

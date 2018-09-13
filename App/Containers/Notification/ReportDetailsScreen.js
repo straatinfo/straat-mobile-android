@@ -35,7 +35,7 @@ class ReportDetailsScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    __DEV__ && console.log(this.props)
+    // __DEV__ && console.log(this.props)
     const { report } = this.props.navigation.state.params
     const { design } = this.props
     return (

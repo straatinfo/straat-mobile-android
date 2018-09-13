@@ -40,7 +40,7 @@ class ReportStepTwo extends Component {
   _onChangeReportType (reportType) {
     const { onSubmit, host: { isSpecific }, Lang } = this.props
     const { reportState: { reportCategoryList, reportGeneralCategoryList }, reportMergeState } = this.props
-    __DEV__ && console.log('reportCategoryList', reportCategoryList)
+    // __DEV__ && console.log('reportCategoryList', reportCategoryList)
 
     /**
      *

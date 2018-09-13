@@ -104,7 +104,7 @@ class ReportItem extends Component {
   }
   render () {
     const { item } = this.props
-    return (<View style={styles.item}>
+    return (<View style={styles.item} onPress={() => {console.log("logpress")}}>
       <View style={styles.info}>
         { item.hasOwnProperty('_mainCategory') === true && item._mainCategory !== null && item._mainCategory.hasOwnProperty('name') === true && <Text style={styles.title} >{ item._mainCategory.name }</Text>}
         {/* <Text style={styles.title}>{item.title}</Text>

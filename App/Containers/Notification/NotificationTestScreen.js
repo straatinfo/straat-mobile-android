@@ -18,7 +18,6 @@ class NotificationTestScreen extends React.Component {
 
     const { updateByNotification } = this.props
     const data = FixtureApi.geReports().data[0]
-    console.log(data)
     updateByNotification(SocketTypes.RECEIVE_GLOBAL, {data: {TYPE: 'REPORT', content: data}})
   }
 

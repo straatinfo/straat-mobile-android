@@ -119,7 +119,8 @@ class ReportMapScreen extends React.Component {
       <UnderMigration title={pageTitle} {...this.props} />
     )
    */
-    __DEV__ && console.log('this.props', this.props)
+    __DEV__ && console.log('this.props emman', this.props)
+    __DEV__ && console.log('this.props emman settings', this.props.user.setting)
     __DEV__ && console.log(this.props.userState._teamActive)
     const { design,
       countedListA, countedListB, countedListC, countedListD, reportMapState: {isOnSearch} } = this.props

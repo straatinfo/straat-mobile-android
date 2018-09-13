@@ -26,8 +26,8 @@ class TeamChat extends Component {
 
     this.connection = CONNECTION.getConnection(userId)
     this.connectionId = CONNECTION.connectionId;
-    console.log('Chat props: ', this.props)
-    console.log('Getting socket in component: ', this.connection)
+    // console.log('Chat props: ', this.props)
+    // console.log('Getting socket in component: ', this.connection)
   }
 
   componentWillUnmount() {
@@ -40,7 +40,7 @@ class TeamChat extends Component {
 
   fetchMessages() {
     const { conversationId, userId, teamId } = this.props
-    console.log('Chat screen conversationId: ', conversationId)
+    // console.log('Chat screen conversationId: ', conversationId)
     if (conversationId) {
       this.props.fetchMessage(conversationId)
     }
@@ -53,19 +53,19 @@ class TeamChat extends Component {
       _author: message[0].user._id,
       body: message[0].text
     }
-    console.log('send-message: Emitting...', SocketTypes.SEND_MESSAGE);
+    // console.log('send-message: Emitting...', SocketTypes.SEND_MESSAGE);
     this.connection.emit(SocketTypes.SEND_MESSAGE, params);
     this.connection.on(SocketTypes.SEND_MESSAGE, data => {
-      console.log('send-message: Emit Response: ', data);
+      // console.log('send-message: Emit Response: ', data);
       if (data && data.status === 1) {
         /* Dispatch action for sending message to api  */
-        console.log('send-message: params: ', params);
+        // console.log('send-message: params: ', params);
         sendMessage(params);
       }
     })
   }
   render() {
-    console.log('Chat Screen navigation params: ', this.props.navigation.state.params);
+    // console.log('Chat Screen navigation params: ', this.props.navigation.state.params);
     const pageTitle = this.props.navigation.state.params.title
     const { fetching, userId, username, navigation, messages } = this.props
     if (fetching) {
@@ -89,7 +89,7 @@ class TeamChat extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('Chat State: ', state)
+  // console.log('Chat State: ', state)
   return {
     fetching: state.message.fetching,
     error: state.message.error,

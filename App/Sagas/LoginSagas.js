@@ -14,7 +14,7 @@ import { convertActiveDesignToDesign, designDefault, getHostLangauge } from '../
 import validator from 'validator'
 import { isOffGPS } from '../Redux/SettingRedux'
 
-/**
+/*
  *
  * try log in user
  * @param {username, password}
@@ -43,10 +43,12 @@ export const login = function * (API, action) {
       const userHost = requestedUserAccount.data.data.user._host
 
       userWithToken = {
-        radius: USER_INITIAL_STATE.radius,
+        // radius: USER_INITIAL_STATE.radius,
         ...requestedUserAccount.data.data.user,
         token: requestedUserAccount.data.data.token,
-        teamList: getApprovedTeamList(requestedUserAccount.data.data.user)
+        teamList: getApprovedTeamList(requestedUserAccount.data.data.user),
+        setting: requestedUserAccount.data.data.user.setting,
+        radius: requestedUserAccount.data.data.user.setting.radius
       }
       // set _host couse backend change string to {} so i will manual here
       userWithToken._host = _host
@@ -58,6 +60,7 @@ export const login = function * (API, action) {
       yield call(AppData.setUserInfo, userWithToken)
 
       // set user info to states for fast retrievinggs
+      console.log('setCurrentUser', userWithToken);
       yield put(UserActions.setCurrentUser(userWithToken))
 
       // save to global for faster access to use account

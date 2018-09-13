@@ -54,6 +54,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   }
   /**               REPORTS                */
   const getReportsByNearby = ({ coordinate, user: { token, radius, _id }, host: { language } }) => {
+    console.log("getNearby Radius", radius);
     // return api.get('v1/api/report/nearby/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + user.radius.toString(),
     return api.get('v1/api/report/near/' + coordinate.longitude.toString() + '/' + coordinate.latitude.toString() + '/' + radius.toString(),
       { language: 'nl', _reporter: _id },
@@ -94,6 +95,20 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+
+  const putUnfollowReport = (user, action) => {
+    const { token, _id } = user;
+    return api.put('v1/api/report/unfollow/'+ action._id, 
+      {user_id: _id}, 
+      {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+  }
+  
   const postReport = ({ reportParams }) => {
     return api.post('v1/api/report/V2',
       reportParams.data,
@@ -577,6 +592,21 @@ const create = (baseURL = AppConfig.ApiUrl) => {
         }
       })
   }
+
+  const putMapRadiusSetting = ({user: {_id, token}}, action) => {
+    console.log(_id, token);
+    return api.put('/v1/api/user/map-radius-setting/'+_id , 
+      {radius: action.radius}, 
+      {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+
+  }
+
   // TEAM
   // used by teamsagas
   const getUserTeams = ({user: { _id, token }}) => {
@@ -744,6 +774,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postForgotPassword,
     postProfileUploadPhoto,
     putFcmToken,
+    putMapRadiusSetting,
 
     // registration API
     postRegisterUser,
@@ -770,6 +801,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postReportTypeC,
     putReport,                   // updating report
     deleteReport,
+    putUnfollowReport,
     putIsPublic,
 
     // conversation

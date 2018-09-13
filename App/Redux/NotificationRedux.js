@@ -7,13 +7,14 @@ import { notificationTypes, ConvoTypes, ReportTypes, SocketTypes } from '../Serv
 const { Types, Creators } = createActions({
   notificationRequestTypeA: ['data'],
   notificationRequestTypeB: ['data'],
+  removeMyreport: ['data'],
   notificationRequestTypeC: ['data'],
   notificationMerge: ['newState'],
   updateByNotification: ['source', 'data'],
   addNotification: ['data'],
   clearNotification: ['data'],
   notificationOpen: ['data'],
-  notificationUpdatemessage: ['params']
+  notificationUpdatemessage: ['params'],
 })
 
 export const NotificationTypes = Types
@@ -35,6 +36,7 @@ export const INITIAL_STATE = Immutable({
 
   errorB: null,
   fetchingB: true,
+  removeMyreport: false,
 
   errorC: null,
   fetchingC: true,
@@ -172,6 +174,15 @@ export const notificationOpen = (state, { data: {target, type} }) => {
   return state
 }
 
+export const removeMyreport = (state, {_id}) => {
+  console.log(state);
+  // console.log(_id)
+  // return state.myReportList.merge({ fetchingDetails: true })
+  // const toRemove = state.myReportList.findIndex(report => report._id === _id )
+  // return state.merge({getTypeAList: state.getTypeAList.filter(report => report._id !== _id)})
+}
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -183,9 +194,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_NOTIFICATION]: addNotification,
   [Types.CLEAR_NOTIFICATION]: clearNotification,
   [Types.NOTIFICATION_OPEN]: notificationOpen,
-  [Types.NOTIFICATION_UPDATEMESSAGE]: notificationUpdatemessage
-  
-
+  [Types.NOTIFICATION_UPDATEMESSAGE]: notificationUpdatemessage,
 })
 
 /* ------------- Selectors ------------- */

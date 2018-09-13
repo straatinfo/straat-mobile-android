@@ -5,7 +5,7 @@ import LoginActions from '../Redux/LoginRedux'
 import UserActions, { isValidUserName, isValidMobileNumber, getUser, getUserState } from './../Redux/UserRedux'
 import ReportsActions from './../Redux/ReportsRedux'
 import { popUpAlert, popUpAlertV2 } from './../Lib/Helper/alertHelper'
-import { messageLoginPopup } from './../Transforms/Filters'
+import { messageLoginPopup, getApprovedTeamList } from './../Transforms/Filters'
 
 import { showAlertBox, logStore, AppData, showSuccesstBox, showSuccessBox, showAlertBoxWithTitle } from './../Redux/commonRedux'
 import { put, call, select } from 'redux-saga/effects'
@@ -13,6 +13,30 @@ import { changeto } from '../Redux/ScreenRedux'
 import { teamGetIsApproved } from '../Transforms/TeamHelper'
 import { getSuccessMessage, getLoginParams, cleanPostalCode } from '../Transforms/RegistrationHelper'
 import { getLanguageState } from './../Redux/LanguageRedux'
+
+
+/**
+ *
+ * this module is hidden registration saga hahaha
+ * registerUser
+ * @param (API, { registrationData, navigation, route })
+ *
+ */
+
+ export const mapRadiusSetting = function * (API, action) {
+  
+  try {
+    const user = yield select(getUserState)
+    console.log('user from mapRadius', user);
+    const mapRadius = yield call(API.putMapRadiusSetting, user, action);
+    
+    if(mapRadius.status === 200) {
+      console.log('Success')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+ }
 
 /**
  *
@@ -43,8 +67,8 @@ export const registerUser = function * (API, action) {
       userWithToken = {...registrationResult.data.data.user, token: registrationResult.data.data.token}
       const successMessage = getSuccessMessage(registrationData.isVolunteer, !!registrationData._team, language)
       const loginParams = getLoginParams(registrationData.isVolunteer, !!registrationData._team, registrationData.username, registrationData.password)
-      __DEV__ && console.log('requestedUserAccount', registrationResult)
-      __DEV__ && console.log('userWithToken', userWithToken)
+      // __DEV__ && console.log('requestedUserAccount', registrationResult)
+      // __DEV__ && console.log('userWithToken', userWithToken)
       global.usersAccount = userWithToken
       yield put(UserActions.setCurrentUser(userWithToken))
       yield call(AppData.setUserInfo, userWithToken)

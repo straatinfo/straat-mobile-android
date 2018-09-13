@@ -23,7 +23,6 @@ class MyReportList extends Component {
   }
   render () {
     const { fetching, reportList, navigation, reportMergeState } = this.props
-    __DEV__ && console.log(this.props)
     const onRemove = this._remove.bind(this)
     return (
     (fetching && <CircleLoader color='blue' />) ||

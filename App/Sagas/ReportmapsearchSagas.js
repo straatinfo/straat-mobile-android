@@ -26,7 +26,7 @@ export const getReportmapsearch = function * (api, googleApi, action) {
     const user = yield select(getUser)
     const { data } = action
     // set radius for qureing google api
-    let radius = 300
+    // let radius = 300
     if (user.radius) {
       radius = user.radius
     }

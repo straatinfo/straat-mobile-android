@@ -48,7 +48,7 @@ class ProfileForm extends ValidationComponent {
     /**
      * @param key(String: enum(userEmail, userName, postaCode)), value
      */
-    __DEV__ && console.log('validating liveValidation', key, value)
+    // __DEV__ && console.log('validating liveValidation', key, value)
     if (key === 'userName') {
       const {user: {isVolunteer}, currentUser: {usernamePre, usernameID}} = this.props
       if (usernamePre === value) { // no change

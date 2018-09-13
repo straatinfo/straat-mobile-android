@@ -57,8 +57,8 @@ class ReportStepThree extends Component {
     }
 
     /** rember that there is default value for this selection and that is the title so item must -1 to get real index in array */
-    __DEV__ && console.log('selectedMainCategoryId', selectedMainCategoryId)
-    __DEV__ && console.log('selected itemIndex', itemIndex)
+    // __DEV__ && console.log('selectedMainCategoryId', selectedMainCategoryId)
+    // __DEV__ && console.log('selected itemIndex', itemIndex)
     const { reportMergeState, reportState: { reportMainCategoryList, reportSubCategoryList } } = this.props
     const subCatList = reportMainCategoryList.find((item) => item._id === selectedMainCategoryId).subCategories.filter((item) => item)
     reportMergeState({
@@ -82,7 +82,6 @@ class ReportStepThree extends Component {
 
   _reportUploadImagesAdd (newImage, _next = () => {}) {
     const { reportMergeState, reportState, uploadPhoto } = this.props
-    console.log(newImage)
     // reportMergeState({reportUploadImages: [...reportState.reportUploadImages, newImage]})
     uploadPhoto(newImage)
     this.enableButton()
@@ -156,7 +155,6 @@ class ReportStepThree extends Component {
 
    // submit report
     if (this.validate()) {
-      console.log('submit')
       this.props.reportSubmit({ callback: (pinRef) => { this.props.onCancel(); this.props.onReportSubmit(pinRef) } })
     }
   }

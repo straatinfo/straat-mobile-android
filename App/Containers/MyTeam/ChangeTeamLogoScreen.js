@@ -30,23 +30,23 @@ class ChangeTeamLogo extends Component {
       }
 
       ImagePicker.launchImageLibrary(options, (response) => {
-        console.log('Response ', response)
+        // console.log('Response ', response)
 
         if (response.didCancel) {
-          __DEV__ && console.log('User cancelled photo picker')
+          // __DEV__ && console.log('User cancelled photo picker')
         } else if (response.error) {
-          __DEV__ && console.log('ImagePicker Error: ', response.error)
+          // __DEV__ && console.log('ImagePicker Error: ', response.error)
         } else if (response.customButton) {
-          __DEV__ && console.log('User tapped custom button: ', response.customButton)
+          // __DEV__ && console.log('User tapped custom button: ', response.customButton)
         } else {
           delete response.data
-          __DEV__ && console.log('response', response)
+          // __DEV__ && console.log('response', response)
           this.setState({ teamPhoto: response.uri })
           editfieldTeam({eteamLogo: response})
         }
       })
     } catch (error) {
-      __DEV__ && console.log(error)
+      // __DEV__ && console.log(error)
     }
   }
 

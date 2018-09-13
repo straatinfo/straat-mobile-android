@@ -21,7 +21,7 @@ class ChangeTeamProfile extends Component {
 
   componentDidMount () {
     const { team: {teamName, teamEmail}, editfieldTeam, _profilePic } = this.props
-    __DEV__ && console.log('Edit Team props ', this.props)
+    // __DEV__ && console.log('Edit Team props ', this.props)
     this.setState({
       teamName: teamName,
       teamEmail: teamEmail,
@@ -39,7 +39,7 @@ class ChangeTeamProfile extends Component {
       teamName: teamName,
       teamLogo: teamLogo
     }
-    __DEV__ && console.log('data', data)
+    // __DEV__ && console.log('data', data)
     this.props.navigation.navigate('ChangeTeamLogo', data)
   }
 

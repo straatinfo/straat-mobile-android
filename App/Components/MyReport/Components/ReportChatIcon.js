@@ -39,7 +39,6 @@ class ReportChatIcon extends Component {
     reportMergeState({reportDetails: item})
   }
   navigateToReportChat (report) {
-    console.log('report', report)
   }
   render () {
     const { report, Lang } = this.props

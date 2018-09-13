@@ -98,7 +98,6 @@ class RegisterAccessCode extends ValidationComponent {
 
     // if code come here that meanss it validated
     this.props.parentSetState({registrationData: this.state})
-    console.log(this.state)
     this.props.onProcess(this.state)
   }
 

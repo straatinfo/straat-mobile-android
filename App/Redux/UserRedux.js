@@ -2,6 +2,7 @@ import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper'
 import { Design } from '../Services/Constant'
+import AppData from '../Lib/Common/AppData';
 
 const { Types, Creators } = createActions({
   setCurrentUser: ['user'],
@@ -74,7 +75,7 @@ export const defualtCoordinate = {
 /* ------------- Intial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  user: __DEV__ ? tempUser : {language: 'nl', teamList: []},
+  user: !__DEV__ ? tempUser : {language: 'nl', teamList: []},
   isLogged: false,
   accessCode: null,
   host: {_id: 'testHostId', language: 'nl'},

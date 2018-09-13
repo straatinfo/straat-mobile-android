@@ -23,7 +23,7 @@ class ReportMapScreen extends React.Component {
   }
 
   componentDidMount () {
-    __DEV__ && console.log(this.props)
+    // __DEV__ && console.log(this.props)
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
