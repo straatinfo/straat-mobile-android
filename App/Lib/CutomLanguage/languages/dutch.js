@@ -97,6 +97,9 @@ export default {
   // Login Failed
   txt_C07: 'Aanmelden Mislukt!',
 
+  // you have been approved 
+  txt_C09: "Gefeliciteerd, de team coördinator heeft uw verzoek geaccepteerd en u heeft nu toegang tot het team.",
+
   /** @description Authenticating... */
   txt_C08: 'Verifiëren...',
 

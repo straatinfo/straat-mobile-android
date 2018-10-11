@@ -63,7 +63,7 @@ export const reportmapReset = (state, { params }) => {
 }
 
 export const mergeReportmap = (state, {newState}) => {
-  __DEV__ && console.log('newState', newState)
+  // __DEV__ && console.log('newState', newState)
   return state.merge(newState)
 }
 

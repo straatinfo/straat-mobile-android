@@ -21,9 +21,6 @@ class ReportListTypeC extends Component {
       Lang.confirmation, Lang.txt_J45,
       [{text: 'Delete', 
         onPress: () => {
-          // deleteMyreport(report._id)
-          // console.log("delete me")
-          console.log('unfollow');
           unfollowReport(report._id);
         }}, {text: 'Cancel', onPress: () => { }}],
       { cancelable: true }
@@ -46,6 +43,7 @@ class ReportListTypeC extends Component {
                   navigation={navigation} 
                   reportMergeState={reportMergeState} 
                   onRemove={onRemove} 
+                  swiper
                   hidden={!!report.unfollow ? report.unfollow.user.toString() === user._id.toString() ? true : false : false }
                   statusSource={StatusSource.reportC} 
                 />

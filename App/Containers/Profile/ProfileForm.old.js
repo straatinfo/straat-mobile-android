@@ -184,7 +184,6 @@ class ProfileForm extends ValidationComponent {
 }
 
 const mapStateToProps = state => {
-    console.log('Profile state: ', state)
     return {
         user: state.user.user,
         userId: state.user.user._id,

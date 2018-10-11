@@ -16,6 +16,7 @@ import UsersActions from './../../Redux/UserRedux'
 
 class ReportMapScreen extends React.Component {
   constructor (props) {
+    connection = {}
     super(props)
     this.state = {
     }
@@ -23,6 +24,7 @@ class ReportMapScreen extends React.Component {
   }
 
   componentDidMount () {
+    
     // __DEV__ && console.log(this.props)
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
@@ -65,7 +67,7 @@ class ReportMapScreen extends React.Component {
             </Button>
           </Right>
         </Header>
-        <Tabs locked={false}>
+        <Tabs locked={true}>
           <Tab heading={this._getSubHeading(language.publicSpace, 0)}>
             <ReportListTypeA navigation={navigation} />
           </Tab>

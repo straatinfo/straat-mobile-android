@@ -228,6 +228,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
   }
 
   const postRegisterUser = ({ registrationData }) => {
+    console.log("registrationDate", registrationData)
     __DEV__ && console.log('postRegisterUser', registrationData)
     return api.post('v1/api/registration/signupV3',
       registrationData,
@@ -607,6 +608,18 @@ const create = (baseURL = AppConfig.ApiUrl) => {
 
   }
 
+  const viewedNotified = (user) => {
+    return api.put('/v1/api/user/change-notified-view/'+user._id,
+    {},
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.token
+      }
+    })
+  }
+
   // TEAM
   // used by teamsagas
   const getUserTeams = ({user: { _id, token }}) => {
@@ -775,6 +788,7 @@ const create = (baseURL = AppConfig.ApiUrl) => {
     postProfileUploadPhoto,
     putFcmToken,
     putMapRadiusSetting,
+    viewedNotified,
 
     // registration API
     postRegisterUser,

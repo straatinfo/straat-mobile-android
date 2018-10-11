@@ -52,8 +52,7 @@ export const getNearbyReports = function * (API, action) {
       // get team list
       const teamList = yield select(getTeamList)
       const mapReports = filterReportsByMapView(reports.data.data, teamList)
-      yield put(ReportsActions.reportMergeState({reportsListNear: reports.data.data, reportMapMarkerList: mapReports}))
-      console.log('reports in map: ', mapReports)
+      yield put(ReportsActions.reportMergeState({newMergingState: reports.data.data, reportMapMarkerList: mapReports}))
     //  yield call(showAlertBox, 'alert')
     } else {
       throw new Error('error in getting Nearby Reports')

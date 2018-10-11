@@ -18,7 +18,7 @@ export const notificaitonOption = {
 
 const { Types, Creators } = createActions({
   changeRadius: ['radius'],
-  settingMergeState: ['newState']
+  settingMergeState: ['newState'],
 })
 
 export const SettingTypes = Types
@@ -42,11 +42,12 @@ export const settingMergeState = (state, { newState }) => {
   return state.merge(newState)
 }
 
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.CHANGE_RADIUS]: changeRadius,
-  [Types.SETTING_MERGE_STATE]: settingMergeState
+  [Types.SETTING_MERGE_STATE]: settingMergeState,
 })
 
 /**

@@ -16,7 +16,8 @@ import { Button } from '../..'
 
 class ReportCreateStep1 extends Component {
   _onSubmit () {
-    this.props.getCategories({ _host: '5a844e1bf154bc463543b987', _reportType: '' })
+    const { reportDetails } = this.props.reportState;
+    this.props.getCategories({ _host: reportDetails._host || '5a844e1bf154bc463543b987', _reportType: '' })
   }
   render () {
     const { reportState: {reportAddress}, design, Lang } = this.props

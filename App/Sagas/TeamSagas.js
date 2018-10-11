@@ -8,11 +8,13 @@ import { fail } from 'assert'
 import { getUser } from '../Redux/UserRedux'
 import { backEndConstEnum } from '../Services/Constant'
 import { hasError } from '../Transforms/responseHelper'
-
+import { SocketTypes } from '../Services/Constant'
 import TeamActions, { getTeamId, putEditTeamState } from '../Redux/TeamRedux'
 import AddNewTeamActions from '../Redux/AddNewTeamRedux'
 import TeamListActions from '../Redux/TeamListRedux'
 import { getLanguageState } from '../Redux/LanguageRedux'
+
+import { CONNECTION } from '../Services/AppSocket'
 
 export function * getTeamProfile (API, action) {
   try {
@@ -74,6 +76,7 @@ export function * getTeamDetails (API, action) {
 export const teamAcceptRequest = function * (API, { teamInvite }) {
   console.log('-- accepting request -- ')
   try {
+    this.connection = CONNECTION.getConnection(teamInvite._user._id)
     yield put(TeamActions.teamMergeState({getTeamInfoFetching: true}))
     console.log('-- accepting request -- ')
     const {_user: { _id: userId }, _team: {_id: teamId }, _id: teamInviteId } = teamInvite
@@ -87,6 +90,11 @@ export const teamAcceptRequest = function * (API, { teamInvite }) {
       // yield put(TeamActions.tarsTeam(teamInvite, acceptUserResponse.data.data.teamMembers ))
       yield put(TeamActions.getTeamDetails({}))                         // reset team details
       yield put(TeamListActions.teamlistGetList({}))                    // reset teamList
+
+      this.connection.emit(SocketTypes.APPROVE_MEMBER, {
+        data: teamInvite._user
+      });
+
     }
   } catch (error) {
     console.log(error)

@@ -41,7 +41,6 @@ class SplashScreen extends React.Component {
     const { Lang, reportMergeState, settingMergeState, setlogininitReport, reportState: { reportCoordinate } } = this.props
     try {
       const location = await this.geo()
-      console.log('location', location)
       // reportMergeState({reportCoordinate: {...reportCoordinate, ...location}}) // will be shift to report redux
 
       setlogininitReport({lat: location.latitude, long: location.longitude})

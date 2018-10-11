@@ -124,7 +124,6 @@ class ReportItem extends Component {
     const { item, Lang, navigation, onRemove } = this.props
     return (          
       <Animatable.View animation="bounceInLeft" easing="ease-out" duration={2000} delay={1000} style={styles.itemContainer} >
-      <TouchableWithoutFeedback onLongPress={() => onRemove(item)}>
         <View style={styles.item}>
           <View style={styles.info}>
             { hasCategoryName(item._mainCategory) ? 
@@ -141,9 +140,7 @@ class ReportItem extends Component {
             style={styles.image} /> || <Image style = {styles.image} source={Images.empty} />}
           { item.isUrgent === true && <Text style={styles.urgent}>!</Text>}
         </View>
-        </TouchableWithoutFeedback>
-          
-    </Animatable.View>
+        </Animatable.View>
     )
   }
   render () {

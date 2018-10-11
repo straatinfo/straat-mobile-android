@@ -31,13 +31,15 @@ class MyReportList extends Component {
         {reportList.length > 0 &&
           reportList.map((report, index) =>
             <View key={report._id}>
-              <ReportItem item={report} navigation={navigation} reportMergeState={reportMergeState} swiper onRemove={onRemove} statusSource={StatusSource.myList} />
-              {/* <View style={{flexDirection: 'row', marginTop: 5, marginLeft: 30}}>
-                <Badge style={{backgroundColor: 'gray'}}><Text style={{fontWeight: '400', color: 'white'}}>0</Text></Badge>
-                <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.navigateToReportChat(report)}><Text style={{fontWeight: '400', color: 'blue'}}>Berichten</Text></TouchableOpacity>
-                <TouchableOpacity style={{marginLeft: 10}} onPress={(e) => this.navigateToReportChat(report)}><Text style={{fontWeight: '400', color: 'blue'}}>Toon</Text></TouchableOpacity>
-              </View>
-              <ReportChatIcon report={report} navigation={navigation} /> */}
+              <ReportItem 
+                item={report} 
+                navigation={navigation} 
+                reportMergeState={reportMergeState} 
+                swiper 
+                onRemove={onRemove} 
+                statusSource={StatusSource.myList} 
+                hidden={false}
+              />
             </View>
              )}
         {/* <Spacer /> */}

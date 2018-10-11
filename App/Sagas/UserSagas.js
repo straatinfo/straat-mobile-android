@@ -38,6 +38,21 @@ import { getLanguageState } from './../Redux/LanguageRedux'
   }
  }
 
+
+ export const viewedNotifiedRequest = function* (API, action) {
+   try {
+    
+    const user = yield select(getUserState);
+    const changeViewed = yield call(API.viewedNotified, user.user);
+    console.log(changeViewed);
+    if (changeViewed.status === 200) {
+    } else {
+      throw new Error(changeViewed.error);
+    }
+   } catch (e) {
+     console.log('error', e);
+   }
+ }
 /**
  *
  * this module is hidden registration saga hahaha

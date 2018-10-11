@@ -9,7 +9,7 @@ export const postConvo = function * (API, action) {
   const user = yield select(getUser)
   try {
     const fetching = yield call(API.postConversation, { user, type, param })
-    __DEV__ && console.log('fetching postConvo', fetching)
+    // __DEV__ && console.log('fetching postConvo', fetching)
     if (fetching.ok && fetching.data.status === 1) {
       const { payload } = fetching.data
       const convos = fixConvo(payload, user._id)

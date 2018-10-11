@@ -89,6 +89,7 @@ export const login = function * (API, action) {
         }
       }
 
+
       // filter if it has login message
       const hasBlocker = yield call(onloginPopUp, {userData: userWithToken})
       if (hasBlocker.access && hasBlocker.message) {
@@ -96,6 +97,8 @@ export const login = function * (API, action) {
           yield call(changeto, navigation, route)
         } else {
           yield call(popUpAlert, { title: 'Team', message: hasBlocker.message, pressok: () => changeto(navigation, route) })
+          // click okay with the notification that the user is already approved
+          yield call(API.viewedNotified, requestedUserAccount.data.data.user);
         }
       } else if (hasBlocker.access) {
         yield call(changeto, navigation, route)

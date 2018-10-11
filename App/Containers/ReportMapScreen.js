@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Lang from './../Lib/CutomLanguage'
 import { Image, BackHandler, Dimensions, Keyboard, LayoutAnimation } from 'react-native'
 import {
   Card,
@@ -26,6 +27,7 @@ import UnderMigration from './../Components/UnderMigration'
 import {drawerData} from './../Navigation/NavigationDrawer'
 import ReportsActions from './../Redux/ReportsRedux'
 import UsersActions from './../Redux/UserRedux'
+import SettingRedux from './../Redux/SettingRedux'
 /**  styles */
 import styles from './Styles/ReportMapStyle'
 // import Images from './../Themes/Images'
@@ -55,7 +57,6 @@ class ReportMapScreen extends React.Component {
   keyboardDidHideListener = {};
 
   componentDidMount () {
-    console.log(this.props)
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
@@ -119,8 +120,6 @@ class ReportMapScreen extends React.Component {
       <UnderMigration title={pageTitle} {...this.props} />
     )
    */
-    __DEV__ && console.log('this.props emman', this.props)
-    __DEV__ && console.log('this.props emman settings', this.props.user.setting)
     __DEV__ && console.log(this.props.userState._teamActive)
     const { design,
       countedListA, countedListB, countedListC, countedListD, reportMapState: {isOnSearch} } = this.props
@@ -178,7 +177,7 @@ const mapDispatchToProps = dispatch => {
     getReportsNearbyRequest: (param) => dispatch(ReportsActions.getReportsNearbyRequest(param)),
     userMergeState: (newState) => dispatch(UsersActions.mergeState(newState)),
     reportChangeStatus: (_report) => dispatch(ReportsActions.reportChangeStatus(_report)),
-    reportCreatesuccess: (params) => dispatch(ReportsActions.reportCreatesuccess(params))
+    reportCreatesuccess: (params) => dispatch(ReportsActions.reportCreatesuccess(params)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ReportMapScreen)

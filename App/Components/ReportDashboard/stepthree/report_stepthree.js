@@ -180,7 +180,7 @@ class ReportStepThree extends Component {
     const { reportState: {
       reportIsUrgent, reportDescription, reportMainCategoryList, submitButton, reportIsPersonInvoled, reportIsVehicleInvoled, reportType,
       reportPersonInvoledCount, reportVehicleInvoledCount, reportPersonInvoledDesc, reportVehicleInvoledDesc,
-      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design, language } = this.props
+      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design, language, reportState } = this.props
     const validated = this.validate()
     return (
       <View style={ReportStyle.container}>

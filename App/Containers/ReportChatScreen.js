@@ -67,6 +67,7 @@ class TeamChat extends Component {
   render() {
     console.log('Chat Screen navigation params: ', this.props.navigation.state.params);
     console.log('Chat Screen props: ', this.props);
+    
     const { title } = this.props.navigation.state.params || { title: '' }
     const { fetching, userId, username, navigation, messages } = this.props
     if (fetching) {

@@ -49,6 +49,9 @@ import DebugConfig from './../../Config/DebugConfig'
 import ReportMapSearchItems from '../../Components/ReportDashboard/Components/ReportMapSearchItems'
 import ReportCreateStep1 from '../../Components/ReportDashboard/Components/ReportCreateStep1'
 
+import { popUpAlertV2 } from '../../Lib/Helper/alertHelper'
+import { CONNECTION } from '../../Services/AppSocket'
+
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
  *
@@ -151,7 +154,6 @@ class ReportMapContainer extends Component {
     }
     this.reportMap = {}
     this.reportMapRegion = {}
-    console.log('this.props.reportState', this.props.reportState)
 
     this.slideUpMenuHeight = height * 0.5
   }
@@ -173,20 +175,20 @@ class ReportMapContainer extends Component {
 
   componentDidMount () {
     const { mapState } = this.state
-    const { reportMergeState } = this.props
+    const { reportMergeState, user } = this.props
     const { reportCoordinate, userPosition } = this.props.reportState
 
     this.setState({ mapState: userPosition })
+
     try {
       /** is separate user position and report position couse pin in map can be move */
       this.watchID = navigator.geolocation.watchPosition((position) => {
        // this.setState({ mapState: {...mapState, ...position.coords} })
         const { latitude, longitude } = position.coords
-        this.mapViewToRegion({ latitude, longitude }, 100)
-        console.log('position.coords', position.coords)
-        reportMergeState({reportCoordinate: {...reportCoordinate, ...position.coords}, userPosition: {...userPosition, ...position.coords}})
-        // this.setAddress(position.coords)
-        console.log('didmount coordinate: ', position)
+        if (position.coords.accuracy <= 100) {
+          this.mapViewToRegion({ latitude, longitude }, 100)
+          reportMergeState({reportCoordinate: {...reportCoordinate, ...position.coords}, userPosition: {...userPosition, ...position.coords}})
+        }
       })
     } catch (e) {
       console.log(e.message)
@@ -219,6 +221,21 @@ class ReportMapContainer extends Component {
     // call fetchNearbyReports
     // coordinate, user
     getReportsNearbyRequest({ coordinate: reportCoordinate, user})
+
+    console.log("from report container ", user);
+
+    this.connection = CONNECTION.getConnection(user._id)
+    console.log('connection of socket', this.connection);
+    /* 
+      for getting notification after the user is approved
+      kindly find all the key word  received-approval to see all the function
+    */
+    this.connection.on('received-approval', (data) => {
+      if (data.data.data._id === user._id) {
+        popUpAlertV2("Team", data.dutch);
+      }
+    });
+
   }
 
   getCategories (_reportType, _host) {
@@ -345,7 +362,6 @@ class ReportMapContainer extends Component {
 
   setAddress (reportPosition) {
     const { setReportAddressByCoordinate } = this.props
-    console.log('setAddress', reportPosition)
     setReportAddressByCoordinate(reportPosition)
   }
 
@@ -382,7 +398,7 @@ class ReportMapContainer extends Component {
     const newState = { ...mapState, ...region }
     try {
       this.reportMap.animateToRegion(newState, duration)
-      // this.setState({mapState: newState}, () => console.log(newState))
+      this.setState({mapState: newState}, () => console.log(newState))
     } catch (e) {
       console.log(e)
     }
@@ -410,12 +426,11 @@ class ReportMapContainer extends Component {
       //       latitudeDelta: newLatitudeDelta}
       //   }})
     } catch (e) {
-      console.log('zoom')
+      console.log(e)
     }
   }
   _zoomOut () {
     const { mapState } = this.state
-    console.log('this.reportMap', this.reportMap)
    // const { region } = this.reportMap.props
     const {reportMergeState, reportState: {userPosition, reportCoordinate}} = this.props
 
@@ -494,9 +509,10 @@ class ReportMapContainer extends Component {
     return Images.pinNew
   }
 
-  _remapMapMarkerList (reportMapMarkerList, mapFilterCode) {
-    // const {  } = this.props
+  // _remapMapMarkerListFilter()
 
+  _remapMapMarkerList ( reportState ,reportMapMarkerList, mapFilterCode) {
+    // const {  } = this.props
     return reportMapMarkerList.filter((report) => mapFilterCode.indexOf(report._reportType.code) >= 0)
   }
 
@@ -507,12 +523,12 @@ class ReportMapContainer extends Component {
   }
 
   render () {
-    const { reportMergeState, reportState, user, navigation, design, Lang, reportMapState: {mapFilterCode}} = this.props
+    const { reportsListNear, reportMergeState, reportState, user, navigation, design, Lang, reportMapState: {mapFilterCode}} = this.props
     // console.log('reportState ', reportState)
     const { currentCoordinate, reportPosition, mapState } = this.state
     const calloutOnPress = this.calloutOnClick.bind(this)
     const confirmChangeStatus = this.confirmChangeStatus.bind(this)
-    const mapMarketList = this._remapMapMarkerList(reportState.reportMapMarkerList, mapFilterCode)
+    const mapMarketList = this._remapMapMarkerList(reportState, reportState.reportMapMarkerList, mapFilterCode)
 
     const pinImage = this.pinImage
     const heights = this.getHeight()
@@ -581,13 +597,18 @@ class ReportMapContainer extends Component {
               radius={8}
               strokeColor={'transparent'}
               fillColor={'blue'} />
-
+            { console.log( 'Mapscreen',  ) }
             { reportState.isReportFormActive === false && mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
+              { 
+                
+                }
               return <MapView.Marker
                 ref={m => { this.reportMarkers['M' + marker._id] = m }}
-                coordinate={{ longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
+                coordinate={ !!marker.unfollow && marker.unfollow.user === user._id ? { longitude: -89.112920, latitude:  46.136008 } :  { longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
                 // title={''}
-                image={pinImage(marker.status)}
+                image={
+                  pinImage(marker.status)
+                }
                 zIndex={index + 5}
                 key={marker._id} >
                 <MapView.Callout style={{flexDirection: 'row', flex: 1}} onPress={() => calloutOnPress(marker)}>

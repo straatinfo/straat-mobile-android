@@ -10,10 +10,12 @@ import ReportsActions from './../../Redux/ReportsRedux'
 import UnderMigration from './../../Components/UnderMigration'
 import UsersActions from './../../Redux/UserRedux'
 
+
 // import Icon from 'react-native-vector-icons/Ionicons'
 
 class ReportMapScreen extends React.Component {
   constructor (props) {
+    connection = {}
     super(props)
     this.state = {
     }
@@ -21,6 +23,7 @@ class ReportMapScreen extends React.Component {
   }
 
   componentDidMount () {
+
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
@@ -66,6 +69,7 @@ class ReportMapScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user.user,
+    userId: state.user.user._id,
     userState: state.user,
     design: state.user.design,
     notificationtState: state.notification,

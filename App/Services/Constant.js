@@ -29,7 +29,7 @@ export const Url = {
    *
    */
   // LOCAL: 'http://192.168.0.33:5000/',
-  LOCAL: 'http://192.168.254.104:5000/',
+  LOCAL: 'http://192.168.254.106:5000/',
 
   /**
    *
@@ -159,7 +159,8 @@ export const SocketTypes = {
   UPDATE_MESSAGE: 'update-message',
   EXIT_CONVO: 'exit-convo',
   RECEIVE_MESSAGE: 'new-message',
-  BLOCK_USER: 'BLOCK_USER'
+  BLOCK_USER: 'BLOCK_USER',
+  APPROVE_MEMBER: 'approved-member',
 
 }
 /**

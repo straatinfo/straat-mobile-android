@@ -68,6 +68,7 @@ export default function * root () {
     /**              USER              */
     takeLatest(CurrentUserTypes.USER_BLOCK, blockUser, api),
     takeLatest(CurrentUserTypes.USER_CHANGE_RADIUS, mapRadiusSetting, api),
+    // takeLatest(CurrentUserTypes.VIEWED_NOTIFIED, viewedNotifiedRequest, api),
 
     /**          ACCESS CODE           */
     takeLatest(CurrentUserTypes.SET_ACCESS_CODE, confirmAccessCode, api),

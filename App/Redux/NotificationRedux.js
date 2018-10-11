@@ -7,13 +7,13 @@ import { notificationTypes, ConvoTypes, ReportTypes, SocketTypes } from '../Serv
 const { Types, Creators } = createActions({
   notificationRequestTypeA: ['data'],
   notificationRequestTypeB: ['data'],
-  removeMyreport: ['data'],
   notificationRequestTypeC: ['data'],
   notificationMerge: ['newState'],
   updateByNotification: ['source', 'data'],
   addNotification: ['data'],
   clearNotification: ['data'],
   notificationOpen: ['data'],
+  removeReport: ['data'],
   notificationUpdatemessage: ['params'],
 })
 
@@ -36,7 +36,6 @@ export const INITIAL_STATE = Immutable({
 
   errorB: null,
   fetchingB: true,
-  removeMyreport: false,
 
   errorC: null,
   fetchingC: true,
@@ -140,7 +139,6 @@ export const clearNotification = (state, {data}) => {
 }
 
 export const notificationMerge = (state, { newState }) => {
-  console.log('newState', newState)
   return state.merge(newState)
 }
 
@@ -174,13 +172,25 @@ export const notificationOpen = (state, { data: {target, type} }) => {
   return state
 }
 
-export const removeMyreport = (state, {_id}) => {
-  console.log(state);
-  // console.log(_id)
-  // return state.myReportList.merge({ fetchingDetails: true })
-  // const toRemove = state.myReportList.findIndex(report => report._id === _id )
-  // return state.merge({getTypeAList: state.getTypeAList.filter(report => report._id !== _id)})
+function filterArray() {
+
 }
+
+export const removeReport = (state, report) => {
+   const newStateA =  state.typeAList.filter( function(e) {
+    return e._id !== report.data;
+  });
+  const newStateB = state.typeBList.filter( function(e) {
+    return e._id !== report.data;
+  });
+
+  const newStateC = state.typeCList.filter( function(e) {
+    return e._id !== report.data;
+  });
+
+  return state.merge({typeAList: newStateA}).merge({typeBList: newStateB}).merge({ typeCList: newStateC });
+}
+
 
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -194,6 +204,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_NOTIFICATION]: addNotification,
   [Types.CLEAR_NOTIFICATION]: clearNotification,
   [Types.NOTIFICATION_OPEN]: notificationOpen,
+  [Types.REMOVE_REPORT]: removeReport,
   [Types.NOTIFICATION_UPDATEMESSAGE]: notificationUpdatemessage,
 })
 

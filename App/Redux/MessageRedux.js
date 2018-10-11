@@ -81,14 +81,14 @@ export const failureSendMessage = (state, { error }) => {
 
 export const newMessage = (state, { conversationId, message }) => {
   if (state.conversationId === conversationId) {
-    __DEV__ && console.log('newMessage :', message)
+    // __DEV__ && console.log('newMessage :', message)
     return state.merge({ messages: [ message, ...state.messages ] })
   }
   return state
 }
 
 export const openMessage = (state, { convo: {conversationId, messages, title} }) => {
-  __DEV__ && console.log('conversationId, messages, title', conversationId, messages, title)
+  // __DEV__ && console.log('conversationId, messages, title', conversationId, messages, title)
   if (state.conversationId === conversationId) {
     return state
   }
@@ -100,7 +100,7 @@ export const getConversation = (state, { param }) => {
 }
 
 export const createPostConvo = (state, { params }) => {
-  __DEV__ && console.log('create conbo here')
+  // __DEV__ && console.log('create conbo here')
   return state
 }
 
@@ -113,12 +113,12 @@ export const sendlocalMessage = (state, { params }) => {
 }
 
 const filterRemoveTempMessage = (message, receive) => {
-  __DEV__ && console.log('receive', receive)
+  // __DEV__ && console.log('received', receive)
   return message._id !== receive.sourceId
 }
 
 export const messageReceive = (state, { param }) => {
-  __DEV__ && console.log('messageReceive', param)
+  // __DEV__ && console.log('messageReceive', param)
   const { payload, _conversation } = param
   if (_conversation === state.conversationId) {
     return state.merge({messages: [

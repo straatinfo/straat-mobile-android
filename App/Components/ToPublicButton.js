@@ -22,7 +22,7 @@ export default class ToPublicButton extends Component {
       <View style={[ styles.w50, styles.statusValue]} >
         <Text style={[ styles.f16 ]}>{isPublic ? Lang.public : Lang.private}</Text>
         {isPublic === false && <TouchableOpacity style={styles.changeStatusCon} underlayColor='rgba(0,0,0,0.0)' onPress={() => onPress()}>
-          <Text style={[styles.changeStatusbtnTxt]} >{Lang.change}emman</Text>
+          <Text style={[styles.changeStatusbtnTxt]} >{Lang.change}</Text>
         </TouchableOpacity>}
       </View>
     )

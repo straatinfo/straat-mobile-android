@@ -76,14 +76,15 @@ export const myReportDeleteRequest = function * (API, action) {
 
 export const unfollowReportRequest = function * (API, action) {
   const language = yield select(getLanguageState)
+  
   try {
+    
     const host = yield select(getUserHost)
     const user = yield select(getUser)
     const result = yield call(API.putUnfollowReport, user, action)
-    console.log('result from MyReportSaga', result);
-
+    
     if (result.status === 200) {
-      // yield put(NotificationActions.removeTypeAList(action._id))
+      yield put(NotificationActions.removeReport(action._id))
       popUpAlertV2(language.success, language.ReportHasBeenDeleted)
     } else {
       throw new Error(language.failed)

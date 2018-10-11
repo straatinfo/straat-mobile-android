@@ -19,8 +19,12 @@ import Styles from './Styles'
 import TeamActions from '../../Redux/TeamRedux'
 import Triangle from 'react-native-triangle'
 
+import { CONNECTION } from '../../Services/AppSocket'
+import { popUpAlertV2 } from '../../Lib/Helper/alertHelper'
+
 class MyTeamScreen extends Component {
   conversationId = null
+  connection = {}
   constructor (props) {
     super(props)
     this.state = {
@@ -31,13 +35,17 @@ class MyTeamScreen extends Component {
   componentWillMount () {
     const { getTeamDetails } = this.props
     getTeamDetails()
+
   }
 
   componentDidMount () {
+    const { userId } = this.props
     BackHandler.addEventListener('hardwareBackPress', () => {
      //  this.props.navigation.goBack()
       return false
     })
+
+    this.connection = CONNECTION.getConnection(userId)
   }
   _getTeamData () {
     const { teamId } = this.props
@@ -267,7 +275,7 @@ class MyTeamScreen extends Component {
   }
   teamRejectRequest (user) {
     const { rejectRequest } = this.props
-    rejectRequest(user)
+    // rejectRequest(user)
   }
 
   render () {

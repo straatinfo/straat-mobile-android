@@ -30,7 +30,8 @@ const { Types, Creators } = createActions({
   updateUser: ['user'],
   teamlistGetuser: ['user'],
   registerInit: ['user'],
-  userBlock: ['data']
+  userBlock: ['data'],
+  // viewedNotified: ['_id'],
 })
 
 export const CurrentUserTypes = Types
@@ -287,6 +288,10 @@ export const mergeState = (state, {newMergingState}) => {
   return state.merge(newMergingState)
 }
 
+// export const viewedNotified = (state) => {
+//   return state.merge({ setting: { isNotified: false } });
+// }
+
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_CURRENT_USER]: setCurrentUser,
   [Types.SET_ACCESS_CODE]: setAccessCode,
@@ -316,6 +321,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_RESET]: userReset,
   [Types.USER_BLOCK]: userBlock,
   [Types.USER_CHANGE_RADIUS]: userChangeRadius,
+  // [Types.VIEWED_NOTIFIED]: viewedNotified,
   
   [Types.UPDATE_USER]: updateUser
 })

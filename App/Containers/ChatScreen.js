@@ -74,11 +74,13 @@ class ChatScreen extends Component {
       this.props.navigation.goBack()
       return true
     })
+    this.setState({chatBox: ''})
 
     this.initUser()
   }
 
   componentWillUnmount () {
+    this.setState({chatBox: ''})
     BackHandler.removeEventListener('hardwareBackPress')
   }
 
@@ -114,7 +116,6 @@ class ChatScreen extends Component {
     }
     // clean chat box
     this.setState({chatBox: ''})
-
     // reflect changes on chatbox first and remove afterRecive confirm
     sendlocalMessage(message)
 
