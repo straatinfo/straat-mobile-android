@@ -9,7 +9,7 @@ export const onloginPopUp = ({ userData }) => {
   if (userData.isVolunteer === true) {
     // volunteer here
     if (userData.teamLeaders.length > 0 || userData.teamMembers.length > 0 || (userData.teams && userData.teams.length > 0)) {
-      return messageLoginPopup(true, Lang.txt_C09)  
+      return messageLoginPopup(true, null)
     } else {
       return messageLoginPopup(true, Lang.txt_C06)
     }
