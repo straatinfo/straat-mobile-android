@@ -28,33 +28,33 @@ class Conversation extends Component {
         const { userId, conversationId } = this.props;
         this.connection = CONNECTION.getConnection(userId);
         this.connectionId = CONNECTION.connectionId;
-        console.log('Conversation socket: ', this.connection);
-        console.log('Conversation socket: ConnectionId ', this.connectionId);
-        console.log('Conversation props: ', this.props);
+        // console.log('Conversation socket: ', this.connection);
+        // console.log('Conversation socket: ConnectionId ', this.connectionId);
+        // console.log('Conversation props: ', this.props);
     }
     _navigateToTeamChat = team => {
         const connectionId = this.connectionId;
         this.conversationId = team.conversations[0];
         const { navigation, setSelectedConversationId, nav } = this.props;
-        console.log('Conversation params: ', team);
+        // console.log('Conversation params: ', team);
         if (!team.conversations[0]) {
-            console.log('Creating conversation...');
+            // console.log('Creating conversation...');
             this._createConversation(team)
         }
-        console.log('ConversationId: ', this.conversationId);
-        console.log('enter-convo: Emitting...', SocketTypes.ENTER_CONVO);
+        // console.log('ConversationId: ', this.conversationId);
+        // console.log('enter-convo: Emitting...', SocketTypes.ENTER_CONVO);
         this.connection.emit(SocketTypes.ENTER_CONVO, {
             "_conversation": this.conversationId,
             "_connection": connectionId
         });
         this.connection.on(SocketTypes.ENTER_CONVO, data => {
-            console.log('enter-convo: Emit Response: ', data);
+            // console.log('enter-convo: Emit Response: ', data);
             if (data && data.status === 1) {
                 this.setState({ isSuccess: true })
             }
         });
         if (this.state.isSuccess === true) {
-            console.log('Setting conversation id...', this.conversationId);
+            // console.log('Setting conversation id...', this.conversationId);
             setSelectedConversationId(this.conversationId);
             this.props.navigation.navigate('TeamChat', { title: team.teamName });
         }
@@ -64,7 +64,7 @@ class Conversation extends Component {
     } */
     _createConversation = team => {
         const { userId, conversationId } = this.props
-        console.log('Team', team);
+        // console.log('Team', team);
         const conversation = {
             "title": team.teamName,
             "type": "TEAM",
@@ -112,7 +112,7 @@ class Conversation extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('Conversation State: ', state);
+    // console.log('Conversation State: ', state);
     return {
         fetching: state.conversation.fetching,
         conversations: state.conversation.conversation,

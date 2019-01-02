@@ -182,8 +182,8 @@ export default {
   // I am an individual reporter
   txt_D24: 'I am an individual reporter',
 
-  // I access street info from my bpt
-  txt_D25: 'I access street info from my bpt',
+  // I want happy to join an existing team
+  txt_D25: 'I want happy to join an existing team',
 
   // I want to start a new team
   txt_D26: 'I want to start a new team',
@@ -207,7 +207,39 @@ export default {
   txt_D32: 'I hereby accept the general terms.',
 
   // The app straat.info is meant volunteers
-  txt_D33: 'The app straat.info is meant volunteers to support neighbourhood watch. The use of this app for any other means is not permitted. \n\nThe app is no replacement for normal communication with professionals like police, hospitals etc.\n\nIn case of urgency always first call 112\n\nSeqretary b.v. is the owner of the app straat.info and accepts no liability of any kind for damages etc using this app.',
+  txt_D33: `Always call 112 first
+
+
+  The app street.info is intended for supporting neighborhood prevention, among other things, for passing on reports to the municipality. The use of the app for other purposes, which do not fit within the current explanation of neighborhood prevention, is not permitted.
+  
+  The app is emphatically not intended to replace normal communication traffic with agencies such as the police, the fire brigade, ambulance and municipalities.
+  
+  Always call 112 first
+  
+  Seqretary e.g. owns the app straat.info and accepts no liability for damage in any way whatsoever, through the use of the app. Seqretary e.g. can change the terms and conditions.
+  
+  
+  About privacy and your data:
+  
+  To protect your data better, the app street.info uses a chat name. You can decide for yourself which name you use. Your phone number and all your other personal details will not be disclosed to anyone in the public part of the app street.info.
+  
+  If you are a member of a team, your team members will see your name, but not your other details. They do not see your phone number, address etc.
+  
+  The team coordinator of your team does have access to your data. This allows the coordinator to check whether the right person is in the team.
+  
+  On request, the municipality and police can, if necessary, inspect your data and data generated with this street app.
+  
+  
+  The notifications with the corresponding messages that are created with the app straat.info are kept for a limited time. Then they are destroyed. Teams and the municipality receive a copy of the reports.
+  
+  We do not analyze the use of the app, other than to improve our services.
+  
+  We do not sell your data to other organizations.
+  
+  You can terminate the use of the app straat.info and have your data removed from our database by sending us a request via email.
+  
+  By accepting these terms and conditions you agree to the use of your data described here.`,
+  // txt_D33: 'The app straat.info is meant volunteers to support neighbourhood watch. The use of this app for any other means is not permitted. \n\nThe app is no replacement for normal communication with professionals like police, hospitals etc.\n\nIn case of urgency always first call 112\n\nSeqretary b.v. is the owner of the app straat.info and accepts no liability of any kind for damages etc using this app.',
 
   // when you are a volunteer, for example
   txt_D34: 'When you are a volunteer, for example want to join a neighbourhood watch, then choose `yes`. When you are going to use this app as a professional, please choose ´no´',
@@ -289,6 +321,9 @@ export default {
   // Report
   txt_E10: 'Create New Report',
 
+  // Chat is diabled for this report
+  txt_E11: 'Chat is diabled for this report',
+
   // MY TEAM
   txt_F01: 'Add extra team',
 
@@ -323,11 +358,14 @@ export default {
   // message your group
   txt_J02: 'Message your group',
 
+  // message your group
+  txt_J02b: 'Communication',
+
   //  Suspicious situation
   txt_J03: 'Suspicious Situation',
 
-  // CREATE MESSAGE
-  txt_J04: 'Create Message',
+  // Public Space
+  txt_J04: 'Public Space',
 
   /** You are here */
   txt_J05: 'You are here',
@@ -357,7 +395,7 @@ export default {
   inProgress: 'In Progress',
   done: 'Done',
   expired: 'Expired',
-  checkOutTheReport: 'check out the report',
+  checkOutTheReport: 'Check Out The Report', // 'check out the report',
   selectMainCategory: 'Choose Main Category',
   selectSubCategory: 'Choose Sub Category',
 
@@ -382,6 +420,9 @@ export default {
 
   // this report has been processed?
   txt_J18: 'This report has been processed?',
+
+  // Currently, this report can only be seen by you and your team members. You're at the point of making this report public to everybody. Do you wish to continue?
+  txt_J18b: 'Currently, this report can only be seen by you and your team members. You\'re at the point of making this report public to everybody. Do you wish to continue?',
 
   // Yes
   txt_J19: 'Yes',
@@ -411,7 +452,7 @@ export default {
   txt_J27: ' Thank you for your report!',
 
   /** @description From now on everybody can see     */
-  txt_J28ab: 'From now on everybody can see in the app. Ifthe report is about public space, it is also mailed to the host.',
+  txt_J28ab: 'From now on everybody can see in the app. If the report is about public space, it is also mailed to the host.',
   txt_J28c: 'Your message has been sent to the group (s) and is also in your overview that can be found in the menu at the top right.',
 
   /** @description hier kunt u berichten sturen naar de teams A  */
@@ -462,6 +503,9 @@ export default {
   /** @description type B Suspicious situation */
   suspiciousSituation: 'Suspicious Situation',
 
+  /** @description type B Suspicious situation */
+  allReports: 'All Reports',
+
   /** @description type C Messages */
   messages: 'Messages',
 
@@ -492,6 +536,12 @@ export default {
   /** @description Urgent? First call 112 */
   txt_J44: 'Urgent? First call 112',
 
+  /** @description Are you sure you want to delete the report? */
+  txt_J45: 'Are you sure you want to delete the report?',
+
+  // this report has been processed?
+  txt_J46: 'This report has been processed?',
+
   /** @description General Information */
   generalInformation: 'General Information',
 
@@ -500,6 +550,9 @@ export default {
 
   /** @description Already Taken */
   alreadyTaken: 'Already Taken',
+
+  /** @description Report has been deleted */
+  ReportHasBeenDeleted: 'Report has been deleted',
 
   // GLOBAL LANGUAGE
   // is under maintenance
@@ -661,6 +714,9 @@ export default {
   // Change my Data
   txt_P06: 'CHANGE MY DATA',
 
+  // Unable to create report, no category available.
+  txt_P07: 'Unable to create report, no category available.',
+
   /** @description Address */
   address: 'Address',
 
@@ -669,5 +725,53 @@ export default {
   txt_CONVERSATION_TITLE: 'Conversation Title',
 
   /** @description Show */
-  show: 'Show'
+  show: 'Show',
+
+  /** @description Confirmation */
+  confirmation: 'Confirmation',
+
+  /** @description Member team is required */
+  teamRequired: 'Member team is required',
+
+  /** @description Member team is required */
+  hostCoordinateIsInvalid: 'Host coordinate is invalid.',
+
+  /** @description Position Error */
+  posistionError: 'Position Error',
+
+  /** @description  map */
+  map: 'Map',
+
+  /** @description  search */
+  _search: 'Search address',
+
+  invalidPhoneNumberM: 'This number is already in use, please enter a different number or contact us through info@straat.info',
+
+  /** @description blockedUser */
+  blockedUser: 'At this moment the use of the app has been blocked. If you have any questions, please contact us through the form on www.straat.info',
+
+  /** @description Connected */
+  connected: 'Connected',
+
+  /** @description Connecting */
+  connecting: 'Connecting',
+
+  /** @description Disconnected */
+  disconnected: 'Disconnected',
+
+  /** @description Notice */
+  notice: 'Notice',
+
+  /** @description Public */
+  public: 'Public',
+
+  /** @description private */
+  private: 'Private',
+
+  /** @description change */
+  change: 'Change',
+
+  /** @description Extra */
+  extra: 'Extra'
+
 }

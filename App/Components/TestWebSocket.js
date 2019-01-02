@@ -52,7 +52,6 @@ class TestWebSocket extends React.Component {
     //   console.log('receive-global-msg', data)
     // })
     this.connection.on('send-global-msg', (data) => {
-      console.log('send-global-msg', data)
       this.setState({info: data})
     })
   }
@@ -85,7 +84,6 @@ class TestWebSocket extends React.Component {
 
   _send () {
     const { user } = this.props
-    console.log('sending :', this.state.item)
     const data = {
       desicription: this.state.item,
       createdAt: '2018-03-26T00:15:11.657Z',
@@ -109,7 +107,6 @@ class TestWebSocket extends React.Component {
   render () {
     const { navigation, notification: {dataReceive, typeCount_A} } = this.props
     const { list } = this.state
-    console.log('otification.typeCount_A', typeCount_A)
     return (
       <Container>
         <HeaderInDrawer title='test Web Socket' navigation={navigation} />

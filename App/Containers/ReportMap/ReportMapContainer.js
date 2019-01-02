@@ -10,7 +10,8 @@ import {
   AsyncStorage,
   TouchableOpacity,
   PermissionsAndroid,
-  WebView
+  WebView,
+  Keyboard
 } from 'react-native'
 import {
   Header,
@@ -33,7 +34,7 @@ import Api from './../../Lib/Common/Api'
 import ApiUtil from './../../Lib/Common/ApiUtil'
 import AlertBox from './../../Components/AlertBox'
 import Images from './../../Themes/Images'
-import { getStyleStatusInPin } from './../../Transforms/ReportHelper'
+import { getStyleStatusInPin, keyboardCb } from './../../Transforms/ReportHelper'
 
 import MapButton from './../../Components/MapButton'
 import ReportStepThree from './../../Components/ReportDashboard/stepthree/report_stepthree'
@@ -45,6 +46,11 @@ import styles from './style'
 import { reportCoordinate, getReportsNearbyRequest } from '../../Redux/ReportsRedux'
 import { cropWH } from '../../Transforms/Cloudinary'
 import DebugConfig from './../../Config/DebugConfig'
+import ReportMapSearchItems from '../../Components/ReportDashboard/Components/ReportMapSearchItems'
+import ReportCreateStep1 from '../../Components/ReportDashboard/Components/ReportCreateStep1'
+
+import { popUpAlertV2 } from '../../Lib/Helper/alertHelper'
+import { CONNECTION } from '../../Services/AppSocket'
 
 /**
  * i think i will not shift this module to redux saga, as of now i dont have time for that @ArC
@@ -62,6 +68,8 @@ const thankYouMessage = 'Thank you for your report! From now on everybody can se
 const ZERO = 0
 
 class ReportMapContainer extends Component {
+  reportMarkers = {}
+  reportPhotoInMarkers = {}
   constructor (props) {
     super(props)
 
@@ -146,7 +154,6 @@ class ReportMapContainer extends Component {
     }
     this.reportMap = {}
     this.reportMapRegion = {}
-    console.log('this.props.reportState', this.props.reportState)
 
     this.slideUpMenuHeight = height * 0.5
   }
@@ -158,7 +165,7 @@ class ReportMapContainer extends Component {
     // this._panel_reportView.transitionTo(this.state.slideMenuHeight + 150 + 65)
           // cnr button, hide report green button
     this.setState({ txt_e10Height: {height: 0} })
-    reportMergeState({reportDetails: marker})
+    reportMergeState({reportDetails: marker, statusSource: 'map'})
   }
 
   resetMap () {
@@ -168,20 +175,20 @@ class ReportMapContainer extends Component {
 
   componentDidMount () {
     const { mapState } = this.state
-    const { reportMergeState } = this.props
+    const { reportMergeState, user } = this.props
     const { reportCoordinate, userPosition } = this.props.reportState
 
-    this.setState({ mapState: reportCoordinate })
+    this.setState({ mapState: userPosition })
+
     try {
       /** is separate user position and report position couse pin in map can be move */
       this.watchID = navigator.geolocation.watchPosition((position) => {
        // this.setState({ mapState: {...mapState, ...position.coords} })
         const { latitude, longitude } = position.coords
-        this.mapViewToRegion({ latitude, longitude }, 100)
-        console.log('position.coords', position.coords)
-        reportMergeState({reportCoordinate: {...reportCoordinate, ...position.coords}, userPosition: {...userPosition, ...position.coords}})
-        // this.setAddress(position.coords)
-        console.log('didmount coordinate: ', position)
+        if (position.coords.accuracy <= 100) {
+          this.mapViewToRegion({ latitude, longitude }, 100)
+          reportMergeState({reportCoordinate: {...reportCoordinate, ...position.coords}, userPosition: {...userPosition, ...position.coords}})
+        }
       })
     } catch (e) {
       console.log(e.message)
@@ -214,6 +221,21 @@ class ReportMapContainer extends Component {
     // call fetchNearbyReports
     // coordinate, user
     getReportsNearbyRequest({ coordinate: reportCoordinate, user})
+
+    console.log("from report container ", user);
+
+    this.connection = CONNECTION.getConnection(user._id)
+    console.log('connection of socket', this.connection);
+    /* 
+      for getting notification after the user is approved
+      kindly find all the key word  received-approval to see all the function
+    */
+    this.connection.on('received-approval', (data) => {
+      if (data.data.data._id === user._id) {
+        popUpAlertV2("Team", data.dutch);
+      }
+    });
+
   }
 
   getCategories (_reportType, _host) {
@@ -234,7 +256,32 @@ class ReportMapContainer extends Component {
 
     setReportAddressByCoordinate(currentCoordinate)
   }
-  submitReport () {
+
+  submitReport (pinRef) {
+    if (!pinRef) {
+      return true
+    }
+    // console.log('this.reportMarkers', this.reportMarkers)
+    __DEV__ && console.log(new Date())
+    setTimeout(() => {
+      if (this.reportMarkers['M' + pinRef]) {
+        this.reportMarkers['M' + pinRef].showCallout()
+        // setTimeout(() => {
+        //   this.reportMarkers['M' + pinRef].hideCallout()
+        //   __DEV__ && console.log(this.reportMarkers['M' + pinRef])
+        //   if (this.reportPhotoInMarkers && this.reportPhotoInMarkers['P' + pinRef] && this.reportPhotoInMarkers['P' + pinRef].reload) {
+        //     setTimeout(() => {
+        //       this.reportMarkers['M' + pinRef].hideCallout()
+        //       setTimeout(() => {
+        //         this.reportMarkers['M' + pinRef].showCallout()
+        //         this.reportPhotoInMarkers['P' + pinRef].reload()
+        //       }, 1500)
+        //     }, 1000)
+        //   }
+        // }, 1500)
+      }
+      __DEV__ && console.log(new Date())
+    }, 5 * 1000) // why 15000 is 3 sec?
   }
 
   onReportTypeSelect (value) {
@@ -262,7 +309,7 @@ class ReportMapContainer extends Component {
   }
 
   hideCreateReport () {
-    const { reportMergeState } = this.props
+    const { reportMergeState, reportCreatesuccess } = this.props
     this.setState({slidingPanelPage: 'report-location', slideMenuUp: true})
     reportMergeState({isReportFormActive: false})
     // this._panel.transitionTo(0)
@@ -289,6 +336,7 @@ class ReportMapContainer extends Component {
       is_person_involved: 0,
       person_involved_num: 0
     })
+    reportCreatesuccess()
   }
 
   showCreateReport () {
@@ -314,7 +362,6 @@ class ReportMapContainer extends Component {
 
   setAddress (reportPosition) {
     const { setReportAddressByCoordinate } = this.props
-    console.log('setAddress', reportPosition)
     setReportAddressByCoordinate(reportPosition)
   }
 
@@ -351,7 +398,7 @@ class ReportMapContainer extends Component {
     const newState = { ...mapState, ...region }
     try {
       this.reportMap.animateToRegion(newState, duration)
-      // this.setState({mapState: newState}, () => console.log(newState))
+      this.setState({mapState: newState}, () => console.log(newState))
     } catch (e) {
       console.log(e)
     }
@@ -379,12 +426,11 @@ class ReportMapContainer extends Component {
       //       latitudeDelta: newLatitudeDelta}
       //   }})
     } catch (e) {
-      console.log('zoom')
+      console.log(e)
     }
   }
   _zoomOut () {
     const { mapState } = this.state
-    console.log('this.reportMap', this.reportMap)
    // const { region } = this.reportMap.props
     const {reportMergeState, reportState: {userPosition, reportCoordinate}} = this.props
 
@@ -413,14 +459,16 @@ class ReportMapContainer extends Component {
   }
   reportFormShow () {
     const {reportMergeState, reportState: {isReportFormActive, reportCoordinate, userPosition }} = this.props
-    this.mapViewToRegion({latitude: reportCoordinate.latitude, longitude: reportCoordinate.longitude }, 300)
-    // set user address from start of this screen
-    this.setAddress(reportCoordinate)
+    keyboardCb(Keyboard, () => {
+      this.mapViewToRegion({latitude: reportCoordinate.latitude, longitude: reportCoordinate.longitude }, 300)
+      // set user address from start of this screen
+      this.setAddress(reportCoordinate)
 
-    this.setState({slideMenuUp: false, slidingPanelPage: 'report-location'},
-    () => {
-    //  this._panel.transitionTo(this.state.slideMenuHeight + 65)
-      reportMergeState({isReportFormActive: true})
+      this.setState({slideMenuUp: false, slidingPanelPage: 'report-location'},
+      () => {
+      //  this._panel.transitionTo(this.state.slideMenuHeight + 65)
+        reportMergeState({isReportFormActive: true})
+      })
     })
   }
   getHeight () {
@@ -460,29 +508,47 @@ class ReportMapContainer extends Component {
     }
     return Images.pinNew
   }
+
+  // _remapMapMarkerListFilter()
+
+  _remapMapMarkerList ( reportState ,reportMapMarkerList, mapFilterCode) {
+    // const {  } = this.props
+    return reportMapMarkerList.filter((report) => mapFilterCode.indexOf(report._reportType.code) >= 0)
+  }
+
+  _mapNavigate (location) {
+    // this.mapViewToRegion({latitude: location.lat, longitude: location.lng}, 400)
+    this.moveReportCircle({latitude: location.lat, longitude: location.lng})
+    __DEV__ && console.log(location)
+  }
+
   render () {
-    const { reportMergeState, reportState, user, navigation, design, Lang } = this.props
+    const { reportsListNear, reportMergeState, reportState, user, navigation, design, Lang, reportMapState: {mapFilterCode}} = this.props
     // console.log('reportState ', reportState)
     const { currentCoordinate, reportPosition, mapState } = this.state
     const calloutOnPress = this.calloutOnClick.bind(this)
     const confirmChangeStatus = this.confirmChangeStatus.bind(this)
+    const mapMarketList = this._remapMapMarkerList(reportState, reportState.reportMapMarkerList, mapFilterCode)
+
     const pinImage = this.pinImage
     const heights = this.getHeight()
-    if (!DebugConfig.displayGoogleMap) {
-      return null
-    }
+    // if (!DebugConfig.displayGoogleMap) {
+    //   return null
+    // }
     return (
-      <View style={styles.container}>
-        {renderIf(this.state.mapReset === 1)(
+      <View style={styles.container} >
+        <ReportMapSearchItems mapNavigate={this._mapNavigate.bind(this)} />
+        {renderIf(this.state.mapReset === 1 && DebugConfig.displayGoogleMap)(
           <MapView
+            onPress={Keyboard.dismiss}
             ref={c => { this.reportMap = c }}
-            style={[styles.map, { height: heights.hmap }]}
-            showsUserLocation={false}
-            followUserLocation={false}
+            style={[styles.map, { height: heights.hmap }, { height: '100%' }]}
+            // showsUserLocation
+            // followUserLocation
             showsMyLocationButton={false}
             showsCompass={false}
             followsUserLocation={false}
-            loadingEnabled={false}
+            loadingEnabled
             toolbarEnabled={false}
             // zoomEnabled={false}
             rotateEnabled
@@ -521,17 +587,28 @@ class ReportMapContainer extends Component {
               strokeColor={'transparent'}
               fillColor={'rgba(112,185,213,0.30)'}
                     />
+            {/* <MapView.Circle
+              center={reportState.userPosition}
+              radius={10}
+              strokeColor={'transparent'}
+              fillColor={'rgba(112,185,213,0.99)'} /> */}
             <MapView.Circle
               center={reportState.userPosition}
-              radius={5}
+              radius={8}
               strokeColor={'transparent'}
-              fillColor={'rgba(112,185,213,0.60)'} />
-
-            { reportState.reportMapMarkerList.length > 0 && reportState.reportMapMarkerList.map(function (marker, index) {
+              fillColor={'blue'} />
+            { console.log( 'Mapscreen',  ) }
+            { reportState.isReportFormActive === false && mapMarketList.length > 0 && mapMarketList.map((marker, index) => {
+              { 
+                
+                }
               return <MapView.Marker
-                coordinate={{ longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
+                ref={m => { this.reportMarkers['M' + marker._id] = m }}
+                coordinate={ !!marker.unfollow && marker.unfollow.user === user._id ? { longitude: -89.112920, latitude:  46.136008 } :  { longitude: marker.reportCoordinate.coordinates[0], latitude: marker.reportCoordinate.coordinates[1] }}
                 // title={''}
-                image={pinImage(marker.status)}
+                image={
+                  pinImage(marker.status)
+                }
                 zIndex={index + 5}
                 key={marker._id} >
                 <MapView.Callout style={{flexDirection: 'row', flex: 1}} onPress={() => calloutOnPress(marker)}>
@@ -546,7 +623,9 @@ class ReportMapContainer extends Component {
                   <WebView
                     source={{uri: cropWH(60, 80, marker.attachments[0].secure_url)}}
                     style={{width: 60, height: 80, flex: 1, marginVertical: 5}}
-                    />}
+                    ref={m => { this.reportPhotoInMarkers['P' + marker._id] = m }}
+                    />
+                  }
                 </MapView.Callout>
               </MapView.Marker>
             }) }
@@ -617,7 +696,7 @@ class ReportMapContainer extends Component {
         {/** because slide menu is so slow i will make alternative for now i will not make it animated: maybe later on */}
         {/** show location with next button */}
         {reportState.isReportFormActive === true && this.state.slidingPanelPage === 'report-location' && <View style={[styles.slideUpMenu, {height: heights.sldeUp, width: width}]}>
-          <ReportStepOne onCancel={this.hideCreateReport} onSubmit={() => this.setState({slidingPanelPage: 'report-type'})} address={reportState.reportAddress} />
+          <ReportCreateStep1 onCancel={this.hideCreateReport} onSubmit={() => this.setState({slidingPanelPage: 'report-type'})} address={reportState.reportAddress} />
           </View>}
         {/** here will select what type of reports */}
         {reportState.isReportFormActive === true && this.state.slidingPanelPage === 'report-type' && <View style={[styles.slideUpMenu, {height: heights.sldeUp, width: width}]}>
@@ -635,7 +714,6 @@ class ReportMapContainer extends Component {
             navigation={navigation}
             />
           </View>}
-
         {/** crate report button */}
         {renderIf(this.state.slideMenuUp === true && reportState.isReportFormActive === false)(
           <View style={[ styles.txt_E10_container, { ...this.state.txt_e10Height, width: '90%' } ]}>

@@ -1,18 +1,9 @@
-import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler } from 'react-native'
-import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container,
-   Card, CardItem, List, Switch, Body, ListItem, Right, Radio, Left, Content, Segment, Header, Tabs, Tab, TabHeading, Icon, Center} from 'native-base'
+import React from 'react'
+import { TextInput } from 'react-native'
+import { Text, Input, List, Body, ListItem, Left, Content, Icon, View } from 'native-base'
+import { AlertBox, CircleButton, RowView, Spacer, validator, ValidationComponent } from './../../Components'
 import { connect } from 'react-redux'
-import ValidationComponent from 'react-native-form-validator'
-import validator from 'validator'
-
-import {Fonts, Colors} from './../../Themes'
-import style from './style'
-import CenterView from './../../Components/CenterView'
-import RowView from './../../Components/RowView'
-import CircleButton from './../../Components/CircleButton'
-import Spacer from './../../Components/Spacer'
-import AlertBox from './../../Components/AlertBox'
+import { Fonts } from './../../Themes'
 
 class RegisterAccessCode extends ValidationComponent {
   constructor (props) {
@@ -107,7 +98,6 @@ class RegisterAccessCode extends ValidationComponent {
 
     // if code come here that meanss it validated
     this.props.parentSetState({registrationData: this.state})
-    console.log(this.state)
     this.props.onProcess(this.state)
   }
 

@@ -23,6 +23,7 @@ class SocketConnection {
    // return this.mainSocket
 
     this.mainSocket = SocketIOClient(BASE_URL + '?_user=' + userId + '&token=' + token, {transports: ['websocket']})
+    __DEV__ && console.log(' this.mainSocket', this.mainSocket)
     return this.mainSocket
   }
   getConnection (userId, token = '') {
@@ -31,6 +32,10 @@ class SocketConnection {
     } else {
       return this.newSocket(userId, token)
     }
+  }
+  logout () {
+    this.mainSocket.disconnect()
+    this.mainSocket = null
   }
 }
 

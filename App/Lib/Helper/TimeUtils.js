@@ -19,7 +19,7 @@ export const GetDateEutype = (time) => {
 
 export const GetTime = (time) => {
   const date = new Date(time)
-  return '' + (date.getHours() + 1).toString() + ':' + date.getMinutes() + ':' + date.getSeconds()
+  return '' + date.getHours().toString() + ':' + date.getMinutes() + ':' + date.getSeconds()
 }
 
 /**

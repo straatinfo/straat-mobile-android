@@ -48,6 +48,30 @@ export const flatReports = (reports) => {
 
 /**
  *
+ * @description removeNoTeam
+ * @param reports
+ *
+ */
+export const removeNoTeam = (report, index, _reporter) => {
+  if (report._team || report._reporter._id === _reporter) {
+    return true
+  }
+  return false
+}
+/**
+ *
+ * @description flat reports
+ * @param reports
+ *
+ */
+export const flatReportsNotificationTab = (reports, _reporter) => {
+  return reports.map(flatReport).filter((r, i) => removeNoTeam(r, i, _reporter))
+}
+
+
+
+/**
+ *
  * @description flat reports
  * @param reports
  *
@@ -95,7 +119,8 @@ export const isDisplayPin = (report, teamList) => {
     if (report.isPublic !== undefined && report.isPublic === false) {
       // this mean it is public report: only member can see this
       // find report team if user has access
-      return teamList.filter((team) => team._id === report._team).length > 0
+      const reportTeamID = report._team ? report._team._id : report._team
+      return teamList.filter((team) => team._id === reportTeamID).length > 0
     } else {
       // this mean the backend is not yet fix so i will display the report for now
       return true
@@ -181,4 +206,56 @@ export const sortCategories = (categoriesList) => {
   }
 
   return categories
+}
+
+export const getReportTypesFilterSelect = (Lang) => {
+  return [
+    {
+      name: Lang.publicSpace,
+      code: 'A'
+    },
+    {
+      name: Lang.suspiciousSituation,
+      code: 'B'
+    },
+    {
+      name: Lang.allReports,
+      code: 'AB'
+    }
+  ]
+}
+
+const addressRemoveLastText = (text = '') => {
+  const t = text.split(',')
+  t.pop()
+  return t.join(',')
+}
+
+export const formatMapSearchResult = (payload) => {
+  return payload.results.map(
+    d => {
+      return {
+        _id: d.place_id,
+        title: d.name,
+        subTitle: addressRemoveLastText(d.formatted_address),
+        icon: d.icon,
+        location: d.geometry.location
+      }
+    }
+  )
+
+}
+
+// run hide keyboard nag callback
+export const keyboardCb = (K, cb) => {
+  K.dismiss()
+  setTimeout(() => {
+    cb()
+  }, 1000)
+}
+
+// if  its member
+export const hasMember = (teamId, teamList) => {
+  const team = teamList.find((t) => t._id === teamId)
+  return !!team
 }

@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
-import { Text, BackHandler } from 'react-native'
+import { BackHandler } from 'react-native'
+import { Text } from 'native-base'
+import { CenterView, CircleButton, RowView, Spacer } from './../../Components'
 import { connect } from 'react-redux'
 import { Fonts } from './../../Themes'
-// import style from './style'
-import CenterView from './../../Components/CenterView'
-import RowView from './../../Components/RowView'
-import CircleButton from './../../Components/CircleButton'
-import Spacer from './../../Components/Spacer'
 
 class NoAccessCode extends Component {
   render () {
     const { Lang } = this.props
     const TextStyles = {
       fontSize: Fonts.size.h5,
-      textAlign: 'center'
+      textAlign: 'center',
+      padding: 10
     }
 
     return (

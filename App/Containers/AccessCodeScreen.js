@@ -79,7 +79,6 @@ class AccessCodeScreen extends React.Component {
     this.state.setState({screen: childKey})
   }
   _confirmAccessCode = () => {
-    console.log('Keyboard', Keyboard)
     Keyboard.dismiss()
     // after success in access code user will redirect to Login
     this.props.confirmAccessCode(this.state.accessCode, this.props.navigation, 'Login')

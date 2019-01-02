@@ -10,8 +10,10 @@ import Footer from '../Components/Footer'
 import FastImage from 'react-native-fast-image'
 import ReportsActions from './../Redux/ReportsRedux'
 import RootStyles from './Styles/RootContainerStyles'
+import LoginActions from '../Redux/LoginRedux'
 import ScreenActions from './../Redux/ScreenRedux'
 import SplashActions from './../Redux/SplashRedux'
+import SettingActions from './../Redux/SettingRedux'
 import Styles from './Styles/SplashStyle'
 
 class SplashScreen extends React.Component {
@@ -20,26 +22,34 @@ class SplashScreen extends React.Component {
     this.state = { progressMessage: '', design: Design }
     global.appSetting = Design
   }
+
   geo () {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          // console.log('locaiton', position)
           resolve(position.coords)
         },
         (err) => {
+          // console.log('locaiton err', err)
           reject(err)
         })
     })
   }
 
   async getLocation () {
-    const { Lang, reportMergeState, reportState: { reportCoordinate } } = this.props
+    const { Lang, reportMergeState, settingMergeState, setlogininitReport, reportState: { reportCoordinate } } = this.props
     try {
       const location = await this.geo()
-      reportMergeState({reportCoordinate: {...reportCoordinate, ...location}})
+      // reportMergeState({reportCoordinate: {...reportCoordinate, ...location}}) // will be shift to report redux
+
+      setlogininitReport({lat: location.latitude, long: location.longitude})
+      settingMergeState({hasGPS: true})
+
       this._processedNext()
     } catch (e) {
-      this.props.changeLoadingMessage('')
+      __DEV__ && console.log(e)
+      // this.props.changeLoadingMessage('')
       AlertBox.alert('', Lang.txt_A02, [{text: Lang.txt_A01, onPress: () => this._processedNext()}], { cancelable: false })
     }
   }
@@ -62,10 +72,9 @@ class SplashScreen extends React.Component {
     const { Lang } = this.props
     this.props.changeLoadingMessage(Lang.txt_A03)
 
-    let interval = setInterval(() => {
+    setTimeout(() => {
       this.getLocation()
-      this.props.changeLoadingMessage('')
-      clearInterval(interval)
+      // this.props.changeLoadingMessage('')
     }, 2000)
   }
 
@@ -74,7 +83,15 @@ class SplashScreen extends React.Component {
     const login = await AppData.getLogin()
     const user = JSON.parse(login)
     if (user && user.username && user.password) {
-      return navigation.navigate('Login', {login: true, username: user.username, password: user.password, popup: false})
+      // return navigation.navigate('Login', {login: true, username: user.username, password: user.password, popup: false, noLoader: true})
+      this.props.attemptLogin(user.username, user.password, this.props.navigation, 'NavigationDrawer',
+        {
+          popup: false,
+          noLoader: true,
+          onFailed: () => {
+            this.props.navigation.navigate('Login')
+          }}) // change to dashboard
+      return true
     }
 
     this.props.change(navigation, 'AccessCodeScreen')
@@ -111,7 +128,11 @@ const mapDispatchToProps = dispatch => {
   return {
     changeLoadingMessage: (loadingMessage) => dispatch(SplashActions.changeLoadingMessage(loadingMessage)),
     change: (navigation, route) => dispatch(ScreenActions.change(navigation, route)),
-    reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState))
+    reportMergeState: (newState) => dispatch(ReportsActions.reportMergeState(newState)),
+    setlogininitReport: (params) => dispatch(ReportsActions.setlogininitReport(params)),
+    settingMergeState: (newState) => dispatch(SettingActions.settingMergeState(newState)),
+    attemptLogin: (username, password, navigation, route, params) => dispatch(LoginActions.loginRequest({username, password, navigation, route, params}))
+
   }
 }
 

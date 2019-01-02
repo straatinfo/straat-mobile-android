@@ -13,6 +13,7 @@ import CenterView from '../Components/CenterView'
 import { CONNECTION } from '../Services/AppSocket'
 import { getTeamLogo } from '../Transforms/TeamHelper'
 import { crop } from '../Transforms/Cloudinary'
+import Chatconnection from '../Components/Chatconnection';
 /**
  *
  *  receive -> updateChatRedux ->
@@ -29,9 +30,14 @@ class ChatScreen extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { user: null }
+    this.state = { user: null, chatBox: '' }
   }
 
+  
+  componentWillMount() {
+    this.setState({chatBox: ''})
+  }
+  
   componentDidMount () {
     // option: byId, byType - refId = (userID, teamID, reportId)
 
@@ -46,7 +52,7 @@ class ChatScreen extends Component {
     // must set conversation here
     // only two options 1st is to using conversationID or using createconvo param
 
-    console.log('chatScreen: ', navigation.state.params)
+
     if (option === convoOption.BYTYPE) {
       // getConversation({type, target})
       if (type === ConvoTypes.USER) {
@@ -68,11 +74,13 @@ class ChatScreen extends Component {
       this.props.navigation.goBack()
       return true
     })
+    this.setState({chatBox: ''})
 
     this.initUser()
   }
 
   componentWillUnmount () {
+    this.setState({chatBox: ''})
     BackHandler.removeEventListener('hardwareBackPress')
   }
 
@@ -106,7 +114,8 @@ class ChatScreen extends Component {
       text: onSendMessage[0].text,
       createdAt: new Date()
     }
-
+    // clean chat box
+    this.setState({chatBox: ''})
     // reflect changes on chatbox first and remove afterRecive confirm
     sendlocalMessage(message)
 
@@ -139,8 +148,14 @@ class ChatScreen extends Component {
       </View>
     )
   }
+
+  _setChatBox (t) {
+    this.setState({chatBox: t})
+  }
+
   render () {
     const { fetching, user: {_id, username}, navigation, messages, title, fetchingConvo } = this.props
+    const { chatBox } = this.state
     // if (fetchingConvo) {
     //   return (<CircleLoader color='blue' />)
     // }
@@ -156,7 +171,10 @@ class ChatScreen extends Component {
               onSend={this.onSend}
               user={{ _id: _id, name: username }}
               renderBubble={this.renderBubble.bind(this, _id)}
+              text={chatBox}
+              onInputTextChanged={(t) => this._setChatBox(t)}
             />}
+            <Chatconnection />
           </View>
         </Content>
       </Container>
@@ -165,7 +183,6 @@ class ChatScreen extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('Chat State: ', state)
   return {
     fetching: state.message.fetching,
     fetchingConvo: state.message.fetchingConvo,

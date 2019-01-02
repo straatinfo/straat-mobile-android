@@ -36,7 +36,10 @@ export default class CreateTeam extends Component {
   _addImage () {
     const { addItem } = this.props
     const options = {
-      title: 'Select Image',
+      title: 'Maak een keuze',
+      cancelButtonTitle: 'Annuleer',
+      takePhotoButtonTitle: 'Maak een nieuwe foto...',
+      chooseFromLibraryButtonTitle: 'Kies een bestaande foto...',
       storageOptions: {
         skipBackup: true,
         path: 'images'

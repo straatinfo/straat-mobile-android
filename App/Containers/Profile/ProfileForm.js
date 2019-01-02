@@ -48,7 +48,7 @@ class ProfileForm extends ValidationComponent {
     /**
      * @param key(String: enum(userEmail, userName, postaCode)), value
      */
-    __DEV__ && console.log('validating liveValidation', key, value)
+    // __DEV__ && console.log('validating liveValidation', key, value)
     if (key === 'userName') {
       const {user: {isVolunteer}, currentUser: {usernamePre, usernameID}} = this.props
       if (usernamePre === value) { // no change
@@ -182,7 +182,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
 
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.fname}
                     onChangeText={text => this.setState({ fname: text})}
                     value={this.state.fname}
                     onEndEditing={(e) => { editfieldProfile({fname: e.nativeEvent.text}) }}
@@ -193,7 +192,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
 
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.lname}
                     onChangeText={text => this.setState({ lname: text})}
                     value={this.state.lname}
                     onEndEditing={(e) => { editfieldProfile({lname: e.nativeEvent.text}) }}
@@ -206,7 +204,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
                     keyboardType='numeric'
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.houseNumber}
                     onChangeText={text => this.setState({ houseNumber: text})}
                     value={this.state.houseNumber}
                     onEndEditing={(e) => { editfieldProfile({houseNumber: e.nativeEvent.text}) }}
@@ -216,7 +213,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
 
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.streetName}
                     onChangeText={text => this.setState({ streetName: text})}
                     value={this.state.streetName}
                     onEndEditing={(e) => { editfieldProfile({streetName: e.nativeEvent.text}) }} />
@@ -225,7 +221,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
 
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.postalCode}
                     onChangeText={text => this.setState({ postalCode: text})}
                     value={this.state.postalCode}
                     onEndEditing={(e) => { editfieldProfile({postalCode: e.nativeEvent.text}); this.liveValidation('postalCode', e.nativeEvent.text) }} />
@@ -234,7 +229,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
 
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.city}
                     onChangeText={text => this.setState({ city: text})}
                     value={this.state.city}
                     onEndEditing={(e) => { editfieldProfile({city: e.nativeEvent.text}); this.liveValidation('city', e.nativeEvent.text) }} />
@@ -254,7 +248,6 @@ class ProfileForm extends ValidationComponent {
                 <Item>
                   <Input
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.email}
                     onChangeText={text => this.setState({ email: text})}
                     value={this.state.email}
                     onEndEditing={(e) => { editfieldProfile({email: e.nativeEvent.text}); this.liveValidation('userEmail', e.nativeEvent.text) }}
@@ -264,7 +257,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
 
                     style={{ color: '#3e3f42'}}
-                    placeholder={currentUser.phoneNumber}
                     onChangeText={text => this.setState({ phoneNumber: text})}
                     value={this.state.phoneNumber}
                     onEndEditing={(e) => { editfieldProfile({phoneNumber: e.nativeEvent.text}); this.liveValidation('phoneNumber', e.nativeEvent.text) }}
@@ -277,7 +269,6 @@ class ProfileForm extends ValidationComponent {
                   <Input
 
                     style={{ color: '#3e3f42'}}
-                    placeholder={Lang.txt_P01}
                     onChangeText={text => this.setState({ usernamePre: text})}
                     value={this.state.usernamePre}
                     onEndEditing={(e) => { editfieldProfile({usernamePre: e.nativeEvent.text}); this.liveValidation('userName', e.nativeEvent.text) }} />

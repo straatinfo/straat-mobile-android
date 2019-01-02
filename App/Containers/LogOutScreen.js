@@ -13,6 +13,10 @@ import LoginActions from '../Redux/LoginRedux'
 import ReportActions from './../Redux/ReportsRedux'
 import UserActions from './../Redux/UserRedux'
 import TeamActions from './../Redux/TeamRedux'
+import MessageActions from './../Redux/MessageRedux'
+import ReportMapActions from './../Redux/ReportMapRedux'
+import TeamListpActions from './../Redux/TeamListRedux'
+
 import { AppData } from '../Redux/commonRedux';
 import { CONNECTION } from '../Services/AppSocket';
 
@@ -23,17 +27,21 @@ class LogOutScreen extends Component {
   }
 
   componentDidMount () {
-    const { userReset, reportReset, navigation } = this.props
+    const { userReset, reportReset, messageReset, reportmapReset, teamlistReset, navigation } = this.props
     // clean all reduxes
     
     userReset()
     reportReset()
+    messageReset()
+    reportmapReset()
+    teamlistReset()
     AppData.reset()
 
     const connection = CONNECTION.getConnection()
-    connection.disconnect()
-
+    // connection.disconnect()
+    CONNECTION.logout()
     navigation.navigate('Splash')
+    // console.log('connection', connection)
   }
 
   render () {
@@ -53,6 +61,9 @@ const mapDispatchToProps = dispatch => {
   return {
     userReset: (params) => dispatch(UserActions.userReset(params)),
     teamReset: (params) => dispatch(TeamActions.teamReset(params)),
+    messageReset: (params) => dispatch(MessageActions.messageReset(params)),
+    reportmapReset: (params) => dispatch(ReportMapActions.reportmapReset(params)),
+    teamlistReset: (params) => dispatch(TeamListpActions.teamlistReset(params)),
     reportReset: (params) => dispatch(ReportActions.reportReset(params))
   }
 }

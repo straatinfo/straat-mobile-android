@@ -26,7 +26,7 @@ import ReportsActions from './../../../Redux/ReportsRedux'
 import { showAlertBox, showAlertBoxWithTitle } from '../../../Redux/commonRedux'
 import HorizontalSelection from '../Components/HorizontalSelection'
 import { ReportTypes } from '../../../Services/Constant'
-import { sortCategories } from '../../../Transforms/ReportHelper';
+import { sortCategories } from '../../../Transforms/ReportHelper'
 
 /**
  *  maybe i should rework this module later, this module works by pass dev
@@ -57,8 +57,8 @@ class ReportStepThree extends Component {
     }
 
     /** rember that there is default value for this selection and that is the title so item must -1 to get real index in array */
-    __DEV__ && console.log('selectedMainCategoryId', selectedMainCategoryId)
-    __DEV__ && console.log('selected itemIndex', itemIndex)
+    // __DEV__ && console.log('selectedMainCategoryId', selectedMainCategoryId)
+    // __DEV__ && console.log('selected itemIndex', itemIndex)
     const { reportMergeState, reportState: { reportMainCategoryList, reportSubCategoryList } } = this.props
     const subCatList = reportMainCategoryList.find((item) => item._id === selectedMainCategoryId).subCategories.filter((item) => item)
     reportMergeState({
@@ -82,7 +82,6 @@ class ReportStepThree extends Component {
 
   _reportUploadImagesAdd (newImage, _next = () => {}) {
     const { reportMergeState, reportState, uploadPhoto } = this.props
-    console.log(newImage)
     // reportMergeState({reportUploadImages: [...reportState.reportUploadImages, newImage]})
     uploadPhoto(newImage)
     this.enableButton()
@@ -147,16 +146,16 @@ class ReportStepThree extends Component {
     // this.render()
   }
   _onSubmit () {
+    const {_activeTeam} = this.props.user
     // requird team so we will validated here if it has some team
-    if (!this.props.user._activeTeam._id) {
-      showAlertBox('Required Team')
-      return true
-    }
+    // if (!(_activeTeam && _activeTeam._id)) {
+    //   showAlertBox('Required Team')
+    //   return true
+    // }
 
    // submit report
     if (this.validate()) {
-      console.log('submit')
-      this.props.reportSubmit({ callback: () => this.props.onCancel() })
+      this.props.reportSubmit({ callback: (pinRef) => { this.props.onCancel(); this.props.onReportSubmit(pinRef) } })
     }
   }
   _onSlectPersonInvolve (value) {
@@ -181,7 +180,7 @@ class ReportStepThree extends Component {
     const { reportState: {
       reportIsUrgent, reportDescription, reportMainCategoryList, submitButton, reportIsPersonInvoled, reportIsVehicleInvoled, reportType,
       reportPersonInvoledCount, reportVehicleInvoledCount, reportPersonInvoledDesc, reportVehicleInvoledDesc,
-      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design, language } = this.props
+      reportSubCategoryList, reportSelectMainCategoryID, reportSelectSubCategoryID, reportAddress }, navigation, design, language, reportState } = this.props
     const validated = this.validate()
     return (
       <View style={ReportStyle.container}>

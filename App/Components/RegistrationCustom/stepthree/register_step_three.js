@@ -1,29 +1,15 @@
 import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  Picker,
-  NetInfo,
-  Alert
-} from 'react-native'
+import { TouchableOpacity, Picker, NetInfo, Alert } from 'react-native'
+import { Text, View } from 'native-base'
 import { connect } from 'react-redux'
-
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button'
-import LinearGradient from 'react-native-linear-gradient'
-import renderIf from 'render-if'
-
 import Api from './../../../Lib/Common/Api'
 import ApiUtil from './../../../Lib/Common/ApiUtil'
-
-import CircleButton from './../../../Components/CircleButton'
-import styles from '../stepthree/style'
 import GeneralDesign from './../../../Lib/GeneralDesign'
+import LinearGradient from 'react-native-linear-gradient'
 import RegistrationOptionSelectiom from './../Components/RegistrationOptionSelection'
-import Spacer from '../../Spacer';
-import Footer from '../../Footer';
+import Spacer from '../../Spacer'
+import styles from '../stepthree/style'
+import Footer from '../../Footer'
 
 class RegistrationStepThree extends Component {
   constructor (props) {
@@ -66,8 +52,6 @@ class RegistrationStepThree extends Component {
                   this.setState({
                     teamList: getTeamResult.result
                   })
-                  console.log('team collected')
-                  console.log(getTeamResult)
                 } else {
                   Alert.alert(
                           'Error',
@@ -96,10 +80,10 @@ class RegistrationStepThree extends Component {
     // invalid if index 0 is selected
     if (itemIndex === 0) {
       // 0 index is used for showing label only
-      __DEV__ && console.log('inValid selectrion')
+      // __DEV__ && console.log('inValid selectrion')
       return null
     }
-    __DEV__ && console.log('valid selectrion')
+    // __DEV__ && console.log('valid selectrion')
     this.props.onTeamIDSelect(itemValue)
     this.setState({selectedTeamID: itemValue})
   }
@@ -113,10 +97,8 @@ class RegistrationStepThree extends Component {
     const { teamList, onRegisterSubmit, design, Lang } = this.props
     const { regOptions } = this.state
     const { teamID, register_option: registerOption, validation: { personalDataForm, volunteerOptionForm, teamOptionForm } } = this.props.parentState
-    __DEV__ && console.log('personalDataForm, volunteerOptionForm, teamOptionForm', personalDataForm, volunteerOptionForm, teamOptionForm)
     const formThreeSubmitButtonEnabled = personalDataForm && volunteerOptionForm && teamOptionForm
     const { MainButton } = GeneralDesign
-    console.log('teamList in step 3', teamList)
 
     return (
       <View style={styles.container}>
@@ -133,7 +115,7 @@ class RegistrationStepThree extends Component {
               onValueChange={(itemValue, itemIndex) => { this.selectedTeam(itemValue, itemIndex) }}>
               <Picker.Item value={'default'} label={Lang.txt_D41} enabled={false} key={'default'} />
               {/** __DEV__ && <Picker.Item value={'devId'} label={'devName'} key={'devkey'} /> */}
-              {teamList.map((l, i) => { console.log('team', l); return <Picker.Item value={l._id} label={l.teamName} key={l._id} /> })}
+              {teamList.map((l, i) => { return <Picker.Item value={l._id} label={l.teamName} key={l._id} /> })}
             </Picker>
           </View>
         }

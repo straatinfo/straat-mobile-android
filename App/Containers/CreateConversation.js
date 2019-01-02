@@ -35,7 +35,6 @@ class CreateConversation extends Component {
         const { conversationTitle } = this.state;
         const { userId } = this.props; */
 
-        console.log('On Proceed', team)
         // const conversation = {
         //     "title": conversationTitle,
         //     "type": "TEAM",

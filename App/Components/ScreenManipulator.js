@@ -15,7 +15,6 @@ class ScreenManipulator extends Component {
   }
 
   render () {
-    console.log(this.props.children)
     return (
       <View style={{flex: 1}}>
         {this.props.children.map((obj, index) => {

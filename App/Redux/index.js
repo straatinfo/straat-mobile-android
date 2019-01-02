@@ -18,6 +18,7 @@ export const reducers = combineReducers({
   reports: require('./ReportsRedux').reducer,
   setting: require('./SettingRedux').reducer,
   conversation: require('./ConversationRedux').reducer,
+  chatconnection: require('./ChatconnectionRedux').reducer,  // chat or socket
   message: require('./MessageRedux').reducer,
   team: require('./TeamRedux').reducer,
   teamList: require('./TeamListRedux').reducer,
@@ -27,6 +28,10 @@ export const reducers = combineReducers({
   notification: require('./NotificationRedux').reducer,
   feedback: require('./FeedbackRedux').reducer,
   userProfile: require('./ProfileRedux').reducer,
+  userinfo: require('./UserinfoRedux').reducer,
+  reportMap: require('./ReportMapRedux').reducer,
+  reportmapsearch: require('./ReportmapsearchRedux').reducer,
+  
   socket: require('./SocketRedux').reducer
 })
 

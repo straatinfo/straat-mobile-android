@@ -1,11 +1,24 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 
+export const notificaitonOption = {
+  autoCancel: true,
+  largeIcon: 'ic_launcher',
+  smallIcon: 'ic_notification',
+  color: 'green',
+  vibrate: true,
+  vibration: 300,
+  title: '',
+  message: '',
+  playSound: true,
+  soundName: 'default'
+}
+
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
   changeRadius: ['radius'],
-  settingMergeState: ['newState']
+  settingMergeState: ['newState'],
 })
 
 export const SettingTypes = Types
@@ -14,7 +27,9 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  radius: 0.25
+  hasGPS: false,
+  radius: 0.25,
+  ...notificaitonOption
 })
 
 /* ------------- Reducers ------------- */
@@ -22,14 +37,33 @@ export const INITIAL_STATE = Immutable({
 export const changeRadius = (state, radius) => {
   return state.merge({ radius: radius })
 }
- 
+
 export const settingMergeState = (state, { newState }) => {
   return state.merge(newState)
 }
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.CHANGE_RADIUS]: changeRadius,
-  [Types.SETTING_MERGE_STATE]: settingMergeState
+  [Types.SETTING_MERGE_STATE]: settingMergeState,
 })
+
+/**
+ * @param is app using gps or not
+ *
+ */
+
+export const isOffGPS = (state) => {
+  return state.setting.hasGPS
+}
+
+/**
+ * @param is app using gps or not
+ *
+ */
+
+export const getAppSetting = ({setting}) => {
+  return setting
+}

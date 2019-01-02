@@ -4,7 +4,6 @@
  * @description return error mesage if has
  */
 export const hasError = (ResquestResponse) => {
-  console.log('ResquestResponse, ResquestResponse')
   if (ResquestResponse && ResquestResponse.error && ResquestResponse.message) {
     return ResquestResponse.message
   } else {

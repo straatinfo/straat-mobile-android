@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -145,16 +146,22 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.getRequested().getGroup() == 'com.google.android.gms') {
+            details.useVersion('11.8.0')
+        }
+    }
+}
+
 dependencies {
+    compile project(':react-native-fcm')
+    compile 'com.google.firebase:firebase-core:10.0.1' //this decides your firebase SDK version
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile project(':react-native-push-notification')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-spinkit')
-    compile(project(':react-native-maps')) {
-        exclude group: 'com.google.android.gms', module: 'play-services-base'
-        exclude group: 'com.google.android.gms', module: 'play-services-maps'
-    }
-    compile 'com.google.android.gms:play-services-base:11.+'
-    compile 'com.google.android.gms:play-services-maps:11.+'
-
+    compile project(':react-native-maps')
     compile project(':react-native-image-picker')
     compile project(':react-native-file-uploader')
     compile project(':react-native-fast-image')
@@ -173,3 +180,28 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+// got problem here
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-gcm/15.0.1/play-services-gcm-15.0.1.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-base/15.0.1/play-services-base-15.0.1.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-basement/15.0.1/play-services-basement-15.0.1.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-iid/15.0.1/play-services-iid-15.0.1.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-stats/15.0.1/play-services-stats-15.0.1.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-tasks/15.0.1/play-services-tasks-15.0.1.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-basement/15.0.1/play-services-basement-15.0.1.aar
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-tasks/15.0.1/play-services-tasks-15.0.1.aar
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-base/15.0.1/play-services-base-15.0.1.aar
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-stats/15.0.1/play-services-stats-15.0.1.aar
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-iid/15.0.1/play-services-iid-15.0.1.aar
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-gcm/15.0.1/play-services-gcm-15.0.1.aar
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-base/11.8.0/play-services-base-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-maps/11.8.0/play-services-maps-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-basement/11.8.0/play-services-basement-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-tasks/11.8.0/play-services-tasks-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-base-license/11.8.0/play-services-base-license-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-maps-license/11.8.0/play-services-maps-license-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-basement-license/11.8.0/play-services-basement-license-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-tasks-license/11.8.0/play-services-tasks-license-11.8.0.pom
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-maps-license/11.8.0/play-services-maps-license-11.8.0.aar
+// Download https://jcenter.bintray.com/com/google/android/gms/play-services-maps/11.8.0/play-services-maps-11.8.0.aar
+// :app:preBuild UP-TO-DATE

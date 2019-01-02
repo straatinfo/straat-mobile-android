@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import { notificationTypes, ConvoTypes, ReportTypes } from '../Services/Constant'
+import { notificationTypes, ConvoTypes, ReportTypes, SocketTypes } from '../Services/Constant'
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -11,8 +11,10 @@ const { Types, Creators } = createActions({
   notificationMerge: ['newState'],
   updateByNotification: ['source', 'data'],
   addNotification: ['data'],
-  clearNotification: ['data']
-
+  clearNotification: ['data'],
+  notificationOpen: ['data'],
+  removeReport: ['data'],
+  notificationUpdatemessage: ['params'],
 })
 
 export const NotificationTypes = Types
@@ -37,7 +39,11 @@ export const INITIAL_STATE = Immutable({
 
   errorC: null,
   fetchingC: true,
-  dataReceive: []
+  dataReceive: [],
+  countedListA: [], //  ['5b18295ffc0d7d0014021364'],
+  countedListB: [], //  ['5b182a46fc0d7d001402136b'],
+  countedListC: [], //  ['5b10f77eec26920014ca10ee']
+  countedListD: [] //  ['5b10f77eec26920014ca10ee'] // chat list box
 })
 
 /* ------------- Reducers ------------- */
@@ -56,12 +62,53 @@ export const notificationRequestTypeB = (state, {data}) => {
 export const notificationRequestTypeC = (state, {data}) => {
   return state.merge({ fetchingC: true })
 }
-
+ 
 export const updateByNotification = (state, {data}) => {
+
+
   return state
 }
+ // must update files in myreport
+const updateMessage = (r, messageID) => {
+  return r.updateIn(['_conversation', 'messages'], (messages) => [...messages, messageID])
+}
+
+export const notificationUpdatemessage = (state, {params: {data, source}}) => {
+  try {
+    let reportIndex
+    if (source === SocketTypes.RECEIVE_MESSAGE && data.conversation.type === 'REPORT') {
+      const reportID = data.conversation._report._id
+      const messageID = data.payload._id
+      if (data.conversation._report._reportType.code === 'A') {
+        reportIndex = state.typeAList.findIndex((r) => r._id === reportID)
+        if (reportIndex >= 0) {
+          return state.merge({typeAList: state.typeAList.map((r, i) => r._id === reportID ? updateMessage(r, messageID) : r)})
+        }
+      }
+
+      if (data.conversation._report._reportType.code === 'B') {
+        reportIndex = state.typeBList.findIndex((r) => r._id === reportID)
+        if (reportIndex >= 0) {
+          return state.merge({typeBList: state.typeBList.map((r, i) => r._id === reportID ? updateMessage(r, messageID) : r)})
+        }
+      }
+
+      if (data.conversation._report._reportType.code === 'C') {
+        reportIndex = state.typeCList.findIndex((r) => r._id === reportID)
+        if (reportIndex >= 0) {
+          return state.merge({typeCList: state.typeCList.map((r, i) => r._id === reportID ? updateMessage(r, messageID) : r)})
+        }
+      }
+    }
+  } catch (e) {
+    console.log(e)
+  }
+  return state
+}
+
 export const addNotification = (state, {data}) => {
   const { convo, count } = data
+  console.log('ConvoTypes.private')
   if (convo.type === ConvoTypes.REPORT) {
     if (convo._report._reportType._id === ReportTypes.PUBLIC_SPACE._id) {
       return state.merge({chatCount: state.typeCount_A + count})
@@ -74,8 +121,9 @@ export const addNotification = (state, {data}) => {
     }
   } else if (convo.type === ConvoTypes.TEAM) {
     // cause 4th tab in notification screen is chat for team only as of now
-    return state.merge({chatCount: state.chatCount + count})
+    return state.merge({chatCount: state.chatCount + count, countedListD: [...state.countedListD, convo._id]})
   } else if (convo.type === ConvoTypes.USER) {
+    return state.merge({chatCount: state.chatCount + count, countedListD: [...state.countedListD, convo._id]})
     // cause 4th tab in notification screen is chat for team only as of now
    // return state.merge({chatCount: state.chatCount + count})
   }
@@ -91,9 +139,59 @@ export const clearNotification = (state, {data}) => {
 }
 
 export const notificationMerge = (state, { newState }) => {
-  console.log('newState', newState)
   return state.merge(newState)
 }
+
+export const notificationOpen = (state, { data: {target, type} }) => {
+  __DEV__ && console.log('opening notification: ', target, type)
+  const _id = target._id
+  // this will reduce counter on red icon
+  if (type === 'REPORT') {
+    // type a
+    if (target._reportType && target._reportType.code === ReportTypes.PUBLIC_SPACE.code) {
+      if (state.countedListA.indexOf(_id) !== -1) {
+        return state.merge({countedListA: state.countedListA.filter(i => i !== _id)})
+      }
+    }
+    if (target._reportType && target._reportType.code === ReportTypes.SAFETY.code) {
+      if (state.countedListB.indexOf(_id) !== -1) {
+        return state.merge({countedListB: state.countedListB.filter(i => i !== _id)})
+      }
+    }
+    if (target._reportType && target._reportType.code === ReportTypes.COMMUNICATION.code) {
+      if (state.countedListC.indexOf(_id) !== -1) {
+        return state.merge({countedListC: state.countedListC.filter(i => i !== _id)})
+      }
+    }
+  }
+  if (type === 'CHAT') {
+    if (state.countedListD.indexOf(_id) !== -1) {
+      return state.merge({countedListD: state.countedListD.filter(i => i !== _id)})
+    }
+  }
+  return state
+}
+
+function filterArray() {
+
+}
+
+export const removeReport = (state, report) => {
+   const newStateA =  state.typeAList.filter( function(e) {
+    return e._id !== report.data;
+  });
+  const newStateB = state.typeBList.filter( function(e) {
+    return e._id !== report.data;
+  });
+
+  const newStateC = state.typeCList.filter( function(e) {
+    return e._id !== report.data;
+  });
+
+  return state.merge({typeAList: newStateA}).merge({typeBList: newStateB}).merge({ typeCList: newStateC });
+}
+
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -104,8 +202,10 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.NOTIFICATION_MERGE]: notificationMerge,
   [Types.UPDATE_BY_NOTIFICATION]: updateByNotification,
   [Types.ADD_NOTIFICATION]: addNotification,
-  [Types.CLEAR_NOTIFICATION]: clearNotification
-
+  [Types.CLEAR_NOTIFICATION]: clearNotification,
+  [Types.NOTIFICATION_OPEN]: notificationOpen,
+  [Types.REMOVE_REPORT]: removeReport,
+  [Types.NOTIFICATION_UPDATEMESSAGE]: notificationUpdatemessage,
 })
 
 /* ------------- Selectors ------------- */
@@ -118,4 +218,31 @@ export const reducer = createReducer(INITIAL_STATE, {
 
 export const getNotification = (state) => {
   return state.notification
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeAList = (state) => {
+  return state.notification.typeAList
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeBList = (state) => {
+  return state.notification.typeBList
+}
+
+/**
+ * @description  get my report list
+ *
+ */
+
+export const getTypeCList = (state) => {
+  return state.notification.typeCList
 }

@@ -18,12 +18,12 @@ class TeamList extends Component {
     }
   }
   _navigateToTeam = (teamId) => {
-    __DEV__ && console.log('Navigate to Team ', teamId)
+    // __DEV__ && console.log('Navigate to Team ', teamId)
     this.props.setCurrentTeam(teamId)
     this.props.navigation.navigate('MyTeamScreen')
   }
   componentDidMount () {
-    __DEV__ && console.log(this.state.userTeams)
+    // __DEV__ && console.log(this.state.userTeams)
     this.props.teamlistGetList({})
   }
 

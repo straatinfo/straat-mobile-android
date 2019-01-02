@@ -8,11 +8,13 @@ import { fail } from 'assert'
 import { getUser } from '../Redux/UserRedux'
 import { backEndConstEnum } from '../Services/Constant'
 import { hasError } from '../Transforms/responseHelper'
-
+import { SocketTypes } from '../Services/Constant'
 import TeamActions, { getTeamId, putEditTeamState } from '../Redux/TeamRedux'
 import AddNewTeamActions from '../Redux/AddNewTeamRedux'
 import TeamListActions from '../Redux/TeamListRedux'
 import { getLanguageState } from '../Redux/LanguageRedux'
+
+import { CONNECTION } from '../Services/AppSocket'
 
 export function * getTeamProfile (API, action) {
   try {
@@ -74,6 +76,7 @@ export function * getTeamDetails (API, action) {
 export const teamAcceptRequest = function * (API, { teamInvite }) {
   console.log('-- accepting request -- ')
   try {
+    this.connection = CONNECTION.getConnection(teamInvite._user._id)
     yield put(TeamActions.teamMergeState({getTeamInfoFetching: true}))
     console.log('-- accepting request -- ')
     const {_user: { _id: userId }, _team: {_id: teamId }, _id: teamInviteId } = teamInvite
@@ -87,6 +90,11 @@ export const teamAcceptRequest = function * (API, { teamInvite }) {
       // yield put(TeamActions.tarsTeam(teamInvite, acceptUserResponse.data.data.teamMembers ))
       yield put(TeamActions.getTeamDetails({}))                         // reset team details
       yield put(TeamListActions.teamlistGetList({}))                    // reset teamList
+
+      this.connection.emit(SocketTypes.APPROVE_MEMBER, {
+        data: teamInvite._user
+      });
+
     }
   } catch (error) {
     console.log(error)
@@ -164,26 +172,24 @@ export function * submiteditTeam (API, action) {
   const Lang = yield select(getLanguageState)
   const { params: { callBack } } = action
   try {
-    console.log('Fetching team data...', action)
-    console.log('Fetching team data API...', API)
     const user = yield select(getUser)
     const params = yield select(putEditTeamState)
     if (!params) {
       throw new Error('no changes')
     }
     yield call(loaderHandler.showLoader, Lang.saving)
-    console.log('submiteditTeam params: ', params)
 
     const editTeamResponse = yield call(API.editTeamProfile, { params: params.data, _team: params._team, user })
     __DEV__ && console.log('Fetching success', editTeamResponse)
 
     if (editTeamResponse.ok && editTeamResponse.data.status === 1) {
-      console.log('Fetching success', editTeamResponse)
       // yield put(TeamActions.teamMergeState({team: teamDataResponse.data.data}))
       // yield put(TeamActions.getDetailsSuccess(editTeamResponse))
       yield call(popUpAlert, { title: '', message: Lang.success, pressok: callBack })
     //  yield put(TeamActions.teamMergeState({team: editTeamResponse.data.data}))
       yield put(TeamListActions.replaceTeamlist(editTeamResponse.data.data))
+      yield put(TeamActions.editTeamSuccess(editTeamResponse.data.data))
+      
     } else if (editTeamResponse.status === 400) {
       throw new Error(Lang.invalidCredentials)
     } else {
@@ -293,5 +299,27 @@ export function * getUserTeamList (API, action) {
     yield put(TeamListActions.teamlistMerge({error: e.message}))
   }
   yield put(TeamListActions.teamlistMerge({fetching: false}))
+}
+ 
+// teamList vol only used by report
+
+export function * getNonVolTeamList (API, action) {
+  const user = yield select(getUser)
+  yield put(TeamListActions.teamlistMerge({fetchingNon: true}))
+  try {
+        // yield call(loaderHandler.showLoader, Lang.authenticating) 
+
+    const getTeamList = yield call(API.getNonVolTeams, {user: user})
+    console.log('Fetching success', getTeamList)
+
+    if (getTeamList.ok && getTeamList.data.status === 1) {
+
+      yield put(TeamListActions.teamlistMerge({teamNonList: getTeamList.data.data}))
+    }
+  } catch (e) {
+    console.log('Fetching data failed', e)
+    yield put(TeamListActions.teamlistMerge({error: e.message}))
+  }
+  yield put(TeamListActions.teamlistMerge({fetchingNon: false}))
 }
  

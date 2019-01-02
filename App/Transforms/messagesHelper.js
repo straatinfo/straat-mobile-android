@@ -1,15 +1,21 @@
 import { ConvoTypes } from '../Services/Constant'
+import { hasImage, crop, getImageUrl } from './Cloudinary'
 
 export const fixGiftChatMessages = (messages = []) => {
   return messages.map((message) => {
+    let avatar = {}
+    if (hasImage(message._author._profilePic)) {
+      avatar = {avatar: crop(200, getImageUrl(message._author._profilePic))}
+    }
+
     return {
       _id: message._id,
       text: message.body || '',
       createdAt: message.createdAt || '',
       user: {
         _id: message._author._id || '',
-        name: 'test user name' // message._author.username || '',
-       // avatar: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png'
+        name: message._author.username || '',
+        ...avatar
       }
     }
   })
@@ -19,7 +25,7 @@ export const fixConvo = (conversation, _user) => {
   const {_id, type, title, participants, messages, _profilePic} = conversation
   if (!_id) {
     return false
-  }
+  } 
 
   const lastMesasge = messages[0] ? messages[0]._author.username + ': ' + messages[0].body : ''
   if (type === ConvoTypes.USER) {
@@ -76,7 +82,6 @@ export const fixConversationListing = (conversations = [], _user) => {
     return fixConvo(conversation, _user)
   }).filter((conversation) => !!conversation)
 }
-
 
 /**
  * @description fix fetched list, team listing while backend not fix old team convo ids

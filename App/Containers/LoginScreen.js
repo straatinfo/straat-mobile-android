@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Keyboard, LayoutAnimation } from 'react-native'
+import { Keyboard, LayoutAnimation } from 'react-native'
+import { Container } from 'native-base'
 import { connect } from 'react-redux'
 import { Metrics } from '../Themes'
 import { ScreenActions } from '../Redux/ScreenRedux'
@@ -118,9 +119,9 @@ class LoginScreen extends React.Component {
   render () {
     const { isKeyboardVisible } = this.state
     return (
-      <View style={{height: this.state.visibleHeight}} >
+      <Container style={{height: this.state.visibleHeight}} >
         <OldLoginForm {...this.props} isKeyboardVisible={isKeyboardVisible} onSubmit={this._handlePressLogin.bind(this)} onNewUser={this._handlePressNewUser.bind(this)} />
-      </View>
+      </Container>
     )
   }
 }

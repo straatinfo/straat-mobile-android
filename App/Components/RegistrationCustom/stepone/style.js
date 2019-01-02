@@ -28,7 +28,9 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flex: 1,
-    padding: 10,
+    // padding: 10,
+    paddingVertical: 0,
+    paddingHorizontal: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
     borderWidth: 1,
@@ -53,12 +55,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontFamily: 'Gill Sans',
     textAlign: 'center',
     margin: 10,
     color: '#ffffff',
     backgroundColor: 'transparent'
   },
+  input: {fontSize: 12},
   alreadyuser: {
     fontSize: 20,
     color: '#96acc7',

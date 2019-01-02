@@ -55,21 +55,21 @@ export const formAFieldValidate = (key, value = '') => {
  *
  */
 
-export const getSuccessMessage = (isVolunteer, isJoinTeam) => {
+export const getSuccessMessage = (isVolunteer, isJoinTeam, lang) => {
   if (isVolunteer) {
     if (isJoinTeam) {
-      return language.txt_C06
+      return lang.txt_C06
     } else {
       // create team
-      return language.success
+      return lang.success
     }
   } else {
     // no volunteer
     if (isJoinTeam) {
-      return language.txt_C06
+      return lang.txt_C06
     } else {
       // create team
-      return language.txt_D43
+      return lang.txt_D43
     }
   }
 }
@@ -141,4 +141,8 @@ export const toUserModel = (user) => {
   usr['usernameID'] = obuserName.nameId
   usr['usernamePre'] = obuserName.name
   return usr
+}
+
+export const cleanPostalCode = (postalCode) => {
+  return postalCode.replace(/\s+/g, '')
 }

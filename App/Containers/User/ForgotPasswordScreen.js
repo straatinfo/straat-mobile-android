@@ -103,6 +103,7 @@ class ForgotPasswordScreen extends React.Component {
 
   _handlePressRequest = (username, password) => {
     const { forgotPasswordRequest, navigation } = this.props
+    Keyboard.dismiss()
     forgotPasswordRequest(this.state.email, () => navigation.navigate('Login')) // change to dashboard
   }
 
@@ -131,7 +132,7 @@ class ForgotPasswordScreen extends React.Component {
               <View ><Text style={Styles.inLoginTxt}>{Lang.forgotPassword}</Text></View>
               <View style={[Styles.textInputContainer]}>
                 <TextInput
-                  onEndEditing={(e) => this.setState({email: e.nativeEvent.text})}
+                  onChangeText={(e) => this.setState({email: e})}
                   underlineColorAndroid='transparent'
                   multiline={false}
                   placeholder={Lang.email} />

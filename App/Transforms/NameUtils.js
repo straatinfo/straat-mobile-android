@@ -4,7 +4,7 @@
  * @returns string full name
  */
 export const GetFullName = (user) => {
-  return '' + user.fname + ' ' + user.lname
+  return '' + (user.fname || ' ') + ' ' + (user.lname || ' ')
 }
 
 /**

@@ -10,10 +10,12 @@ import ReportsActions from './../../Redux/ReportsRedux'
 import UnderMigration from './../../Components/UnderMigration'
 import UsersActions from './../../Redux/UserRedux'
 
+
 // import Icon from 'react-native-vector-icons/Ionicons'
 
 class ReportMapScreen extends React.Component {
   constructor (props) {
+    connection = {}
     super(props)
     this.state = {
     }
@@ -21,7 +23,7 @@ class ReportMapScreen extends React.Component {
   }
 
   componentDidMount () {
-    console.log(this.props)
+
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
@@ -40,10 +42,10 @@ class ReportMapScreen extends React.Component {
      *
      */
     const { navigation, design, Lang } = this.props
-    console.log(this.props.navigation.state.routeName)
+    // console.log(this.props.navigation.state.routeName)
     return (
       <Container>
-        <Header style={[GlobalStyle.header, {backgroundColor: design.header}]} hasTabs>
+        <Header style={[GlobalStyle.header, {backgroundColor: design.header}]}>
           <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.goBack()}>
               <Icon name='md-arrow-back' />
@@ -58,7 +60,7 @@ class ReportMapScreen extends React.Component {
             </Button>
           </Right>
         </Header>
-        <MyReportList navigation={navigation} />
+        <MyReportList navigation={navigation} Lang={Lang} />
       </Container>
     )
   }
@@ -67,6 +69,7 @@ class ReportMapScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.user.user,
+    userId: state.user.user._id,
     userState: state.user,
     design: state.user.design,
     notificationtState: state.notification,

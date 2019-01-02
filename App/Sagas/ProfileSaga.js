@@ -11,6 +11,7 @@ import { put, call, select } from 'redux-saga/effects'
 import { onloginPopUp, getApprovedTeamList, isEmpty } from '../Transforms/Filters'
 import { showAlertBox, logStore, AppData } from '../Redux/commonRedux'
 import { toUserModel } from '../Transforms/RegistrationHelper';
+import { getLanguageState } from './../Redux/LanguageRedux'
 
 export const editUserProfile = function * (API, action) {
   const language = yield select(getLanguageState)

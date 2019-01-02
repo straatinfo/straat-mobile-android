@@ -41,7 +41,6 @@ export default class RegisterUserData extends Component {
   }
 
   _handlePressExistingUser () {
-    console.log(this)
     this.props.navigation.navigate('Login')
   }
   validateField (type, value) {
@@ -52,10 +51,8 @@ export default class RegisterUserData extends Component {
   submitButtonEnabler () {
     // check if all fields in form has error : if none then enable button
     const formList = this.state.registerForm
-    console.log(formList)
     //  if (formList)
     Object.keys(formList).forEach((k, i) => {
-      console.log(k)
     })
   }
   _changeField (val, key) {

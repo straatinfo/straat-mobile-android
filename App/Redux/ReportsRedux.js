@@ -17,7 +17,9 @@ const { Types, Creators } = createActions({
   reportSubmit: ['reportParams'],                               // listeen here is effect that submit report to the server
   reportMergeState: ['newState'],
   reportChangeStatus: ['report'],
-  reportReset: ['params']
+  reportReset: ['params'],
+  setlogininitReport: ['params'],
+  reportCreatesuccess: ['reportsParams']
 
 })
 export const ReportsTypes = Types
@@ -96,7 +98,8 @@ export const INITIAL_STATE = Immutable({
   submitButton: false,
   reportDetails: Report,                                          // type: Report  this data will display on after click the callout on map or in message
   fetchTeam: true,
-  errorTeam: ''
+  errorTeam: '',
+  statusSource: null
 })
 
 /* ------------- Reducers ------------- */
@@ -107,6 +110,14 @@ export const getReportsNearbyRequest = (state, { reportsParams: { coordinate } }
 
 export const setReportAddressByCoordinate = (state, { coordinate }) => {
   return state.merge({ reportCoordinate: coordinate })
+}
+
+export const setlogininitReport = (state, { params }) => {
+  const { long, lat } = params
+  return state.merge({
+    reportCoordinate: {...state.reportCoordinate, longitude: long, latitude: lat},
+    userPosition: {...state.userPosition, longitude: long, latitude: lat}
+  })
 }
 
 export const setMainCategory = (state, { reportParam }) => {
@@ -134,9 +145,14 @@ export const reportSubmit = (state, { reportParams }) => {
   return state
 }
 
+export const reportCreatesuccess = (state, { reportParams }) => {
+  return state.merge({reportCoordinate: {...state.reportCoordinate, ...state.userPosition}})
+}
+
 export const reportChangeStatus = (state, { _report }) => {
   return state
 }
+
 export const reportReset = (state, { params }) => {
   return INITIAL_STATE
 }
@@ -154,10 +170,12 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPLOAD_PHOTO]: uploadPhoto,
   [Types.ADD_REPORT_PHOTO]: addReportPhoto,
   [Types.REPORT_SUBMIT]: reportSubmit,
-
+  [Types.REPORT_CREATESUCCESS]: reportCreatesuccess,
+  
   [Types.REPORT_CHANGE_STATUS]: reportChangeStatus,
   [Types.REPORT_MERGE_STATE]: reportMergeState,
-  [Types.REPORT_RESET]: reportReset
+  [Types.REPORT_RESET]: reportReset,
+  [Types.SETLOGININIT_REPORT]: setlogininitReport
 })
 
 /* ------------- Selectors ---------------- */
@@ -168,24 +186,29 @@ export const reducer = createReducer(INITIAL_STATE, {
  * @param {*} state
  */
 export const getReportParams = (state) => {
-  const { reports, user: { user } } = state
-  const { accessToken } = user
+  const { reports, user: { user: { _id, _host, token, _activeTeam }, host: { language } } } = state
   console.log('state', state)
   // set first only required
   const reportParams = {
-    _reporter: user._id,
-    _host: user._host,
+    _reporter: _id,
+    _host: _host,
     _reportType: reports.reportType._id,
     reportTypeCode: reports.reportType.code,
     title: reports.reportType.name,
     description: reports.reportDescription,
-    reportUploadedPhotos: reports.reportListImages
+    reportUploadedPhotos: reports.reportListImages,
+    language: language
   }
-
+ 
   let requireInType = {}
   requireInType.teamList = []
 
   // type A
+  if (reports.reportType.code === ReportTypes.PUBLIC_SPACE.code) {
+    requireInType.isPublic = true
+  }
+
+  // type A - B
   if (reports.reportType.code === ReportTypes.PUBLIC_SPACE.code || reports.reportType.code === ReportTypes.SAFETY.code) {
     // validation
     if (reports.reportSelectMainCategoryID) {
@@ -194,7 +217,10 @@ export const getReportParams = (state) => {
     if (reports.reportSelectSubCategoryID) {
       requireInType._subCategory = reports.reportSelectSubCategoryID
     }
-    requireInType._team = user._activeTeam._id // pan samantagal lnagto 
+    if (_activeTeam) {
+      requireInType._team = _activeTeam._id // pan samantagal lnagto 
+    }
+
     requireInType.isUrgent = reports.reportIsUrgent
     requireInType.location = reports.reportAddress
     requireInType.long = reports.reportCoordinate.longitude
@@ -231,7 +257,7 @@ export const getReportParams = (state) => {
     requireInType.location = ''
     requireInType.teamList = reports.reportTeamSelected
   }
-  return {data: { ...reportParams, ...requireInType }, accessToken, type: reports.reportType.code}
+  return {data: { ...reportParams, ...requireInType }, token, type: reports.reportType.code }
 }
 
 /* ------------- Some methods ------------- */
@@ -272,4 +298,14 @@ export const processReport = (reportParams = {}) => {
  */
 export const getReportMapMarkerList = (state) => {
   return state.reports.reportMapMarkerList
+}
+
+/**
+ *
+ * @description getReportMapMarkerList
+ * @param state
+ *
+ */
+export const getUserPosition = (state) => {
+  return state.reports.userPosition
 }

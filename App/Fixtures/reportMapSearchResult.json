@@ -1,0 +1,157 @@
+{
+  "html_attributions": [],
+  "results": [{
+      "formatted_address": "Leeuwerikstraat 4, 9269 NB Feanwâlden, Netherlands",
+      "geometry": {
+        "location": {
+          "lat": 53.24018599999999,
+          "lng": 5.99844
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 53.24153582989272,
+            "lng": 5.999789829892722
+          },
+          "southwest": {
+            "lat": 53.23883617010727,
+            "lng": 5.997090170107279
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+      "id": "656b8c0b9a711633b22b30ac2a7930d1916d6f24",
+      "name": "Judo Kings Feanwalden",
+      "opening_hours": {
+        "open_now": false,
+        "weekday_text": []
+      },
+      "photos": [{
+        "height": 855,
+        "html_attributions": [
+          "<a href=\"https: //maps.google.com/maps/contrib/113499196266186826776/photos\">Judo Veenwouden</a>"
+        ],
+        "photo_reference": "CmRaAAAA0fMs0pj95CAsbDmn66Eu3PEe0PgjR5XfScKn_9bdu4slGTDdKJVUyhwoc6m9q9WLB6uBPPk54x4jNNUnqpc8SsYLhArExFClO2iowiqJRpinHJ5jw1EpyOj-eaXbFfRNEhDYcC1JUj9zc8pmyO1g5xqWGhSTzM9SH6OxDDd6t35QvmoV1HfTrg",
+        "width": 1140
+      }],
+      "place_id": "ChIJOR0RTEuryUcR9_ttGxsg9xg",
+      "reference": "CmRbAAAA7bG7it5iWFw1rg6LSrdcIlq06maA2u9Q1xPCliQwqqer0yOaY3BKNa6hGbgBIKkVNA5pfNgRyAt84RYauRNyg5KrKbTGGODUHjNnZxYMJl2HlUvvWzw-zFYK794hLkD2EhA9gyZGphVE6CVD6fVzaSmFGhQ4iHgP-mQHa9K3AVjtsF364jw4Kw",
+      "types": [
+        "point_of_interest",
+        "establishment"
+      ]
+    },
+    {
+      "formatted_address": "Elingsloane 17A, 9251 MN Burgum, Netherlands",
+      "geometry": {
+        "location": {
+          "lat": 53.2006588,
+          "lng": 5.9857748
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 53.20202362989272,
+            "lng": 5.987271479892722
+          },
+          "southwest": {
+            "lat": 53.19932397010728,
+            "lng": 5.984571820107278
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+      "id": "4d410abba2974411b93fd4bb1fa12b2e039a4e82",
+      "name": "Judo Kings",
+      "place_id": "ChIJgSsyGItUyEcR1OwT43F24lo",
+      "reference": "CmRbAAAAXnVkLDt15kxAj_xA1xyhmPD1DpqG5vqa-hhqlEIzeCNwj9ELneOJa1P9sgqE3-46gmBqRsYuSPQtOpBM6mEsS48Qz5RFcYVPDzzYhC34xska0Of3CwP5Go2O1Ol_iRj-EhCMy_vi25uyjbP3Bvn_b4iaGhRVkej6diezY1JbSZNt4VhXQ9tIwQ",
+      "types": [
+        "point_of_interest",
+        "establishment"
+      ]
+    },
+    {
+      "formatted_address": "Prins Bernhardstraat 1A, 9251 GJ Burgum, Netherlands",
+      "geometry": {
+        "location": {
+          "lat": 53.1890502,
+          "lng": 5.9868489
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 53.19074177989272,
+            "lng": 5.988184079892722
+          },
+          "southwest": {
+            "lat": 53.18804212010727,
+            "lng": 5.985484420107278
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+      "id": "4253834b7cac5004159f026f5bede9d099c253d8",
+      "name": "Judo Kings",
+      "opening_hours": {
+        "open_now": false,
+        "weekday_text": []
+      },
+      "photos": [{
+        "height": 778,
+        "html_attributions": [
+          "<a href=\"https: //maps.google.com/maps/contrib/105437093994103863964/photos\">Judo Kings</a>"
+        ],
+        "photo_reference": "CmRaAAAA5Yz3W2w3thUYtaLQG15JdT_0Nvp4H_Hcq8pRLnbQnQ0Vk_qMYcNMr7yjkcj-eZtTk9thvdO0qXSFUiNZRySOzLeJJ-skrKRnsl_HQ4FfPBUtUHh9VTQcwAnK6p8lf-ckEhBtNs1Env2Qhg3GaeXM788hGhRUtetVl6nEnlpoSv9LwRZSSi_nIA",
+        "width": 1166
+      }],
+      "place_id": "ChIJM0oBb31UyEcR8tqSBLOoDFs",
+      "rating": 5,
+      "reference": "CmRbAAAAXlazwg7r4Y0ZFZI82Akwy0jx5Niscwaq4cy2GLduwHerAduLesFX2PbIgepqFXMYd6lAsH8DaORxMzGSYEMmur7tfcSQps6oZfqb4b7Hc3IJJ00oRkCMkgUD1_rXWVtzEhBcvAZhT6PHyWv-NkshiBNzGhRlryVmaqwrbE8XHPknv5rYaLdOUQ",
+      "types": [
+        "health",
+        "point_of_interest",
+        "establishment"
+      ]
+    },
+    {
+      "formatted_address": "Torenstraat 21, 9203 BC Drachten, Netherlands",
+      "geometry": {
+        "location": {
+          "lat": 53.108402,
+          "lng": 6.100352
+        },
+        "viewport": {
+          "northeast": {
+            "lat": 53.10975922989272,
+            "lng": 6.101833279892723
+          },
+          "southwest": {
+            "lat": 53.10705957010727,
+            "lng": 6.099133620107279
+          }
+        }
+      },
+      "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+      "id": "9341aa5b3309acdafc03031589d67303008285db",
+      "name": "Crowned Kings Tattoos",
+      "opening_hours": {
+        "open_now": false,
+        "weekday_text": []
+      },
+      "photos": [{
+        "height": 422,
+        "html_attributions": [
+          "<a href=\"https: //maps.google.com/maps/contrib/117836376380042725614/photos\">Tattoo Lucky shot</a>"
+        ],
+        "photo_reference": "CmRaAAAAHuwZxZpTFlpdxS23a107aJkzeM2X9l_C8EAia6zGihP1lwInpKM2TbsrYhmDhnFjBrcqHwRESsjhJBvPSNbEyuCTCMWM08dkF2iZG8nnNkGcnvk-6Rn-XqEE8yz_tGMTEhDdgJzoObvFBqc0DertAIpLGhQMfTcQi_bf68FAhk4qmhpqIr09XQ",
+        "width": 750
+      }],
+      "place_id": "ChIJ7SNJpdVRyEcRoXl7rBYk4Is",
+      "rating": 4.6,
+      "reference": "CmRbAAAAFoxLoWjkShybAoYr1QxbFqiYKiUiqWCMztPW05KUZkXNPht4aj8TeGJ1Jm36W9_qdIQT54oQeda12RmHeqAKEGR8Eqs7BX9f7x48re3POsZX_0ZP2mCCGK4wI2cYaCbXEhBMQ8MaYG_FHRv2lcXWzmHHGhSPZIj4FwcaBaLb4Yym-cUm1VUOug",
+      "types": [
+        "store",
+        "point_of_interest",
+        "establishment"
+      ]
+    }
+  ],
+  "status": "OK"
+}

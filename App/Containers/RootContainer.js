@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
 import { View, StatusBar, Text } from 'react-native'
-import ReduxNavigation from '../Navigation/ReduxNavigation'
+import { Root, StyleProvider } from 'native-base'
 import { connect } from 'react-redux'
+import ReduxNavigation from '../Navigation/ReduxNavigation'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 import BusyIndicator from 'react-native-busy-indicator'
 
-import { Root } from 'native-base'
+import renderIf from 'render-if'
 
 // Styles
 import styles from './Styles/RootContainerStyles'
-
+import getTheme from './../Themes/native-base-theme/components'
+import material from './../Themes/native-base-theme/variables/material'
+import PrivateComponent from '../Components/PrivateComponent'
 // import Language from '../Redux/LanguageRedux'
-import renderIf from 'render-if'
 
 class RootContainer extends Component {
-
   componentDidMount () {
     // if redux persist is not active fire startup action
     if (!ReduxPersist.active) {
@@ -26,12 +27,13 @@ class RootContainer extends Component {
   }
 
   render () {
-    const { loadedLaguage } = this.props
+    const { loadedLaguage, isLogged } = this.props
     return (
       <Root style={styles.applicationView}>
         <StatusBar barStyle='light-content' />
-        {renderIf(loadedLaguage)(<ReduxNavigation />)}
-        {renderIf(!loadedLaguage)(<Text>Loading</Text>)}
+        {renderIf(loadedLaguage)(<StyleProvider style={getTheme(material)}><ReduxNavigation /></StyleProvider>)}
+        {renderIf(isLogged)(<PrivateComponent />)}
+        {renderIf(!loadedLaguage)(<Text />)}
         <BusyIndicator />
       </Root>
     )
@@ -40,7 +42,8 @@ class RootContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    loadedLaguage: state.language.loadedLaguage
+    loadedLaguage: state.language.loadedLaguage,
+    isLogged: state.user.isLogged
   }
 }
 

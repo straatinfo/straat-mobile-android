@@ -20,10 +20,7 @@ export default class ReportChat extends Component {
 
   connection = {}
 
-  componentDidMount () {
-    console.log('Report chat props: ', this.props)
-    console.log()
-  }
+  componentDidMount () {}
 
   /**
    * When a user joins the chatroom, check if they are an existing user.
@@ -76,7 +73,7 @@ export default class ReportChat extends Component {
    */
 
   onReceivedMessage (messages) {
-    console.log('Receiving messages...', messages)
+    // console.log('Receiving messages...', messages)
     this.connection.on('send-message', data => {
         // call an action creator to update state
     })
@@ -89,7 +86,6 @@ export default class ReportChat extends Component {
    */
 
   onSend = message => {
-    console.log('On send ', message)
     const { conversationId, userId } = this.props
     let params = {
       _conversation: conversationId,
@@ -98,7 +94,6 @@ export default class ReportChat extends Component {
     }
     // appSocket.emit('send-message', params);
     /* Dispatch action for sending message to api  */
-    console.log('Send message params: ', params)
     this.props.sendMessage(params)
   }
   render () {

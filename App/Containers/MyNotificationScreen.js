@@ -24,8 +24,6 @@ export default class MyNotificationScreen extends Component {
       const user = JSON.parse(userInfo)
             /** set user variable */
       this.setState({user: user})
-      console.log('user')
-      console.log(user)
     })
   }
 

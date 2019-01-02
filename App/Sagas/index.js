@@ -19,6 +19,7 @@ import { NotificationTypes } from './../Redux/NotificationRedux'
 import { TeamTypes } from '../Redux/TeamRedux'
 import { FeedbackTypes } from '../Redux/FeedbackRedux'
 import { ProfileTypes } from '../Redux/ProfileRedux'
+import { UserinfoTypes } from '../Redux/UserinfoRedux'
 import { AddNewTeamTypes } from '../Redux/AddNewTeamRedux'
 
 /* ------------- Sagas ------------- */
@@ -28,22 +29,25 @@ import { login, appStart } from './LoginSagas'
 import { getUserAvatar } from './GithubSagas'
 import { change } from './ScreenSagas'
 import { confirmAccessCode, registerAccessCode } from './AccessCodeSagas'
-import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity } from './UserSagas'
+import { registerUser, validateEmail, validateUserName, validatePostalCode, validatePhoneNumber, validateTeamName, validateTeamEmail, getTeamlist, uploadTeamPhoto, requestPassword, validateCity, validateHousenumber, blockUser, mapRadiusSetting } from './UserSagas'
 import { getNearbyReports, getReportAddress, uploadPhoto, getCategories, submitReport, changeStatus } from './ReportsSaga'
 import { fetchConversation, createConversation, getConversationList } from './ConversationSaga'
 import { fetchMessage, sendMessage, getMessagesByConvoId, postConvo } from './MessageSaga'
-import { myReportRequest, myReportDetailRequest } from './MyReportSagas'
+import { myReportRequest, myReportDetailRequest, myReportDeleteRequest, unfollowReportRequest } from './MyReportSagas'
 import { notifactionRequestTypeA, notifactionRequestTypeB, notifactionRequestTypeC, updateByNotification } from './NotificationSaga'
 import { sendFeedback } from './FeedbackSaga'
-import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam } from './TeamSagas'
+import { getTeamProfile, getTeamRequest, getTeamDetails, teamAcceptRequest, teamRejectRequest, addNewTeam, addNewTeamUpload, getUserTeamList, submiteditTeam, getNonVolTeamList } from './TeamSagas'
 import { editUserProfile, uploadUserPhoto, validateUserNameProfile, validateEmailProfile, validatePhoneNumberProfile, validateCityProfile, validatePostalCodeProfile } from './ProfileSaga'
 import { TeamListTypes } from '../Redux/TeamListRedux'
+import { getUserinfo } from './UserinfoSagas';
+import { ReportmapsearchTypes } from '../Redux/ReportmapsearchRedux';
+import { getReportmapsearch } from './ReportmapsearchSagas';
 /* ------------- API ------------- */
 
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
 const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
-const googleAPI = API.googleAPI()
+const googleAPI = DebugConfig.useFixtures ? FixtureAPI : API.googleAPI()
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -61,6 +65,10 @@ export default function * root () {
 
     /**              USER              */
     takeLatest(CurrentUserTypes.FORGOT_PASSWORD_REQUEST, requestPassword, api),
+    /**              USER              */
+    takeLatest(CurrentUserTypes.USER_BLOCK, blockUser, api),
+    takeLatest(CurrentUserTypes.USER_CHANGE_RADIUS, mapRadiusSetting, api),
+    // takeLatest(CurrentUserTypes.VIEWED_NOTIFIED, viewedNotifiedRequest, api),
 
     /**          ACCESS CODE           */
     takeLatest(CurrentUserTypes.SET_ACCESS_CODE, confirmAccessCode, api),
@@ -71,6 +79,9 @@ export default function * root () {
     takeLatest(CurrentUserTypes.REGISTER_SET_USERNAME, validateUserName, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_EMAIL, validateEmail, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_POSTALCODE, validatePostalCode, api),
+    takeLatest(CurrentUserTypes.REGISTER_SET_HOUSE_NUMBER, validateHousenumber, api),
+
+    
     takeLatest(CurrentUserTypes.REGISTER_SET_CITY, validateCity, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_PHONENUMBER, validatePhoneNumber, api),
     takeLatest(CurrentUserTypes.REGISTER_SET_TEAMNAME, validateTeamName, api),
@@ -88,8 +99,9 @@ export default function * root () {
     takeLatest(ReportsTypes.SET_REPORT_ADDRESS_BY_COORDINATE, getReportAddress, googleAPI),
 
     /**         TEAM           */
-
+    
     takeLatest(TeamListTypes.TEAMLIST_GET_LIST, getUserTeamList, api),
+    takeLatest(TeamListTypes.TEAMLISTNONVOL_GET_LIST, getNonVolTeamList, api),
     takeLatest(TeamTypes.GET_TEAM_DETAILS, getTeamDetails, api),
     takeLatest(TeamTypes.GET_TEAM_REQUEST, getTeamRequest, api),
     takeLatest(TeamTypes.TEAM_ACCEPT_REQUEST, teamAcceptRequest, api),
@@ -111,6 +123,8 @@ export default function * root () {
     /**          MY REPORT             */
     takeLatest(MyReportTypes.MY_REPORT_REQUEST, myReportRequest, api),
     takeLatest(MyReportTypes.MY_REPORT_DETAIL_REQUEST, myReportDetailRequest, api),
+    takeLatest(MyReportTypes.DELETE_MYREPORT, myReportDeleteRequest, api),
+    takeLatest(MyReportTypes.UNFOLLOW_REPORT, unfollowReportRequest, api),
 
     /**          NOTIFICATION          */
     takeLatest(NotificationTypes.NOTIFICATION_REQUEST_TYPE_A, notifactionRequestTypeA, api),
@@ -128,8 +142,15 @@ export default function * root () {
 
     takeLatest(ProfileTypes.SETUSERNAME_PROFILE, validateUserNameProfile, api),
 
-    takeLatest(ProfileTypes.UPLOAD_EDITPROFILE, uploadUserPhoto, api)
+    takeLatest(ProfileTypes.UPLOAD_EDITPROFILE, uploadUserPhoto, api),
 
+    // SEACH IN MAP
+    takeLatest(ReportmapsearchTypes.REPORTMAPSEARCH_REQUEST, getReportmapsearch, api, googleAPI),
+
+    
+    // USER INFO PROFILE
+
+    takeLatest(UserinfoTypes.USERINFO_REQUEST, getUserinfo, api),
     // some sagas receive extra parameters in addition to an action
     // takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ])

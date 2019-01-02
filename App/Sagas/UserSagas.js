@@ -5,15 +5,54 @@ import LoginActions from '../Redux/LoginRedux'
 import UserActions, { isValidUserName, isValidMobileNumber, getUser, getUserState } from './../Redux/UserRedux'
 import ReportsActions from './../Redux/ReportsRedux'
 import { popUpAlert, popUpAlertV2 } from './../Lib/Helper/alertHelper'
-import { messageLoginPopup } from './../Transforms/Filters'
+import { messageLoginPopup, getApprovedTeamList } from './../Transforms/Filters'
 
 import { showAlertBox, logStore, AppData, showSuccesstBox, showSuccessBox, showAlertBoxWithTitle } from './../Redux/commonRedux'
 import { put, call, select } from 'redux-saga/effects'
 import { changeto } from '../Redux/ScreenRedux'
 import { teamGetIsApproved } from '../Transforms/TeamHelper'
-import { getSuccessMessage, getLoginParams } from '../Transforms/RegistrationHelper'
+import { getSuccessMessage, getLoginParams, cleanPostalCode } from '../Transforms/RegistrationHelper'
 import { getLanguageState } from './../Redux/LanguageRedux'
 
+
+/**
+ *
+ * this module is hidden registration saga hahaha
+ * registerUser
+ * @param (API, { registrationData, navigation, route })
+ *
+ */
+
+ export const mapRadiusSetting = function * (API, action) {
+  
+  try {
+    const user = yield select(getUserState)
+    console.log('user from mapRadius', user);
+    const mapRadius = yield call(API.putMapRadiusSetting, user, action);
+    
+    if(mapRadius.status === 200) {
+      console.log('Success')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+ }
+
+
+ export const viewedNotifiedRequest = function* (API, action) {
+   try {
+    
+    const user = yield select(getUserState);
+    const changeViewed = yield call(API.viewedNotified, user.user);
+    console.log(changeViewed);
+    if (changeViewed.status === 200) {
+    } else {
+      throw new Error(changeViewed.error);
+    }
+   } catch (e) {
+     console.log('error', e);
+   }
+ }
 /**
  *
  * this module is hidden registration saga hahaha
@@ -31,6 +70,8 @@ export const registerUser = function * (API, action) {
   try {
     // show loader
     yield call(loaderHandler.showLoader, language.registering)
+    __DEV__ && console.log('registrationData', registrationData)
+    // return true
     // fetch result
     const registrationResult = yield call(API.postRegisterUser, { registrationData })
 
@@ -39,10 +80,10 @@ export const registerUser = function * (API, action) {
     // status success
     if (registrationResult.ok && registrationResult.data.status === 1) {
       userWithToken = {...registrationResult.data.data.user, token: registrationResult.data.data.token}
-      const successMessage = getSuccessMessage(registrationData.isVolunteer, !!registrationData._team)
+      const successMessage = getSuccessMessage(registrationData.isVolunteer, !!registrationData._team, language)
       const loginParams = getLoginParams(registrationData.isVolunteer, !!registrationData._team, registrationData.username, registrationData.password)
-      __DEV__ && console.log('requestedUserAccount', registrationResult)
-      __DEV__ && console.log('userWithToken', userWithToken)
+      // __DEV__ && console.log('requestedUserAccount', registrationResult)
+      // __DEV__ && console.log('userWithToken', userWithToken)
       global.usersAccount = userWithToken
       yield put(UserActions.setCurrentUser(userWithToken))
       yield call(AppData.setUserInfo, userWithToken)
@@ -167,7 +208,7 @@ export const validateUserName = function * (API, action) {
 
 export const validatePostalCode = function * (API, action) {
   const language = yield select(getLanguageState)
-  const { postalCode } = action
+  const { postalCode, houseNumber } = action
   __DEV__ && console.log('action', action)
   try {
     // show loader
@@ -178,21 +219,70 @@ export const validatePostalCode = function * (API, action) {
       throw new Error(language.invalid + ' ' + language.postalCode)
     }
     yield put(UserActions.mergeState({isValidatedPostalCode: true}))
-    /*
+
     // validate from backend
-    const validationResult = yield call(API.postConfirmAccessCode, { postalCode })
+    const validationResult = yield call(API.postValidatePostalCode, { postalCode: cleanPostalCode(postalCode) })
     __DEV__ && console.log('userName validationResult', validationResult)
 
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
       yield put(UserActions.mergeState({isValidatedPostalCode: true}))
+      if (houseNumber) {
+        yield put(UserActions.registerSetHouseNumber(postalCode, houseNumber)) // updating hause number
+      }
     } else {
-      throw new Error('invalid postal code')
+      throw new Error(language.invalid + ' ' + language.postalCode)
     }
-    */
   } catch (e) {
     __DEV__ && console.log(e)
     yield put(UserActions.mergeState({isValidatedPostalCode: false}))
+    showAlertBox(e.message)
+  }
+  // clean screen
+  yield call(loaderHandler.hideLoader)
+  // yield call(logStore)
+}
+
+/**
+ * @description validate city: this will be base to get coordinate
+ * @param (API, { city })
+ * it listen to REGISTER_SET_CITY
+ *
+ */
+
+export const validateHousenumber = function * (API, action) {
+  const language = yield select(getLanguageState)
+  const { houseNumber, postalCode } = action
+  // const user = yield select(getUserState)
+  try {
+    // show loader
+    yield call(loaderHandler.showLoader, language.verifying + ' ' + language.city)
+    const validationResult = yield call(API.postValidateHouseNumber, { postalCode: cleanPostalCode(postalCode), houseNumber: houseNumber })
+    __DEV__ && console.log('houseNumber validationResult', validationResult)
+
+    // status success
+    if (validationResult.ok && validationResult.data.status === 1) {
+      const {_host, houseNumber, streetName, city, postalCode, geoLocation} = validationResult.data.data
+      yield put(UserActions.mergeState({
+        hostId: _host,
+        registrationCity: city,
+      //   registrationHouseNumber: houseNumber,
+        registrationGeoLocation: geoLocation,
+        registrationPostalCode: postalCode,
+        registrationStreetName: streetName,
+        isValidatedHouseNumber: true
+      }))
+    } else if (validationResult.ok && validationResult.data.status === 0) {
+      if (validationResult.data.data && validationResult.data.data.error) {
+        throw new Error(validationResult.data.data.error)
+      }
+      throw new Error(language.city + ' ' + language.invalid)
+    } else {
+      throw new Error(language.request + ' ' + language.failed)
+    }
+  } catch (e) {
+    __DEV__ && console.log(e)
+    yield put(UserActions.mergeState({isValidatedHouseNumber: false}))
     showAlertBox(e.message)
   }
   // clean screen
@@ -224,6 +314,7 @@ export const validateCity = function * (API, action) {
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
       __DEV__ && console.log('validationResult', validationResult)
+
       // success in getting _host
       yield put(UserActions.mergeState({isValidatedCity: true})) // un finished <-------|
       yield put(UserActions.mergeState({hostId: validationResult.data.data._host}))
@@ -269,21 +360,16 @@ export const validatePhoneNumber = function * (API, action) {
     if (!isValidMobileNumber(phoneNumber)) {
       throw new Error(language.invalid + ' ' + language.mobileNumber)
     }
-
-    yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))
-
-    /*
     // validate from backend
-    const validationResult = yield call(API.postConfirmAccessCode, { postalCode })
-    __DEV__ && console.log('userName validationResult', validationResult)
+    const validationResult = yield call(API.postValidatePhoneNumber, { phoneNumber })
+    __DEV__ && console.log('phoneNumber validationResult', validationResult)
 
     // status success
     if (validationResult.ok && validationResult.data.status === 1) {
-      yield put(UserActions.mergeState({isValidatedPostalCode: true}))
+      yield put(UserActions.mergeState({isValidatedPhoneNumber: true}))
     } else {
-      throw new Error('invalid postal code')
+      throw new Error(language.invalidPhoneNumberM)
     }
-    */
   } catch (e) {
     __DEV__ && console.log(e)
     yield put(UserActions.mergeState({isValidatedPhoneNumber: false}))
@@ -446,6 +532,8 @@ export const uploadTeamPhoto = function * (API, action) {
     // status success
     if (result.ok && result.data.status === 1) {
       yield put(UserActions.mergeState({teamPhotoUploaded: result.data.data}))
+    } else if (!result.ok && result.problem === 'TIMEOUT_ERROR') {
+      throw new Error(language.networkError)
     } else {
       throw new Error(language.uploading + ' ' + language.failed)
     }
@@ -499,5 +587,36 @@ export const requestPassword = function * (API, action) {
   }
   // clean screen
   yield call(loaderHandler.hideLoader)
+  // yield call(logStore)
+}
+
+/**
+ * @description request for new pasword using email
+ * @param eMail
+ * it listen to REGISTER_SET_PHONE_NUMBER
+ *
+ */
+
+export const blockUser = function * (API, action) {
+  const language = yield select(getLanguageState)
+  const user = yield select(getUser)
+  const { data: {data, cb} } = action
+  __DEV__ && console.log('action', action)
+  try {
+    console.log(action)
+    if (data.user._id === user._id) {
+      __DEV__ && console.log('user is block: ', user._id)
+
+    // yield put(UserActions.mergeState({passwordRequestSuccess: false}))
+      popUpAlertV2(language.notice, language.blockedUser, cb)
+    }
+  //   () => {
+  //     put(UserActions.mergeState({isBlockedUser: true}))
+  //  }
+  } catch (e) {
+    __DEV__ && console.log(e)
+  }
+  // clean screen
+  // yield call(loaderHandler.hideLoader)
   // yield call(logStore)
 }

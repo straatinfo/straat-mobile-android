@@ -2,6 +2,7 @@ import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 import { convertActiveDesignToDesign, designDefault } from '../Transforms/themeHelper'
 import { Design } from '../Services/Constant'
+import AppData from '../Lib/Common/AppData';
 
 const { Types, Creators } = createActions({
   setCurrentUser: ['user'],
@@ -13,7 +14,8 @@ const { Types, Creators } = createActions({
   registerFailure: ['error'],
   registerSetUsername: ['userName', 'primeUserName'],                        // usrname = username + postUserName, primeUserName = userName only
   registerSetEmail: ['userEmail'],
-  registerSetPostalcode: ['postalCode'],
+  registerSetPostalcode: ['houseNumber', 'postalCode'],
+  registerSetHouseNumber: ['postalCode', 'houseNumber'],
   registerSetCity: ['city'],
   registerSetPhonenumber: ['phoneNumber'],
   registerSetTeamname: ['teamName', 'isVolunteer'],
@@ -26,7 +28,10 @@ const { Types, Creators } = createActions({
   userReset: ['params'],
   userChangeRadius: ['radius'],
   updateUser: ['user'],
-  teamlistGetuser: ['user']
+  teamlistGetuser: ['user'],
+  registerInit: ['user'],
+  userBlock: ['data'],
+  // viewedNotified: ['_id'],
 })
 
 export const CurrentUserTypes = Types
@@ -63,12 +68,18 @@ export const tempUser = {
   token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YThiNGFmYmFjNThhZDAwMTQxYTM1MmUiLCJpYXQiOjE1MjcxNDA5MTY5OTV9.UDacF19-c8nbabww_8VrYXKZbjpnHTYlImKMviKfhZ0',
   _activeTeam: { _id: 'teamIdSample' }
 }
+
+export const defualtCoordinate = {
+  lat: 53.2729807,
+  long: 5.985930199999999
+}
 /* ------------- Intial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  user: __DEV__ ? tempUser : {language: 'nl'},
+  user: !__DEV__ ? tempUser : {language: 'nl', teamList: []},
+  isLogged: false,
   accessCode: null,
-  host: null,
+  host: {_id: 'testHostId', language: 'nl'},
   hostId: null,
   _teamActive: '',
   radius: radius,
@@ -78,6 +89,7 @@ export const INITIAL_STATE = Immutable({
   // for registration
   isValidatedUserEmail: false,
   isValidatedPostalCode: false,
+  isValidatedHouseNumber: false,
   isValidatedUserName: false,
   isValidatedTeamName: false,
   isValidatedTeamEmail: false,
@@ -87,6 +99,9 @@ export const INITIAL_STATE = Immutable({
   registrationUserName: '',
   registrationUserEmail: '',
   registrationPostalCode: '',
+  registrationHouseNumber: '',
+  registrationStreetName: '',
+  registrationGeoLocation: {},
   registrationCity: '',
   registrationTeamName: '',
   registrationTeamEmail: '',
@@ -104,8 +119,37 @@ export const INITIAL_STATE = Immutable({
   passwordRequestSuccess: false,                             // requet new password using email: forgot passowd status
 
   position: null,
-  isCoor: false
+  isCoor: false,
+  isBlockedUser: false
 })
+
+export const registerInit = (state, action) => {
+  // reset registration here
+  return state.merge({
+    isValidatedUserEmail: false,
+    isValidatedPostalCode: false,
+    isValidatedHouseNumber: false,
+    isValidatedUserName: false,
+    isValidatedTeamName: false,
+    isValidatedTeamEmail: false,
+    isValidatedPhoneNumber: false,
+    isUploadingPhoto: false,
+    filter: {},
+    registrationUserName: '',
+    registrationUserEmail: '',
+    registrationPostalCode: '',
+    registrationHouseNumber: '',
+    registrationStreetName: '',
+    registrationGeoLocation: {},
+    registrationCity: '',
+    registrationTeamName: '',
+    registrationTeamEmail: '',
+    registrationPhoneNumber: '',
+    teamList: [],
+    teamPhotoLocal: {},
+    teamPhotoUploaded: { url: '', secure_url: '' }
+  })
+}
 
 export const setAccessCode = (state, {accessCodeContainer: { accessCode }}) => {
   return state.merge({
@@ -122,7 +166,8 @@ export const setHostId = (state, { hostId }) => {
 
 export const setCurrentUser = (state, { user }) => {
   return state.merge({
-    user: user
+    user: user,
+    isLogged: true
   })
 }
 
@@ -168,6 +213,12 @@ export const registerSetUsername = (state, {userName}) => {
 export const registerSetPostalcode = (state, {postalCode}) => {
   return state.merge({
     registrationPostalCode: postalCode
+  })
+}
+
+export const registerSetHouseNumber = (state, {houseNumber}) => {
+  return state.merge({
+    registrationHouseNumber: houseNumber
   })
 }
 
@@ -224,11 +275,22 @@ export const updateUser = (state, {user}) => {
   return state.merge({user: {...state.user, ...user, ...addedData}})
 }
 
+export const userBlock = (state, data) => {
+  if (data.data && data.data.user && data.data.user._id) {
+    return state.merge({ isBlockedUser: true })
+  }
+  return state
+}
+
 // use this so not to make many method for setting redux state
 export const mergeState = (state, {newMergingState}) => {
   __DEV__ && console.log('newMergingState', newMergingState)
   return state.merge(newMergingState)
 }
+
+// export const viewedNotified = (state) => {
+//   return state.merge({ setting: { isNotified: false } });
+// }
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SET_CURRENT_USER]: setCurrentUser,
@@ -243,10 +305,13 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.REGISTER_SET_USERNAME]: registerSetUsername,
   [Types.REGISTER_SET_EMAIL]: registerSetEmail,
   [Types.REGISTER_SET_POSTALCODE]: registerSetPostalcode,
+  [Types.REGISTER_SET_HOUSE_NUMBER]: registerSetHouseNumber,
+
   [Types.REGISTER_SET_CITY]: registerSetCity,
   [Types.REGISTER_SET_TEAMNAME]: registerSetTeamname,
   [Types.REGISTER_SET_TEAMEMAIL]: registerSetTeamemail,
   [Types.REGISTER_SET_PHONENUMBER]: registerSetPhonenumber,
+  [Types.REGISTER_INIT]: registerInit,
 
   [Types.GET_TEAMLIST]: getTeamlist,
   [Types.SET_TEAM_PHOTO]: setTeamPhoto,
@@ -254,8 +319,10 @@ export const reducer = createReducer(INITIAL_STATE, {
 
   [Types.FORGOT_PASSWORD_REQUEST]: forgotPasswordRequest,
   [Types.USER_RESET]: userReset,
+  [Types.USER_BLOCK]: userBlock,
   [Types.USER_CHANGE_RADIUS]: userChangeRadius,
-
+  // [Types.VIEWED_NOTIFIED]: viewedNotified,
+  
   [Types.UPDATE_USER]: updateUser
 })
 

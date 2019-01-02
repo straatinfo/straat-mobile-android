@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, BackHandler } from 'react-native'
+import { View, BackHandler, TouchableOpacity } from 'react-native'
 import { Text, Container, Content, Button, Right, Body, Icon, Left, List, ListItem, Thumbnail, H1, Card, CardItem } from 'native-base'
 import { connect } from 'react-redux'
 import { Col, Row, Grid } from 'react-native-easy-grid'
@@ -19,8 +19,12 @@ import Styles from './Styles'
 import TeamActions from '../../Redux/TeamRedux'
 import Triangle from 'react-native-triangle'
 
+import { CONNECTION } from '../../Services/AppSocket'
+import { popUpAlertV2 } from '../../Lib/Helper/alertHelper'
+
 class MyTeamScreen extends Component {
   conversationId = null
+  connection = {}
   constructor (props) {
     super(props)
     this.state = {
@@ -31,13 +35,17 @@ class MyTeamScreen extends Component {
   componentWillMount () {
     const { getTeamDetails } = this.props
     getTeamDetails()
+
   }
 
   componentDidMount () {
+    const { userId } = this.props
     BackHandler.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.goBack()
-      return true
+     //  this.props.navigation.goBack()
+      return false
     })
+
+    this.connection = CONNECTION.getConnection(userId)
   }
   _getTeamData () {
     const { teamId } = this.props
@@ -46,7 +54,7 @@ class MyTeamScreen extends Component {
   }
 
   chatScreen (user) {
-    __DEV__ && console.log('user', user)
+    // __DEV__ && console.log('user', user)
     this.props.navigation.navigate('Chat', {
       //  conversationId: '5ae2369ee5424662ecfaaece',
       title: user.username,
@@ -62,25 +70,25 @@ class MyTeamScreen extends Component {
     const connectionId = this.connectionId
     this.conversationId = user.conversations[0]
     const { setSelectedConversationId } = this.props
-    __DEV__ && console.log('personal conversation params: ', user)
+    // __DEV__ && console.log('personal conversation params: ', user)
     if (!user.convesations[0]) {
-      __DEV__ && console.log('Creating personal conversation...')
+      // __DEV__ && console.log('Creating personal conversation...')
       this._createConversation(user)
     }
-    __DEV__ && console.log('PM ConversationId: ', this.conversationId)
-    __DEV__ && console.log('entering-convo: Emitting...', SocketTypes.ENTER_CONVO)
+    // __DEV__ && console.log('PM ConversationId: ', this.conversationId)
+    // __DEV__ && console.log('entering-convo: Emitting...', SocketTypes.ENTER_CONVO)
     this.connectionId.emit(SocketTypes.ENTER_CONVO, {
       '_conversation': this.conversationId,
       '_connection': connectionId
     })
     this.connectionId.on(SocketTypes.ENTER_CONVO, data => {
-      __DEV__ && console.log('entering-convo: Emit Response: ', data)
+      // __DEV__ && console.log('entering-convo: Emit Response: ', data)
       if (data && data.status === 1) {
         this.setState({ isSuccess: true })
       }
     })
     if (this.state.isSuccess === true) {
-      __DEV__ && console.log('Setting conversation id...', this.conversationId)
+      // __DEV__ && console.log('Setting conversation id...', this.conversationId)
       setSelectedConversationId(this.conversationId)
       this.props.navigation.navigate('PersonalChat', { title: GetChatName(user._user) })
     }
@@ -91,7 +99,7 @@ class MyTeamScreen extends Component {
 
   _createConversation = user => {
     const { userId, conversationId } = this.props
-    __DEV__ && console.log('Personal Message')
+    // __DEV__ && console.log('Personal Message')
     const conversation = {
       'title': GetChatName(user._user),
       'type': 'PRIVATE',
@@ -185,9 +193,10 @@ class MyTeamScreen extends Component {
     )
   }
   _renderMemberRequestLst (isTeamLeader) {
-    const { requests, Lang, fetching } = this.props
+    const { navigation: { navigate }, requests, Lang, fetching } = this.props
     const teamAcceptRequest = this.teamAcceptRequest.bind(this)
     const teamRejectRequest = this.teamRejectRequest.bind(this)
+    const renderUserName = this._userName.bind(this)
 
     if (requests.length === 0) {
       return null
@@ -207,7 +216,9 @@ class MyTeamScreen extends Component {
         { requests.map((teamInvite) => (
           <ListItem key={teamInvite._user._id}>
             <Body>
-              <Text>{GetChatName(teamInvite._user)}</Text>
+              {/* only allow to redir if admin of this team */}
+              {renderUserName(teamInvite._user, isTeamLeader, navigate)}
+              {/* <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: teamInvite._user})}><Text>{GetFullName(teamInvite._user)}</Text></TouchableOpacity> */}
             </Body>
             <Right>
               <Row>
@@ -220,9 +231,16 @@ class MyTeamScreen extends Component {
       </List>
     )
   }
-  _renderTeamMemberList () {
-    const { team: { teamMembers }, userId, Lang } = this.props
-    __DEV__ && console.log('team members', this.props)
+  _userName (user, isTeamLeader, navigate) {
+    if (!isTeamLeader) {
+      return <Text>{GetFullName(user)}</Text>
+    }
+    return <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: user})}><Text>{GetFullName(user)}</Text></TouchableOpacity>
+  }
+  _renderTeamMemberList (isTeamLeader) {
+    const { navigation: { navigate }, team: { teamMembers }, userId, Lang } = this.props
+    const renderUserName = this._userName.bind(this)
+    // __DEV__ && console.log('team members', this.props)
     if (!(teamMembers && teamMembers.length > 1)) {
       return null
     }
@@ -239,7 +257,9 @@ class MyTeamScreen extends Component {
 
             <ListItem key={user._user._id}>
               <Body>
-                <Text>{GetChatName(user._user)}</Text>
+                {/* only allow to redir if admin of this team */}
+                {renderUserName(user._user, isTeamLeader, navigate)}
+                {/* <TouchableOpacity onPress={() => navigate('UserInfoScreen', {user: user._user})}><Text>{GetFullName(user._user)}</Text></TouchableOpacity> */}
               </Body>
               <Right>
                 <Icon name='chatbubbles' onPress={() => this.chatScreen(user._user)} />
@@ -255,7 +275,7 @@ class MyTeamScreen extends Component {
   }
   teamRejectRequest (user) {
     const { rejectRequest } = this.props
-    rejectRequest(user)
+    // rejectRequest(user)
   }
 
   render () {
@@ -266,7 +286,7 @@ class MyTeamScreen extends Component {
     }
     const isTeamLeader = checkLeaderById(userId, teamLeaders)
     const ifActiveTeam = isActiveTeam(team)
-    __DEV__ && console.log('team', team)
+    // __DEV__ && console.log('team', team)
     return (
       <Container style={{ backgroundColor: Colors.background }}>
         <HeaderInDrawer navigation={navigation} title={Lang.txt_E03} nhBack />
@@ -282,7 +302,7 @@ class MyTeamScreen extends Component {
           <Spacer />
 
           { this._renderMemberRequestLst(isTeamLeader) }
-          { this._renderTeamMemberList() }
+          { this._renderTeamMemberList(isTeamLeader) }
           <Spacer />
         </Content>
         { ifActiveTeam === true ? <MainButton title={Lang.txt_F04} onPress={() => console.log('invite clicked')} styles={{width: '90%', flex: 0, alignSelf: 'center'}} /> : null }

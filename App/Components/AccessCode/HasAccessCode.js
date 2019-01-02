@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Keyboard, LayoutAnimation, BackHandler } from 'react-native'
-import { Button, Text as NBText, Contant, Form, Item, Input, Label, Spinner, Title, Container,
-   Card, CardItem, ListItem, Right, Radio, Left, Content, Segment, Header, Tabs, Tab, TabHeading, Icon, Center} from 'native-base'
+import { Text, Item, Input, View } from 'native-base'
+import { CenterView, CircleButton, RowView, Spacer } from './../../Components'
 import { connect } from 'react-redux'
-import LinearGradient from 'react-native-linear-gradient'
-import {Fonts, Colors} from './../../Themes'
-import style from './style'
-import CenterView from './../../Components/CenterView'
-import RowView from './../../Components/RowView'
-import CircleButton from './../../Components/CircleButton'
-import Spacer from './../../Components/Spacer'
+import { Fonts } from './../../Themes'
 
 class HasAccessCode extends Component {
   render () {

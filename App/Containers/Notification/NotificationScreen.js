@@ -16,6 +16,7 @@ import UsersActions from './../../Redux/UserRedux'
 
 class ReportMapScreen extends React.Component {
   constructor (props) {
+    connection = {}
     super(props)
     this.state = {
     }
@@ -23,7 +24,8 @@ class ReportMapScreen extends React.Component {
   }
 
   componentDidMount () {
-    __DEV__ && console.log(this.props)
+    
+    // __DEV__ && console.log(this.props)
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.props.navigation.goBack()
       return true
@@ -45,15 +47,15 @@ class ReportMapScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    const { language, navigation, design, user: { isVolunteer }, notificationtState: { typeCount_A, typeCount_B, typeCount_C, chatCount } } = this.props
-    const notificationCount = typeCount_A + typeCount_B + typeCount_C + chatCount
+    const { language, navigation, design, user: { isVolunteer } } = this.props
+    const notificationCount = 0
     return (
       <Container>
         <Header style={[GlobalStyle.header, {backgroundColor: design.header}]} hasTabs>
           <Left style={{flex: 1}}>
             <Button transparent onPress={() => this.props.navigation.navigate('ReportMap')}>
               <Icon name='map' />
-              { notificationCount.count > 0 ? <Badge style={{alignContent: 'center', justifyContent: 'center'}}><Title style={{color: 'white'}}>{notificationCount}</Title></Badge> : null }
+              { notificationCount > 0 ? <Badge style={{alignContent: 'center', justifyContent: 'center'}}><Title style={{color: 'white'}}>{notificationCount}</Title></Badge> : null }
             </Button>
           </Left>
           <CenterView style={{ flex: 6 }}>
@@ -65,17 +67,17 @@ class ReportMapScreen extends React.Component {
             </Button>
           </Right>
         </Header>
-        <Tabs locked={false}>
-          <Tab heading={this._getSubHeading(language.publicSpace, typeCount_A)}>
+        <Tabs locked={true}>
+          <Tab heading={this._getSubHeading(language.publicSpace, 0)}>
             <ReportListTypeA navigation={navigation} />
           </Tab>
-          <Tab heading={this._getSubHeading(language.suspiciousSituation, typeCount_B)}>
+          <Tab heading={this._getSubHeading(language.suspiciousSituation, 0)}>
             <ReportListTypeB navigation={navigation} />
           </Tab>
-          {isVolunteer === false && <Tab heading={this._getSubHeading(language.messages, typeCount_C)}>
+          <Tab heading={this._getSubHeading(language.messages, 0)}>
             <ReportListTypeC navigation={navigation} />
-          </Tab>}
-          <Tab heading={this._getSubHeading(language.chat, chatCount)}>
+          </Tab>
+          <Tab heading={this._getSubHeading(language.chat, 0)}>
             {/* <ChatScreen navigation={navigation} noHeader />  */}
             <Conversation navigation={navigation} noHeader />
           </Tab>
@@ -90,6 +92,11 @@ const mapStateToProps = state => {
     user: state.user.user,
     userState: state.user,
     design: state.user.design,
+    countedListA: state.notification.countedListA.length,
+    countedListB: state.notification.countedListB.length,
+    countedListC: state.notification.countedListC.length,
+    countedListD: state.notification.countedListD.length,
+    // chatCount: state.notification.chatCount, 
     notificationtState: state.notification,
     language: state.language.Languages
   }

@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import {
-  View,
-  Text,
   TouchableOpacity,
   Image,
   ScrollView
 } from 'react-native'
-import { Icon, Content } from 'native-base'
+import { Icon, View, Text, Content } from 'native-base'
 import LinearGradient from 'react-native-linear-gradient'
 
 import Images from './../../../Themes/Images'
@@ -50,7 +48,7 @@ class ReportStepOne extends Component {
     const { reportState: {reportAddress}, design, Lang } = this.props
     return (
       
-      <ScrollView style={ReportStyle.container}>
+      <Content style={ReportStyle.container}>
         <View style={styles.cancelBtnContainer}>
           <TouchableOpacity underlayColor='rgba(0,0,0,0.0)' onPress={this.props.onCancel}>
             <Icon name='md-close' style={ReportStyle.iconStyle} />
@@ -72,7 +70,7 @@ class ReportStepOne extends Component {
         <Text style={{fontSize: 17, fontFamily: 'Gill Sans', textAlign: 'center', margin: 10, marginBottom: 20, color: '#96acc7', backgroundColor: 'transparent'}}>
             {Lang.txt_J32}
           </Text>
-      </ScrollView> 
+      </Content> 
     )
   }
 }

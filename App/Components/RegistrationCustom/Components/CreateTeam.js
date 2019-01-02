@@ -66,7 +66,7 @@ class CreateTeam extends Component {
       } else {
         // this.setState({ selectedImage: {uri: response.uri}, hasImageSelected: true })
          // set parent logo
-        __DEV__ && console.log(response)
+        // __DEV__ && console.log(response)
         this.props.parentSetState({teamLogo: response.uri}, loaderHandler.hideLoader)
         setTeamPhoto(response)
       }
@@ -74,7 +74,7 @@ class CreateTeam extends Component {
   }
 
   render () {
-    __DEV__ && console.log('rendering create team')
+    // __DEV__ && console.log('rendering create team')
     const { MainButton } = GeneralDesign
     const { onRegisterSubmit, title, onClose, parentSetState, liveValidation, validateCreateTeam, liveValidated: { isValidatedTeamEmail, isValidatedTeamName }, design, Lang } = this.props
     const { teamName, teamEmailAddress, teamLogo, validation: { personalDataForm, volunteerOptionForm }, register_option: registerOption } = this.props.parentState

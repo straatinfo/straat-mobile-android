@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "380284627860",
+    "firebase_url": "https://straat-1520273984013.firebaseio.com",
+    "project_id": "straat-1520273984013",
+    "storage_bucket": "straat-1520273984013.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380284627860:android:da2b91855d643f29",
+        "android_client_info": {
+          "package_name": "com.straatmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380284627860-hep8vrbm7akrejorh0b51evverou9qpm.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "380284627860-hep8vrbm7akrejorh0b51evverou9qpm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGdayqpOpFeiZRcm_iOzQ3GlRkGlArlWs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

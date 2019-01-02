@@ -97,6 +97,9 @@ export default {
   // Login Failed
   txt_C07: 'Aanmelden Mislukt!',
 
+  // you have been approved 
+  txt_C09: "Gefeliciteerd, de team coördinator heeft uw verzoek geaccepteerd en u heeft nu toegang tot het team.",
+
   /** @description Authenticating... */
   txt_C08: 'Verifiëren...',
 
@@ -183,8 +186,8 @@ export default {
   // Ik ben een individuele melder
   txt_D24: 'Ik ben een individuele melder',
 
-  // I access street info from my bpt
-  txt_D25: 'Ik wil toegang tot straat.info van mijn bpt',
+  // I want happy to join an existing team
+  txt_D25: 'Ik wil graag bij een bestaand team',
 
   // I want to start a new team
   txt_D26: 'Ik wil een nieuw team starten',
@@ -208,7 +211,39 @@ export default {
   txt_D32: 'Ik accepteer hierbij de algemene voorwaarden',
 
   // The app straat.info is meant volunteers
-  txt_D33: 'De app straat.info is bedoeld voor het ondersteunen van buurtpreventie. Het gebruik van de app voor andere doeleinden, die niet binnen de gangbare uitleg van buurtpreventie passen, is niet toegestaan.\n\nDe app is nadrukkelijk niet bedoeld om het normale communicatie verkeer met instanties zoals de politie, de brandweer, ambulance en gemeenten te vervangen. \n\nBel bij spoed altijd eerst 112 \n\nSeqretary b.v. is eigenaar van de app straat.info en aanvaardt geen enkele aansprakelijkheid voor schade op welke wijze dan ook, door het gebruik van de app.',
+  txt_D33: `Bel bij spoed altijd eerst 112
+
+
+De app straat.info is bedoeld voor het ondersteunen van buurtpreventie onder andere voor het doorgeven van meldingen aan de gemeente. Het gebruik van de app voor andere doeleinden, die niet binnen de gangbare uitleg van buurtpreventie passen, is niet toegestaan.
+
+De app is nadrukkelijk niet bedoeld om het normale communicatie verkeer met instanties zoals de politie, de brandweer, ambulance en gemeenten te vervangen.
+
+Bel bij spoed altijd eerst 112
+
+Seqretary b.v. is eigenaar van de app straat.info en aanvaardt geen enkele aansprakelijkheid voor schade op welke wijze dan ook, door het gebruik van de app. Seqretary b.v. kan de algemene voorwaarden wijzigen.
+
+
+Over privacy en jouw gegevens:
+
+Om je gegevens beter te beschermen, maakt de app straat.info gebruik van een chatnaam. Je mag zelf bepalen welke naam je daarvoor gebruikt. Je telefoonnummer en al je andere persoonlijke gegevens worden in het openbare deel van de app straat.info aan niemand bekend gemaakt.
+
+Als je lid bent van een team, dan zien je teamleden wel je naam, maar niet je overige gegevens. Zij zien dus niet je telefoonnummer, adres etc.
+
+De teamcoördinator van je team heeft wel inzage in je gegevens. Hiermee kan de coördinator controleren of de juiste persoon in het team zit.
+
+De gemeente en politie kunnen desgevraagd indien noodzakelijk inzage krijgen in jouw gegevens en gegevens die met deze app straat.info worden gegenereerd.
+
+
+De meldingen met de bijbehorende berichten die met de app straat.info worden gemaakt, worden een beperkte tijd bewaard. Daarna worden deze vernietigd. Teams en de gemeente krijgen een afschrift van de meldingen.
+
+Wij maken geen analyse van het gebruik van de app, anders dan ter verbetering van onze dienstverlening.
+
+Wij verkopen je gegevens niet aan andere organisaties.
+
+Je kunt het gebruik van de app straat.info beëindigen en je gegevens laten verwijderen uit ons bestand door ons via de mail een verzoek daartoe te versturen.
+
+Met het accepteren van deze algemene voorwaarden stem je in met het hier beschreven gebruik van je gegevens.`,
+  // txt_D33: 'De app straat.info is bedoeld voor het ondersteunen van buurtpreventie. Het gebruik van de app voor andere doeleinden, die niet binnen de gangbare uitleg van buurtpreventie passen, is niet toegestaan.\n\nDe app is nadrukkelijk niet bedoeld om het normale communicatie verkeer met instanties zoals de politie, de brandweer, ambulance en gemeenten te vervangen. \n\nBel bij spoed altijd eerst 112 \n\nSeqretary b.v. is eigenaar van de app straat.info en aanvaardt geen enkele aansprakelijkheid voor schade op welke wijze dan ook, door het gebruik van de app.',
 
   // when you are a volunteer, for example
   txt_D34: 'Als u vrijwilliger bent, bijvoorbeeld aan een BIT of BPT meedoet, kies dan “ja”. Als u bijvoorbeeld bij de overheid werkt en u de app voor uw werk wilt gebruiken, klik dan “nee”',
@@ -290,6 +325,9 @@ export default {
   // Report
   txt_E10: 'GEEF MELDING DOOR',
 
+  // Chat is diabled for this report
+  txt_E11: 'Chat is uitgeschakeld voor dit rapport',
+
   txt_F13: 'Voeg nieuw team toe',
 
   // REPORTS
@@ -299,10 +337,13 @@ export default {
   // message your group
   txt_J02: 'Bericht uw groep',
 
+  // message your group
+  txt_J02b: 'Communicatie',
+
   //  Suspicious situation
   txt_J03: 'Verdachte Situatie',
 
-  //   CREATE MESSAGE
+  //  Public Space
   txt_J04: 'Melding Openbare Ruimte',
 
   /** You are here */
@@ -333,7 +374,7 @@ export default {
   inProgress: 'Behandeling',
   done: 'Afgehandeld',
   expired: 'Verlopen',
-  checkOutTheReport: 'BEKIJK MELDING',
+  checkOutTheReport: 'Bekijk Melding', // 'BEKIJK MELDING',
   selectMainCategory: 'Kies Hoofdcategorie',
   selectSubCategory: 'Kies Subcategorie',
 
@@ -359,6 +400,9 @@ export default {
 
   // this report has been processed
   txt_J18: 'Is deze melding afgehandeld?',
+
+  // Currently, this report can only be seen by you and your team members. You're at the point of making this report public to everybody. Do you wish to continue?
+  txt_J18b: 'Deze melding is op dit moment alleen zichtbaar voor u en uw teamleden. U staat op het punt de melding openbaar te maken. Wilt u doorgaan?',
 
   // Yes
   txt_J19: 'Ja',
@@ -439,6 +483,9 @@ export default {
   /** @description type B Suspicious Situation */
   suspiciousSituation: 'Verdachte Situatie',
 
+  /** @description type B Suspicious situation */
+  allReports: 'Alle Meldingen',
+
   /** @description type C Messages */
   messages: 'Berichten',
 
@@ -468,6 +515,9 @@ export default {
 
   /** @description Urgent? First call 112 */
   txt_J44: 'Spoed? Bel eerst 112',
+
+  /** @description Are you sure you want to delete the report? */
+  txt_J45: 'Weet je zeker dat je het rapport wilt verwijderen?',
 
   /** @description General Information */
   generalInformation: 'Algemene Informatie',
@@ -506,6 +556,9 @@ export default {
   txt_F11: 'Selecteer teamlogo',
 
   txt_F12: 'REGISTEREN',
+
+  /** @description Report has been deleted */
+  ReportHasBeenDeleted: 'Rapport is verwijderd',
 
   // GLOBAL LANGUAGE
   //  is  Under Migration
@@ -667,6 +720,9 @@ export default {
   // Change my Data
   txt_P06: 'WIJZIG MIJN GEGEVENS',
 
+  // Unable to create report, no category available.
+  txt_P07: 'Kan rapport niet maken, geen categorie beschikbaar.',
+
   /** @description Address */
   address: 'Adres',
 
@@ -675,5 +731,52 @@ export default {
   txt_CONVERSATION_TITLE: 'Gespreks Titel',
 
   /** @description Show */
-  show: 'Toon'
+  show: 'Toon',
+
+  /** @description Confirmation */
+  confirmation: 'Bevestiging',
+
+  /** @description Member team is required */
+  teamRequired: 'Lid team is verplicht',
+
+  /** @description Member team is required */
+  hostCoordinateIsInvalid: 'Hostcoördinaat is ongeldig.',
+
+  /** @description Position Error */
+  posistionError: 'Positiefout',
+
+  /** @description  map */
+  map: 'Kaart',
+
+  /** @description  search */
+  _search: 'Zoek adres',
+
+  invalidPhoneNumberM: 'Dit nummer is al in gebruik. Voer een ander nummer in of neem contact op via info@straat.info',
+
+  /** @description blockedUser */
+  blockedUser: 'Op dit moment is de app voor jou geblokkeerd. Als je vragen hebt, neem dan contact op via het formulier p www.straat.info',
+
+  /** @description Connected */
+  connected: 'Verbonden',
+
+  /** @description Connecting */
+  connecting: 'Aansluiten',
+
+  /** @description Disconnected */
+  disconnected: 'Losgekoppeld',
+
+  /** @description Notice */
+  notice: 'Merk Op',
+
+  /** @description Public */
+  public: 'Public',
+
+  /** @description private */
+  private: 'Besloten',
+
+  /** @description change */
+  change: 'Verander',
+
+  /** @description Extra */
+  extra: 'Extra'
 }

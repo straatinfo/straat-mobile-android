@@ -23,6 +23,13 @@ class ReportDetailsScreen extends React.Component {
       return true
     })
   }
+  _getTitle (report) {
+    // const { Lang } = this.props
+    if (report._mainCategory !== undefined && report._mainCategory !== null && report._mainCategory.name !== undefined) {
+      return report._mainCategory.name
+    }
+    return ''
+  }
   render () {
     /**
      * under migraiotn so this page must only return migration page
@@ -35,7 +42,6 @@ class ReportDetailsScreen extends React.Component {
      *  .map is not good for the heart
      *
      */
-    console.log(this.props)
     const { report } = this.props.navigation.state.params || { report: ReportDefault }
     const { design } = this.props
     return (
@@ -47,7 +53,7 @@ class ReportDetailsScreen extends React.Component {
             </Button>
           </Left>
           <Body style={{ flex: 6 }}>
-            <Title>{report.title}</Title>
+            <Title>{this._getTitle(report)}</Title>
           </Body>
         </Header>
         <ReportDetail screen report={report} />

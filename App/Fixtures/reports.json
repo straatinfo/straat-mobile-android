@@ -1,0 +1,58 @@
+[{
+  "_id": "5b1ad23fead53b00143dbf4b",
+  "updatedAt": "2018-06-08T19:00:15.726Z",
+  "createdAt": "2018-06-08T19:00:15.683Z",
+  "_reporter": {
+    "_id": "5b1ad212ead53b00143dbf44S",
+    "username": "test_ID:NH1cT",
+    "email": "test@test.test"
+  },
+  "_host": {
+    "_id": "5b1ad1b2e7b7a94e366dc1b9",
+    "hostName": "alblasserdam",
+    "email": "alblasserdamTest@straat.info",
+    "language": "nl"
+  },
+  "_reportType": {
+    "_id": "5a7888bb04866e4742f74955",
+    "code": "A",
+    "name": "Public Space"
+  },
+  "title": "Public Space",
+  "description": "test ",
+  "_mainCategory": {
+    "_id": "5af352f8c38e980014415eb0",
+    "name": "other",
+    "description": ""
+  },
+  "_team": {
+    "_id": "5b1ad212ead53b00143dbf46",
+    "teamName": "testTeam"
+  },
+  "location": "23 Amorsolo Street, Makati, Kalakhang Maynila, Philippines",
+  "long": 121.01385209709406,
+  "lat": 14.559213137910724,
+  "generatedReportId": "A20180608_00001",
+  "__v": 0,
+  "_conversation": {
+    "_id": "5b1ad23fead53b00143dbf4c",
+    "messages": [],
+    "participants": [],
+    "type": "TEAM",
+    "title": "Untilted conversation"
+  },
+  "attachments": [],
+  "reportCoordinate": {
+    "coordinates": [121.01385209709406, 14.559213137910724],
+    "type": "Point"
+  },
+  "peopleInvolvedDescription": "",
+  "peopleInvolvedCount": 0,
+  "isPeopleInvolved": false,
+  "vehicleInvolvedDescription": "",
+  "vehicleInvolvedCount": 0,
+  "isVehicleInvolved": false,
+  "isPublic": false,
+  "isUrgent": true,
+  "status": "NEW"
+}]
