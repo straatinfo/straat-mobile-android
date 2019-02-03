@@ -11,7 +11,7 @@ export default {
   // my custom language setting ENGLISH/ DUTCH
   // language: __DEV__ ? Languages.ENGLISH : Languages.DUTCH,
 
-  language: Languages.DUTCH,
+  language: Languages.ENGLISH,
 
   // STAGING, LOCAL ,STAGING_heroku_ni_boboy: backen@
   ApiUrl: Url.STAGING_heroku_ni_boboy,

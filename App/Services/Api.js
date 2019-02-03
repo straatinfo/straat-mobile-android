@@ -649,9 +649,11 @@ const create = (baseURL = AppConfig.ApiUrl) => {
 
   
   // MY TEAM
-  const addNewTeam = ({ user: { _id, token, _host }, data }) => {
+  const addNewTeam = ({ user: { _id, token, _host }, data, hasPhoto }) => {
+    __DEV__ && console.log('adding team', data)
     // return api.post('/v2/api/team/new/' + _id,
-    return api.post('v2/api/team/?_user=' + _id + '&_host=' + _host,
+    if (hasPhoto) {
+      return api.post('v2/api/team/?_user=' + _id + '&_host=' + _host,
       data,
       {
         method: 'POST',
@@ -660,6 +662,17 @@ const create = (baseURL = AppConfig.ApiUrl) => {
           'Authorization': 'Bearer ' + token
         }
       })
+    } else {
+      return api.post('v2/api/team/?_user=' + _id + '&_host=' + _host,
+      data,
+      {
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+    }
   }
   const getTeamDetails = (teamId, { token }) => {
     // console.log('Team ID: ', teamId)

@@ -113,6 +113,7 @@ export const addSuccess = (state, { details }) => {
 }
 
 export const addFailed = (state, { error }) => {
+  console.log('error', error);
   return state.merge({ fetching: false, error: error})
 }
 

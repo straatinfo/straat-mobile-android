@@ -40,6 +40,7 @@ class AddTeam extends Component {
         } else if (response.customButton) {
           __DEV__ && console.log('User tapped custom button: ', response.customButton)
         } else {
+          console.log(response);
           this.setState({ teamPhoto: response.uri, teamLogo: response })
           addNewTeamMergeState({teamPhoto: response.uri})
           delete response.data

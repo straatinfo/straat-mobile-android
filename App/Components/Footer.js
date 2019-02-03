@@ -40,7 +40,7 @@ class Footer extends Component {
   }
 
   render () {
-    if (this.props.design.isSpecific === false) {
+    if (!this.props || !this.props.design || this.props.design.isSpecific === false) {
       return <View />
     }
     return (

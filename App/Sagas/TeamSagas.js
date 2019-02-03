@@ -130,21 +130,31 @@ export function * addNewTeam (API, action) {
   const { params: { teamLogo, teamName, teamEmail, callBack } } = action
   __DEV__ && console.log('action: ', action)
   const user = yield select(getUser)
-  let data = new FormData()
-  data.append('photo', {uri: teamLogo.uri, name: teamLogo.fileName, type: teamLogo.type})
-  data.append('teamName', teamName)
-  data.append('teamEmail', teamEmail)
- // data.append('_host', user._host)
-  data.append('isVolunteer', user.isVolunteer)
-  data.append('creationMethod', backEndConstEnum.teamCreationMethod)
+  const hasPhoto = teamLogo.uri && teamLogo.fileName && teamLogo.type ? true : false
+  let data
+  if (hasPhoto) {
+    data = new FormData()
+    data.append('photo', {uri: teamLogo.uri, name: teamLogo.fileName, type: teamLogo.type})
+    data.append('teamName', teamName)
+    data.append('teamEmail', teamEmail)
+  // data.append('_host', user._host)
+    data.append('isVolunteer', user.isVolunteer)
+    data.append('creationMethod', backEndConstEnum.teamCreationMethod)
+  } else {
+    data = {
+      teamName: teamName,
+      teamEmail: teamEmail,
+      isVolunteer: user.isVolunteer,
+      creationMethod: backEndConstEnum.teamCreationMethod
+    }
+  }
 
   try {
     __DEV__ && console.log('Fetching team data...', action)
     __DEV__ && console.log('Fetching team data API...', API)
 
     yield call(loaderHandler.showLoader, Lang.saving)
-
-    const newTeamResponse = yield call(API.addNewTeam, {data: data, user})
+    const newTeamResponse = yield call(API.addNewTeam, {data: data, user, hasPhoto})
 
     __DEV__ && console.log('Fetching success', newTeamResponse)
     if (newTeamResponse.ok && newTeamResponse.data.status === 1) {
